@@ -1,0 +1,23 @@
+{
+  "id": "bench-504",
+  "name": "Mosca2",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250113-mosca2---logic-flaw",
+  "chain": "bsc",
+  "block_number": 45722244,
+  "attack_txs": [
+    "0xf13d281d4aa95f1aca457bd17f2531581b0ce918c90905d65934c9e67f6ae0ec"
+  ],
+  "vulnerable_address": "0xd8791f0c10b831b605c5d48959eb763b266940b9",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Mosca.sol",
+  "function": "join",
+  "type": "accounting-error",
+  "attacker_profit": 34374.405308085734,
+  "source_case_id": "dfhl-0668",
+  "fix_description": "In join, the baseAmount calculation includes diff (existing balance above 127 tokens), which is then added back to user.balance. This allows users to repeatedly call join to compound their balance without depositing proportional new funds. Fix by computing baseAmount from only the new deposit amount, not including the existing balance diff.",
+  "attack_date": "2025-01-13",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is very short and the exploit flow is straightforward: join once, take a flash loan, call buy and exitProgram, then repeat a simple join/exit loop to drain value. It involves only a few protocol interactions and no complex math, routing, or deep cross-contract/state reasoning beyond spotting broken accounting in the program exit logic."
+}

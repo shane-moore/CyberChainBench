@@ -1,0 +1,23 @@
+{
+  "id": "bench-435",
+  "name": "NGP",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250918-ngp---price-manipulation",
+  "chain": "bsc",
+  "block_number": 61515895,
+  "attack_txs": [
+    "0xc2066e0dff1a8a042057387d7356ad7ced76ab90904baa1e0b5ecbc2434df8e1"
+  ],
+  "vulnerable_address": "0xd2f26200cd524db097cf4ab7cc2e5c38ab6ae5c9",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Token.sol",
+  "function": "_update",
+  "type": "accounting-error",
+  "attacker_profit": 1783776.091230445,
+  "source_case_id": "dfhl-0591",
+  "fix_description": "Root cause is incorrect operation ordering in _update: fee deduction from pair + sync() happens BEFORE the user transfer completes, creating an inconsistent intermediate state where pair reserves are already modified but the sell has not finalized. This is similar to a state-mutation-before-interaction pattern (akin to reentrancy). Fix: move all fee deductions and sync() to AFTER super._update(from, to, value) completes. Additionally, replace getPrice() spot reserve ratio with TWAP oracle, and remove DEAD from whitelist.",
+  "attack_date": "2025-09-18",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a short multi-step DeFi exploit involving a flashloan, fee-on-transfer swap routing, and understanding a token-specific sync/_update bug that manipulates the pair price. While the execution path is only a few calls, identifying the required precomputed amounts and why sending bought tokens to the dead address distorts reserves requires protocol-specific reasoning beyond an obvious pattern."
+}

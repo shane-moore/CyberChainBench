@@ -1,0 +1,31 @@
+{
+  "id": "bench-21",
+  "name": "XSTABLE Protocol",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220810-xstable-protocol---incorrect-logic-check",
+  "chain": "ethereum",
+  "block_number": 15310017,
+  "attack_txs": [
+    "0x873f7c77d5489c1990f701e9bb312c103c5ebcdcf0a472db726730814bfd55f3"
+  ],
+  "vulnerable_address": "0xb276647e70cb3b81a1ca302cf8de280ff0ce5799",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x91383a15c391c142b80045d8b4730c1c37ac0378",
+  "file": "XST2.sol",
+  "function": "_getTxType",
+  "type": "accounting-error",
+  "attacker_profit": 45696.11763724888,
+  "source_case_id": "dfhl-0126",
+  "fix_description": "Remove the buy reward minting logic triggered by txType==1 in _implementBuy. The transfer hook cannot reliably distinguish swap from skim since both have sender=Pool, making any reward logic here exploitable.",
+  "attack_date": "2022-08-10",
+  "normal_txs": [
+    "0xdee5d93d8be415356b7d0d12346ae0b999787fa3f18b73334ec545d83de90f01",
+    "0xab687f8a93372dc04e566c532494a8ce8fc9ec2798adaa1c542eaf2f95b66794",
+    "0x80c8aea313fcf7aa9126989f88ca9872cb9849fbff39e560d0c7168373801701",
+    "0x23c5f6bcee15f8952a062b0746bcc85a32904261c5ee47baa3b369be056c75f9",
+    "0x0f74cc3804fd103bf7ee3d206c45247a48d97d182285b32b077a972c447c6694"
+  ],
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a multi-step exploit involving a flash swap from one Uniswap V2 pair, manipulation of another pair\u2019s reserves/balances using swap/sync/skim mechanics, then unwinding to repay the loan. It requires protocol-specific understanding of Uniswap V2 accounting and token/pair interactions, but the attack path is still fairly contained and not deeply cross-protocol or mathematically intricate."
+}

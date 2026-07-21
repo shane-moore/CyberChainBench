@@ -1,0 +1,31 @@
+{
+  "id": "bench-80",
+  "name": "TIME",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231206-time---arbitrary-address-spoofing-attack",
+  "chain": "ethereum",
+  "block_number": 18730463,
+  "attack_txs": [
+    "0xecdd111a60debfadc6533de30fb7f55dc5ceed01dfadd30e4a7ebdb416d2f6b6"
+  ],
+  "vulnerable_address": "0x303a41300baeb37a1028af017b17b8a6edc3066a",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x4b0e9a7da8bab813efae92a6651019b8bd6c0a29",
+  "file": "MulticallUpgradeable.sol",
+  "function": "multicall",
+  "type": "access-control",
+  "attacker_profit": 188133.9969375557,
+  "source_case_id": "dfhl-0198",
+  "normal_txs": [
+    "0xdaf043a4fd715db67d54409adcde2ac4ef8dd5d0552226e3168dda913a637bb7",
+    "0x3a144dcc975d24e4487b4db27223179d0c6fb0bb1bdc31ded22aeae5ccaf2e2e",
+    "0xafe304b90d30a6b564dd484edcabfc8a2e31b7aac379af208845a2bd4e9da8b1",
+    "0xe6dacfce75edb266ab1de0e3d66f2ea48f84f709c9d7b55191ab3d2a4374c4c3",
+    "0x4eaaceaccd864483dd937748109bc7c742b9f7a5eedd938ccb44a06e2e507a7b"
+  ],
+  "fix_description": "In MulticallUpgradeable.multicall, when the call originates from a trusted forwarder (isTrustedForwarder(msg.sender)), append the original _msgSender() (extracted from calldata tail per ERC2771) to each sub-call's data before delegatecall. This ensures _msgSender() in each sub-call resolves to the actual meta-transaction signer, not an attacker-controlled suffix. Without this, an attacker can craft multicall sub-call data with an arbitrary address appended at the end, and since delegatecall preserves the trusted forwarder as msg.sender, _msgSender() in the sub-call reads the attacker-spoofed address \u2014 enabling unauthorized burns or transfers on behalf of any victim.",
+  "attack_date": "2023-12-06",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is not a simple single-call bug: it requires understanding the ERC2771Context + Multicall arbitrary sender spoofing issue, crafting/using a valid forwarder request, and then leveraging the resulting unauthorized burn to manipulate a Uniswap pair before syncing and swapping for profit. The PoC is still fairly compact and only involves a few contracts and steps, so it is more involved than easy but not deep enough to be hard."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-471",
+  "name": "KRC",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250518-krc---deflationary-token",
+  "chain": "bsc",
+  "block_number": 49875424,
+  "attack_txs": [
+    "0x78f242dee5b8e15a43d23d76bce827f39eb3ac54b44edcd327c5d63de3848daf"
+  ],
+  "vulnerable_address": "0xdBEAD75d3610209A093AF1D46d5296BBeFFd53f5",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "PancakePair.sol",
+  "function": "skim",
+  "type": "accounting-error",
+  "attacker_profit": 7116.540246882884,
+  "source_case_id": "dfhl-0632",
+  "fix_description": "Deflationary token issue in skim function. The token transfer mechanics cause accounting discrepancy when interacting with LP pair.",
+  "attack_date": "2025-05-18",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a multi-step DeFi attack using two flash loans, swaps, and repeated pair skim/manipulation to desynchronize reserves before extracting value. While the PoC is fairly direct and much of the transfer sequence is hardcoded from the attack trace, understanding why the skim loop works requires protocol-specific AMM and fee-on-transfer token knowledge."
+}

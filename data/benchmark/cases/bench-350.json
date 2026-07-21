@@ -1,0 +1,23 @@
+{
+  "id": "bench-350",
+  "name": "Burner",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240522-burner---sandwich-ack",
+  "chain": "ethereum",
+  "block_number": 19917291,
+  "attack_txs": [
+    "0x3bba4fb6de00dd38df3ad68e51c19fe575a95a296e0632028f101c5199b6f714"
+  ],
+  "vulnerable_address": "0x4d4d05e1205e3A412ae1469C99e0d954113aa76F",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Burner.sol",
+  "function": "_convert",
+  "type": "price-manipulation",
+  "attacker_profit": 6297.774764610024,
+  "source_case_id": "dfhl-0492",
+  "fix_description": "In _convert, uses manipulable on-chain price/balance values. Fix: use TWAP oracle or add flash-loan protection.",
+  "attack_date": "2024-05-22",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is very short and essentially a simple two-step manipulation: buy PNT, call convertAndBurn with attacker-chosen token inputs, then sell back for profit. It involves minimal protocol complexity, no real flash-loan machinery in the test, and the vulnerable pattern appears straightforward once the burner logic is identified."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-114",
+  "name": "PancakeHunny",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2021/README.md#20210603-pancakehunny---incorrect-calculation",
+  "chain": "bsc",
+  "block_number": 7962339,
+  "attack_txs": [
+    "0x765de8357994a206bb90af57dcf427f48a2021f2f28ca81f2c00bc3b9842be8e"
+  ],
+  "vulnerable_address": "0x109Ea28dbDea5E6ec126FbC8c33845DFe812a300",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "HunnyMinter.sol",
+  "function": "mintFor",
+  "type": "accounting-error",
+  "attacker_profit": 2815.5504263132893,
+  "source_case_id": "dfhl-0025",
+  "fix_description": "In mintFor, use the actual transferred amount (feeSum) for tokenToHunnyBNB calculation instead of balanceOf(address(this)). The current code uses the full contract balance which can be inflated by sending tokens directly to the contract before calling mintFor, resulting in excessive HUNNY minting.",
+  "attack_date": "2021-06-03",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a short but protocol-specific multi-step attack: flash-loan BUSD, swap into the target token, abuse repeated UniswapV2 pair skim behavior via token transfers to distort balances, then swap back for profit and repay. It requires understanding AMM reserve/balance mechanics and the skim-based manipulation pattern, so it is more involved than a trivial access-control bug but still far from a deeply complex cross-protocol exploit."
+}

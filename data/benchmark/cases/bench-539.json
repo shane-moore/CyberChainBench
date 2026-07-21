@@ -1,0 +1,23 @@
+{
+  "id": "bench-539",
+  "name": "BDEX",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221105-bdex---business-logic-flaw",
+  "chain": "bsc",
+  "block_number": 22629432,
+  "attack_txs": [
+    "0xe7b7c974e51d8bca3617f927f86bf907a25991fe654f457991cbf656b190fe94"
+  ],
+  "vulnerable_address": "0xB2B1DC3204ee8899d6575F419e72B53E370F6B20",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "BvaultsStrategy.sol",
+  "function": "_vswapSwapToken",
+  "type": "price-manipulation",
+  "attacker_profit": 2410.958905138087,
+  "source_case_id": "dfhl-0084",
+  "fix_description": "In _vswapSwapToken, swap executed with insufficient slippage protection. Fix: set reasonable amountOutMin based on oracle price.",
+  "attack_date": "2022-11-05",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a short, direct price-manipulation exploit against a strategy function: swap WBNB for BDEX to skew reserves, call convertDustToEarned(), then swap back for profit. The PoC is well under 100 lines, uses only a few external calls, and does not require flash loans or deep protocol-internal reasoning."
+}

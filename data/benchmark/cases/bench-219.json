@@ -1,0 +1,23 @@
+{
+  "id": "bench-219",
+  "name": "Melo",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230506-melo---access-control",
+  "chain": "bsc",
+  "block_number": 27960446,
+  "attack_txs": [
+    "0x3f1973fe56de5ecd59a815d3b14741cf48385903b0ccfe248f7f10c2765061f7"
+  ],
+  "vulnerable_address": "0x9A1aEF8C9ADA4224aD774aFdaC07C24955C92a54",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "cERC20.sol",
+  "function": "mint",
+  "type": "access-control",
+  "attacker_profit": 89891.53541960845,
+  "source_case_id": "dfhl-0343",
+  "fix_description": "In mint, the function is public without any access control. Anyone can mint arbitrary amounts of tokens to any address. Fix: add onlyOwner or onlyMinter modifier to restrict who can call mint.",
+  "attack_date": "2023-05-06",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a straightforward missing access control issue: the attacker directly calls an unrestricted mint function, then swaps the freshly minted tokens for USDT. The PoC is very short, involves essentially two actions, and requires minimal protocol-specific or DeFi-specific reasoning."
+}

@@ -1,0 +1,24 @@
+{
+  "id": "bench-297",
+  "name": "PestoToken",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240923-pestotoken---price-manipulation",
+  "chain": "ethereum",
+  "block_number": 20811949,
+  "attack_txs": [
+    "0x3d5b4a0d560e8dd750239b578e2b85921b523835b644714dc239a2db70cf067c"
+  ],
+  "vulnerable_address": "0xE81C4A73bfDdb1dDADF7d64734061bE58d4c0b4C",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "PestoTheBabyKingPenguin.sol",
+  "function": "_transfer",
+  "type": "input-validation",
+  "attacker_profit": 3049.795677484885,
+  "source_case_id": "dfhl-0431",
+  "fix_description": "In swapTokensForEth, amountOutMinimum is set to 0, accepting any output without validation. An attacker can use flash swap to alter pair reserves, then trigger the contract auto-swap at a manipulated price. Fix by setting a reasonable minimum output based on TWAP or oracle price.",
+  "_review_note": "DISPUTED: amountOutMin=0 sandwich vulnerability. Unclear if this is input-validation or price-manipulation. The contract auto-swaps with no slippage protection.",
+  "attack_date": "2024-09-23",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a multi-step DeFi exploit involving a Uniswap V3 flash loan callback, multiple Uniswap V2 swaps, and protocol-specific manipulation of the token contract\u2019s self-balance/supply logic before repaying the flash loan. It is not a generic bug pattern and requires understanding the target tokenomics and cross-protocol flow, but the attack path is still relatively short and the code remains compact."
+}

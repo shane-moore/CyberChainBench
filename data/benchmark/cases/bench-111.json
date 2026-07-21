@@ -1,0 +1,23 @@
+{
+  "id": "bench-111",
+  "name": "3913Token",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231102-3913token---deflationary-token-attack",
+  "chain": "bsc",
+  "block_number": 33132468,
+  "attack_txs": [
+    "0x8163738d6610ca32f048ee9d30f4aa1ffdb3ca1eddf95c0eba086c3e936199ed"
+  ],
+  "vulnerable_address": "0xd74F28c6E0E2c09881Ef2d9445F158833c174775",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "T3913.sol",
+  "function": "burnPairs",
+  "type": "access-control",
+  "attacker_profit": 31148.279460875325,
+  "source_case_id": "dfhl-0230",
+  "fix_description": "Add onlyOwner or restricted access modifier to burnPairs. The function is public without access control, allowing anyone to burn tokens from the liquidity pair and manipulate the token price.",
+  "attack_date": "2023-11-02",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This PoC uses a long multi-step attack chain with five nested flash loans, multiple AMM pairs, a helper contract, repeated skim/burnPairs state manipulation, and manual reserve-based swaps. Reproducing it requires deep protocol-specific reasoning about token/pair accounting and non-obvious state transitions, which would likely take an experienced auditor well over 2 hours."
+}

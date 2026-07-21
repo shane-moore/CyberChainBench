@@ -1,0 +1,31 @@
+{
+  "id": "bench-136",
+  "name": "0x0DEX",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230911-0x0dex---parameter-manipulation",
+  "chain": "ethereum",
+  "block_number": 18115708,
+  "attack_txs": [
+    "0x00b375f8e90fc54c1345b33c686977ebec26877e2c8cac165429927a6c9bdbec"
+  ],
+  "vulnerable_address": "0x6128d5f7c64dab48a1c66f9d62eaefa1d5aa03ed",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x3d18ad735f949febd59bbfcb5864ee0157607616",
+  "file": "OxODexPool.sol",
+  "function": "swapOnWithdrawal",
+  "type": "input-validation",
+  "attacker_profit": 60722.961605478915,
+  "source_case_id": "dfhl-0255",
+  "fix_description": "In swapOnWithdrawal, the tokenOut and amountOut parameters are user-controlled without validation. Attacker can set amountOut to 0 (no slippage protection) and manipulate the swap price, or pass a malicious tokenOut. Fix: validate tokenOut against a whitelist, and enforce minimum amountOut based on oracle price.",
+  "attack_date": "2023-09-11",
+  "normal_txs": [
+    "0xef27cb69d337b164c974a0468e11194c77fded722ff9611c599c4a65f3941bab",
+    "0xf134d34eb574ddfbe884401e88a5adfbe30c1e33929a0bf27e643beff9104ce2",
+    "0x53e72797910b9edb4233512eb4d2e979290482a9a4a78f7bd4374de8299136ad",
+    "0x98a6d22048a9bbed6f675ae44f9176238edf65dfbdcfe4cb6c80d2d83d88decd",
+    "0x5eeceea8cb3ba308e5f39fdd7b7560b0ceb92f02360580781fae9706ea898322"
+  ],
+  "difficulty": "hard",
+  "difficulty_reasoning": "This exploit requires understanding a highly protocol-specific privacy DEX withdrawal/signature scheme, crafting custom ring-signature-like withdrawal data with bn256 precompile math, and chaining it with balance manipulation, forced ETH sends, repeated deposit/withdraw cycles, and a flash loan. Although the PoC is not extremely long, the vulnerability is non-obvious and would likely take an experienced auditor well over 2 hours to fully derive and reproduce."
+}

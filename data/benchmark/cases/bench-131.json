@@ -1,0 +1,31 @@
+{
+  "id": "bench-131",
+  "name": "FireBirdPair",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230930-firebirdpair---lack-slippage-protection",
+  "chain": "polygon",
+  "block_number": 48149138,
+  "attack_txs": [
+    "0x96d80c609f7a39b45f2bb581c6ba23402c20c2b6cd528317692c31b8d3948328"
+  ],
+  "vulnerable_address": "0xd01224268a0f2ff5659a14af96051701070a1211",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x5d53c9f5017198333c625840306d7544516618e4",
+  "file": "FirebirdReserveFund.sol",
+  "function": "_firebirdSwapToken",
+  "type": "price-manipulation",
+  "attacker_profit": 1683.5571733194527,
+  "source_case_id": "dfhl-0249",
+  "fix_description": "In _firebirdSwapToken, swap executed with insufficient slippage protection. Fix: set reasonable amountOutMin based on oracle price.",
+  "normal_txs": [
+    "0x7bfbf3733c4d00a6398f9211daf18147bb62559a1e0f0c5ceb7c59ec0a0e091f",
+    "0xaac115004d2b04f16dc6155276edbc994516e66e2771b8490b33f09fac0c2446",
+    "0xc684811ab04a3ab7b405ba8cf454f79db948652a63419b977460be7f09d7126b",
+    "0x42d9632d24d8448ec31a281b21ec2891ebc1a68f3d5338d4f47e2a5db8e1dfb3",
+    "0xd04b2f1b3096e88e12ae44d0049aaa510cb8ffe890c129e95310edf3150f5c50"
+  ],
+  "attack_date": "2023-09-30",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a multi-step DeFi attack involving a flash loan, repeated reserve manipulation on a specific LP, abuse of protocol fee collection logic, and a final no-slippage reserve-fund sale before unwinding. It requires understanding protocol-specific Firebird pair/reserve-fund mechanics rather than just spotting a generic bug, but the PoC itself is still fairly compact and not deeply stateful enough to be hard."
+}

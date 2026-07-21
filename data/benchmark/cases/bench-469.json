@@ -1,0 +1,23 @@
+{
+  "id": "bench-469",
+  "name": "YDT",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250526-ydt---logic-flaw",
+  "chain": "bsc",
+  "block_number": 50273546,
+  "attack_txs": [
+    "0x233b21d0355108593c3f136797aed886ae1d4655384b33d67b1fccee88cdfbc2"
+  ],
+  "vulnerable_address": "0x3612e4Cb34617bCac849Add27366D8D85C102eFd",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "YDTMainContract.sol",
+  "function": "proxyTransfer",
+  "type": "input-validation",
+  "attacker_profit": 41009.735848397046,
+  "source_case_id": "dfhl-0629",
+  "fix_description": "In proxyTransfer, the access check validates the callerModule parameter (user-controlled input) instead of msg.sender. Any attacker can pass a whitelisted module address as the parameter while calling directly. Fix: replace callerModule check with require(msg.sender == address(taxModule) || msg.sender == address(referralModule) || ...).",
+  "attack_date": "2025-05-26",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is very short and effectively a direct abuse of a likely missing access control/unsafe external-call path: it invokes a token function by selector, triggers the pair, then swaps the drained tokens for USDT. It is a simple 2-3 step exploit with minimal protocol-specific logic, no flash loan, and only basic DEX swap knowledge required."
+}

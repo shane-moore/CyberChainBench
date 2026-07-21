@@ -1,0 +1,23 @@
+{
+  "id": "bench-375",
+  "name": "GROKD",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240412-grokd---lack-of-access-control",
+  "chain": "bsc",
+  "block_number": 37622478,
+  "attack_txs": [
+    "0x8293946b5c88c4a21250ca6dc93c6d1a695fb5d067bb2d4aed0a11bd5af1fb32"
+  ],
+  "vulnerable_address": "0xec61196d3e2ae276eecf070110075118abd1f63e",
+  "has_public_source": false,
+  "fixable": true,
+  "proxy_address": "0x31d3231cda62c0b7989b488ca747245676a32d81",
+  "function": "0xd2beb00a",
+  "type": "access-control",
+  "attacker_profit": 97796.15768446715,
+  "source_case_id": "dfhl-0519",
+  "fix_description": "In function 0xd2beb00a, func_05A6 directly writes to a storage array without any msg.sender check. Any caller can overwrite contract configuration data. Add onlyOwner modifier (call func_1C0A like other admin functions do).",
+  "attack_date": "2024-04-12",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a straightforward lack-of-access-control exploit: the attacker simply acquires LP, deposits it, calls an unrestricted updatePool to set an absurd rewardPerBlock, advances blocks, and claims rewards. It involves only a few obvious steps and minimal protocol-specific reasoning, so a competent auditor could reproduce it quickly."
+}

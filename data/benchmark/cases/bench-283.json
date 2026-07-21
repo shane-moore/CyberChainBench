@@ -1,0 +1,23 @@
+{
+  "id": "bench-283",
+  "name": "BUBAI",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20241029-bubai---rug-pull",
+  "chain": "ethereum",
+  "block_number": 21074246,
+  "attack_txs": [
+    "0x1b4730e715286862042def956d5aaa6a53203ee02b97ea913de73fa462e48f90"
+  ],
+  "vulnerable_address": "0xB0f34bA1617BB7C2528e570070b8770E544b003E",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "ORAAI.sol",
+  "function": "stuckToken",
+  "type": "access-control",
+  "attacker_profit": 179459.4377269779,
+  "source_case_id": "dfhl-0417",
+  "fix_description": "stuckToken is external without any access control. It sets _allowances[_stuck][_oracex] = _maxTxAmount, granting _oracex address approval to transferFrom any address. Attacker calls stuckToken(pairAddress) to approve draining LP pair tokens. Fix: add onlyOwner modifier or remove the function entirely.",
+  "attack_date": "2024-10-29",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The exploit is a very straightforward token bug/allowance abuse: directly transfer tokens out of the Uniswap pair via transferFrom, call sync to update reserves, then dump the stolen tokens for ETH. It is only a few steps, involves minimal protocol-specific reasoning, and the PoC is short with simple Uniswap interaction."
+}

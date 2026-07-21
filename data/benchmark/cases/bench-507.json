@@ -1,0 +1,23 @@
+{
+  "id": "bench-507",
+  "name": "JPulsepot",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250110-jpulsepot---logic-flaw",
+  "chain": "bsc",
+  "block_number": 45640246,
+  "attack_txs": [
+    "0xd6ba15ecf3df9aaae37450df8f79233267af41535793ee1f69c565b50e28f7da"
+  ],
+  "vulnerable_address": "0x384b9fb6e42dab87f3023d87ea1575499a69998e",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "FortuneWheel.sol",
+  "function": "swapProfitFees",
+  "type": "price-manipulation",
+  "attacker_profit": 21518.28288508903,
+  "source_case_id": "dfhl-0671",
+  "fix_description": "Add slippage protection (reasonable amountOutMin) to the swaps inside swapProfitFees. The function uses getTokenAmountForLink which relies on manipulable AMM spot prices via router.getAmountsOut, allowing sandwich attacks.",
+  "attack_date": "2025-01-10",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The PoC is short, but the exploit is not a trivial access-control bug: it requires a flash loan, coordinated swaps through Pancake V2, and understanding that calling swapProfitFees() after manipulating the token market creates profit. An experienced auditor could likely reproduce it within 30 minutes to 2 hours after reading the victim logic, but it still involves protocol-specific fee-swap/price-impact reasoning across multiple contracts."
+}

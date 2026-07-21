@@ -1,0 +1,23 @@
+{
+  "id": "bench-179",
+  "name": "LUSD",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230707-lusd---price-manipulation-attack",
+  "chain": "bsc",
+  "block_number": 29756867,
+  "attack_txs": [
+    "0x1eeef7b9a12b13f82ba04a7951c163eb566aa048050d6e9318b725d7bcec6bfa"
+  ],
+  "vulnerable_address": "0xdec12a1dcbc1f741ccd02dfd862ab226f6383003",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Loan.sol",
+  "function": "supply",
+  "type": "price-manipulation",
+  "attacker_profit": 9412.693394235452,
+  "source_case_id": "dfhl-0298",
+  "fix_description": "In supply(), do not use router.getAmountsOut() as a price oracle. AMM spot prices are manipulable via flash loans. Use Chainlink or TWAP oracle to determine the token value for payout calculation.",
+  "attack_date": "2023-07-07",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit requires a multi-step chain: aggregating liquidity from several flash loans, manipulating a PancakeSwap BTCB-BSC-USD pool via flashswap, abusing the loan contract\u2019s getAmountsOut-based valuation, then unwinding and repaying all legs. The bug pattern is understandable once identified, but writing the PoC needs protocol-specific DeFi knowledge around AMM price manipulation, flash loans, and the target\u2019s mint/withdraw flow."
+}

@@ -1,0 +1,22 @@
+{
+  "id": "bench-420",
+  "name": "- MEVbot_0x28d9",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221211---mevbot_0x28d9---insufficient-validation",
+  "chain": "ethereum",
+  "block_number": 16157843,
+  "attack_txs": [
+    "0x313d23bdd9277717e3088f32c976479c09d4b8a94d5d94deb835d157fd0850ce"
+  ],
+  "vulnerable_address": "0x28d949fdfb5d9ea6b604fa6fee3d6548ea779f17",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0xd5b99797",
+  "type": "input-validation",
+  "attacker_profit": 1338.1458756180352,
+  "source_case_id": "dfhl-0061",
+  "fix_description": "The func_00FB (0xd5b99797) function only validates msg.sender but does not validate the borrowing parameters. The bot automatically repays with its own USDC, allowing the authorized caller to initiate arbitrary borrows at the bot expense. Add validation on loan parameters or remove automatic repayment logic.",
+  "attack_date": "2022-12-11",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is extremely short and essentially just loops a DODO flash loan against a vulnerable contract with crafted calldata, without any complex routing, math, or multi-protocol state reasoning. An auditor would mainly need to identify the missing/unsafe callback handling or access control issue and reproduce it in a few calls, which fits the easy category."
+}

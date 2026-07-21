@@ -1,0 +1,23 @@
+{
+  "id": "bench-457",
+  "name": "Stead",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250629-stead---access-control",
+  "chain": "arbitrum",
+  "block_number": 352509408,
+  "attack_txs": [
+    "0x32dbfce2253002498cd41a2d79e249250f92673bc3de652f3919591ee26e8001"
+  ],
+  "vulnerable_address": "0xca9d57cd258731a07c56c01ca353e8b0e2798e25",
+  "has_public_source": false,
+  "fixable": true,
+  "proxy_address": "0xf9ff933f51ba180a474634440a406c95dfb27596",
+  "function": "0x16fb27ce",
+  "type": "access-control",
+  "attacker_profit": 13723.45315180544,
+  "source_case_id": "dfhl-0617",
+  "fix_description": "Add access control (onlyOwner or role-based) to function 0x16fb27ce. After a contract upgrade, this function was left without msg.sender validation, allowing anyone to drain STEAD tokens from the contract.",
+  "attack_date": "2025-06-29",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a single-call exploit against an obvious missing access control issue: the PoC just invokes an unrestricted function on the victim to drain tokens. It requires minimal protocol understanding, no flash loans or complex state manipulation, and the exploit logic is trivial to write."
+}

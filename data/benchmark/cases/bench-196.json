@@ -1,0 +1,23 @@
+{
+  "id": "bench-196",
+  "name": "MidasCapitalXYZ",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230617-midascapitalxyz---precision-loss",
+  "chain": "bsc",
+  "block_number": 29185769,
+  "attack_txs": [
+    "0x4a304ff08851106691f626045b0f55d403e3a0958363bdf82b96e8ce7209c3a6"
+  ],
+  "vulnerable_address": "0xf3c870b7c201515e2552d018ec2a15910fd35909",
+  "has_public_source": false,
+  "fixable": true,
+  "proxy_address": "0xf8527dc5611b589cbb365acacaac0d1dc70b25cb",
+  "function": "0xdb006a75",
+  "type": "accounting-error",
+  "attacker_profit": 519122.9196873022,
+  "source_case_id": "dfhl-0314",
+  "fix_description": "Compound V2 fork share inflation attack. Exchange rate = (cash + totalBorrows - totalReserves) / totalSupply. When totalSupply is minimal (1 wei), attacker donates tokens to inflate cash, making exchange rate extremely large. Subsequent minters get 0 shares (integer division). Attacker redeems their 1 share for all funds. Fix: require minimum initial deposit with dead shares, or add virtual offset to prevent division precision loss.",
+  "attack_date": "2023-06-17",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This PoC involves a long multi-contract attack chain with nested V2/V3 flash liquidity, LP mint/redeem manipulation, vault deposits, lending market collateral/borrow flows, and custom helper contracts to abuse protocol accounting. Writing it requires deep understanding of this specific protocol\u2019s oracle/collateral logic and state transitions across several markets, which is well beyond a straightforward exploit."
+}

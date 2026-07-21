@@ -1,0 +1,23 @@
+{
+  "id": "bench-165",
+  "name": "Utopia",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230720-utopia---business-logic-flaw",
+  "chain": "bsc",
+  "block_number": 30119397,
+  "attack_txs": [
+    "0xeb4eb487f58d39c05778fed30cd001b986d3c52279e44f46b2de2773e7ee1d5e"
+  ],
+  "vulnerable_address": "0xb1da08c472567eb0ec19639b1822f578d39f3333",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Utopia.sol",
+  "function": "_airdrop",
+  "type": "accounting-error",
+  "attacker_profit": 118970.91506309275,
+  "source_case_id": "dfhl-0285",
+  "fix_description": "Remove the _airdrop function entirely. It serves no legitimate purpose (only emits fake Transfer events for marketing) but introduces a critical vulnerability: attackers can craft tAmount to make airdropAddress equal the pair contract address, overwriting its balance to 1 and manipulating pool reserves.",
+  "attack_date": "2023-07-20",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is short, but it relies on understanding a protocol-specific business logic flaw in the token\u2019s airdrop/random-address mechanism and how it interacts with PancakePair skim/sync reserve accounting. It is more than a trivial access-control bug, yet still only a few steps and limited cross-protocol complexity, so an experienced auditor could likely reproduce it within 30 minutes to 2 hours."
+}

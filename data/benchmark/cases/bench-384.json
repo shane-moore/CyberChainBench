@@ -1,0 +1,23 @@
+{
+  "id": "bench-384",
+  "name": "ZongZi",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240325-zongzi---price-manipulation",
+  "chain": "bsc",
+  "block_number": 37272888,
+  "attack_txs": [
+    "0x247f4b3dbde9d8ab95c9766588d80f8dae835129225775ebd05a6dd2c69cd79f"
+  ],
+  "vulnerable_address": "0xB7a254237E05cccA0a756f75FB78Ab2Df222911b",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "ZZF.sol",
+  "function": "burnToHolder",
+  "type": "price-manipulation",
+  "attacker_profit": 223471.27756294276,
+  "source_case_id": "dfhl-0530",
+  "fix_description": "In burnToHolder, getAmountsOut reads spot AMM price to determine how much ETH to give user for burned tokens. Attacker flash loans to manipulate pool price, then calls burnToHolder to receive inflated ETH amount. Fix: use TWAP oracle instead of getAmountsOut for price determination, or add a maximum ETH payout limit per transaction.",
+  "attack_date": "2024-03-25",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a multi-step DeFi attack involving a flash swap, several token swaps to manipulate protocol state, and abuse of protocol-specific reward logic via burnToHolder/receiveRewards. It requires understanding the vulnerable tokenomics/reward mechanism and AMM interactions, but the overall PoC is still fairly contained and not deeply complex across many contracts."
+}

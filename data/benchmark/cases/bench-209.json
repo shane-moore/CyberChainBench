@@ -1,0 +1,22 @@
+{
+  "id": "bench-209",
+  "name": "NOON (NO)",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230529-noon-no---wrong-visibility-in-function",
+  "chain": "ethereum",
+  "block_number": 17366980,
+  "attack_txs": [
+    "0x23fb7f093e827ed061aafb574cfd420eab879621c7f78cb341292e106a3a88c0"
+  ],
+  "vulnerable_address": "0x6fEAc5F3792065b21f85BC118D891b33e0673bD8",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x30e0789e",
+  "type": "access-control",
+  "attacker_profit": 2144.1836204495376,
+  "source_case_id": "dfhl-0329",
+  "fix_description": "_transfer(address,address,uint256) (0x30e0789e) is exposed as public/external but should be internal. Anyone can call it to transfer tokens from any address to any address without authorization. Fix: change visibility to internal.",
+  "attack_date": "2023-05-29",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very straightforward exploit based on an obvious vulnerability pattern: a wrongly exposed internal-like _transfer function that lets the attacker move tokens out of the LP pair. The attack is only a few steps long (steal pair tokens, sync/update reserves, send tokens back, then swap for WETH) and requires minimal protocol-specific reasoning beyond basic Uniswap V2 reserve mechanics."
+}

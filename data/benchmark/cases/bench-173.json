@@ -1,0 +1,23 @@
+{
+  "id": "bench-173",
+  "name": "Value Defi",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2021/README.md#20210508-value-defi---cross-contract-reentrancy",
+  "chain": "bsc",
+  "block_number": 7223030,
+  "attack_txs": [
+    "0xa00def91954ba9f1a1320ef582420d41ca886d417d996362bf3ac3fe2bfb9006"
+  ],
+  "vulnerable_address": "0xd4bbf439d3eab5155ca7c0537e583088fb4cfce8",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "VSafeVaultWBNB.sol",
+  "function": "_deposit",
+  "type": "reentrancy",
+  "attacker_profit": 137391.49648313835,
+  "source_case_id": "dfhl-0031",
+  "fix_description": "In _deposit(), the earn() call makes external interactions before the share calculation and minting are complete. Add nonReentrant modifier or move earn() after _mint, or use a pre-computed balance snapshot to prevent cross-contract reentrancy from manipulating the share calculation.",
+  "attack_date": "2021-05-08",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is essentially a one-call replay of the exploit using a crafted calldata blob and a forked state, with no flash loan logic, swap routing, or multi-contract attack orchestration in the test itself. While understanding the root cause may require protocol-specific analysis of Alpaca/worker behavior, writing this PoC from the exploit transaction would be quick for an experienced auditor."
+}

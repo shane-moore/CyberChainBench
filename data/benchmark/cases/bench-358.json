@@ -1,0 +1,23 @@
+{
+  "id": "bench-358",
+  "name": "SATURN",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240507-saturn---price-manipulation",
+  "chain": "bsc",
+  "block_number": 38488209,
+  "attack_txs": [
+    "0x948132f219c0a1adbffbee5d9dc63bec676dd69341a6eca23790632cb9475312"
+  ],
+  "vulnerable_address": "0x9BDF251435cBC6774c7796632e9C80B233055b93",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Saturn.sol",
+  "function": "autoLiquidityPairTokens",
+  "type": "price-manipulation",
+  "attacker_profit": 8264.51246060486,
+  "source_case_id": "dfhl-0500",
+  "fix_description": "In autoLiquidityPairTokens, addLiquidity uses 0 minimum amounts. Fix: set reasonable minimum based on oracle price.",
+  "attack_date": "2024-05-07",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is a multi-step chain involving privileged token configuration changes, token acquisition from a holder, a flash loan, AMM reserve/balance desync, and a block-roll timing detail before draining value. It is not deeply complex protocol-wise, but it requires understanding token-specific sell-limit logic and PancakeSwap pair mechanics, making it more than a straightforward single-pattern exploit."
+}

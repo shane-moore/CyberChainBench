@@ -1,0 +1,31 @@
+{
+  "id": "bench-36",
+  "name": "SNOOD",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220618-snood---miscalculation-on-_spendallowance",
+  "chain": "ethereum",
+  "block_number": 14983664,
+  "attack_txs": [
+    "0x9a6227ef97d7ce75732645bd604ef128bb5dfbc1bfbe0966ad1cd2870d45a20e"
+  ],
+  "vulnerable_address": "0xeac2a259f3ebb8fd1097aeccaa62e73b6e43d5bf",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0xd45740ab9ec920bedbd9bab2e863519e59731941",
+  "file": "SchnoodleV9Base.sol",
+  "function": "_spendAllowance",
+  "type": "accounting-error",
+  "attacker_profit": 105612.05891507184,
+  "source_case_id": "dfhl-0141",
+  "fix_description": "In _spendAllowance, do not call _getStandardAmount on the amount parameter. Allowances are token-denominated, so pass amount directly to super._spendAllowance without reflection conversion. The conversion causes the amount to round to 0, bypassing the allowance check entirely.",
+  "normal_txs": [
+    "0xc9057c69f2550490e7cb592dfc2a87517970dd703d8975b0ed014933417c44fe",
+    "0x5d9417cfcde7b657b2285168399262980858c6c48cb3bd7cd717f9981e0b979c",
+    "0x2e5660a420dd2ca2e82218cba4f0c1bd5fd29d23dfaeae7c9af837f56a454fbe",
+    "0x472f2ac3f3920e5589d7569825dc226a19d389aff7abdf53d99f729f6b2ad1d8",
+    "0x878e061dc1e424ca6ea40b7a1574636994c59767af6dd6246049967c6ab14a4b"
+  ],
+  "attack_date": "2022-06-18",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very short, direct reserve-manipulation exploit against a Uniswap-style pair using an obvious token flaw: the PoC simply transfers tokens out of the LP, calls sync, returns them, then swaps for WETH. It involves only a couple of contract interactions, no flash loan or deep protocol reasoning, and a competent auditor could write it quickly once noticing the pair token can be pulled from the LP."
+}

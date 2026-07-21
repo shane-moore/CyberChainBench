@@ -1,0 +1,23 @@
+{
+  "id": "bench-298",
+  "name": "DOGGO",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240920-doggo---logic-flaw",
+  "chain": "ethereum",
+  "block_number": 20794803,
+  "attack_txs": [
+    "0x9e074d70e4f9022cba33c1417a6f6338d8248b67d6141c9a32913ca567d0efca"
+  ],
+  "vulnerable_address": "0x240Cd7b53d364a208eD41f8cEd4965D11F571B7a",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "DOGGO.sol",
+  "function": "_transfer",
+  "type": "price-manipulation",
+  "attacker_profit": 46993.14512541508,
+  "source_case_id": "dfhl-0432",
+  "fix_description": "In _transfer, swapTokensForEth is called with no slippage protection (amountOutMin=0). Add a reasonable minimum output amount to prevent sandwich attacks during the internal tax swap.",
+  "attack_date": "2024-09-20",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is a multi-step DeFi attack involving a Uniswap V3 flash loan, fee-on-transfer token behavior, manipulation of the token contract\u2019s self-balance, and multiple swaps across V2/V3 flows to extract profit and repay the loan. It requires understanding protocol-specific tokenomics and callback sequencing, but the PoC is still relatively short and self-contained rather than deeply complex."
+}

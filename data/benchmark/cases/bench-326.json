@@ -1,0 +1,23 @@
+{
+  "id": "bench-326",
+  "name": "LW",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240708-lw---integer-underflow",
+  "chain": "bsc",
+  "block_number": 40287545,
+  "attack_txs": [
+    "0x96a955304fed48a8fbfb1396ec7658e7dc42b7c140298b80ce4206df34f40e8d"
+  ],
+  "vulnerable_address": "0xABC6e5a63689b8542dbDC4b4f39a7e00d4AC30c8",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "LW.sol",
+  "function": "transferFrom",
+  "type": "accounting-error",
+  "attacker_profit": 7208.2918740197665,
+  "source_case_id": "dfhl-0466",
+  "fix_description": "In transferFrom, _transfer is executed before the allowance check, and the allowance subtraction uses raw minus without SafeMath (Solidity 0.7.6 has no auto overflow check). If allowance < amount, the subtraction underflows to a huge number instead of reverting. Attacker can transferFrom without approval. Fix: use SafeMath for allowance subtraction, or check allowance >= amount before _transfer.",
+  "attack_date": "2024-07-08",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The PoC is more than a trivial single-bug exploit: it uses a flash swap, token price/accounting manipulation via repeated thanPrice/skim interactions, and understanding of a token\u2019s custom receive/swap behavior plus LP mechanics. However, the attack path is still fairly short and self-contained, without deep cross-protocol state reasoning or highly complex math, so it fits medium rather than hard."
+}

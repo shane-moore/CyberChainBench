@@ -1,0 +1,23 @@
+{
+  "id": "bench-446",
+  "name": "Grizzifi",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250813-grizzifi---logic-flaw",
+  "chain": "bsc",
+  "block_number": 57482647,
+  "attack_txs": [
+    "0xdb5296b19693c3c5032abe5c385a4f0cd14e863f3d44f018c1ed318fa20058f7"
+  ],
+  "vulnerable_address": "0x21ab8943380B752306aBF4D49C203B011A89266B",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Grizzifi.sol",
+  "function": "_incrementUplineTeamCount",
+  "type": "accounting-error",
+  "attacker_profit": 48425.74534346222,
+  "source_case_id": "dfhl-0604",
+  "fix_description": "In _incrementUplineTeamCount, the milestone check uses totalInvested which includes already-withdrawn amounts. Attacker can invest/withdraw repeatedly to inflate totalInvested and trigger milestone rewards. Fix by using active (current) investment balance instead of cumulative totalInvested for milestone eligibility.",
+  "attack_date": "2025-08-13",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a straightforward referral/accounting abuse with a simple repeated pattern: deploy helper contracts, make small deposits with chained referrers, then collect referral bonuses. It does not require flash loans, pricing logic, or deep protocol internals, and the PoC is short with obvious exploitation steps despite being repeated across 30 contracts."
+}

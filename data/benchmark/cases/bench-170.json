@@ -1,0 +1,23 @@
+{
+  "id": "bench-170",
+  "name": "USDTStakingContract28",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230715-usdtstakingcontract28---lack-of-access-control",
+  "chain": "ethereum",
+  "block_number": 17696563,
+  "attack_txs": [
+    "0xfc872bf5ca8f04b18b82041ec563e4abf2e31e1fc27d1ea5dee39bc8a79d2d06"
+  ],
+  "vulnerable_address": "0x800cfD4A2ba8CE93eA2cc814Fce26c3635169017",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "BUSD staking.sol",
+  "function": "tokenAllowAll",
+  "type": "access-control",
+  "attacker_profit": 20930.23716858639,
+  "source_case_id": "dfhl-0290",
+  "fix_description": "Add onlyOwner modifier to tokenAllowAll(). The function is public with no access control, allowing anyone to approve unlimited token spending from the contract to any address, enabling direct theft of all deposited tokens.",
+  "attack_date": "2023-07-15",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very straightforward arbitrary-approval exploit: the attacker calls a publicly accessible function to approve themselves for all USDT held by the staking contract, then immediately drains it with transferFrom. It is a simple two-step attack with no complex DeFi mechanics, flash loans, or protocol-specific setup."
+}

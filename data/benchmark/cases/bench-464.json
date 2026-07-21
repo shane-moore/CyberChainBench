@@ -1,0 +1,23 @@
+{
+  "id": "bench-464",
+  "name": "BankrollNetwork",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250619-bankrollnetwork---incorrect-dividends-calculation",
+  "chain": "bsc",
+  "block_number": 51715418,
+  "attack_txs": [
+    "0x7226b3947c7e8651982e5bd777bca52d03ea31d19b515dec123595a4435ae22c"
+  ],
+  "vulnerable_address": "0xAdEfb902CaB716B8043c5231ae9A50b8b4eE7c4e",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "BankrollNetworkStack.sol",
+  "function": "distribute",
+  "type": "accounting-error",
+  "attacker_profit": 15803.092404393616,
+  "source_case_id": "dfhl-0623",
+  "fix_description": "In distribute, profit is calculated as share * timeDelta with no cap on timeDelta. After long inactivity, a single deposit triggers massive dividend distribution. Fix by capping timeDelta to distributionInterval, or setting lastPayout = now when no tokens are staked.",
+  "attack_date": "2025-06-19",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The exploit is a very short flash-loan-funded logic abuse with only a few external interactions: flash borrow, buy, repeatedly call buyFor with the vulnerable contract as recipient, then sell and withdraw. Although it uses a DeFi primitive (flash loan), the core bug appears straightforward and the PoC is compact and easy for an experienced auditor to reproduce quickly."
+}

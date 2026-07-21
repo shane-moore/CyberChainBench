@@ -1,0 +1,23 @@
+{
+  "id": "bench-155",
+  "name": "NeutraFinance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230801-neutrafinance---price-manipulation",
+  "chain": "arbitrum",
+  "block_number": 117189139,
+  "attack_txs": [
+    "0x6301d4c9f7ac1c96a65e83be6ea2fff5000f0b1939ad24955e40890bd9fe6122"
+  ],
+  "vulnerable_address": "0xdbd3d6040f87A9F822839Cb31195Ad25C2D0D54d",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Convert.sol",
+  "function": "getAmountOut",
+  "type": "price-manipulation",
+  "attacker_profit": 43323.657895458666,
+  "source_case_id": "dfhl-0275",
+  "fix_description": "In getAmountOut(), do not use spot reserves from AMM pools to calculate conversion rate. Use TWAP oracle or Chainlink price feeds to determine the fair exchange rate between the two LP tokens, preventing flash-loan manipulation of pool reserves.",
+  "attack_date": "2023-08-01",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a multi-step DeFi exploit involving a Balancer flash loan, Camelot swaps/addLiquidity, interaction with a protocol-specific convert contract, and LP burn/unwind logic. While not extremely long or cross-transactional, it requires understanding protocol-specific accounting and coordinated price/liquidity manipulation beyond a simple bug pattern."
+}

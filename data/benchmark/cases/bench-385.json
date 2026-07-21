@@ -1,0 +1,22 @@
+{
+  "id": "bench-385",
+  "name": "CGT",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240323-cgt---incorrect-access-control",
+  "chain": "ethereum",
+  "block_number": 19498911,
+  "attack_txs": [
+    "0x4ff4028b03c3df468197358b99f5160e5709e7fce3884cc8ce818856d058e106"
+  ],
+  "vulnerable_address": "0x579A3244f38112b8AAbefcE0227555C9b6e7aaF0",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x3c278bd5",
+  "type": "input-validation",
+  "attacker_profit": 190114.691788563,
+  "source_case_id": "dfhl-0531",
+  "fix_description": "In lift (0x3c278bd5), the function accepts any address whose vote count exceeds the current chief without validating how the votes were obtained. The etch/vote functions allow unrestricted vote inflation. Add validation that votes come from legitimate token holders or restrict the etch function.",
+  "attack_date": "2024-03-23",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is conceptually straightforward once identified: gain governance control with a small token lock, schedule/execute a malicious spell via zero-delay pause, then mint/drain assets and swap them out. However, writing the PoC requires understanding Maker-style governance components (DSChief/DSPause/Vat/Join), crafting the spell payload, and coordinating multiple protocol interactions and liquidation swaps across several routers/tokens."
+}

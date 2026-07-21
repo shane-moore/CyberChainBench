@@ -1,0 +1,31 @@
+{
+  "id": "bench-157",
+  "name": "Curve",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230730-curve---vyper-compiler-bug--reentrancy",
+  "chain": "ethereum",
+  "block_number": 17806056,
+  "attack_txs": [
+    "0xa84aa065ce61dbb1eb50ab6ae67fc31a9da50dd2c74eefd561661bfce2f1620c"
+  ],
+  "vulnerable_address": "0x6326debbaa15bcfe603d831e7d75f4fc10d9b43e",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x9848482da3ee3076165ce6497eda906e66bb85c5",
+  "file": "Vyper_contract.sol",
+  "function": "remove_liquidity",
+  "type": "reentrancy",
+  "attacker_profit": 11443250.328066712,
+  "source_case_id": "dfhl-0278",
+  "fix_description": "The Vyper compiler (0.2.15/0.2.16/0.3.0) has a bug where the @nonreentrant decorator does not correctly protect against reentrancy. During remove_liquidity, ETH is sent to the caller before the pool state is fully updated. Fix: upgrade the Vyper compiler to a patched version where @nonreentrant works correctly, or manually implement a reentrancy lock in storage.",
+  "normal_txs": [
+    "0xac7545ae71e4b70ae720e2f0b5f94951331bd1304eef98dc47c709ce31f35823",
+    "0x132d90663794716fcbc5e5b5bfcfcb8a8735140aedea885478c6d88d1ebddada",
+    "0x573d18c8dc9767db9d284806b065c4a9fab3c8639f9968c87019a633283d5aee",
+    "0xe40caa743af6cfc65fa99bd59541effd49f9d2521a9155cd71b2c4f5b84ddd47",
+    "0xa140d0e01c37d74ad10af978fe90dc0a7f819e50bf1f8e6d536a40da5119b942"
+  ],
+  "attack_date": "2023-07-30",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This PoC requires chaining multiple lending venues and DeFi primitives\u2014Balancer flash loan, Aave V2/V3 borrowing, Compound collateralization, and several Curve 3pool liquidity transformations\u2014before exploiting the burner\u2019s missing slippage protection. Writing it demands deep protocol-specific understanding of liquidity imbalance effects and cross-protocol capital sourcing, well beyond a straightforward single-bug exploit."
+}

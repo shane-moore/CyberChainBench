@@ -1,0 +1,23 @@
+{
+  "id": "bench-231",
+  "name": "SushiSwap",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230409-sushiswap---unchecked-user-input",
+  "chain": "ethereum",
+  "block_number": 17007842,
+  "attack_txs": [
+    "0x04b166e7b4ab5105a8e9c85f08f6346de1c66368687215b0e0b58d6e5002bc32"
+  ],
+  "vulnerable_address": "0x044b75f554b886A065b9567891e45c79542d7357",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "RouteProcessor2.sol",
+  "function": "swapUniV3",
+  "type": "input-validation",
+  "attacker_profit": 1258863.7317,
+  "source_case_id": "dfhl-0356",
+  "fix_description": "In swapUniV3, the pool address is read from user-controlled stream data without verifying it was deployed by the canonical UniswapV3Factory. Attacker passes a malicious contract as pool, which calls uniswapV3SwapCallback and passes the msg.sender==lastCalledPool check, then steals tokens via safeTransferFrom. Fix: verify pool = UniswapV3Factory.getPool(token0, token1, fee) before calling swap.",
+  "attack_date": "2023-04-09",
+  "difficulty": "unknown",
+  "difficulty_reasoning": "No matching PoC file found for automated labeling."
+}

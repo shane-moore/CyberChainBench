@@ -1,0 +1,31 @@
+{
+  "id": "bench-31",
+  "name": "Omni NFT",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220710-omni-nft---reentrancy",
+  "chain": "ethereum",
+  "block_number": 15114362,
+  "attack_txs": [
+    "0x05d65e0adddc5d9ccfe6cd65be4a7899ebcb6e5ec7a39787971bcc3d6ba73996"
+  ],
+  "vulnerable_address": "0x50c7a557d408a5f5a7fdbe1091831728ae7eba45",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0xebe72cdafebc1abf26517dd64b28762df77912a9",
+  "file": "SupplyLogic.sol",
+  "function": "executeWithdrawERC721",
+  "type": "reentrancy",
+  "attacker_profit": 172454.42858279677,
+  "source_case_id": "dfhl-0136",
+  "fix_description": "In executeWithdrawERC721, the NToken.burn() call (which triggers safeTransferFrom \u2192 onERC721Received callback) happens before validateHFAndLtv health factor check. Fix: add nonReentrant modifier to executeWithdrawERC721 and liquidationERC721, or move the burn (external call) after all state validation to follow checks-effects-interactions pattern.",
+  "normal_txs": [
+    "0x264e16f4862d182a6a0b74977df28a85747b6f237b5e229c9a5bbacdf499ccb4",
+    "0x531fe482c8599134c02a939844f4283c1f81f4c277472a9f87f0e3cde06e2f50",
+    "0xf2b3e47e6da30eba3b02e29be6bab40220348d4890ebea40161ff168b27c02bc",
+    "0x4efcf8016bf521ccccfc44b72c0ee7998d878ce131b64aecd75006614f1e0e06",
+    "0xb7c7149d2fbac788c7e64dd95503dcfae6491d47c082c2a60b77958722f3f56c"
+  ],
+  "attack_date": "2022-07-10",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This PoC is a long, protocol-specific multi-contract attack involving a Balancer flash loan, an NFTX flash loan, NFT redeem/mint flows, Omnibridge-style NFT collateral lending, liquidation logic, and ERC721 callback-driven state manipulation. Understanding and reproducing it requires deep reasoning about cross-contract accounting and callback timing, well beyond a straightforward exploit pattern."
+}

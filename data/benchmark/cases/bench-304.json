@@ -1,0 +1,22 @@
+{
+  "id": "bench-304",
+  "name": "INUMI",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240911-inumi---access-control",
+  "chain": "ethereum",
+  "block_number": 20729549,
+  "attack_txs": [
+    "0xbeef352f716973043236f73dd5104b9d905fd04b7fc58d9958ac5462e7e3dbc1"
+  ],
+  "vulnerable_address": "0xdb27d4ff4be1cd04c34a7cb6f47402c37cb73459",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x5d098b38",
+  "type": "access-control",
+  "attacker_profit": 11651.273944999819,
+  "source_case_id": "dfhl-0439",
+  "fix_description": "In setMarketingWallet (0x5d098b38), there is no msg.sender validation. Anyone can change the marketing wallet address to receive token fees. Add require(msg.sender == owner) before updating storage[0x08].",
+  "attack_date": "2024-09-11",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very straightforward two-step exploit: the attacker sets a privileged wallet address and then calls a fund-withdrawal function. It matches an obvious missing access control pattern, requires no DeFi-specific knowledge, and the PoC is very short with minimal contract interaction."
+}

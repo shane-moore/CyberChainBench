@@ -1,0 +1,97 @@
+[
+  {
+    "slug": "euler",
+    "label": "Euler Finance",
+    "chain": "ethereum",
+    "urls": [
+      "https://www.euler.finance/blog/war-peace-behind-the-scenes-of-eulers-240m-exploit-recovery"
+    ]
+  },
+  {
+    "slug": "pancakebunny",
+    "label": "PancakeBunny",
+    "chain": "bsc",
+    "urls": [
+      "https://rekt.news/pancakebunny-rekt/"
+    ]
+  },
+  {
+    "slug": "beanstalk",
+    "label": "Beanstalk",
+    "chain": "ethereum",
+    "urls": [
+      "https://rekt.news/beanstalk-rekt/"
+    ]
+  },
+  {
+    "slug": "curve-finance",
+    "label": "Curve Finance",
+    "chain": "ethereum",
+    "urls": [
+      "https://rekt.news/curve-finance-rekt/"
+    ]
+  },
+  {
+    "slug": "kyberswap",
+    "label": "KyberSwap",
+    "chain": "ethereum",
+    "urls": [
+      "https://rekt.news/kyberswap-rekt/"
+    ]
+  },
+  {
+    "slug": "cream",
+    "label": "Cream",
+    "chain": "ethereum",
+    "urls": [
+      "https://rekt.news/cream-rekt/"
+    ]
+  },
+  {
+    "slug": "transit-swap",
+    "label": "Transit Swap",
+    "chain": "bsc",
+    "urls": [
+      "https://rekt.news/transit-swap-rekt/"
+    ]
+  },
+  {
+    "slug": "inverse-finance",
+    "label": "Inverse Finance",
+    "chain": "ethereum",
+    "urls": [
+      "https://rekt.news/inverse-finance-rekt/"
+    ]
+  },
+  {
+    "slug": "pickle-finance",
+    "label": "Pickle Finance",
+    "chain": "ethereum",
+    "urls": [
+      "https://rekt.news/pickle-finance-rekt/"
+    ]
+  },
+  {
+    "slug": "harvest-finance",
+    "label": "Harvest Finance",
+    "chain": "ethereum",
+    "urls": [
+      "https://rekt.news/harvest-finance-rekt/"
+    ]
+  },
+  {
+    "slug": "fei-rari",
+    "label": "Fei Rari",
+    "chain": "ethereum",
+    "urls": [
+      "https://rekt.news/fei-rari-rekt/"
+    ]
+  },
+  {
+    "slug": "midas-capital",
+    "label": "Midas Capital",
+    "urls": [
+      "https://rekt.news/midas-capital-rekt/"
+    ]
+  }
+]

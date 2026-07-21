@@ -1,0 +1,23 @@
+{
+  "id": "bench-461",
+  "name": "Gangsterfinance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250620-gangsterfinance---incorrect-dividends",
+  "chain": "bsc",
+  "block_number": 51782713,
+  "attack_txs": [
+    "0xf34e59e4fe2c9b454d2b73a1a3f3aaf07d484a0c71ff8278b1c068cdedc4b64d"
+  ],
+  "vulnerable_address": "0xe968d2e4adc89609773571301abec3399d163c3b",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "TokenVault.sol",
+  "function": "distribute",
+  "type": "accounting-error",
+  "attacker_profit": 16280.568153185699,
+  "source_case_id": "dfhl-0621",
+  "fix_description": "In distribute, profit is calculated as share * timeDelta with no cap on timeDelta. After a long period of inactivity, a single deposit triggers a massive profit distribution. Fix by capping the maximum timeDelta used in the calculation, or distributing incrementally rather than accumulating unbounded.",
+  "attack_date": "2025-06-20",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is a short, single-transaction flash-swap exploit with only a few straightforward protocol interactions: donate, deposit, resolve, and harvest. It requires some vault-specific reading, but the attack flow is simple and compact, with no complex math, routing, or multi-protocol state reasoning."
+}

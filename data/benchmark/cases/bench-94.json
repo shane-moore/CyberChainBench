@@ -1,0 +1,22 @@
+{
+  "id": "bench-94",
+  "name": "Token8633_9419",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231117-token8633_9419---price-manipulation",
+  "chain": "bsc",
+  "block_number": 33545075,
+  "attack_txs": [
+    "0xf6ec3c22b718c3da17746416992bac7b65a4ef42ccf5b43cf0716c82bffc2844"
+  ],
+  "vulnerable_address": "0x86335cb69e4e28fad231dae3e206ce90849a5477",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x5525de2a",
+  "type": "accounting-error",
+  "attacker_profit": 26161.782489948917,
+  "source_case_id": "dfhl-0212",
+  "fix_description": "In func_25EA, the function unconditionally calls external contract autoSwapAndAddToMarketing() during every transfer when storage[0x26] is set. This allows repeated price manipulation via transfers. Add cooldown, minimum threshold, or remove the auto-swap trigger from the transfer path.",
+  "attack_date": "2023-11-17",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This PoC is a long, highly protocol-specific multi-step exploit involving a flash loan, repeated helper contract calls in large loops, pair manipulation, low-level external calls, and coordinated state changes across several contracts. Understanding why 130 iterations of autoAddLp and 900 iterations of autoSwapAndAddToMarketing create profit would require deep reasoning about the token/helper internals and AMM accounting, which pushes it well beyond a straightforward auditor write-up."
+}

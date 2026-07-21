@@ -1,0 +1,23 @@
+{
+  "id": "bench-443",
+  "name": "d3xai",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250816-d3xai---price-manipulation",
+  "chain": "bsc",
+  "block_number": 57780985,
+  "attack_txs": [
+    "0x26bcefc152d8cd49f4bb13a9f8a6846be887d7075bc81fa07aa8c0019bd6591f"
+  ],
+  "vulnerable_address": "0x94ddcd7253ac864ec77a2ddc2be4b2418ed17c9d",
+  "has_public_source": false,
+  "fixable": true,
+  "proxy_address": "0xb8ad82c4771daa852ddf00b70ba4be57d22edd99",
+  "function": "0x969e3756",
+  "type": "price-manipulation",
+  "attacker_profit": 158533.91702466505,
+  "source_case_id": "dfhl-0599",
+  "fix_description": "The exchange function (0x969e3756) uses LP pool spot price for quoting, which can be manipulated via flash loans. Replace with TWAP oracle or add flash loan protection (e.g., check that pool reserves have not changed in the same block).",
+  "attack_date": "2025-08-16",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a multi-step flash-loan attack involving protocol-specific mispricing in a proxy exchange plus repeated buys/sells across helper contracts and Pancake swaps, so it requires understanding the target flow rather than spotting a trivial bug. While the root cause is conceptually simple (buy low/sell high), the exploit chain is fairly involved with many coordinated calls and setup contracts, putting it beyond an easy case."
+}

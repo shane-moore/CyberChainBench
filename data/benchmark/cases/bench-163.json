@@ -1,0 +1,23 @@
+{
+  "id": "bench-163",
+  "name": "Conic Finance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230721-conic-finance---read-only-reentrancy--misconfiguration",
+  "chain": "ethereum",
+  "block_number": 17740955,
+  "attack_txs": [
+    "0x8b74995d1d61d3d7547575649136b8765acb22882960f0636941c44ec7bbe146"
+  ],
+  "vulnerable_address": "0xbb787d6243a8d450659e09ea6fd82f1c859691e9",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "ConicEthPool.sol",
+  "function": "handleDepeggedCurvePool",
+  "type": "reentrancy",
+  "attacker_profit": 3252066.444912509,
+  "source_case_id": "dfhl-0283",
+  "fix_description": "Protect handleDepeggedCurvePool against read-only reentrancy. Check that the Curve pool is not in the middle of a state-changing operation (e.g. verify pool reentrancy lock status) before reading its price. Alternatively, use a cached/TWAP price that cannot be manipulated by mid-transaction state inconsistency.",
+  "attack_date": "2023-07-21",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This PoC uses a sophisticated multi-stage attack chain with nested Aave v2/v3 and Balancer flash loans, repeated pool state manipulation, and three separate read-only reentrancy entry points across Curve/Conic interactions. Exploiting it requires deep understanding of Conic\u2019s depeg handling, oracle pricing during liquidity removal callbacks, and cross-protocol state timing, which is well beyond a straightforward auditor write-up."
+}

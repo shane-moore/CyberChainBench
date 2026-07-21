@@ -1,0 +1,32 @@
+{
+  "id": "bench-409",
+  "name": "- Lodestar",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221211---lodestar---flashloan-price-manipulation",
+  "chain": "arbitrum",
+  "block_number": 45121904,
+  "attack_txs": [
+    "0xc523c6307b025ebd9aef155ba792d1ba18d5d83f97c7a846f267d3d9a3004e8c"
+  ],
+  "vulnerable_address": "0x4eb611232ce3a738d9ee20467a5dd2ecf3b2d919",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0xcc25dac54a1a62061b596fd3baf7d454f34c56ff",
+  "file": "CToken.sol",
+  "function": "exchangeRateStoredInternal",
+  "type": "price-manipulation",
+  "attacker_profit": 4273369.71590623,
+  "source_case_id": "dfhl-0060",
+  "fix_description": "The GLPOracle derives plvGLP price from GlpDepositor.totalAssets(), which can be inflated via the public donate() function. Attacker flash loans funds, donates to inflate totalAssets, oracle reports inflated plvGLP price, attacker borrows against overvalued collateral. Fix: use a manipulation-resistant price source for plvGLP (e.g., TWAP or exclude donated assets from price calculation).",
+  "notes": "vulnerable_address and function may be incorrect. The actual bug is in the GLPOracle contract (separate from CToken), whose getUnderlyingPrice reads GlpDepositor.totalAssets() which can be inflated via donate(). The CToken exchangeRateStoredInternal is not the root cause.",
+  "normal_txs": [
+    "0xe19d744a6f2eefd49ff6f61d9aac615663f935c0aca985a21bec58afbb8e3fe7",
+    "0x228248d5f468fe19bd74d7754d8ae8665fbd40bebd981d48d206f6cbf29ccdbf",
+    "0x114cf4d1cc7f43a2868389eff4599b831faedab2f8980ac961f18397a704901c",
+    "0x386fb804254abf819d772fd19c89cf7f9efbd478096e024a4bccad3d87612ee5",
+    "0x36912888f1deb18bc4a5ccd9637e8cd532559b5266b2325f52afc183b842eec2"
+  ],
+  "attack_date": "2022-12-11",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This PoC is a long multi-stage attack chain involving several nested flash loans, Uniswap V2/V3 callbacks, GMX GLP minting, plvGLP price manipulation via donate, and then borrowing across multiple Lodestar markets. Writing it requires deep protocol-specific understanding of Lodestar collateral accounting and GLP/plvGLP mechanics, well beyond a straightforward exploit."
+}

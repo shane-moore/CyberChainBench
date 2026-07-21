@@ -1,0 +1,23 @@
+{
+  "id": "bench-289",
+  "name": "SASHAToken",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20241006-sashatoken---price-manipulation",
+  "chain": "ethereum",
+  "block_number": 20905302,
+  "attack_txs": [
+    "0xd9fdc7d03eec28fc2453c5fa68eff82d4c297f436a6a5470c54ca3aecd2db17e"
+  ],
+  "vulnerable_address": "0xD1456D1b9CEb59abD4423a49D40942a9485CeEF6",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "SASHA.sol",
+  "function": "swapTokensForEth",
+  "type": "price-manipulation",
+  "attacker_profit": 600080.7061029321,
+  "source_case_id": "dfhl-0423",
+  "fix_description": "swapTokensForEth calls swapExactTokensForETHSupportingFeeOnTransferTokens with amountOutMin=0 (no slippage protection). Anyone can sandwich the swapBack triggered during _transfer to extract value. Fix: use TWAP or oracle-based minimum output, not 0.",
+  "attack_date": "2024-10-06",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is a very short, direct attack flow with only a few calls: buy the token on Uniswap V2, transfer tokens to the V2 pair, then dump via Uniswap V3 for profit. It does not require flash loans, deep protocol-specific state reasoning, or a long multi-contract exploit chain, so an experienced auditor could reproduce it quickly once the token/pool flaw is identified."
+}

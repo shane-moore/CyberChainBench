@@ -1,0 +1,23 @@
+{
+  "id": "bench-404",
+  "name": "GAIN",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240221-gain---bad-function-implementation",
+  "chain": "ethereum",
+  "block_number": 19277620,
+  "attack_txs": [
+    "0x7acc896b8d82874c67127ff3359d7437a15fdb4229ed83da00da1f4d8370764e"
+  ],
+  "vulnerable_address": "0xdE59b88abEFA5e6C8aA6D742EeE0f887Dab136ac",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "GAIN.sol",
+  "function": "_transferFrom",
+  "type": "accounting-error",
+  "attacker_profit": 18652.55482247009,
+  "source_case_id": "dfhl-0552",
+  "fix_description": "In _transferFrom, do not trigger _snap() (rebase) during a transfer. The rebase changes _gonsPerFragment mid-transfer, causing inconsistency between the deducted amount (calculated before rebase) and the received amount (calculated after rebase). Move rebase logic to a separate function that cannot be triggered within a transfer.",
+  "attack_date": "2024-02-21",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This is a protocol-specific multi-step AMM reserve-manipulation exploit: flash borrow WETH, interact with a thin Uniswap V2 pair using swap/skim/sync in sequence, then drain mispriced WETH and repay. The PoC is short, but understanding why the skim/sync sequence breaks GAIN/WETH accounting requires more than spotting a trivial bug, so it is above easy but not deeply complex."
+}

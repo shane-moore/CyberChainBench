@@ -1,0 +1,25 @@
+{
+  "id": "bench-570",
+  "name": "FireToken",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20241001-firetoken---pair-manipulation-with-transfer-function",
+  "chain": "ethereum",
+  "block_number": 20869375,
+  "attack_txs": [
+    "0xd20b3b31a682322eb0698ecd67a6d8a040ccea653ba429ec73e3584fa176ff2b"
+  ],
+  "vulnerable_address": "0x18775475f50557b96C63E8bbf7D75bFeB412082D",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": null,
+  "file": "FireToken.sol",
+  "function": "_transfer(address,address,uint256)",
+  "type": "price-manipulation",
+  "attacker_profit": 22341.22,
+  "source_case_id": "draft-292",
+  "fix_description": "Remove the code that burns tokens directly from the LP pair balance and calls sync() during sell transfers. This mechanism (lines 266-277) directly manipulates pair reserves on every sell, creating a self-reinforcing price inflation that attackers exploit via repeated small sells followed by a final large sell at the inflated price.",
+  "normal_txs": [],
+  "attack_date": "2024-10-01",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is more than a trivial single-bug abuse: it uses an Aave flash loan, Uniswap V2 swap/reserve manipulation logic, and a constructor-based contract creation trick to bypass the token\u2019s anti-contract transfer check. While the core bug is understandable once identified, reproducing the full attack requires protocol-specific reasoning across multiple contracts and several ordered steps."
+}

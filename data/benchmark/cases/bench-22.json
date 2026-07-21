@@ -1,0 +1,25 @@
+{
+  "id": "bench-22",
+  "name": "ANCH",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220809-anch---skim-token-balance",
+  "chain": "bsc",
+  "block_number": 20302535,
+  "attack_txs": [
+    "0xf68ba761158dd37a7cb5a12a688364998c41a38e3a400ad9ad2a08c59067ed30"
+  ],
+  "vulnerable_address": "0xA4f5d4aFd6b9226b3004dD276A9F778EB75f2e9e",
+  "has_public_source": true,
+  "fixable": false,
+  "proxy_address": "",
+  "file": "ANCHToken.sol",
+  "function": "_transfer",
+  "type": "input-validation",
+  "attacker_profit": 575.4006187963217,
+  "source_case_id": "dfhl-0127",
+  "normal_txs": [],
+  "fix_description": "Add require(sender != recipient) in _transfer to reject self-transfers. This blocks the Pair.skim(address(Pair)) loop: each skim triggers _transfer with sender==recipient==Pair, which would cancel out the main transfer but still grant bonus rewards from the contract balance, inflating Pair.balanceOf above reserves. After 60 iterations the attacker drains the surplus via skim(attacker).",
+  "attack_date": "2022-08-09",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is a short flash-loan-driven price/manipulation attack that requires understanding the vulnerable token/pair interaction, specifically how repeated skim calls can amplify balance distortions before swapping back for profit. While the PoC is compact, it is not a trivial access-control bug and needs protocol-specific reasoning about AMM reserve/accounting behavior and fee-on-transfer token mechanics."
+}

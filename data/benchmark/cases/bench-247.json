@@ -1,0 +1,27 @@
+{
+  "id": "bench-247",
+  "name": "- Dexible",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230217---dexible---arbitrary-external-call-vulnerability",
+  "chain": "ethereum",
+  "block_number": 16646023,
+  "attack_txs": [
+    "0x138daa4cbeaa3db42eefcec26e234fc2c89a4aa17d6b1870fc460b2856fd11a6"
+  ],
+  "vulnerable_address": "0x33e690aea97e4ef25f0d140f1bf044d663091daf",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0xde62e1b0edaa55aac5ffbe21984d321706418024",
+  "file": "SwapHandler.sol",
+  "function": "fill",
+  "type": "reentrancy",
+  "attacker_profit": 490418.67746534484,
+  "source_case_id": "dfhl-0374",
+  "fix_description": "Add reentrancy guard (nonReentrant modifier) to fill, or follow checks-effects-interactions pattern to update state before making external calls.",
+  "normal_txs": [
+    "0xb3cfbd40752c149761d105890f40d860a4366a819add6f5414db9bc474cc6481"
+  ],
+  "attack_date": "2023-02-17",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very straightforward arbitrary call / missing validation exploit: the attacker crafts routerData so Dexible executes a token transferFrom against a victim who had approved the protocol. The PoC is short, single-transaction, uses no flash loans or complex DeFi mechanics, and only requires understanding that user-controlled router/target data can abuse existing allowances."
+}

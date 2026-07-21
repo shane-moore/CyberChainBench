@@ -1,0 +1,22 @@
+{
+  "id": "bench-442",
+  "name": "0x8d2e",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250820-0x8d2e---access-control",
+  "chain": "base",
+  "block_number": 34459414,
+  "attack_txs": [
+    "0x6be0c4b5414883a933639c136971026977df4737b061f864a4a04e4bd7f07106"
+  ],
+  "vulnerable_address": "0x8d2Ef0d39A438C3601112AE21701819E13c41288",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0xfa461e33",
+  "type": "access-control",
+  "attacker_profit": 39430.0299596528,
+  "source_case_id": "dfhl-0598",
+  "fix_description": "In uniswapV3SwapCallback (0xfa461e33), no validation that msg.sender is a legitimate Uniswap V3 pool. Any caller can invoke this callback and trigger token transfers. Add pool address verification.",
+  "attack_date": "2025-08-20",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a single-call exploit of an obvious missing access control issue in a Uniswap V3 callback function. The PoC is very short, requires no DeFi-specific routing or flash-loan setup, and a competent auditor could reproduce it quickly."
+}

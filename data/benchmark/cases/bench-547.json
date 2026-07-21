@@ -1,0 +1,31 @@
+{
+  "id": "bench-547",
+  "name": "HPAY",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221018-hpay---access-control",
+  "chain": "bsc",
+  "block_number": 22281159,
+  "attack_txs": [
+    "0x6a3a667e07f422a6cba196a22f34ae532b98aaa67b2bb0f696a0eafb3922307d"
+  ],
+  "vulnerable_address": "0xe9bc03ef08e991a99f1bd095a8590499931dcc30",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0xf8bc1434f3c5a7af0be18c00c675f7b034a002f0",
+  "file": "MintableAutoCompundRelockBonus.sol",
+  "function": "setToken",
+  "type": "access-control",
+  "attacker_profit": 552.770948537947,
+  "source_case_id": "dfhl-0094",
+  "fix_description": "Add onlyOwner modifier to setToken(). Currently anyone can call it to change the staking and rewards token addresses to a malicious token, then drain the contract funds.",
+  "normal_txs": [
+    "0x8c2e261f949696b00f98bb5382466396eed98b3d33d52a6cc76b0bfed97b2972",
+    "0xe3c6c92506ac609151d0ca559dda2c2f29603acb7614a3425f324b899f17dcf5",
+    "0x4422be2fd8dd3c2668e308992b410bfbcc1c989e26c593a13b6a970a3926890e",
+    "0x30327915fd400b288136df4c7c34cd36b9b50f560e90b5e00597c74588ab6876",
+    "0x6e7738ba9260069eaeea962e879f9f8b5d9bc9c851eb0495bc4b31f8d8634f1e"
+  ],
+  "attack_date": "2022-10-18",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The exploit is a straightforward logic flaw: the attacker can call an unprotected token configuration function, point the staking contract to a self-minted fake token, stake arbitrary amounts, wait, then switch back to the real reward token and withdraw. It requires only a few simple steps, no flash loans or deep DeFi mechanics, and the PoC is short and direct."
+}

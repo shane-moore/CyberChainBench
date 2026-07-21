@@ -1,0 +1,23 @@
+{
+  "id": "bench-417",
+  "name": "PeapodsFinance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240129-peapodsfinance---reentrancy",
+  "chain": "ethereum",
+  "block_number": 19109730,
+  "attack_txs": [
+    "0x95c1604789c93f41940a7fd9eca11276975a9a65d250b89a247736287dbd2b7e"
+  ],
+  "vulnerable_address": "0xdbB20A979a92ccCcE15229e41c9B082D5b5d7E31",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "DecentralizedIndex.sol",
+  "function": "flash",
+  "type": "reentrancy",
+  "attacker_profit": 199.65711021836523,
+  "source_case_id": "dfhl-0568",
+  "fix_description": "Add reentrancy guard (nonReentrant modifier) to flash, or follow checks-effects-interactions pattern to update state before making external calls.",
+  "attack_date": "2024-01-29",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The PoC is a short but multi-step DeFi exploit: a Uniswap V2 flash swap, a Uniswap V3 swap to manipulate token state/pricing, an interaction with a protocol-specific rewards function, then a swap back and loan repayment. It requires understanding how the target contract miscalculates value under manipulated conditions, so it is more than a trivial bug but not a deeply complex cross-protocol attack chain."
+}

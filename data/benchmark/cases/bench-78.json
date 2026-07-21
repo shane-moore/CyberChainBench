@@ -1,0 +1,23 @@
+{
+  "id": "bench-78",
+  "name": "BCT",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231209-bct---price-manipulation",
+  "chain": "bsc",
+  "block_number": 34204710,
+  "attack_txs": [
+    "0xdae0b85e01670e6b6b317657a72fb560fc388664cf8bfdd9e1b0ae88e0679103"
+  ],
+  "vulnerable_address": "0x70ca72bb4a1386439a2a51476f2335a31005ebe8",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Token.sol",
+  "function": "bindInviter",
+  "type": "input-validation",
+  "attacker_profit": 2449.605982516058,
+  "source_case_id": "dfhl-0196",
+  "fix_description": "In bindInviter, the inviter binding is triggered solely by transfer amount (10**15 or 5*10**14) without verifying the legitimacy of the inviter relationship. Fix: remove the amount-based binding mechanism, or add proper authorization (e.g., require a signed invitation or restrict binding to a dedicated function with access control).",
+  "attack_date": "2023-12-09",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This PoC involves a long, protocol-specific multi-step attack chain across several contracts and two transactions: setup of five helper contracts, flash borrowing, inviter-chain abuse, repeated reserve-based swaps/skims, and cross-pair manipulation. Understanding and reproducing it requires deep reasoning about custom token/inviter logic, AMM reserve math, and iterative state changes, which is well beyond a quick standard exploit pattern."
+}

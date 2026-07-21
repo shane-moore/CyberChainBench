@@ -1,0 +1,23 @@
+{
+  "id": "bench-52",
+  "name": "GYMNetwork",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220409-gymnetwork---flashloan--token-migrate-flaw",
+  "chain": "bsc",
+  "block_number": 16798807,
+  "attack_txs": [
+    "0xa5b0246f2f8d238bb56c0ddb500b04bbe0c30db650e06a41e00b6a0fff11a7e5"
+  ],
+  "vulnerable_address": "0x1BEfe6f3f0E8edd2D4D15Cae97BAEe01E51ea4A4",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "LpMigration.sol",
+  "function": "migrate",
+  "type": "price-manipulation",
+  "attacker_profit": 559365.4284640043,
+  "source_case_id": "dfhl-0160",
+  "fix_description": "In migrate, removeLiquidityETH and addLiquidityETH use 0 as minimum output amounts (no slippage protection). Attacker manipulates pool price before calling migrate, extracting value through the price difference. Fix: calculate and enforce reasonable minimum amounts based on oracle prices or TWAP.",
+  "attack_date": "2022-04-09",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is multi-step: take a flash loan, seed liquidity for a malicious fake token pair, repeatedly trigger the vulnerable router against multiple victim allowances, then unwind liquidity and repay. While the bug pattern is conceptually simple once understood, writing the PoC requires protocol-specific understanding of the router/liquidity flow and coordinating several external contract interactions."
+}

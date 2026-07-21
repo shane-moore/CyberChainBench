@@ -1,0 +1,30 @@
+{
+  "id": "bench-175",
+  "name": "Libertify",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230711-libertify---reentrancy",
+  "chain": "polygon",
+  "block_number": 44941585,
+  "attack_txs": [
+    "0x7320accea0ef1d7abca8100c82223533b624c82d3e8d445954731495d4388483"
+  ],
+  "vulnerable_address": "0x089d9868b58ef37d5804281e106d9b7e71a4d05f",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x9c80a455ecaca7025a45f5fa3b85fd6a462a447b",
+  "file": "LibertiVault.sol",
+  "function": "_deposit",
+  "type": "reentrancy",
+  "attacker_profit": 1444515.5529748246,
+  "source_case_id": "dfhl-0294",
+  "fix_description": "In _deposit, add reentrancy guard. External token interactions during deposit allow re-entry before share minting state is finalized.",
+  "normal_txs": [
+    "0xc6a2561bac8047f0495c91081a0e923fdca9dc9aa3b8081d2df9da637d86204e",
+    "0x61b1cb5a286a0e68b4251eecbc0c080db8e6eafd8746ee196c406ab8184f0161",
+    "0x253f3f881114f6b4c58d63080a9e36e46a0dd27896a2396339903c2be59de144",
+    "0x92a40656a56e2d48963610bbab9c0d02335208e86d680d517e2e9679e47d8c82"
+  ],
+  "attack_date": "2023-07-11",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit requires understanding a protocol-specific reentrancy in LibertiVault.deposit via a crafted 1inch aggregation callback, then using flash-loaned liquidity and repeated deposit/exit cycles to manipulate share minting and drain value. While the PoC is not very long, it involves multi-contract interaction (Aave, vault, 1inch, Uniswap) and non-obvious callback-based control flow rather than a simple standalone bug."
+}

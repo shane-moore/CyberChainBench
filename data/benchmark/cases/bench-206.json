@@ -1,0 +1,23 @@
+{
+  "id": "bench-206",
+  "name": "ERC20TokenBank",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230531-erc20tokenbank---price-manipulation",
+  "chain": "ethereum",
+  "block_number": 17376907,
+  "attack_txs": [
+    "0x578a195e05f04b19fd8af6358dc6407aa1add87c3167f053beb990d6b4735f26"
+  ],
+  "vulnerable_address": "0x765b8d7Cd8FF304f796f4B6fb1BCf78698333f6D",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "ExchangeBetweenPools.sol",
+  "function": "doExchange",
+  "type": "price-manipulation",
+  "attacker_profit": 109112.73498770969,
+  "source_case_id": "dfhl-0325",
+  "fix_description": "In doExchange, set a reasonable min_dy (minimum output amount) in curve.exchange_underlying instead of 0. Also add access control so only authorized callers can trigger the exchange. The current zero slippage protection allows sandwich attacks to extract value during the Curve swap.",
+  "attack_date": "2023-05-31",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This is a short PoC, but the exploit is not just a trivial single-call bug: it requires a flash loan, a Curve pool swap to set up state, invoking a protocol-specific vulnerable exchange function, then swapping back and repaying. An auditor would need to understand the victim contract\u2019s pool/accounting logic and the interaction with Curve pricing, which puts it above easy but below a deeply complex multi-contract attack."
+}

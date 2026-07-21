@@ -1,0 +1,31 @@
+{
+  "id": "bench-257",
+  "name": "Pickle Finance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2021/README.md#20201121-pickle-finance---insufficient-validation",
+  "chain": "ethereum",
+  "block_number": 11303123,
+  "attack_txs": [
+    "0xe72d4e7ba9b5af0cf2a8cfb1e30fd9f388df0ab3da79790be842bfbed11087b0"
+  ],
+  "vulnerable_address": "0x6186E99D9CFb05E1Fdf1b442178806E81da21dD8",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x6847259b2B3A4c17e7c43C54409810aF48bA5210",
+  "file": "curve.sol",
+  "function": "add_liquidity",
+  "type": "input-validation",
+  "attacker_profit": 15334932.4974528,
+  "source_case_id": "dfhl-0041",
+  "fix_description": "In CurveProxyLogic.add_liquidity(), validate that the curve parameter is a whitelisted Curve pool address and underlying is a known token. The function currently accepts arbitrary addresses for curve, curveFunctionSig, and underlying, allowing an attacker to inject arbitrary calls via delegatecall from the Controller. Additionally, swapExactJarForJar should validate that _fromJar and _toJar are registered Jars.",
+  "normal_txs": [
+    "0xcf9b6b4bd76dc1f7d9d41906339d274df5bdfe3a3f0c1113c11ed7fd79d35aa8",
+    "0xd7195d8d3568d0f4f81d65342a032263b9992680fc3a55bc1a63ec11d6fecfe8",
+    "0x2348d330f767c35a940e2506f8e65bc282fbc3f0f1ef4576a3691f2f23cd80a0",
+    "0x8ce0bcd34f3cc204078fcf7ebdb5b4fe460ead9a30bc60ef1b1026e44a6992bb",
+    "0x59645bd797f2d8f36a1d7c77590bf14287c34d0ac604fa9843069e815d6206f7"
+  ],
+  "attack_date": "2020-11-21",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a multi-step arbitrary-call abuse that requires understanding how the controller, jar, strategy, and curve logic interact, plus crafting fake jar/underlying contracts to redirect token flows. The PoC is not mathematically complex, but it is protocol-specific and involves several coordinated calls rather than a trivial single-function bug."
+}

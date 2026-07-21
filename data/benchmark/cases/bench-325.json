@@ -1,0 +1,22 @@
+{
+  "id": "bench-325",
+  "name": "GAX",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240711-gax---lack-of-access-control",
+  "chain": "bsc",
+  "block_number": 40375925,
+  "attack_txs": [
+    "0x368f842e79a10bb163d98353711be58431a7cd06098d6f4b6cbbcd4c77b53108"
+  ],
+  "vulnerable_address": "0xdb4b73df2f6de4afcd3a883efe8b7a4b0763822b",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x6c99d7c8",
+  "type": "input-validation",
+  "attacker_profit": 49019.3186400679,
+  "source_case_id": "dfhl-0465",
+  "fix_description": "Function 0x6c99d7c8 transfers tokens to msg.sender with user-supplied amount (arg1) without validating against any deposit/stake records. Any caller can pass an arbitrary amount and receive that many tokens. Fix: validate arg1 <= userStake[msg.sender] and deduct from balance.",
+  "attack_date": "2024-07-11",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is a one-step exploit consisting of a single low-level call with crafted calldata to drain BUSD from the vulnerable contract. It requires minimal protocol understanding, no flash loans or multi-contract interactions, and the exploit code is extremely short and straightforward."
+}

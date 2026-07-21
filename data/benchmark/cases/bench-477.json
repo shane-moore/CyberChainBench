@@ -1,0 +1,23 @@
+{
+  "id": "bench-477",
+  "name": "ImpermaxV3",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250426-impermaxv3---flashloan-price-oracle-manipulation",
+  "chain": "base",
+  "block_number": 29437439,
+  "attack_txs": [
+    "0xde903046b5cdf27a5391b771f41e645e9cc670b649f7b87b1524fc4076f45983"
+  ],
+  "vulnerable_address": "0xa68f6075ae62ebd514d1600cb5035fa0e2210ef8",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "TokenizedUniswapV3Position.sol",
+  "function": "reinvestFees",
+  "type": "accounting-error",
+  "attacker_profit": 62228.21069731256,
+  "source_case_id": "dfhl-0637",
+  "fix_description": "reinvestFees allows fee reinvestment into arbitrary price ranges even when the position has outstanding borrows. Attacker borrows against LP, then reinvests fees into extreme range to crash position value and trigger bad debt. Fix by requiring no outstanding borrows before reinvesting, or restricting the new price range to include current price.",
+  "attack_date": "2025-04-26",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This PoC is a long, protocol-specific multi-contract attack chain involving nested flash loans, Uniswap V3 LP position minting/reinvesting, repeated fee-generation swaps, Impermax collateral/borrow accounting abuse, bad-debt restructuring, and redemption manipulation. Writing it requires deep understanding of Impermax V3 internals plus Uniswap V3 position mechanics and state-dependent sequencing well beyond a straightforward flash-loan exploit."
+}

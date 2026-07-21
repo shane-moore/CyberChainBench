@@ -1,0 +1,22 @@
+{
+  "id": "bench-306",
+  "name": "AIRBTC_exp",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240911-airbtc_exp---access-control",
+  "chain": "bsc",
+  "block_number": 42157592,
+  "attack_txs": [
+    "0x00e4bbc86369d67e21b1910c4f9178c8257ce96192039a7839bd4d3593e1cd27"
+  ],
+  "vulnerable_address": "0x12050E4355a392162698C6cF30eB8c9e0777300d",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x008ea502",
+  "type": "input-validation",
+  "attacker_profit": 6779.644489349837,
+  "source_case_id": "dfhl-0441",
+  "fix_description": "Function 0x008ea502 takes (recordId, amount, recipient) and transfers contract-held tokens. It does not validate that msg.sender is the owner of the record (arg0). Anyone can pass any recordId and withdraw other users escrowed funds. Fix: add require(records[arg0].owner == msg.sender).",
+  "attack_date": "2024-09-11",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very short, direct exploit: it reads the vulnerable contract\u2019s token balance, invokes a single arbitrary/unsafe call on the target to transfer out funds, then swaps the stolen tokens on PancakeSwap. It requires little protocol-specific reasoning beyond recognizing a missing access control/arbitrary call pattern and uses only a couple of external interactions."
+}

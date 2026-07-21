@@ -1,0 +1,23 @@
+{
+  "id": "bench-498",
+  "name": "FourMeme",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250211-fourmeme---logic-flaw",
+  "chain": "bsc",
+  "block_number": 46555732,
+  "attack_txs": [
+    "0x2902f93a0e0e32893b6d5c907ee7bb5dabc459093efa6dbc6e6ba49f85c27f61"
+  ],
+  "vulnerable_address": "0xb28723a16d3347cdc0ce035eb1c1eb0b7406682f",
+  "has_public_source": false,
+  "fixable": true,
+  "proxy_address": "0x5c952063c7fc8610FFDB798152D69F0B9550762b",
+  "function": "0x55110640",
+  "type": "input-validation",
+  "attacker_profit": 13140.357362437653,
+  "source_case_id": "dfhl-0662",
+  "fix_description": "The migration function (0x55110640) uses createAndInitializePoolIfNecessary to create the PancakeSwap pool, but does not verify if the pool was already created and initialized by an attacker with a malicious price. Fix by checking if the pool already exists and if so, verify the current sqrtPriceX96 matches the expected migration price before adding liquidity.",
+  "attack_date": "2025-02-11",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is a multi-step protocol-specific attack: buy restricted meme tokens, pre-create a Pancake V3 pool with a maliciously skewed initial price, rely on the launchpad\u2019s migration/addLiquidity logic to seed that attacker-created pool, then swap out inflated WBNB. It requires understanding concentrated-liquidity pool initialization and the target protocol\u2019s migration flow, but the PoC itself is still fairly direct and not deeply complex."
+}

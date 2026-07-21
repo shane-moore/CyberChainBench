@@ -1,0 +1,25 @@
+{
+  "id": "bench-85",
+  "name": "bZxProtocol",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231202-bzxprotocol---inflation-attack",
+  "chain": "ethereum",
+  "block_number": 18695729,
+  "attack_txs": [
+    "0x0fc5c0d41e5506fdb9434fab4815a4ff671afc834e47a533b3bed7182ece73b0"
+  ],
+  "vulnerable_address": "0x624f7f89414011b276c60ea2337bfba936d1cbbe",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x7f3fe9d492a9a60aebb06d82cba23c6f32cad10b",
+  "file": "LoanTokenLogicStandard.sol",
+  "function": "_tokenPrice",
+  "type": "accounting-error",
+  "attacker_profit": 87883.7958288497,
+  "source_case_id": "dfhl-0202",
+  "normal_txs": [],
+  "fix_description": "In _tokenPrice, add virtual shares and virtual assets to prevent inflation attacks when totalTokenSupply is near zero. Replace the price formula with: (assetSupply + VIRTUAL_ASSETS) * WEI_PRECISION / (totalTokenSupply + VIRTUAL_SHARES). Alternatively, in _mintToken enforce a minimum first deposit that mints dead shares to address(0), making the donation-based inflation economically infeasible. The current formula assetSupply * WEI_PRECISION / totalTokenSupply allows an attacker to mint minimal shares, donate assets directly to inflate assetSupply, and use the inflated share price as collateral to borrow from other pools.",
+  "attack_date": "2023-12-02",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very short, single-contract exploit with an obvious vulnerable pattern: repeatedly self-transferring tokens to manipulate internal accounting before redeeming for ETH. The PoC is under 100 lines, uses no complex DeFi primitives beyond a simulated flashloan, and a competent auditor could reproduce it quickly."
+}

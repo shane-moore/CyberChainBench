@@ -1,0 +1,23 @@
+{
+  "id": "bench-557",
+  "name": "RES-Token",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221006-res-token---pair-manipulate",
+  "chain": "bsc",
+  "block_number": 21948017,
+  "attack_txs": [
+    "0xe59fa48212c4ee716c03e648e04f0ca390f4a4fc921a890fded0e01afa4ba96d"
+  ],
+  "vulnerable_address": "0xecCD8B08Ac3B587B7175D40Fb9C60a20990F8D21",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "BEP20TokenA.sol",
+  "function": "_tokenACalcTokenB",
+  "type": "price-manipulation",
+  "attacker_profit": 207612.73932655875,
+  "source_case_id": "dfhl-0105",
+  "fix_description": "In _tokenACalcTokenB, uses AMM spot reserves/price which can be manipulated via flash loan. Fix: use TWAP oracle or Chainlink price feed.",
+  "attack_date": "2022-10-06",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a multi-step flash-loan exploit involving repeated direct pair manipulations, a protocol-specific token conversion call, and liquidation through a second pool, so an auditor must understand the token\u2019s custom mechanics and AMM reserve math. While the exploit path is explicit in the PoC, it is more involved than a simple access-control or reentrancy issue and likely takes meaningful protocol reading to reproduce."
+}

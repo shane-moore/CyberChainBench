@@ -1,0 +1,23 @@
+{
+  "id": "bench-282",
+  "name": "RPP",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20241105-rpp---logic-flaw",
+  "chain": "bsc",
+  "block_number": 43752882,
+  "attack_txs": [
+    "0x76c39537374e7fa7f206ed3c99aa6b14ccf1d2dadaabe6139164cc37966e40bd"
+  ],
+  "vulnerable_address": "0x7d1a69302d2a94620d5185f2d80e065454a35751",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "RichPipToken.sol",
+  "function": "autoLiquidityPairTokens",
+  "type": "price-manipulation",
+  "attacker_profit": 13996.457556288236,
+  "source_case_id": "dfhl-0416",
+  "fix_description": "In autoLiquidityPairTokens, addLiquidity uses 0 minimum amounts. Fix: set reasonable minimum based on oracle price.",
+  "attack_date": "2024-11-05",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is a very short single-transaction flash-loan exploit with straightforward repeated swaps against one vulnerable token and one router/pool pair. It does not require deep protocol internals, cross-contract state reasoning, or complex DeFi mechanics beyond basic flash loan + swap abuse."
+}

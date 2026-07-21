@@ -1,0 +1,23 @@
+{
+  "id": "bench-323",
+  "name": "DoughFina",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240712-doughfina---incorrect-input-validation",
+  "chain": "ethereum",
+  "block_number": 20288623,
+  "attack_txs": [
+    "0x92cdcc732eebf47200ea56123716e337f6ef7d5ad714a2295794fdc6031ebb2e"
+  ],
+  "vulnerable_address": "0x9f54e8eAa9658316Bb8006E03FFF1cb191AafBE6",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "ConnectorDeleverageParaswap.sol",
+  "function": "deloopAllCollaterals",
+  "type": "input-validation",
+  "attacker_profit": 823657.8623949623,
+  "source_case_id": "dfhl-0463",
+  "fix_description": "In deloopAllCollaterals, validate that paraSwapContract from user-supplied multiTokenSwapData is a whitelisted ParaSwap address, and that paraswapCallData does not encode malicious operations. Currently the function approves tokens to tokenTransferProxy and calls arbitrary paraSwapContract with arbitrary callData, allowing attackers to drain approved tokens.",
+  "attack_date": "2024-07-12",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is a short PoC, but it is not a trivial single-call bug: it requires understanding Aave debt repayment on behalf of a victim, abusing a protocol-specific deleverage/flashloan flow, and crafting custom encoded swapData to pull the victim\u2019s WETH. An experienced auditor could likely reproduce it within 30 minutes to 2 hours after reading the connector logic, but it still needs multi-contract DeFi context rather than a plainly obvious pattern."
+}

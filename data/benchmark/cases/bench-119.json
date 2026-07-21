@@ -1,0 +1,27 @@
+{
+  "id": "bench-119",
+  "name": "OpenLeverage",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231022-openleverage---business-logic-flaw",
+  "chain": "bsc",
+  "block_number": 32820952,
+  "attack_txs": [
+    "0xd88f26f2f9145fa413db0cfd5d3eb121e3a50a3fdcee16c9bd4731e68332ce4b"
+  ],
+  "vulnerable_address": "0x3d11015d9044cabbb2504448e37f20d0d56e36f8",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x7bacb1c805cbbf7c4f74556a4b34fde7793d0887",
+  "file": "RewardVault.sol",
+  "function": "initialize",
+  "type": "access-control",
+  "attacker_profit": 7948.316171797786,
+  "source_case_id": "dfhl-0237",
+  "fix_description": "Add initializer modifier (from OpenZeppelin Initializable) to the initialize function. Without it, anyone can call initialize repeatedly to overwrite admin and distributor, taking control of the contract.",
+  "normal_txs": [
+    "0xf4bde29de69b1d8cbf5eedde27ba45989a2877e3e93fb3513a839ecaf176b169"
+  ],
+  "attack_date": "2023-10-22",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a straightforward uninitialized/incorrectly protected initialize() takeover leading to admin hijack, implementation change, and delegatecall-based token draining. The attack flow is short and obvious, with no flash loans, pricing logic, or deep protocol-specific reasoning required."
+}

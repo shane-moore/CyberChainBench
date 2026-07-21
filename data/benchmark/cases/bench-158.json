@@ -1,0 +1,22 @@
+{
+  "id": "bench-158",
+  "name": "Carson",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230726-carson---price-manipulation",
+  "chain": "bsc",
+  "block_number": 30306325,
+  "attack_txs": [
+    "0x37d921a6bb0ecdd8f1ec918d795f9c354727a3ff6b0dba98a512fceb9662a3ac"
+  ],
+  "vulnerable_address": "0xe0a3e0f7e4c789747eb29a212ea915a7a1e1ac69",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x022c0d9f",
+  "type": "accounting-error",
+  "attacker_profit": 99629.20994456763,
+  "source_case_id": "dfhl-0279",
+  "fix_description": "The custom pair swap function has correct K value verification matching Uniswap V2 standard. However, the paired token has a fee-on-transfer mechanism that creates a discrepancy between actual pair balance and recorded reserves. Attacker exploits this gap by triggering token transfers that burn/tax tokens from the pair without updating reserves, then swapping at a favorable rate. Fix by calling sync() after fee-bearing transfers, or using actual balanceOf instead of cached reserves for K check.",
+  "attack_date": "2023-07-26",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The PoC requires chaining five nested flash loans and understanding a protocol-specific flaw in a customized pair/router interaction rather than a generic bug pattern. While the exploit execution itself is not extremely long, it involves multi-contract coordination and repeated swap manipulation logic, putting it beyond a quick straightforward exploit."
+}

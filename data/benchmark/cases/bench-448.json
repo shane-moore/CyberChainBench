@@ -1,0 +1,29 @@
+{
+  "id": "bench-448",
+  "name": "WXC",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250811-wxc---incorrect-token-burn-mechanism",
+  "chain": "bsc",
+  "block_number": 57177438,
+  "attack_txs": [
+    "0x1397bc7f0d284f8e2e30d0a9edd0db1f3eb0dd284c75e30d226b02bf09ad068f"
+  ],
+  "vulnerable_address": "0x4c100d30d9c511b8bb9d1c951bbc1be489a0172f",
+  "has_public_source": false,
+  "fixable": true,
+  "proxy_address": "0x8087720eeea59f9f04787065447d52150c09643e",
+  "function": "0x23b872dd",
+  "type": "accounting-error",
+  "attacker_profit": 30068.686783266196,
+  "source_case_id": "dfhl-0606",
+  "fix_description": "The internal transfer logic directly modifies the pair balance (stor101[pair] += ...) as a reward/distribution mechanism without going through a proper transfer. This creates a discrepancy between the pair actual balance and its recorded reserves. Remove the direct pair balance manipulation from the transfer path, or use a separate claim mechanism that calls pair.sync() atomically.",
+  "acceptable_alternatives": {
+    "function": [
+      "0xa9059cbb",
+      "0x23b872dd"
+    ]
+  },
+  "attack_date": "2025-08-11",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit requires understanding a nonstandard multi-contract flow: a flash loan from one contract, a PancakePair callback-based swap manipulation, and then dumping the acquired token via the router. While the PoC is short, the crafted pair.swap calldata and need to reason about Pancake callback behavior and protocol-specific token logic make it more than a trivial single-step bug."
+}

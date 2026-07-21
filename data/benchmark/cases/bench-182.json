@@ -1,0 +1,23 @@
+{
+  "id": "bench-182",
+  "name": "AzukiDAO",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230703-azukidao---invalid-signature-verification",
+  "chain": "ethereum",
+  "block_number": 17593309,
+  "attack_txs": [
+    "0x6233c9315dd3b6a6fcc7d653f4dca6c263e684a76b4ad3d93595e3b8e8714d34"
+  ],
+  "vulnerable_address": "0x8189AFBE7b0e81daE735EF027cd31371b3974FeB",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Bean.sol",
+  "function": "claim",
+  "type": "input-validation",
+  "attacker_profit": null,
+  "source_case_id": "dfhl-0301",
+  "fix_description": "In claim function, properly verify the signature: ensure the signer is authorized and the signature cannot be replayed or forged. Add nonce tracking and validate the recovered signer address against an authorized list.",
+  "attack_date": "2023-07-03",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a straightforward replay/signature validation flaw: the attacker repeatedly calls claim() with the same valid signature to mint tokens multiple times. The PoC is very short, uses a single contract interaction pattern, and requires little DeFi-specific knowledge beyond spotting missing nonce/used-signature protection."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-520",
+  "name": "LAXO Token",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/README.md#20260222-laxo-token---incorrect-burn-logic",
+  "chain": "bsc",
+  "block_number": 82730141,
+  "attack_txs": [
+    "0xd58f3ef6414b59f95f55dae1acb3d5d6e626acf5333917c6d43fe422d98ac7d3"
+  ],
+  "vulnerable_address": "0x62951CaD7659393BF07fbe790cF898A3B6d317CB",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "LAXOToken.sol",
+  "function": "_transfer",
+  "type": "accounting-error",
+  "attacker_profit": 135552.87474283678,
+  "source_case_id": "dfhl-0683",
+  "fix_description": "In _transfer, remove the deflation logic that directly transfers tokens from the LP pair to DEAD address and calls sync(). Even with the 1-hour cooldown, this mechanism allows predictable price manipulation by triggering the burn at strategic times. Use a separate reward/burn mechanism that does not directly modify pair balances.",
+  "attack_date": "2026-02-22",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a multi-step DeFi attack involving a Pancake V3 flash loan, token swapping, liquidity add/remove interactions, reserve manipulation on a pair, and then extracting value via a crafted swap. It requires understanding AMM reserve mechanics and protocol-specific token behavior, but the PoC is still fairly short and linear rather than deeply complex."
+}

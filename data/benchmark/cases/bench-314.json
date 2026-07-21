@@ -1,0 +1,23 @@
+{
+  "id": "bench-314",
+  "name": "AAVE",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240828-aave---arbitrary-call-error",
+  "chain": "ethereum",
+  "block_number": 20624704,
+  "attack_txs": [
+    "0xc27c3ec61c61309c9af35af062a834e0d6914f9352113617400577c0f2b0e9de"
+  ],
+  "vulnerable_address": "0x02e7b8511831b1b02d9018215a0f8f500ea5c6b3",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "BaseParaSwapBuyAdapter.sol",
+  "function": "_buyOnParaSwap",
+  "type": "reentrancy",
+  "attacker_profit": 31870.061238888007,
+  "source_case_id": "dfhl-0450",
+  "fix_description": "Add reentrancy guard (nonReentrant modifier) to _buyOnParaSwap, or follow checks-effects-interactions pattern to update state before making external calls.",
+  "attack_date": "2024-08-28",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is very short and the exploit path is straightforward: repeatedly call a vulnerable deposit function in a loop, then withdraw and transfer the drained tokens. It does not require flash loans, pricing logic, or deep protocol-specific reasoning beyond noticing the broken accounting/access pattern."
+}

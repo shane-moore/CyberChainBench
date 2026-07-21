@@ -1,0 +1,23 @@
+{
+  "id": "bench-468",
+  "name": "UsualMoney",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250527-usualmoney---arbitrage",
+  "chain": "ethereum",
+  "block_number": 22575930,
+  "attack_txs": [
+    "0x585d8be6a0b07ca2f94cfa1d7542f1a62b0d3af5fab7823cbcf69fb243f271f8"
+  ],
+  "vulnerable_address": "0xE033cb1bB400C0983fA60ce62f8eCDF6A16fcE09",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "VaultRouter.sol",
+  "function": "_convertToTokens",
+  "type": "accounting-error",
+  "attacker_profit": 42768.70109018667,
+  "source_case_id": "dfhl-0628",
+  "fix_description": "In _convertToTokens, the SUSDS branch assumes a fixed 1:1 exchange rate, but SUSDS can depeg on the open market. Fix by using SUSDS.convertToAssets() or an oracle to get the real exchange rate, or route SUSDS through the same swap path as USD0PP to let market price determine the conversion.",
+  "attack_date": "2025-05-27",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a multi-step DeFi attack involving a flash loan, creating/manipulating a thin Uniswap V3 pool, abusing protocol-specific VaultRouter deposit pricing via ParaSwap swap data, then unwinding through Curve and Uniswap. It requires understanding several protocol interactions and pricing assumptions, but the PoC is still fairly direct and not deeply stateful or mathematically intricate enough to be hard."
+}

@@ -1,0 +1,22 @@
+{
+  "id": "bench-193",
+  "name": "Contract_0x7657",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230619-contract_0x7657---business-logic",
+  "chain": "ethereum",
+  "block_number": 17511178,
+  "attack_txs": [
+    "0x74279a131dccd6479378b3454ea189a6ce350cce51de47d81a0ef23db1b134d5"
+  ],
+  "vulnerable_address": "0x76577603F99EAe8320F70B410a350a83D744CB77",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x0a8fe064",
+  "type": "access-control",
+  "attacker_profit": 19915.75242862743,
+  "source_case_id": "dfhl-0311",
+  "fix_description": "Function 0x0a8fe064 has no access control - anyone can call it to set storage[0x06] to their address and receive ETH via the subsequent call. The contract has an isAdmin() role system but this function does not check it. Fix: add require(isAdmin(msg.sender)) check.",
+  "attack_date": "2023-06-19",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is essentially a direct call into the vulnerable contract with crafted parameters to drain a victim\u2019s USDT balance, plus a simple callback function to receive the tokens. It is a very short, single-path exploit with no flash loans, pricing logic, or complex protocol interactions."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-116",
+  "name": "LaEeb",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231030-laeeb---lack-slippage-protection",
+  "chain": "bsc",
+  "block_number": 33053188,
+  "attack_txs": [
+    "0x0d13a61e9dc81cfae324d3d80e49830d9bbae300f760e016a15600889a896a1b"
+  ],
+  "vulnerable_address": "0xa2B8A15A07385EA933088c6bcBB38B84c1051a58",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "LaEeb.sol",
+  "function": "swapTokensForEth",
+  "type": "price-manipulation",
+  "attacker_profit": 396.28871894816393,
+  "source_case_id": "dfhl-0234",
+  "fix_description": "In swapTokensForEth, swap executed with insufficient slippage protection. Fix: set reasonable amountOutMin based on oracle price.",
+  "attack_date": "2023-10-30",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a short, direct exploit: flash-loan WBNB, swap into the vulnerable token, repeatedly abuse the pair via transfer+skim in a simple loop, then swap back and repay. It uses standard AMM/flash-loan primitives with minimal protocol-specific complexity, and the PoC is well under 100 lines."
+}

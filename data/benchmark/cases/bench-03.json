@@ -1,0 +1,23 @@
+{
+  "id": "bench-03",
+  "name": "Ploutoz",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2021/README.md#20211123-ploutoz---flash-loan",
+  "chain": "bsc",
+  "block_number": 12886417,
+  "attack_txs": [
+    "0x7fe46c2746855dd57e18f4d33522849ff192e4e26c74835799ba8dab89099457"
+  ],
+  "vulnerable_address": "0x067d0a19e92a65caa2fcd8f3c88da8851fcd3771",
+  "has_public_source": false,
+  "fixable": true,
+  "proxy_address": "0xad2d8f920a3795c1eee47a00c1056c801eaad18c",
+  "function": "0x585314cf",
+  "type": "price-manipulation",
+  "attacker_profit": 339998.41776708316,
+  "source_case_id": "dfhl-0005",
+  "fix_description": "The borrow function (0x585314cf) uses a manipulable AMM spot price to value DOP collateral. Attacker inflates DOP price via flash loan, then borrows assets at inflated collateral value. Fix by using a TWAP oracle or Chainlink price feed instead of spot price for collateral valuation.",
+  "attack_date": "2021-11-23",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This is a multi-step DeFi exploit involving a flash swap, cross-router price manipulation of the collateral token, then abusing several lending markets to borrow multiple assets against the inflated collateral before unwinding and repaying. The bug pattern is understandable, but writing the PoC requires protocol-specific understanding of the loan token borrow flow and coordinated interactions across multiple contracts and pools."
+}

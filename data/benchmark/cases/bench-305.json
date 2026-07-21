@@ -1,0 +1,22 @@
+{
+  "id": "bench-305",
+  "name": "INUMI_db27",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240911-inumi_db27---access-control",
+  "chain": "ethereum",
+  "block_number": 20729672,
+  "attack_txs": [
+    "0x45ce017f5a295f387eafb596b4bcb1192dd1c302ccb9d097d7fa2cdf3008b139"
+  ],
+  "vulnerable_address": "0xdb27d4ff4be1cd04c34a7cb6f47402c37cb73459",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x5d098b38",
+  "type": "access-control",
+  "attacker_profit": 3736.1239548187978,
+  "source_case_id": "dfhl-0440",
+  "fix_description": "setMarketingWallet(address) (0x5d098b38) has no onlyOwner check. Anyone can call it to change the marketing wallet (storage[0x08]) to their own address. Trading fees are then sent to the attacker. Fix: add require(msg.sender == owner()).",
+  "attack_date": "2024-09-11",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very simple two-step exploit: set an arbitrary marketing wallet, then call rescueEth to drain funds to the attacker-controlled contract. It matches an obvious missing access control issue, requires no DeFi-specific knowledge, and the PoC is short with minimal external interactions."
+}

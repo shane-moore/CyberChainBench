@@ -1,0 +1,23 @@
+{
+  "id": "bench-46",
+  "name": "Akutar NFT",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220423-akutar-nft---denial-of-service",
+  "chain": "ethereum",
+  "vulnerable_address": "0xF42c318dbfBaab0EEE040279C6a2588Fa01a961d",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "AkuAuction.sol",
+  "function": "claimProjectFunds",
+  "type": "accounting-error",
+  "attacker_profit": 12425.2498398,
+  "block_number": 14636844,
+  "attack_txs": [
+    "0x62d280abc60f8b604175ab24896c989e6092e496ac01f2f5399b2a62e9feaacf"
+  ],
+  "source_case_id": "dfhl-0154",
+  "fix_description": "In claimProjectFunds, fix the require statement: change require(refundProgress >= totalBids) to require(refundProgress >= _bidIndex). The variable totalBids incorrectly counts total bid submissions (including multiple bids per user), while _bidIndex tracks unique bidders which is what refundProgress iterates over. This mismatch makes the condition permanently unsatisfiable, locking all funds.",
+  "attack_date": "2022-04-23",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This PoC demonstrates two straightforward logic bugs with minimal setup: a refund DoS caused by sending ETH to a reverting contract and an obvious incorrect require condition that locks funds. The exploit uses simple direct calls on a fork with no flash loans, no complex DeFi primitives, and only basic time-warping to reach the vulnerable states."
+}

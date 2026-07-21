@@ -1,0 +1,31 @@
+{
+  "id": "bench-23",
+  "name": "Cream Finance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2021/README.md#20210830-cream-finance---flashloan-attack--reentrancy",
+  "chain": "ethereum",
+  "block_number": 13125071,
+  "attack_txs": [
+    "0xa9a1b8ea288eb9ad315088f17f7c7386b9989c95b4d13c81b69d5ddad7ffe61e"
+  ],
+  "vulnerable_address": "0x3c710b981f5ef28da1807ce7ed3f2a28580e0754",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x2db6c82ce72c8d7d770ba1b5f5ed0b6e075066d6",
+  "file": "CToken.sol",
+  "function": "borrowFresh",
+  "type": "reentrancy",
+  "attacker_profit": 596182.0864778406,
+  "source_case_id": "dfhl-0013",
+  "normal_txs": [
+    "0x234b7846d200a4fa6072191e02930065636d97954093d002fd74bd468c505fb9",
+    "0x1d20ea6596943a38376bef5d3b68d67db275061257c7af5a05334212563c2028",
+    "0x1c3464135a0d7b0e770d53afe57b9ff0de70803bbf2e8f7714ea71022447f288",
+    "0x6afb3e8e318e221711715c3e2017661ad35ef92e083f7554372ce8ffcaf7da6d",
+    "0x5452e5ff92a628bbebe732441e2b10cf428d7e0170004665c6b689180642533f"
+  ],
+  "fix_description": "In borrowFresh, update accountBorrows and totalBorrows BEFORE calling doTransferOut. Same pattern as Rari Capital - ETH sent before state update allows reentrancy.",
+  "attack_date": "2021-08-30",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a multi-step attack involving a Uniswap flash swap, ERC777 hook abuse via ERC1820 registration, Compound-style mint/borrow interactions, interest accrual manipulation, and token dumping to repay the loan. It is not extremely long, but it requires understanding several protocol-specific mechanics across multiple contracts, making it more than a straightforward pattern exploit."
+}

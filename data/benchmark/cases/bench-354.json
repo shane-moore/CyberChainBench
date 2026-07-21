@@ -1,0 +1,22 @@
+{
+  "id": "bench-354",
+  "name": "TGC",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240512-tgc---business-logic-flaw",
+  "chain": "bsc",
+  "block_number": 38629401,
+  "attack_txs": [
+    "0x12e8c24dec36a29fdd9b9d7a8b587b3abd2519089b6438c194e6e5eb357b68d8"
+  ],
+  "vulnerable_address": "0x32F9188d6D86Bf88dbAc3ceEe5958aDf1aa609df",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0xfd5a466f",
+  "type": "price-manipulation",
+  "attacker_profit": 36175.12527813537,
+  "source_case_id": "dfhl-0496",
+  "fix_description": "The claim/reward function (0xfd5a466f) calculates token price using raw balanceOf() calls on the pair address: price = tokenA.balanceOf(pair) / tokenB.balanceOf(pair). An attacker can flash-loan manipulate pair reserves to inflate the price ratio, then claim inflated rewards. Fix: use a TWAP oracle or Chainlink price feed instead of instantaneous pair balances for price calculation.",
+  "attack_date": "2024-05-12",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a short but protocol-specific multi-step attack: swap into the target token, interact with a vulnerable contract function, warp time, then use a PancakePair callback/flash-swap style interaction to realize profit. It is not a trivial access-control bug, but it also does not involve a long cross-protocol chain or deep accounting complexity, so an experienced auditor would likely need protocol understanding but not several hours."
+}

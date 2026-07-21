@@ -1,0 +1,23 @@
+{
+  "id": "bench-347",
+  "name": "- JAY",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221229---jay---insufficient-validation--reentrancy",
+  "chain": "ethereum",
+  "block_number": 16288200,
+  "attack_txs": [
+    "0xd4fafa1261f6e4f9c8543228a67caf9d02811e4ad3058a2714323964a8db61f6"
+  ],
+  "vulnerable_address": "0xf2919d1d80aff2940274014bef534f7791906ff2",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "JAY.sol",
+  "function": "buyJayWithERC721",
+  "type": "reentrancy",
+  "attacker_profit": 18244.562241753236,
+  "source_case_id": "dfhl-0053",
+  "fix_description": "Add reentrancy guard (nonReentrant modifier) to buyJayWithERC721, or follow checks-effects-interactions pattern to update state before making external calls.",
+  "attack_date": "2022-12-29",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a reentrancy exploit but not a trivial one: it uses a flash loan, multiple buy/sell cycles, and a crafted ERC721 transferFrom callback to reenter protocol logic. An auditor would need to understand the token sale flow and the NFT-handling path in buyJay/sell, making it more involved than a simple single-call reentrancy."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-124",
+  "name": "WiseLending",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231013-wiselending---donate-inflation-exchangerate--rounding-error",
+  "chain": "ethereum",
+  "block_number": 18342121,
+  "attack_txs": [
+    "0x7ac4a98599596adbf12fffa2bd23e2a2d2ac7e8989b6ea043fcc412a29126555"
+  ],
+  "vulnerable_address": "0x84524bAa1951247b3A2617A843e6eCe915Bb9674",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "MainHelper.sol",
+  "function": "calculateLendingShares",
+  "type": "accounting-error",
+  "attacker_profit": 261423.25213075714,
+  "source_case_id": "dfhl-0242",
+  "fix_description": "In calculateLendingShares, the shares <= 1 check is insufficient protection against inflation attack. Attacker deposits minimal amount (getting shares=2), then donates tokens to inflate pseudoTotalPool, causing subsequent depositors shares to round to 0 via integer division. Fix: use virtual shares/assets offset, or enforce minimum first deposit with dead shares sent to address(0).",
+  "attack_date": "2023-10-13",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This exploit requires understanding a protocol-specific share-accounting/precision-loss flaw in Wise Lending, orchestrated through multiple coordinated steps: flash loan, two NFT-backed positions, donation-based share price inflation, borrowing across many assets, and a separate recovery contract looping withdrawals to reclaim the donation. Although the PoC is not extremely long, the vulnerability is non-obvious and depends on deep reasoning about internal pool/share math rather than a simple generic bug pattern."
+}

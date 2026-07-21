@@ -1,0 +1,23 @@
+{
+  "id": "bench-98",
+  "name": "XAI",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231115-xai---business-logic-flaw",
+  "chain": "bsc",
+  "block_number": 33503557,
+  "attack_txs": [
+    "0x2b251e456c434992b9ac7ec56dc166550c4cd7db3adefbf7eb3ab91cef55f9bf"
+  ],
+  "vulnerable_address": "0x570Ce7b89c67200721406525e1848bca6fF5A6F3",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "CoinToken.sol",
+  "function": "_burn",
+  "type": "accounting-error",
+  "attacker_profit": 129.69921248877122,
+  "source_case_id": "dfhl-0216",
+  "fix_description": "In _burn, also subtract the corresponding rAmount from _rTotal. Currently only _tTotal is reduced, causing the reflection rate to inflate and artificially increase all holders balances.",
+  "attack_date": "2023-11-15",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a multi-step economic exploit involving a flash loan, repeated buys/sells across a proxy exchange and PancakeSwap, plus helper contracts and batching through many addresses to realize the mispricing. The root cause is conceptually simple (buy low via proxy, sell high), but writing the exploit requires understanding the protocol-specific exchange behavior, swap routing, and orchestration across several contracts."
+}

@@ -1,0 +1,22 @@
+{
+  "id": "bench-88",
+  "name": "AIS",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231129-ais---insufficient-validation",
+  "chain": "bsc",
+  "block_number": 33916688,
+  "attack_txs": [
+    "0x0be817b6a522a111e06293435c233dab6576d7437d0e148b45efcf7ab8a10de0"
+  ],
+  "vulnerable_address": "0xffac2ed69d61cf4a92347dcd394d36e32443d9d7",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x704b6c02",
+  "type": "access-control",
+  "attacker_profit": 60229.712766308905,
+  "source_case_id": "dfhl-0207",
+  "fix_description": "In setAdmin (0x704b6c02), there is no access control check. Any caller can change the admin address. Add onlyOwner or onlyAdmin modifier to restrict who can call setAdmin.",
+  "attack_date": "2023-11-29",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is multi-step and requires understanding several protocol-specific behaviors: a flash loan, AMM pair skim abuse with repeated token transfers, invoking a token-side harvest/admin takeover path, then draining and unwinding through swaps. While the PoC is not very long, the vulnerability is not an obvious single-pattern bug and requires reading interactions across the token, pair, and vulnerable admin contract."
+}

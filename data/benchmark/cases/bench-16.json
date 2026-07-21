@@ -1,0 +1,22 @@
+{
+  "id": "bench-16",
+  "name": "ZoomproFinance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220905-zoomprofinance---flashloans--price-manipulation",
+  "chain": "bsc",
+  "block_number": 21055931,
+  "attack_txs": [
+    "0xe176bd9cfefd40dc03508e91d856bd1fe72ffc1e9260cd63502db68962b4de1a"
+  ],
+  "vulnerable_address": "0x5a9846062524631C01ec11684539623DAb1Fae58",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0xd96a094a",
+  "type": "price-manipulation",
+  "attacker_profit": 60808.48002900833,
+  "source_case_id": "dfhl-0119",
+  "fix_description": "In sell(), the swap via router.swapExactTokensForTokens uses amountOutMin=0, allowing execution at any price. After func_36A9 computes the net amount (after fees), calculate a minimum acceptable output based on current reserves or a price oracle, and pass it as amountOutMin to prevent flashloan-manipulated price exploitation.",
+  "attack_date": "2022-09-05",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The PoC is a multi-step DeFi exploit: flash-loan USDT, buy protocol token, manipulate a fakeUSDT/ZOOM pair via a batch token mint/drain primitive, sync reserves, then sell back at the distorted price and repay. It requires understanding protocol-specific pricing logic and AMM reserve manipulation across several contracts, but the chain is still fairly direct and the PoC is short."
+}

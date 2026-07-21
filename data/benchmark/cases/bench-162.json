@@ -1,0 +1,31 @@
+{
+  "id": "bench-162",
+  "name": "RariCapital",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2021/README.md#20210509-raricapital---cross-contract-reentrancy",
+  "chain": "ethereum",
+  "block_number": 12394010,
+  "attack_txs": [
+    "0x171072422efb5cd461546bfe986017d9b5aa427ff1c07ebe8acc064b13a7b7be"
+  ],
+  "vulnerable_address": "0xec260f5a7a729bb3d0c42d292de159b4cb1844a3",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0xd6e194af3d9674b62d1b30ec676030c23961275e",
+  "file": "AlphaPoolController.sol",
+  "function": "getBalance",
+  "type": "reentrancy",
+  "attacker_profit": 3846868.2520340723,
+  "source_case_id": "dfhl-0030",
+  "fix_description": "Add reentrancy protection to the withdrawal flow. The getBalance() function reads aETH.balanceOf which is not yet updated during a cross-contract reentrancy via ETH transfer callback. Use a nonReentrant modifier on withdrawal functions or update internal accounting before making external calls.",
+  "normal_txs": [
+    "0x4764dc6ff19a64fc1b0e57e735661f64d97bc1c44e026317be8765358d0a7392",
+    "0xd9d4b6ff500e6128d79b902628f2f75b63e15e57654beb6475c1b996c27a54a5",
+    "0x7a15d9de875c0eb84007aa0bb4a2842041384e3373f83210cd8df4d445227cd3",
+    "0x20c6fae609b558e8e42f72bdfe76fbeebaa434eb70aed0e43553f88ba622feb9",
+    "0x429166a2f737c06cf06da4347c70466cf7c74e7b9a140bd88256b1879326bfd0"
+  ],
+  "attack_date": "2021-05-09",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a short but non-trivial multi-step exploit: flash-loan USDC, mint collateral, enter market, borrow ETH, then abuse the receive-hook/exitMarket interaction during ETH transfer to bypass collateral constraints before redeeming and repaying. It requires understanding Compound/Rari market mechanics and callback-based control flow, so it is more involved than an obvious single-pattern bug but not a deeply complex attack chain."
+}

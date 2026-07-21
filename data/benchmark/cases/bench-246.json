@@ -1,0 +1,23 @@
+{
+  "id": "bench-246",
+  "name": "- Starlink",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230217---starlink---business-logic-flaw",
+  "chain": "bsc",
+  "block_number": 25729305,
+  "attack_txs": [
+    "0x146586f05a4513136deab3557ad15df8f77ffbcdbd0dd0724bc66dbeab98a962"
+  ],
+  "vulnerable_address": "0x518281F34dbf5B76e6cdd3908a6972E8EC49e345",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "StarlinkCoin.sol",
+  "function": "_transfer",
+  "type": "accounting-error",
+  "attacker_profit": 11808.72247085467,
+  "source_case_id": "dfhl-0373",
+  "fix_description": "In _transfer, fees are deducted when tokens are transferred from the LP pair (buy). Attacker uses pair.skim() to send tokens to the pair without fee, then transfers from pair trigger fee deduction from pair balance, causing balance < reserve mismatch. Fix: exclude LP pair from fee deductions on incoming transfers, or call pair.sync() after fee operations.",
+  "attack_date": "2023-02-17",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is a multi-step DeFi attack: deploy many helper contracts, warp time to satisfy a check, take a flash loan, buy RL, add liquidity to obtain LP tokens, fan out LP transfers to repeatedly claim airdrops, then unwind liquidity and swap back to repay. It requires understanding protocol-specific airdrop logic and LP-based reward abuse across multiple contracts, but the PoC remains fairly direct and not deeply complex."
+}

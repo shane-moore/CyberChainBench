@@ -1,0 +1,23 @@
+{
+  "id": "bench-533",
+  "name": "- SheepFarm",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221116---sheepfarm---no-input-validation",
+  "chain": "bsc",
+  "block_number": 23088157,
+  "attack_txs": [
+    "0x5735026e5de6d1968ab5baef0cc436cc0a3f4de4ab735335c5b1bd31fa60c582"
+  ],
+  "vulnerable_address": "0x4726010da871f4b57b5031E3EA48Bde961F122aA",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "SheepFarm.sol",
+  "function": "register",
+  "type": "accounting-error",
+  "attacker_profit": 210.18286342471592,
+  "source_case_id": "dfhl-0078",
+  "fix_description": "In register, add villages[user].timestamp = block.timestamp after registration. Currently the timestamp is never set, so the require(villages[user].timestamp == 0) check always passes, allowing the same user to register multiple times and claim GEM_BONUS repeatedly.",
+  "attack_date": "2022-11-16",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is a very short, direct exploit with only a few simple contract calls and no flash loans, price manipulation, or complex cross-protocol interactions. It appears to abuse straightforward protocol logic/accounting around repeated registration and village upgrades, which a competent auditor could likely identify and weaponize quickly."
+}

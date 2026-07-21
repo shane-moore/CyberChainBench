@@ -1,0 +1,23 @@
+{
+  "id": "bench-509",
+  "name": "LPMine",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250108-lpmine---incorrect-reward-calculation",
+  "chain": "bsc",
+  "block_number": 45586331,
+  "attack_txs": [
+    "0x00c5a772a58b117f142b2cbc8721b80d145ef7a910043ad08439863d0e78e300"
+  ],
+  "vulnerable_address": "0x6BBeF6DF8db12667aE88519090984e4F871e5feb",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "LPMine.sol",
+  "function": "getCanClaimed",
+  "type": "price-manipulation",
+  "attacker_profit": 24079.616766559644,
+  "source_case_id": "dfhl-0673",
+  "fix_description": "In getRemoveTokens, do not use IERC20.balanceOf(pair) to calculate LP token value as it can be manipulated via flash loan. Use pair.getReserves() with TWAP protection, or use an external oracle for LP token pricing.",
+  "attack_date": "2025-01-08",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is a multi-step DeFi attack involving two flash loans, LP participation, timestamp manipulation in the forked test, repeated reward extraction, pair skim abuse, and token swaps to unwind profit. While the core bug is conceptually simple (incorrect reward accounting/time update), writing the PoC requires understanding several protocol-specific interactions and coordinating multiple contracts."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-447",
+  "name": "Bebop",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250812-bebop---arbitrary-user-input",
+  "chain": "arbitrum",
+  "block_number": 367586045,
+  "attack_txs": [
+    "0xe5f8fe69b38613a855dbcb499a2c4ecffe318c620a4c4117bd0e298213b7619d"
+  ],
+  "vulnerable_address": "0xbeb0b0623f66be8ce162ebdfa2ec543a522f4ea6",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "JamInteraction.sol",
+  "function": "runInteractions",
+  "type": "input-validation",
+  "attacker_profit": 18997.521488908533,
+  "source_case_id": "dfhl-0605",
+  "fix_description": "runInteractions only blacklists calls to balanceManager but allows arbitrary calls to any other address. Attacker can craft interactions to call transferFrom on token contracts, draining tokens approved to the settlement contract. Add whitelist for allowed target contracts, or blacklist token transfer selectors (transferFrom, transfer, approve).",
+  "attack_date": "2025-08-12",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is a very short, direct abuse of the settlement function by crafting a fake order and passing arbitrary ERC20 transferFrom calls as interactions, with no flash loans, routing, or complex state manipulation. This is essentially an access-control/validation failure in a single protocol entrypoint, and a competent auditor could reproduce it quickly."
+}

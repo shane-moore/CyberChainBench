@@ -1,0 +1,23 @@
+{
+  "id": "bench-218",
+  "name": "HODL",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230509-hodl---reflection-token",
+  "chain": "ethereum",
+  "block_number": 17220893,
+  "attack_txs": [
+    "0xedc214a62ff6fd764200ddaa8ceae54f842279eadab80900be5f29d0b75212df"
+  ],
+  "vulnerable_address": "0xEdA47E13fD1192E32226753dC2261C4A14908fb7",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "HODLCapital.sol",
+  "function": "deliver",
+  "type": "accounting-error",
+  "attacker_profit": 24112.524380918898,
+  "source_case_id": "dfhl-0342",
+  "fix_description": "Same as MCC (bench-217). In deliver, reducing _rTotal manipulates the reflect rate, creating balance/reserve mismatch in LP pair. Fix: exclude LP pair from rate changes or add same-block protection.",
+  "attack_date": "2023-05-09",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This PoC involves a highly protocol-specific attack against a reflection token integrated with a Uniswap V2 pair, requiring deep understanding of reflected supply accounting, pair reserve/balance desynchronization, flash loans, callback-driven swaps, skim abuse, and repeated state manipulations. The exploit chain is long and non-obvious, with many carefully tuned iterative steps and parameters, so reproducing and understanding it would likely take an experienced auditor well over 2 hours."
+}

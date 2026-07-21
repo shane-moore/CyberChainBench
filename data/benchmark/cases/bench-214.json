@@ -1,0 +1,23 @@
+{
+  "id": "bench-214",
+  "name": "SellToken02",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230513-selltoken02---price-manipulation",
+  "chain": "bsc",
+  "block_number": 28168035,
+  "attack_txs": [
+    "0x7d04e953dad4c880ad72b655a9f56bc5638bf4908213ee9e74360e56fa8d7c6a"
+  ],
+  "vulnerable_address": "0x57Db19127617B77c8abd9420b5a35502b59870D6",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "SellToken.sol",
+  "function": "getToken2Price",
+  "type": "price-manipulation",
+  "attacker_profit": 10912.12746332259,
+  "source_case_id": "dfhl-0338",
+  "fix_description": "In getToken2Price, IRouter.getAmountsOut reads AMM spot price which can be manipulated via flash loan. Fix: use TWAP oracle or Chainlink price feed instead of router getAmountsOut.",
+  "attack_date": "2023-05-13",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This is a multi-step price manipulation exploit using a flash loan, AMM swaps to pump and dump the token, and protocol-specific short/withdraw interactions across several contracts. The core bug is straightforward oracle misuse, but writing the PoC requires understanding the target router\u2019s short flow and coordinating two flash-loan callbacks, which pushes it beyond easy."
+}

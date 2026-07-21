@@ -1,0 +1,23 @@
+{
+  "id": "bench-527",
+  "name": "Truebit",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/README.md#20260109-truebit---overflow",
+  "chain": "ethereum",
+  "block_number": 24191019,
+  "attack_txs": [
+    "0xcd4755645595094a8ab984d0db7e3b4aabde72a5c87c4f176a030629c47fb014"
+  ],
+  "vulnerable_address": "0xc186e6f0163e21be057e95aa135edd52508d14d3",
+  "has_public_source": false,
+  "fixable": true,
+  "proxy_address": "0x764c64b2a09b09acb100b80d8c505aa6a0302ef2",
+  "function": "0xc59d5633",
+  "type": "accounting-error",
+  "attacker_profit": 26358706.33015892,
+  "source_case_id": "dfhl-0689",
+  "fix_description": "In func_1446 (internal function called by getPurchasePrice), the addition of v9 + v12 can overflow uint256 without any check. Add SafeMath add() to the addition, or refactor the formula to divide by common factors before summing to keep intermediate results within 2^256.",
+  "attack_date": "2026-01-09",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit loop itself is mechanically simple (buy then immediately sell), but deriving the correct malicious amount requires understanding the protocol-specific bonding curve math and reverse-solving the pricing formula to trigger an extreme mispricing. An experienced auditor could build this in under a couple of hours after reading the pool logic, but it is not an obvious generic bug pattern."
+}

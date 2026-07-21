@@ -1,0 +1,23 @@
+{
+  "id": "bench-145",
+  "name": "Balancer",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230827-balancer---rounding-error--business-logic-flaw",
+  "chain": "ethereum",
+  "block_number": 18004652,
+  "attack_txs": [
+    "0x2a027c8b915c3737942f512fc5d26fd15752d0332353b3059de771a35a606c2d"
+  ],
+  "vulnerable_address": "0x9210F1204b5a24742Eba12f710636D76240dF3d0",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "LinearMath.sol",
+  "function": "_calcMainOutPerBptIn",
+  "type": "accounting-error",
+  "attacker_profit": 365972.5366344312,
+  "source_case_id": "dfhl-0265",
+  "fix_description": "In _calcMainOutPerBptIn, the conversion between nominal and actual balances via _toNominal/_fromNominal introduces rounding errors that can be exploited through repeated join/exit operations. The rounding direction is inconsistent, allowing attackers to extract small amounts of excess tokens each iteration. Fix: ensure consistent rounding (always round against the user) in both _toNominal and _fromNominal conversions.",
+  "attack_date": "2023-08-27",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a multi-step DeFi attack involving a dYdX flash loan, repeated Balancer swaps, manipulation of Balancer's internal accounting via a deflationary token, and strategic use of gulp() to realize the mispricing. While the vulnerability class is known, writing the PoC requires understanding Balancer pool mechanics and carefully sequencing many protocol-specific interactions rather than a simple one-call bug."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-408",
+  "name": "Game",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240211-game---reentrancy--business-logic-flaw",
+  "chain": "ethereum",
+  "block_number": 19213947,
+  "attack_txs": [
+    "0x0eb8f8d148508e752d9643ccf49ac4cb0c21cbad346b5bbcf2d06974d31bd5c4"
+  ],
+  "vulnerable_address": "0x52d69c67536f55efefe02941868e5e762538dbd6",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Game.sol",
+  "function": "makeBid",
+  "type": "reentrancy",
+  "attacker_profit": 29212.891738728078,
+  "source_case_id": "dfhl-0560",
+  "fix_description": "In makeBid, follow checks-effects-interactions: update bidAddress and bidEther before calling _sendEther to refund the previous bidder. Or add a nonReentrant modifier. The current order allows reentrancy via the ETH refund call.",
+  "attack_date": "2024-02-11",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a straightforward reentrancy exploit against a bidding game with a simple logic flaw in the minimum-bid check. The PoC is short, uses one target contract, no flash loans or complex DeFi primitives, and the attack flow is just initial bid plus repeated reentrant bad bids."
+}

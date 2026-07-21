@@ -1,0 +1,23 @@
+{
+  "id": "bench-309",
+  "name": "PLN",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240905-pln---access-control",
+  "chain": "ethereum",
+  "block_number": 20681143,
+  "attack_txs": [
+    "0xcc36283cee837a8a0d4af0357d1957dc561913e44ad293ea9da8acf15d874ed5"
+  ],
+  "vulnerable_address": "0xe0c218e1633a5c76d57ff4f11149f07bfff16aea",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "PLNTOKEN.sol",
+  "function": "liqBurnAt",
+  "type": "input-validation",
+  "attacker_profit": 403837.0948297064,
+  "source_case_id": "dfhl-0444",
+  "fix_description": "Add access control or rate limiting to liqBurnAt. Currently anyone can trigger it via transferFrom(excluded_addr, 0xdead, any_amount), which burns almost all tokens from the LP pair and calls sync(). Add onlyOwner restriction, or a cooldown period, or limit the burn amount per call.",
+  "attack_date": "2024-09-05",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The exploit is a very short, direct sequence: buy the vulnerable token, trigger the bug with a zero-amount transferFrom, then sell back for profit. It uses only basic token/router interactions and an obvious abnormal behavior in token logic, with no flash loans, complex state reasoning, or multi-protocol chaining."
+}

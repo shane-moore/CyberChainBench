@@ -1,0 +1,23 @@
+{
+  "id": "bench-245",
+  "name": "- RevertFinance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230218---revertfinance---arbitrary-external-call-vulnerability",
+  "chain": "ethereum",
+  "block_number": 16653390,
+  "attack_txs": [
+    "0xdaccbc437cb07427394704fbcc8366589ffccf974ec6524f3483844b043f31d5"
+  ],
+  "vulnerable_address": "0x531110418d8591C92e9cBBFC722Db8FFb604FAFD",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "V3Utils.sol",
+  "function": "_swap",
+  "type": "reentrancy",
+  "attacker_profit": 23869.44247326837,
+  "source_case_id": "dfhl-0372",
+  "fix_description": "Add reentrancy guard (nonReentrant modifier) to _swap, or follow checks-effects-interactions pattern to update state before making external calls.",
+  "attack_date": "2023-02-18",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a short, single-contract approval-draining exploit that abuses a straightforward arbitrary call/trust issue in the swap utility by passing attacker-controlled token addresses and calldata. The PoC is compact, requires minimal DeFi context, and an experienced auditor could reproduce it quickly once they see the unchecked external call pattern."
+}

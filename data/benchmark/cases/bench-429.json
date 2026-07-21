@@ -1,0 +1,23 @@
+{
+  "id": "bench-429",
+  "name": "yETH",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20251201-yeth---unsafe-math",
+  "chain": "ethereum",
+  "block_number": 23914086,
+  "attack_txs": [
+    "0x53fe7ef190c34d810c50fb66f0fc65a1ceedc10309cf4b4013d64042a0331156"
+  ],
+  "vulnerable_address": "0xCcd04073f4BdC4510927ea9Ba350875C3c65BF81",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "yETH weighted stableswap pool.sol",
+  "function": "_calc_supply",
+  "type": "accounting-error",
+  "attacker_profit": 3019476.62,
+  "source_case_id": "dfhl-0583",
+  "fix_description": "In _calc_supply, replace unsafe math operations (unsafe_div, unsafe_sub, unsafe_mul) with safe equivalents that revert on overflow/underflow. The attacker manipulates pool state so that the iterative supply calculation overflows via unsafe_mul(s, r) or underflows via unsafe_sub(l, ...), producing an incorrect supply value that allows minting unlimited yETH with tiny deposits.",
+  "attack_date": "2025-12-01",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This PoC involves a long, highly protocol-specific attack sequence with many add/remove liquidity cycles, selective rate updates, a rebase interaction, and final pool drain logic, requiring deep understanding of the pool\u2019s internal accounting. Even though the code is refactored, reproducing or deriving the exploit would likely take well over 2 hours due to the non-obvious state manipulation across many steps."
+}

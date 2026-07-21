@@ -1,0 +1,22 @@
+{
+  "id": "bench-303",
+  "name": "Unverified_03f9",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240912-unverified_03f9---access-control",
+  "chain": "ethereum",
+  "block_number": 20737849,
+  "attack_txs": [
+    "0x1a3e9eb5e00f39e84f90ca23bd851aa194b1e7a90003e3f6b9b17bbb66dabbb9"
+  ],
+  "vulnerable_address": "0x03f911aedc25c770e701b8f563e8102cfacd62c0",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0xfa461e33",
+  "type": "access-control",
+  "attacker_profit": 886.4660896513974,
+  "source_case_id": "dfhl-0438",
+  "fix_description": "In uniswapV3SwapCallback (0xfa461e33), no validation that msg.sender is a legitimate Uniswap V3 pool. Anyone can call the callback to trigger token transfers from the contract. Fix: compute expected pool address from CREATE2 and verify msg.sender matches.",
+  "attack_date": "2024-09-12",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a short but protocol-specific multi-step attack: flash-loan BUSD, swap into the target token, abuse repeated pair.skim calls by manipulating token balances/reserves, then swap back and repay. It requires understanding Uniswap V2 pair reserve/balance mechanics and why skim can be abused here, so it is not a purely obvious single-step bug."
+}

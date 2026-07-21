@@ -1,0 +1,22 @@
+{
+  "id": "bench-478",
+  "name": "YVToken",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250416-yvtoken---not-slippage-protection",
+  "chain": "bsc",
+  "block_number": 48415276,
+  "attack_txs": [
+    "0xe1e7fa81c3761e2698aa83e084f7dd4a1ff907bcfc4a612d54d92175d4e8a28b"
+  ],
+  "vulnerable_address": "0x113F16A3341D32c4a38Ca207Ec6ab109cF63e434",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0xf3db5490",
+  "type": "price-manipulation",
+  "attacker_profit": 15166.568769737722,
+  "source_case_id": "dfhl-0639",
+  "fix_description": "The function 0xf3db5490 executes swapExactTokensForTokensSupportingFeeOnTransferTokens via PancakeRouter without slippage protection (amountOutMinimum=0) and without access control. Add minimum output amount check based on getAmountsOut with a tolerance, and restrict caller to owner.",
+  "attack_date": "2025-04-16",
+  "difficulty": "unknown",
+  "difficulty_reasoning": "No matching PoC file found for automated labeling."
+}

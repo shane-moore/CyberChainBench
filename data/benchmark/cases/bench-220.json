@@ -1,0 +1,31 @@
+{
+  "id": "bench-220",
+  "name": "DODO",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2021/README.md#20210308-dodo---flashloan-attack",
+  "chain": "ethereum",
+  "block_number": 12000165,
+  "attack_txs": [
+    "0x395675b56370a9f5fe8b32badfa80043f5291443bd6c8273900476880fb5221e"
+  ],
+  "vulnerable_address": "0x2bbd66fc4898242bdbd2583bbe1d76e8b8f71445",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x051ebd717311350f1684f89335bed4abd083a2b6",
+  "file": "DVM.sol",
+  "function": "init",
+  "type": "access-control",
+  "attacker_profit": 1851070.4193487777,
+  "source_case_id": "dfhl-0036",
+  "fix_description": "In init, the function is external without any access control or initialization guard. Anyone can call init to re-initialize the DVM pool with malicious token addresses, then drain the pool funds. Fix: add initializer modifier or require(!initialized) check to prevent re-initialization.",
+  "normal_txs": [
+    "0x611e9d9d0163a1b516c27dfe21a9362e6d694a9107814c00bed82df2b6a4effe",
+    "0xfbf6d8305660a2cb2282b94299c51acfc51860a39b1f63a758615492ba40109d",
+    "0xa3b9c06deb02736e1f936b25af44fea4a7d9e201d881fbd777453594f9aed43c",
+    "0x3f5f8ccc03b247ac1e372199718a016075c1f01a1305de75b68088e3f0bd62c3",
+    "0xeb5cc58e89d2819c87c0c9d4b5f582c4f766c9665746e69e4440f31276400520"
+  ],
+  "attack_date": "2021-03-08",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very short, single-callback flash-loan exploit where the attacker simply calls an unprotected or improperly validated init() during the loan and then transfers out the borrowed assets. It requires minimal protocol-specific reasoning, no complex routing or pricing logic, and the PoC is far under 100 lines."
+}

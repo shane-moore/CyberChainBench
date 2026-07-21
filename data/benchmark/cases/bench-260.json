@@ -1,0 +1,23 @@
+{
+  "id": "bench-260",
+  "name": "- UFDao",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230111---ufdao---incorrect-parameter-setting",
+  "chain": "bsc",
+  "block_number": 24705059,
+  "attack_txs": [
+    "0x933d19d7d822e84e34ca47ac733226367fbee0d9c0c89d88d431c4f99629d77a"
+  ],
+  "vulnerable_address": "0xCA49EcF7e7bb9bBc9D1d295384663F6BA5c0e366",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Shop.sol",
+  "function": "buyPublicOffer",
+  "type": "accounting-error",
+  "attacker_profit": 86100.81101935472,
+  "source_case_id": "dfhl-0391",
+  "fix_description": "The publicOffer.rate parameter is set incorrectly, allowing users to mint LP tokens at a price far below market value. Fix by setting rate to match current market price, or add a price oracle check to ensure the offer price is within a reasonable range of the LP market value.",
+  "attack_date": "2023-01-11",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is a very short, direct two-step abuse of protocol logic: buy through the public offer, then burn UFT to redeem USDC, repeated with an inflated amount. It involves no flash loans, no complex routing, and minimal cross-contract reasoning beyond understanding a straightforward mint/burn imbalance."
+}

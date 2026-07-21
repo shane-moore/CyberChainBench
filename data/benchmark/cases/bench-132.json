@@ -1,0 +1,22 @@
+{
+  "id": "bench-132",
+  "name": "DEXRouter",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230929-dexrouter---arbitrary-external-call",
+  "chain": "bsc",
+  "block_number": 32161326,
+  "attack_txs": [
+    "0xf77c5904da98d3d4a6e651d0846d35545ef5ca0b969132ae81a9c63e1efc2113"
+  ],
+  "vulnerable_address": "0x1f7cF218B46e613D1BA54CaC11dC1b5368d94fb7",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x2a011594",
+  "type": "input-validation",
+  "attacker_profit": 4321.64820892075,
+  "source_case_id": "dfhl-0250",
+  "fix_description": "functionCallWithValue(address,bytes,uint256) (0x2a011594) accepts arbitrary target address and calldata with only an isContract() check. No whitelist validation on the target. Attacker passes token contract address with transferFrom calldata to steal user-approved tokens. Fix: validate target against whitelist of approved protocols.",
+  "attack_date": "2023-09-29",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very straightforward arbitrary external call/access control issue: the attacker first sets malicious parameters via `update`, then invokes `functionCallWithValue` to make the victim send its BNB balance to the attacker contract. The PoC is short, requires minimal protocol-specific knowledge, and the exploit flow is only two simple external calls plus a callback/fallback stub."
+}

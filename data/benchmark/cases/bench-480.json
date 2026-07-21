@@ -1,0 +1,22 @@
+{
+  "id": "bench-480",
+  "name": "Unverified 0x6077",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250411-unverified-0x6077---lack-of-access-control",
+  "chain": "base",
+  "block_number": 28791090,
+  "attack_txs": [
+    "0x1a6002d8aee205dff67cb2cdaf60569721655857d49ffe2ce81e10fde8c45946"
+  ],
+  "vulnerable_address": "0x607742A2Adea4037020e11Bb67CB98E289E3eC7D",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0xfa461e33",
+  "type": "access-control",
+  "attacker_profit": 61649.72979062261,
+  "source_case_id": "dfhl-0641",
+  "fix_description": "The uniswapV3SwapCallback (0xfa461e33) trusts msg.sender as a legitimate V3 pool without validation. Add verification that msg.sender is a pool deployed by the canonical Uniswap V3 factory (compute expected pool address from token0, token1, fee and verify msg.sender matches).",
+  "attack_date": "2025-04-11",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a short but protocol-specific multi-step price/manipulation attack: flash-loan BUSD, swap into UN, abuse repeated pair.skim() calls after asymmetric token transfers, then swap back and repay. It requires understanding UniswapV2 pair reserve/balance mechanics and the non-obvious skim abuse pattern, so it is more involved than a basic access control bug but not a deeply complex cross-protocol chain."
+}

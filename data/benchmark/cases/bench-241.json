@@ -1,0 +1,22 @@
+{
+  "id": "bench-241",
+  "name": "- LaunchZone",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230227---launchzone---access-control",
+  "chain": "bsc",
+  "block_number": 26024420,
+  "attack_txs": [
+    "0xaee8ef10ac816834cd7026ec34f35bdde568191fe2fa67724fcf2739e48c3cae"
+  ],
+  "vulnerable_address": "0x6d8981847eb3cc2234179d0f0e72f6b6b2421a01",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x4f1f05bc",
+  "type": "access-control",
+  "attacker_profit": 87319.9270610696,
+  "source_case_id": "dfhl-0368",
+  "fix_description": "Function 0x4f1f05bc is a multi-hop swap router that executes token swaps using contract-held funds. It has no access control \u2014 any caller can invoke it to swap tokens held by the contract to arbitrary destinations. Fix: add require(msg.sender == governance() || msg.sender == owner()) to restrict who can trigger swaps with contract funds.",
+  "attack_date": "2023-02-27",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is more than a trivial single-bug case: it uses a flash loan, AMM reserve math, and a protocol-specific abuse of UniswapV2Pair.skim through repeated token transfers to manipulate balances before swapping back. The PoC is still fairly short and self-contained, so an experienced auditor could likely reproduce it within 30 minutes to 2 hours once they recognize the skim/balance-reserve desync pattern."
+}

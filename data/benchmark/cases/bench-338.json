@@ -1,0 +1,23 @@
+{
+  "id": "bench-338",
+  "name": "- DFS",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221230---dfs---insufficient-validation--flashloan",
+  "chain": "bsc",
+  "block_number": 24349822,
+  "attack_txs": [
+    "0xcddcb447d64c2ce4b3ac5ebaa6d42e26d3ed0ff3831c08923c53ea998f598a7c"
+  ],
+  "vulnerable_address": "0x2B806e6D78D8111dd09C58943B9855910baDe005",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "DFS.sol",
+  "function": "_transfer",
+  "type": "accounting-error",
+  "attacker_profit": 1450.8037746371674,
+  "source_case_id": "dfhl-0052",
+  "fix_description": "In _transfer, when interacting with the pair, the sender balance is reduced by both amount and fee (_balance[from].sub(amount).sub(fee)), but should only be reduced by amount. The fee should be deducted from the transferred amount, not charged additionally. Fix: _balance[from] = _balance[from].sub(amount); and send (amount - fee) to recipient.",
+  "attack_date": "2022-12-30",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a multi-step AMM/pair-manipulation exploit using a flash swap, reserve/sync/skim abuse, token transfers, and final draining swap before repayment. It requires understanding PancakePair mechanics and protocol-specific token behavior, but the attack path is still fairly direct and the PoC is well under hard-tier complexity."
+}

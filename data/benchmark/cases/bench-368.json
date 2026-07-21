@@ -1,0 +1,22 @@
+{
+  "id": "bench-368",
+  "name": "UnverifiedContr_0x00C409",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240417-unverifiedcontr_0x00c409---unverified-external-call",
+  "chain": "ethereum",
+  "block_number": 19675513,
+  "attack_txs": [
+    "0x998f1da472d927e74405b0aa1bbf5c1dbc50d74b39977bed3307ea2ada1f1d3f"
+  ],
+  "vulnerable_address": "0x00C409001C1900DdCdA20000008E112417DB003b",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0xba381f8f",
+  "type": "input-validation",
+  "attacker_profit": 55228.98060619242,
+  "source_case_id": "dfhl-0511",
+  "fix_description": "In function 0xba381f8f, the handler (func_021E) calls external addresses provided by the user in calldata (getBalance calls on user-supplied addresses). These addresses are not validated against a whitelist, allowing attackers to pass malicious contracts that return fake values. Add whitelist validation for target addresses before making external calls.",
+  "attack_date": "2024-04-17",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a short but protocol-specific multi-step attack: flash loan BUSD, swap into UN, abuse the pair via repeated token transfers plus skim to manipulate balances/reserves, then swap back for profit and repay. It requires understanding UniswapV2 pair accounting and skim behavior rather than just spotting a trivial access control bug, but the PoC is still compact and not deeply complex."
+}

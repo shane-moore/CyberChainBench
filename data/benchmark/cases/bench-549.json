@@ -1,0 +1,23 @@
+{
+  "id": "bench-549",
+  "name": "Uerii Token",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221017-uerii-token---access-control",
+  "chain": "ethereum",
+  "block_number": 15767838,
+  "attack_txs": [
+    "0xf4a3d0e01bbca6c114954d4a49503fc94dfdbc864bded5530b51a207640d86b5"
+  ],
+  "vulnerable_address": "0x418C24191aE947A78C99fDc0e45a1f96Afb254BE",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Token.sol",
+  "function": "mint",
+  "type": "access-control",
+  "attacker_profit": 2436.37641745613,
+  "source_case_id": "dfhl-0096",
+  "fix_description": "mint is public with no access control. Anyone can call it to mint 100M tokens to themselves for free. Add onlyOwner modifier or remove the function entirely.",
+  "attack_date": "2022-10-17",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a straightforward missing access control exploit: the attacker simply calls an unrestricted mint() function and swaps the minted tokens through Uniswap. The PoC is short, linear, and requires minimal protocol-specific reasoning beyond basic token swaps."
+}

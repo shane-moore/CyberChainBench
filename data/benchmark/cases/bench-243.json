@@ -1,0 +1,24 @@
+{
+  "id": "bench-243",
+  "name": "- EFVault",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230224---efvault---storage-collision",
+  "chain": "ethereum",
+  "block_number": 16696240,
+  "attack_txs": [
+    "0x1fe5a53405d00ce2f3e15b214c7486c69cbc5bf165cf9596e86f797f62e81914"
+  ],
+  "vulnerable_address": "0x80cb73074a6965f60df59bf8fa3ce398ffa2702c",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0xbdb515028a6fa6cd1634b5a9651184494abfd336",
+  "file": "Vault.sol",
+  "function": "constructor",
+  "type": "accounting-error",
+  "attacker_profit": 3422199.6097975415,
+  "source_case_id": "dfhl-0370",
+  "fix_description": "Storage collision after proxy upgrade: the new implementation constructor/storage layout reordered variables, causing controller to read from wrong slot. assetsPerShare() then calls incorrect address. Fix: in the new implementation constructor/variable declarations, maintain exact same storage layout as previous version. Only append new variables at the end. Use storage gaps (__gap) pattern.",
+  "attack_date": "2023-02-24",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is essentially a single direct call to redeem() after minting/funding ENF balance in the test, with no flash loan, routing, or multi-contract interaction. This suggests a very straightforward protocol/accounting or input-validation issue that an experienced auditor could reproduce quickly."
+}

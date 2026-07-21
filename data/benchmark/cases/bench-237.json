@@ -1,0 +1,31 @@
+{
+  "id": "bench-237",
+  "name": "- ParaSpace NFT",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230317---paraspace-nft---flashloan--scaledbalanceof-manipulation",
+  "chain": "ethereum",
+  "block_number": 16845559,
+  "attack_txs": [
+    "0xe3f0d14cfb6076cabdc9057001c3fafe28767a192e88005bc37bd7d385a1116a"
+  ],
+  "vulnerable_address": "0xd9ffe514e96014fa79bc0c33874dd2ef20678f6f",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x638a98bbb92a7582d07c52ff407d49664dc8b3ee",
+  "file": "GenericLogic.sol",
+  "function": "_getUserBalanceForERC20",
+  "type": "price-manipulation",
+  "attacker_profit": 4947338.598268518,
+  "source_case_id": "dfhl-0363",
+  "fix_description": "In _getUserBalanceForERC20, uses manipulable on-chain price/balance values. Fix: use TWAP oracle or add flash-loan protection.",
+  "normal_txs": [
+    "0x2bc4ea3f060255535d524a3b8a3f29b151685160ef6aa2eca60658c0ce551dfc",
+    "0x0ff8c602b5f2a068e4be65bb2286e1e946cdfac77d7ab00c54ff10c40966b692",
+    "0x6a87fdfdb27177b121b24998eeb602345712cad20bfa35866d6be87be2c91bf0",
+    "0x5e301fd9b17059c36c3b5fb465bc7ef036f88f9b2a511c3775bd878328deaddc",
+    "0xa42f2be4b01b9fae5b161e7626d6f4f1bf899f71dfa2f9c6d42ef0fc396e24d8"
+  ],
+  "attack_date": "2023-03-17",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is a clear multi-step price manipulation using a flash loan, two interactions with the vulnerable swap contract, and PancakeSwap V3 routing to distort and then unwind ARA pricing. It requires understanding protocol-specific swap behavior and token flow across several contracts, but the attack path is still fairly direct and the PoC is concise."
+}

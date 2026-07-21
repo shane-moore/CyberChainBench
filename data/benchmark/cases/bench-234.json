@@ -1,0 +1,31 @@
+{
+  "id": "bench-234",
+  "name": "SafeMoon Hack",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230328-safemoon-hack---access-control",
+  "chain": "bsc",
+  "block_number": 26864890,
+  "attack_txs": [
+    "0x48e52a12cb297354a2a1c54cbc897cf3772328e7e71f51c9889bb8c5e533a934"
+  ],
+  "vulnerable_address": "0xeb11a0a0bef1ac028b8c2d4cd64138dd5938ca7a",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x42981d0bfbaf196529376ee702f2a9eb9092fcb5",
+  "file": "Safemoon.sol",
+  "function": "burn",
+  "type": "input-validation",
+  "attacker_profit": 8561831.871338692,
+  "source_case_id": "dfhl-0359",
+  "fix_description": "In burn, the function is public without access control and accepts an arbitrary from address. Anyone can burn tokens from any address (including the LP pair). Attacker burns pair tokens to manipulate price. Fix: add onlyOwner/onlyBridge modifier, or require(from == msg.sender).",
+  "normal_txs": [
+    "0xb88e1b418c7fe1b434614f94d408f5ec386f84cbe590081c3e8fcebfb9f50f58",
+    "0x264f2ccd71cf8363ba9a6d3ab0a3264092516ceecedf74eb2b4480b80fa762a2",
+    "0x7d2cb88b17b0721e6c0b15d60d880adacb3ffd65967d3b89876b88790a0a1fdb",
+    "0xdb8cd8f6bfeac0b2839b07366c9fbb5b61ba00772763b866827e220e501170ec",
+    "0x5c005be00b624e377a13880137522f54a7c7095825a6e3deb5542fd5729fccbc"
+  ],
+  "attack_date": "2023-03-28",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The core issue is an obvious missing access control on public mint/burn functions, and the PoC shows both a trivial direct mint and a simple flash-loan-assisted burn manipulation. While it touches a pair sync and swap router, the exploit logic is still straightforward and likely writable by an experienced auditor well under 30 minutes."
+}

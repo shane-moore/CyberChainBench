@@ -1,0 +1,31 @@
+{
+  "id": "bench-77",
+  "name": "GoodCompound",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231211-goodcompound---price-manipulation",
+  "chain": "ethereum",
+  "block_number": 18759541,
+  "attack_txs": [
+    "0x1106418384414ed56cd7cbb9fedc66a02d39b663d580abc618f2d387348354ab"
+  ],
+  "vulnerable_address": "0x15759ab2fa2195135bd9d9bfd85e39a8f8f8423c",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x7b7246c78e2f900d17646ff0cb2ec47d6ba10754",
+  "file": "UniswapV2SwapHelper.sol",
+  "function": "maxSafeTokenAmount",
+  "type": "price-manipulation",
+  "attacker_profit": 14039.232395713341,
+  "source_case_id": "dfhl-0195",
+  "fix_description": "In maxSafeTokenAmount, pair.getReserves() returns the instantaneous reserve which can be manipulated via flash loans. Fix: use a TWAP oracle or time-weighted reserve values instead of spot reserves to determine the safe swap amount. Alternatively, add a slippage check or compare against a cached/historical reserve value.",
+  "normal_txs": [
+    "0x46cdf03000ab6d1ee5566a4f171c9679c7be78e60b9974ab9acbf41c86d839af",
+    "0x6ae43c229c31e7d7c0dcd577886cbfc62c1579e707325c2780b0e3effad8e759",
+    "0x1525b71f997b35e9951c1b90785e311c1d6798d6b1c4026ad3ccee1ce6cace3e",
+    "0xbe2d73077ed62ae15bf409d62934d3926478e8a7c25b240ef30dca5cfdb2f299",
+    "0x0aa4f52680f909eb0f383d6ea5c67a5a5ea9bb8d6b39031c8e49b1c1c45bfebc"
+  ],
+  "attack_date": "2023-12-11",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is more than a trivial single-bug case: it uses a flash loan, interacts with a specific AMM pair, and relies on understanding how repeated token transfers plus skim() can manipulate pair balances/reserves before swapping back. While the PoC is short, reproducing it still requires protocol-specific reasoning about UniswapV2-style accounting rather than an obvious access-control or basic reentrancy bug."
+}

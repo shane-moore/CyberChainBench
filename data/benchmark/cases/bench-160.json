@@ -1,0 +1,31 @@
+{
+  "id": "bench-160",
+  "name": "MintoFinance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230723-mintofinance---signature-replay",
+  "chain": "bsc",
+  "block_number": 30214353,
+  "attack_txs": [
+    "0x53be95dc8ffbc80060215133f76f48df35deef3cd7e1803e24b1e2f8aa53440b"
+  ],
+  "vulnerable_address": "0x0d116ed40831fef8e21ece57c8455ae3b1e4041b",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0xdbf1c56b2ad121fe705f9b68225378aa6784f3e5",
+  "file": "ReferralCrowdsale.sol",
+  "function": "buyTokens",
+  "type": "input-validation",
+  "attacker_profit": 9593.86093077189,
+  "source_case_id": "dfhl-0281",
+  "fix_description": "Add a nonce or used-signature mapping to prevent signature replay. The current signature verification only checks signer role and expiration time, but does not track whether a signature has already been consumed. Add: mapping(bytes32 => bool) usedSignatures; and mark the signature hash as used after first successful verification.",
+  "normal_txs": [
+    "0xd69273ee00873098709ab7d3b47e65e213c2379de2e6b6bb78261d788422b1f9",
+    "0xc8693f1e7e0f4cdfa1f5e87f4a406fd7a5cc87d422a219e77ebcdf81d8ff39c0",
+    "0x1e9b708e1408b1043fcff5f49b023a25a78090c087b979fdfdf23c362b7037af",
+    "0x49b7df06802756e82c01ae85cf6c7c429334b02d76d87c600ffcdb612dff534e",
+    "0x36c37d4909c649cf36df0c94600ac28205b48f97c4ba5c2e36c9ace82168eb63"
+  ],
+  "attack_date": "2023-07-23",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very straightforward fake-token/payment validation bypass: the attacker sets the payment token to their own contract and implements transferFrom to always return true, then calls buyTokens once and swaps the received tokens. It is a short PoC with essentially one exploit interaction plus a sell step, requiring little protocol-specific knowledge beyond spotting missing transfer/payment verification."
+}

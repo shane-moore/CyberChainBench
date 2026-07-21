@@ -1,0 +1,23 @@
+{
+  "id": "bench-174",
+  "name": "RodeoFinance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230711-rodeofinance---twap-oracle-manipulation",
+  "chain": "arbitrum",
+  "block_number": 110043453,
+  "attack_txs": [
+    "0xb1be5dee3852c818af742f5dd44def285b497ffc5c2eda0d893af542a09fb25a"
+  ],
+  "vulnerable_address": "0xf3721d8a2c051643e06bf2646762522fa66100da",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "OracleTWAP.sol",
+  "function": "latestAnswer",
+  "type": "price-manipulation",
+  "attacker_profit": 269503.6895825267,
+  "source_case_id": "dfhl-0293",
+  "fix_description": "The TWAP implementation uses only 4 price samples over 2 hours, which is too short to resist manipulation. Increase the number of samples and observation window, or use a more robust oracle (e.g. Chainlink) as the underlying price source instead of a manipulable on-chain oracle.",
+  "attack_date": "2023-07-11",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit requires understanding a protocol-specific oracle manipulation and how Rodeo\u2019s health factor/LP pricing can be bypassed, then chaining several swaps plus a flash loan across Camelot, Uniswap V3, Balancer, and the Investor contract. While the PoC itself is fairly short, reproducing the exploit depends on prior multi-transaction TWAP manipulation context and multi-contract DeFi interaction, which is beyond a simple one-step bug."
+}

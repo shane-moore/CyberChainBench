@@ -1,0 +1,23 @@
+{
+  "id": "bench-519",
+  "name": "Curve LlamaLend",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/README.md#20260302-curve-llamalend---share-price-manipulation",
+  "chain": "ethereum",
+  "block_number": 24566937,
+  "attack_txs": [
+    "0xb93506af8f1a39f6a31e2d34f5f6a262c2799fef6e338640f42ab8737ed3d8a4"
+  ],
+  "vulnerable_address": "0xb45ad160634c528Cc3D2926d9807104FA3157305",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "sDola.sol",
+  "function": "totalAssets",
+  "type": "price-manipulation",
+  "attacker_profit": 45970.707427722096,
+  "source_case_id": "dfhl-0682",
+  "fix_description": "The root cause is that Curve LlamaLend liquidation mechanism is incompatible with atomically-changable oracles. The attacker donates to sDOLA to atomically inflate its share price (totalAssets uses balanceOf), which paradoxically triggers liquidations on LlamaLend. Fix: use TWAP or time-delayed oracle for sDOLA pricing in LlamaLend, or add donation resistance (internal accounting instead of balanceOf) in totalAssets.",
+  "attack_date": "2026-03-02",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This PoC chains nested flash loans, multiple Curve/LLAMMA/Yearn/sDOLA interactions, controller loan creation/repayment, liquidation of protocol users via a helper contract, and state-sensitive accounting manipulation. Writing it requires deep understanding of LlamaLend/LLAMMA and several external protocols, with many coordinated steps and non-obvious sequencing well beyond a straightforward exploit."
+}

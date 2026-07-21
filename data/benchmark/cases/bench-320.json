@@ -1,0 +1,23 @@
+{
+  "id": "bench-320",
+  "name": "Novax",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240806-novax---price-manipulation",
+  "chain": "bsc",
+  "block_number": 41116211,
+  "attack_txs": [
+    "0xb1ad1188d620746e2e64785307a7aacf2e8dbda4a33061a4f2fbc9721048e012"
+  ],
+  "vulnerable_address": "0x55C9EEbd368873494C7d06A4900E8F5674B11bD2",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "TokenStake.sol",
+  "function": "withdraw",
+  "type": "price-manipulation",
+  "attacker_profit": 24759.490169367073,
+  "source_case_id": "dfhl-0457",
+  "fix_description": "In withdraw, usdToToken converts USD value to token amount using an oracle (IOracle.convertUsdBalanceDecimalToTokenDecimal). If the oracle reads manipulable AMM price, attacker deflates token price to receive more tokens on withdrawal than originally staked. Fix: use TWAP or Chainlink price feed in the oracle, or lock withdrawal amount at stake time.",
+  "attack_date": "2024-08-06",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This is a short but multi-step DeFi exploit: flash swap USDT, manipulate the token price via swaps, stake at the distorted valuation, reverse the price move, then withdraw using the stale USDT-denominated value. It requires understanding AMM pricing, sandwich-style valuation abuse, and the protocol\u2019s stake/withdraw accounting, but the PoC itself is still fairly compact and straightforward once identified."
+}

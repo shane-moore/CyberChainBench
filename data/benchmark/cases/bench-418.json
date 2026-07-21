@@ -1,0 +1,23 @@
+{
+  "id": "bench-418",
+  "name": "BarleyFinance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240128-barleyfinance---reentrancy",
+  "chain": "ethereum",
+  "block_number": 19106655,
+  "attack_txs": [
+    "0x995e880635f4a7462a420a58527023f946710167ea4c6c093d7d193062a33b01"
+  ],
+  "vulnerable_address": "0x04c80Bb477890F3021F03B068238836Ee20aA0b8",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "DecentralizedIndex.sol",
+  "function": "flash",
+  "type": "reentrancy",
+  "attacker_profit": 117927.06881657963,
+  "source_case_id": "dfhl-0569",
+  "fix_description": "Add reentrancy guard (nonReentrant modifier) to flash, or follow checks-effects-interactions pattern to update state before making external calls.",
+  "attack_date": "2024-01-28",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is a multi-step DeFi attack involving a flash loan, token purchase, liquidity addition, mass deployment of helper contracts, repeated airdrop claims, then liquidity removal and token dump. It requires understanding protocol-specific reward logic and LP-based eligibility abuse, but the execution flow is still fairly direct and not deeply complex."
+}

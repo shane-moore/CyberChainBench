@@ -1,0 +1,24 @@
+{
+  "id": "bench-69",
+  "name": "PineProtocol",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231222-pineprotocol---business-logic-flaw",
+  "chain": "ethereum",
+  "block_number": 18799488,
+  "attack_txs": [
+    "0xec7523660f8b66d9e4a5931d97ad8b30acc679c973b20038ba4c15d4336b393d"
+  ],
+  "vulnerable_address": "0x2405913d54fC46eEAF3Fb092BfB099F46803872f",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "ERC721LendingPool02.sol",
+  "function": "flashLoan",
+  "type": "input-validation",
+  "attacker_profit": 112.1646399,
+  "source_case_id": "dfhl-0186",
+  "_review_note": "DISPUTED: vulnerable_address is the new contract (has whitelistedIntermediaries) but vulnerability is in the old contract. Shared pool between old/new contracts. Profit only $112.",
+  "fix_description": "In flashLoan(), validate that _reserve is a whitelisted token address. Currently any token can be passed as _reserve, allowing attackers to borrow from _fundSource for arbitrary tokens that the fund source holds and has approved.",
+  "attack_date": "2023-12-22",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The PoC itself is short, but the exploit depends on understanding protocol-specific lending/flashloan accounting across two Pine lending pool contracts and the vault repayment invariant failure. It is a multi-step attack using one pool\u2019s flash loan to repay another pool and then settling by direct vault transfer, which is not a totally generic bug pattern."
+}

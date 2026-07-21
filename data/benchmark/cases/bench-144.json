@@ -1,0 +1,23 @@
+{
+  "id": "bench-144",
+  "name": "EAC",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230829-eac---price-manipulation",
+  "chain": "bsc",
+  "block_number": 31273019,
+  "attack_txs": [
+    "0x477f9ee698ac8ae800ffa012ab52fd8de39b58996245c5e39a4233c1ae5f1baa"
+  ],
+  "vulnerable_address": "0xb803ed66ab449d80ed12cacf83eae5147fdc6922",
+  "has_public_source": false,
+  "fixable": true,
+  "proxy_address": "0xa08a40e0f11090dcb09967973df82040bff63561",
+  "function": "0xe6a24c3f",
+  "type": "price-manipulation",
+  "attacker_profit": 7867.460072736408,
+  "source_case_id": "dfhl-0264",
+  "fix_description": "Function 0xe6a24c3f swaps the contract token balance via router with no slippage protection (minOut=0). Attacker manipulates the DEX pair price first, then triggers this function to make the contract swap at an extremely unfavorable rate. Fix by adding minimum output amount check (slippage protection) or using TWAP to validate the swap price is reasonable.",
+  "attack_date": "2023-08-29",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is a very short flash-loan-funded, two-swap exploit with a single critical external call to the vulnerable proxy in between. It does not require deep protocol internals or complex state reasoning, and an experienced auditor could reproduce this pattern quickly once the missing validation/access-control issue is identified."
+}

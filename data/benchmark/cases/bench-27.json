@@ -1,0 +1,31 @@
+{
+  "id": "bench-27",
+  "name": "Nomad Bridge",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220802-nomad-bridge---business-logic-flaw--incorrect-acceptable-merkle-root-checks",
+  "chain": "ethereum",
+  "block_number": 15259101,
+  "attack_txs": [
+    "0xa5fe9d044e4f3e5aa5bc4c0709333cd2190cba0f4e7f16bcf73f49f83e4a5460"
+  ],
+  "vulnerable_address": "0xb92336759618f55bd0f8313bd843604592e27bd8",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x5d94309e5a0090b165fa4181519701637b6daeba",
+  "file": "Replica.sol",
+  "function": "process",
+  "type": "input-validation",
+  "attacker_profit": 2288040.423571263,
+  "source_case_id": "dfhl-0131",
+  "fix_description": "In process, add a check that messages[_messageHash] != bytes32(0) before calling acceptableRoot. The default mapping value 0x00 was accidentally marked as a trusted root during initialize, allowing unproven messages to be processed. The fix ensures only messages that have been explicitly proven can be processed.",
+  "normal_txs": [
+    "0x53a7924e2e66053fa49c0fc27969891302ca0ba25e2ce8138ee3ba02f8e0e49a",
+    "0x770f93303dcf8bf368a8cd55f969b6bbdd8cbce3fd86ec790621a887fe8e0406",
+    "0x52bbf6bf0e694046a2c9c19c82f6c709fd20384a81f38532b084daee65387af0",
+    "0x08d5d83608f0a6a344d8021ff9db9d2f9e97695505824f6c858f1f17a693811c",
+    "0xa691d0cd3f8f63d65eabca171c85e12732d0540d4d84e9888896593aa7f0c43d"
+  ],
+  "attack_date": "2022-08-02",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The exploit is essentially a single-call replay/copy-paste of an already valid bridge message with only the recipient address changed, requiring no flash loans, pricing logic, or complex multi-contract sequencing. Although the underlying bridge bug is subtle, writing this PoC from the provided transaction data is straightforward and well within 30 minutes for a competent auditor."
+}

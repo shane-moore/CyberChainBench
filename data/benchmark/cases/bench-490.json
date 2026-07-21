@@ -1,0 +1,23 @@
+{
+  "id": "bench-490",
+  "name": "UNI",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250307-uni---logic-flaw",
+  "chain": "ethereum",
+  "block_number": 21992034,
+  "attack_txs": [
+    "0x6c8aed8d0eab29416cd335038cd5ee68c5e27bfb001c9eac7fc14c7075ed4420"
+  ],
+  "vulnerable_address": "0xdDF309b8161aca09eA6bBF30Dd7cbD6c474FF700",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "SamPrisonman.sol",
+  "function": "marketAndTIFFs",
+  "type": "accounting-error",
+  "attacker_profit": 14225.708013795313,
+  "source_case_id": "dfhl-0652",
+  "fix_description": "Logic flaw in marketAndTIFFs function leading to incorrect accounting.",
+  "attack_date": "2025-03-07",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a short but protocol-specific multi-step attack: it uses a flash loan, swaps through a UniswapV2 pair, repeatedly abuses skim/reserve accounting with the fee-on-transfer token, then swaps back for profit. An experienced auditor could build it without extreme effort, but it requires understanding AMM reserve mechanics and the specific token/pair behavior rather than just spotting a trivial access control bug."
+}

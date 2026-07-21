@@ -1,0 +1,22 @@
+{
+  "id": "bench-288",
+  "name": "P719Token",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20241011-p719token---price-manipulation-inflate-attack",
+  "chain": "bsc",
+  "block_number": 43023423,
+  "attack_txs": [
+    "0x9afcac8e82180fa5b2f346ca66cf6eb343cd1da5a2cd1b5117eb7eaaebe953b3"
+  ],
+  "vulnerable_address": "0x6beee2b57b064eac5f432fc19009e3e78734eabc",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0xa9059cbb",
+  "type": "price-manipulation",
+  "attacker_profit": 310464.31844018464,
+  "source_case_id": "dfhl-0422",
+  "fix_description": "Token has built-in AMM where getReserves() returns (address(this).balance, balanceOf(this)). transfer() triggers burns from the contract own token balance (the LP reserve). Attacker calls transfer 688 times, each time burning tokens from the LP reserve, reducing token reserve while BNB reserve stays constant. This inflates token price. Attacker then swaps token->BNB at inflated price. Fix: burn from sender/recipient balance instead of contract balance, or use separate accounting variables for LP reserves independent of balanceOf(this).",
+  "attack_date": "2024-10-11",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This exploit requires a non-obvious understanding of the victim token\u2019s custom transfer/sell logic, plus a sophisticated multi-contract setup using a PancakeV3 flash loan, dozens of helper contracts, staged buys, token consolidation, and distributed sells to manipulate internal accounting and price. Writing this PoC would likely take well over 2 hours because the attack depends on protocol-specific behavior rather than a standard bug pattern."
+}

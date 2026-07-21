@@ -1,0 +1,31 @@
+{
+  "id": "bench-04",
+  "name": "Indexed Finance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2021/README.md#20211015-indexed-finance---price-manipulation",
+  "chain": "ethereum",
+  "block_number": 13417949,
+  "attack_txs": [
+    "0x44aad3b853866468161735496a5d9cc961ce5aa872924c5d78673076b1cd95aa"
+  ],
+  "vulnerable_address": "0x120c6956d292b800a835cb935c9dd326bdb4e011",
+  "has_public_source": true,
+  "fixable": false,
+  "proxy_address": "",
+  "file": "MarketCapSqrtController.sol",
+  "function": "updateMinimumBalance",
+  "type": "price-manipulation",
+  "attacker_profit": 11048635.783368023,
+  "source_case_id": "dfhl-0007",
+  "normal_txs": [
+    "0x4dfebbe16a1139091c09b424ff76f39928279fc08eb88b104dc0ff1c438d404b",
+    "0x45eef0fc7f71efa69a70f6816d0338ab631281440e34689ca5f085029aba936f",
+    "0xe90bc17193f2fff73eb64b103700bb6db5364af6cf4f81252420021861101a85",
+    "0x72b1ff306754584000c5e026c138d5519ab5125c7b86f9ebdf6ee4d5a6330ccd",
+    "0xcb9622376b22dd8c8203ff6d9fd2f960bf4e674e4ea5608ac34e485344e1329b"
+  ],
+  "fix_description": "Fix the _estimatePoolValue formula in updateMinimumBalance: do not use a single token balance to estimate pool value when weights are not updated in real-time. Use TWAP or multiple token balances to prevent flash-loan manipulation of poolValue, which cascades into manipulated minimumBalance and ultimately inflated token weights via gulp.",
+  "attack_date": "2021-10-15",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This PoC uses a long, protocol-specific multi-step attack chain: nested flash swaps across multiple pairs, reindexing and minimum-balance manipulation in Indexed Finance, iterative pool swaps/mints/burns, and custom repayment handling. Writing it requires deep understanding of the pool/controller internals and Balancer-like accounting quirks, well beyond a straightforward exploit pattern."
+}

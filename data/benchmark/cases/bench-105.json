@@ -1,0 +1,23 @@
+{
+  "id": "bench-105",
+  "name": "Raft_fi",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231110-raft_fi---donate-inflation-exchangerate--rounding-error",
+  "chain": "ethereum",
+  "block_number": 18543486,
+  "attack_txs": [
+    "0xfeedbf51b4e2338e38171f6e19501327294ab1907ab44cfd2d7e7336c975ace7"
+  ],
+  "vulnerable_address": "0xD0Db31473CaAd65428ba301D2174390d11D0C788",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "ERC20Indexable.f.sol",
+  "function": "mint",
+  "type": "accounting-error",
+  "attacker_profit": 27680.272781739768,
+  "source_case_id": "dfhl-0222",
+  "fix_description": "In mint, the division amount.divUp(storedIndex) is vulnerable to first-depositor share inflation. When storedIndex is manipulated to a large value via donation, subsequent mints produce near-zero shares. Fix by initializing with dead shares or using virtual balance accounting to bound the minimum effective index.",
+  "attack_date": "2023-11-10",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit requires understanding a protocol-specific index inflation/rounding issue in Raft, then chaining it with liquidation, repeated tiny managePosition calls, collateral redemption, additional borrowing, and finally swap routing to realize profit. While the PoC is not extremely long, it is clearly more than a trivial single-bug exploit and needs multi-step DeFi reasoning across several contracts."
+}

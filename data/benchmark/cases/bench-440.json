@@ -1,0 +1,23 @@
+{
+  "id": "bench-440",
+  "name": "ABCCApp",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250823-abccapp---lack-of-access-control",
+  "chain": "bsc",
+  "block_number": 58615055,
+  "attack_txs": [
+    "0xee4eae6f70a6894c09fda645fb24ab841e9847a788b1b2e8cb9cc50c1866fb12"
+  ],
+  "vulnerable_address": "0x1bc016c00f8d603c41a582d5da745905b9d034e5",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "ABCCApp.sol",
+  "function": "addFixedDay",
+  "type": "access-control",
+  "attacker_profit": 10001.989439881452,
+  "source_case_id": "dfhl-0596",
+  "fix_description": "addFixedDay is public with no access control. Anyone can modify the fixedDay state variable which affects staking/reward time calculations. Add onlyOwner modifier.",
+  "attack_date": "2025-08-23",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The exploit is a short, direct chain: take a flash loan, call deposit, abuse addFixedDay to fast-forward state, claim DDDD, and swap to BUSD. It relies on an obvious protocol-specific logic flaw with only a few external calls and minimal cross-protocol complexity, so a competent auditor could likely reproduce it quickly."
+}

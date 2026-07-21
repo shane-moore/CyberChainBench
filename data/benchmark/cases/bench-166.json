@@ -1,0 +1,23 @@
+{
+  "id": "bench-166",
+  "name": "FFIST",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230720-ffist---business-logic-flaw",
+  "chain": "bsc",
+  "block_number": 30113118,
+  "attack_txs": [
+    "0x199c4b88cab6b4b495b9d91af98e746811dd8f82f43117c48205e6332db9f0e0"
+  ],
+  "vulnerable_address": "0x80121da952a74c06adc1d7f85a237089b57af347",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "GoldCoin.sol",
+  "function": "_airdrop",
+  "type": "accounting-error",
+  "attacker_profit": 52781.191603952604,
+  "source_case_id": "dfhl-0286",
+  "fix_description": "Remove the _airdrop function. Same vulnerability pattern as Utopia: attacker controls tAmount to make airdropAddress equal the pair address, overwriting its balance to 1 via direct assignment (_balances[airdropAddress] = airdropAmount).",
+  "attack_date": "2023-07-20",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit flow is only a few steps, but it depends on understanding a protocol-specific token mechanic: deriving a special address from lastAirdropAddress, block.number, and the pair to trigger a reserve/accounting distortion before calling sync(). This is not a generic access-control bug and requires reading the token logic plus AMM reserve behavior, though the PoC itself is still fairly short and simple to execute."
+}

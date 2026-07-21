@@ -1,0 +1,27 @@
+{
+  "id": "bench-300",
+  "name": "WXETA",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240915-wxeta---logic-flaw",
+  "chain": "bsc",
+  "block_number": 42284162,
+  "attack_txs": [
+    "0x614da880bd46e98131accd9a83917abf3d56dac94caf13ae98eeff504eea3704"
+  ],
+  "vulnerable_address": "0x7c83dc9221cfd48ac760710b7f1cd7b76ff6fcc2",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x05c2dd9cf547c6cccf91245346e6e1bc9926cae7",
+  "file": "WXETA.sol",
+  "function": "initialize",
+  "type": "access-control",
+  "attacker_profit": 49051.20366756474,
+  "source_case_id": "dfhl-0435",
+  "fix_description": "In initialize, add s.initialized = true at the end of the function. The current code checks require(!s.initialized) but never sets it to true, allowing anyone to re-initialize the contract and take over ownership.",
+  "normal_txs": [
+    "0x54f272a3f069beee24ea0f26d37426d6553b37c5d18c356c1398b86672fa75ba"
+  ],
+  "attack_date": "2024-09-15",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very short, direct exploit based on an obvious missing access control/unsafe initialization pattern: the attacker calls initialize(), mints an enormous amount to the pair, then drains value via a simple swap. It requires minimal protocol-specific reasoning and only a couple of external interactions, so a competent auditor could reproduce it quickly."
+}

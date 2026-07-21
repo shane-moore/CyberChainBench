@@ -1,0 +1,24 @@
+{
+  "id": "bench-450",
+  "name": "MulticallWithETH",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250726-multicallwitheth---arbitrary-call",
+  "chain": "bsc",
+  "block_number": 55371343,
+  "attack_txs": [
+    "0x6da7be6edf3176c7c4b15064937ee7148031f92a4b72043ae80a2b3403ab6302"
+  ],
+  "vulnerable_address": "0x3DA0F00d5c4E544924bC7282E18497C4A4c92046",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "MulticallWithETH.sol",
+  "function": "aggregate",
+  "type": "input-validation",
+  "attacker_profit": 9969.265825453966,
+  "source_case_id": "dfhl-0608",
+  "fix_description": "In aggregate, validate callData to reject calls to token transfer functions (transferFrom, approve) that could drain funds from users who approved this contract. Alternatively, the contract should not accept token approvals at all \u2014 remove any functionality that causes users to approve tokens to this address.",
+  "notes": "Ambiguous case: the multicall contract itself has no bug (same design as Multicall3). The issue is that users approved tokens to this contract, and anyone can call aggregate with arbitrary callData (including transferFrom). May not be a contract vulnerability but rather a misuse/deployment issue.",
+  "attack_date": "2025-07-26",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a multi-step DeFi exploit involving a flash swap, token price/accounting manipulation via repeated calls, LP skim abuse, and final unwinding through swaps. It requires understanding protocol-specific token logic and AMM pair behavior rather than a simple generic bug, but the attack path is still fairly compact and not deeply cross-protocol or mathematically intricate."
+}

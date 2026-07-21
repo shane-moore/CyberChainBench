@@ -1,0 +1,34 @@
+{
+  "id": "bench-19",
+  "name": "Circle",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220816-circle---price-manipulation",
+  "chain": "ethereum",
+  "block_number": 15354438,
+  "attack_txs": [
+    "0xf1818f62c635e5c80ef16b7857da812c74ce330ebed46682b4d173bffe84c666"
+  ],
+  "vulnerable_address": "0xae461ca67b15dc8dc81ce7615e0320da1a9ab8d5",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "UniswapV2Pair.sol",
+  "type": "accounting-error",
+  "attacker_profit": 3558187.6418895554,
+  "annotation_hints": {
+    "function": {
+      "label": "TODO_FUNCTION",
+      "status": "missing",
+      "expected_schema": {
+        "type": "string",
+        "example": "withdraw"
+      },
+      "hint": "Primary vulnerable function name for the canonical benchmark case."
+    }
+  },
+  "function": "skim",
+  "source_case_id": "dfhl-0124",
+  "notes": "Disputed: vulnerable_address points to UniswapV2Pair but actual vulnerability is in MakerDAO CDP authorization (frob/flux). Function should be frob not skim. Type should be access-control not accounting-error. Limited public analysis available.",
+  "attack_date": "2022-08-16",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is a multi-step chain involving a Maker flash loan, interacting with Maker CDP internals (urns/frob/flux/join), withdrawing LP collateral, burning LP tokens, and finally swapping out the stolen asset. It is not a trivial pattern and requires protocol-specific understanding of Maker vault mechanics and collateral movement, but the PoC is still fairly compact and does not involve highly complex cross-transaction state reasoning."
+}

@@ -1,0 +1,24 @@
+{
+  "id": "bench-343",
+  "name": "MixedSwapRouter",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240531-mixedswaprouter---arbitrary-call",
+  "chain": "arbitrum",
+  "block_number": 216881056,
+  "attack_txs": [
+    "0xf57f041cb6d8a10e11edab50b84e49b59ff834c7d114d1e049cedd654c36194d"
+  ],
+  "vulnerable_address": "0x58637aaac44e2a2f190d9e1976e236d86d691542",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0xe3e98241cb99af7a452e94b9cf219aaa766e0869",
+  "file": "MixedSwapRouter.sol",
+  "function": "_validatePoolTokens",
+  "type": "input-validation",
+  "attacker_profit": 14251.276982538491,
+  "source_case_id": "dfhl-0485",
+  "fix_description": "The router allows arbitrary calls that can be used to transferFrom tokens approved by users. Fix _validatePoolTokens to properly restrict which target contracts and function selectors can be called, preventing arbitrary token transfers from users who approved the router.",
+  "attack_date": "2024-05-31",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is not a simple one-call bug: it requires understanding the router\u2019s swap/callback flow, crafting a fake pool contract, and abusing callback parameters to make the victim pay as the payer. Although the PoC is fairly short, it involves multiple contracts, CREATE2 setup, and protocol-specific logic rather than an obvious generic pattern."
+}

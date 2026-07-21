@@ -1,0 +1,24 @@
+{
+  "id": "bench-318",
+  "name": "VOW",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240813-vow---misconfiguration",
+  "chain": "ethereum",
+  "block_number": 20519309,
+  "attack_txs": [
+    "0x758efef41e60c0f218682e2fa027c54d8b67029d193dd7277d6a881a24b9a561"
+  ],
+  "vulnerable_address": "0x184497031808F2b6A2126886C712CC41f146E5dC",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "VSCTokenManager.sol",
+  "function": "tokensReceivedVOW",
+  "type": "accounting-error",
+  "attacker_profit": 1436938.9144043655,
+  "source_case_id": "dfhl-0455",
+  "fix_description": "getVOWVSCRate relies on usdRate values from VOW and VSC token contracts which were misconfigured, resulting in an extremely favorable exchange rate. tokensReceivedVOW uses this rate to mint VSC: attacker burns minimal VOW to mint massive VSC. Fix: add sanity bounds on the VOW/VSC rate (e.g., max mint ratio), or validate usdRate values are within expected ranges before computing the exchange.",
+  "notes": "Disputed case: team was testing usdRate changes on mainnet and a MEV bot exploited the 15-30 second window of misconfigured rate. Not a code vulnerability per se \u2014 operational error (testing on mainnet). Contract functioned as designed.",
+  "attack_date": "2024-08-13",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a multi-step exploit involving a Uniswap V2 flash swap callback, interaction with a protocol-specific token manager, draining value through vUSD/VOW and VOW/USDT pools, and repayment logic. It requires understanding the target protocol\u2019s flawed token/accounting behavior plus AMM reserve math, but the attack flow is still fairly linear and not deeply stateful or governance-level complex."
+}

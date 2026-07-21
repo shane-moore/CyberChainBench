@@ -1,0 +1,23 @@
+{
+  "id": "bench-25",
+  "name": "EtnProduct",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220804-etnproduct---business-logic-flaw",
+  "chain": "bsc",
+  "block_number": 20147975,
+  "attack_txs": [
+    "0x72321a3b50bb68ac3b46b0ab973b0e87b6c48ab73d23c4ba2cb73527f978d995"
+  ],
+  "vulnerable_address": "0x1292267f726e6F313972ec4e14578735473e1649",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "EtnProduct.sol",
+  "function": "addLiquidity",
+  "type": "accounting-error",
+  "attacker_profit": 7340.50180535533,
+  "source_case_id": "dfhl-0129",
+  "fix_description": "In addLiquidity, send LP tokens to the contract itself (address(this)) instead of msg.sender, preventing external callers from receiving free liquidity. Also consider adding access control to functions that trigger addLiquidity.",
+  "attack_date": "2022-08-04",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This is a multi-step exploit involving a flash loan, token swap, NFT/shop/product interactions, LP pair burn mechanics, and finally selling the manipulated token into a market contract. While the PoC is not very long, understanding why these protocol-specific steps inflate or unlock U value requires reading several custom contracts and DeFi flow assumptions, making it more than a trivial bug."
+}

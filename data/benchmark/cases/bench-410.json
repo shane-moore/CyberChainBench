@@ -1,0 +1,27 @@
+{
+  "id": "bench-410",
+  "name": "FILX DN404",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240210-filx-dn404---access-control",
+  "chain": "ethereum",
+  "block_number": 19196686,
+  "attack_txs": [
+    "0xbeef09ee9d694d2b24f3f367568cc6ba1dad591ea9f969c36e5b181fd301be82"
+  ],
+  "vulnerable_address": "0xe58acb560fc33e283ab70c700a0f2eed0e333e0a",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x2c7112245fc4af701ebf90399264a7e89205dad4",
+  "file": "LinearVesting.sol",
+  "function": "init",
+  "type": "access-control",
+  "attacker_profit": 168280.47666380237,
+  "source_case_id": "dfhl-0561",
+  "fix_description": "Add initialization protection to init(): either use OpenZeppelin initializer modifier, or add require(owner == address(0)) to ensure it can only be called once. Currently anyone can re-initialize and take ownership.",
+  "normal_txs": [
+    "0x4566b71626140be52119cb108e8940b11769a6cd75125ce3057d254a036ba004"
+  ],
+  "attack_date": "2024-02-10",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very short, direct exploit centered on an obvious initialization/access-control flaw: the attacker calls init on the victim proxy, withdraws the target token, then swaps it out on Uniswap. The PoC is well under 100 lines, uses only a couple of meaningful external interactions, and requires minimal protocol-specific reasoning beyond basic token liquidation."
+}

@@ -1,0 +1,22 @@
+{
+  "id": "bench-355",
+  "name": "GFOX",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240510-gfox---lack-of-access-control",
+  "chain": "ethereum",
+  "block_number": 19835925,
+  "attack_txs": [
+    "0x12fe79f1de8aed0ba947cec4dce5d33368d649903cb45a5d3e915cc459e751fc"
+  ],
+  "vulnerable_address": "0x11A4a5733237082a6C08772927CE0a2B5f8A86B6",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x7cb64759",
+  "type": "access-control",
+  "attacker_profit": 302335.37285260705,
+  "source_case_id": "dfhl-0497",
+  "fix_description": "In setMerkleRoot (0x7cb64759), there is no access control. The function directly writes arg0 to storage[0x03] (merkle root) without any msg.sender check. Add require(msg.sender == owner) to prevent unauthorized root updates.",
+  "attack_date": "2024-05-10",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a trivial access control issue: the attacker directly calls setMerkleRoot on the victim and then claims tokens with an empty proof. The PoC is very short, only uses two external calls, and requires no complex DeFi, flash loans, or multi-contract reasoning."
+}

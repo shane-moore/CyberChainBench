@@ -1,0 +1,31 @@
+{
+  "id": "bench-05",
+  "name": "SushiSwap Miso",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2021/README.md#20210916-sushiswap-miso---insufficient-validation",
+  "chain": "ethereum",
+  "block_number": 13237751,
+  "attack_txs": [
+    "0x78d6355703507f88f2090eb780d245b0ab26bf470eabdb004761cedf3b1cda44"
+  ],
+  "vulnerable_address": "0x76a4e9c8f54fe236b42ce9a84b4c33a6216834e4",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0xc2704dec22e552164dee240b20b840ea379b878e",
+  "file": "BatchAuction.sol",
+  "function": "batch",
+  "type": "accounting-error",
+  "attacker_profit": 3124996.447841257,
+  "source_case_id": "dfhl-0008",
+  "normal_txs": [
+    "0xf6dba64f2ab813ff3948eb5c5acdbca1811f13649e921b12f88c074572457493",
+    "0x625980302eff21d9145df92065538fdbbccb2d83de70166a4b58dd295b33770c",
+    "0x14f776406b32e0c683a878dfda22b136a19b349d61bfa8511763ab4ded03e4df",
+    "0xc6da3a92803014035f79b64ff4c91328b2fc229c3160595bdc1bccefdba21ff1",
+    "0x41c36cb5debfa6812adc0836694b70d2c5bfcedae0ca60202b322f3642ac0978"
+  ],
+  "fix_description": "Remove batch/multicall functionality from the auction contract, or replace direct ETH handling (msg.value) with WETH transferFrom so each commitment requires a separate token transfer that cannot be reused across delegatecall iterations.",
+  "attack_date": "2021-09-16",
+  "difficulty": "unknown",
+  "difficulty_reasoning": "No matching PoC file found for automated labeling."
+}

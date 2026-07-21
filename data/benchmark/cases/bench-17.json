@@ -1,0 +1,23 @@
+{
+  "id": "bench-17",
+  "name": "ShadowFi",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220902-shadowfi---access-control",
+  "chain": "bsc",
+  "block_number": 20969096,
+  "attack_txs": [
+    "0xe30dc75253eecec3377e03c532aa41bae1c26909bc8618f21fb83d4330a01018"
+  ],
+  "vulnerable_address": "0x10bc28d2810dD462E16facfF18f78783e859351b",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "ShadowFi.sol",
+  "function": "burn",
+  "type": "input-validation",
+  "attacker_profit": 298920.11136931716,
+  "source_case_id": "dfhl-0120",
+  "fix_description": "Add access control to the burn function: either restrict to onlyOwner, or change to only allow burning the callers own tokens by replacing account parameter with msg.sender.",
+  "attack_date": "2022-09-02",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very short, direct reserve-manipulation exploit: buy the token, call an exposed burn on the pair\u2019s balance, sync the pair, then sell back at the distorted price. It uses only a few external calls, no flash loan or complex protocol logic, and the bug pattern is fairly obvious once the public burn function is noticed."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-202",
+  "name": "UN",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230606-un---price-manipulation",
+  "chain": "bsc",
+  "block_number": 28864174,
+  "attack_txs": [
+    "0xff5515268d53df41d407036f547b206e288b226989da496fda367bfeb31c5b8b"
+  ],
+  "vulnerable_address": "0x1aFA48B74bA7aC0C3C5A2c8B7E24eB71D440846F",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "UN.sol",
+  "function": "_swapBurn",
+  "type": "accounting-error",
+  "attacker_profit": 26407.952061184293,
+  "source_case_id": "dfhl-0321",
+  "fix_description": "Remove or rate-limit the _swapBurn function. It directly burns 40% of the transfer amount from the LP pair and calls sync(), allowing attackers to repeatedly drain pair token balance via multiple transfers. Add a per-block execution limit or remove the direct pair balance manipulation.",
+  "attack_date": "2023-06-06",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is essentially a two-step missing access control exploit: the attacker sets themselves as the marketing wallet and then calls rescueEth to drain funds. The PoC is short, requires no DeFi primitives or flash loans, and the extra gasprice logic is just payout replication rather than core exploit complexity."
+}

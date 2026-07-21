@@ -1,0 +1,23 @@
+{
+  "id": "bench-56",
+  "name": "OneRing Finance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220321-onering-finance---flashloan--price-oracle-manipulation",
+  "chain": "fantom",
+  "block_number": 34041500,
+  "attack_txs": [
+    "0xca8dd33850e29cf138c8382e17a19e77d7331b57c7a8451648788bbb26a70145"
+  ],
+  "vulnerable_address": "0xc06826f52f29b34c5d8b2c61abf844cebcf78abf",
+  "has_public_source": false,
+  "fixable": true,
+  "proxy_address": "0x4e332d616b5ba1edfd87c899e534d996c336a2fc",
+  "function": "0x580ab673",
+  "type": "price-manipulation",
+  "attacker_profit": 1419482.6894823762,
+  "source_case_id": "dfhl-0166",
+  "fix_description": "The function (0x5b1dac60) uses LP token spot price to determine OShare value. Attacker borrowed $80M USDC via flashloan to inflate LP token price, then extracted OShare at inflated valuation. Fix: use TWAP or time-weighted LP pricing, or add a price deviation check that reverts when LP price moves too much in a single block.",
+  "attack_date": "2022-03-21",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very short, single-flash-loan exploit with only a few steps: borrow USDC, deposit into the vulnerable vault, immediately withdraw inflated value, and repay. The PoC is under 50 lines and relies on straightforward vault share/accounting abuse rather than deep multi-protocol or highly protocol-specific reasoning."
+}

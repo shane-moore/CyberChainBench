@@ -1,0 +1,31 @@
+{
+  "id": "bench-156",
+  "name": "GYMNET",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230731-gymnet---insufficient-validation",
+  "chain": "bsc",
+  "block_number": 30448987,
+  "attack_txs": [
+    "0x7fe96c00880b329aa0fcb00f0ef3a0766c54e13965becf9cc5e0df6fbd0deca6"
+  ],
+  "vulnerable_address": "0x177dd7202eb9ae5154fdf3006f8ae93dcb3b45e9",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x6b869795937dd2b6f4e03d5a0ffd07a8ad8c095b",
+  "file": "GymRouter.sol",
+  "function": "swapExactTokensForTokensSupportingFeeOnTransferTokens",
+  "type": "input-validation",
+  "attacker_profit": 3050.5250743391016,
+  "source_case_id": "dfhl-0277",
+  "fix_description": "In swapExactTokensForTokensSupportingFeeOnTransferTokens, change safeTransferFrom(to, ...) to safeTransferFrom(msg.sender, ...). The current code transfers tokens from the \"to\" parameter instead of the caller, allowing anyone to spend tokens of addresses that have approved the router.",
+  "normal_txs": [
+    "0xa353d19ff0600130195b0d5444faff962098c808c9ba512af722731787d7d358",
+    "0x9ba818a14fff6212d94d5eb8caf21418898d7f682c3f0a22c88643d703e744db",
+    "0xba8fb4b7e5f3c5f778cfa6f9aab7e823a94d91f1a6295ebf5a9d986cbc9a49ee",
+    "0x125ebef08c431c575e0952f8a86ed37c95619b208a86d3bca1ea54b5402ccbc4",
+    "0x8422ed4aeb69e0e27efb43646a63d196d0ed3f980f294b6a81e9755a1cd3d5b9"
+  ],
+  "attack_date": "2023-07-31",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is a multi-step DeFi interaction: take a flash loan, seed liquidity for a malicious fake token pair, abuse the victim router across many victim addresses, then unwind liquidity and repay. While the underlying issue appears conceptually simple (router trusting an attacker-created fake pair/token), writing the PoC requires protocol-specific understanding of PancakeSwap liquidity mechanics, swap routing, and the victim contract\u2019s logic."
+}

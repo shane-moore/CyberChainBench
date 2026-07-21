@@ -1,0 +1,23 @@
+{
+  "id": "bench-68",
+  "name": "Telcoin",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231225-telcoin---storage-collision",
+  "chain": "polygon",
+  "block_number": 51546496,
+  "attack_txs": [
+    "0x35f50851c3b754b4565dc3e69af8f9bdb6555edecc84cf0badf8c1e8141d902d"
+  ],
+  "vulnerable_address": "0x10d0e9755c67ab37089acb4f51e8b4ee407fe853",
+  "has_public_source": false,
+  "fixable": true,
+  "proxy_address": "0x56bcadff30680ebb540a84d75c182a5dc61981c0",
+  "function": "0xd1f57894",
+  "type": "accounting-error",
+  "attacker_profit": 108678.66678842274,
+  "source_case_id": "dfhl-0185",
+  "fix_description": "Storage collision between CloneableProxy (slot 0 = _initialized/_initializing) and Wallet (slot 0 = _state). Wallet.initialize() via delegatecall zeroes out the proxy initialization guard, allowing re-initialization. Fix: use namespaced storage (EIP-7201) or ensure Wallet does not write to slot 0, preserving the proxy initializer protection.",
+  "attack_date": "2023-12-25",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very straightforward uninitialized/reinitializable proxy exploit: the attacker simply calls initialize() again with a malicious implementation and delegatecall payload to drain the proxy's token balance. The PoC is short, involves essentially one key external action plus the delegated transfer, and requires minimal DeFi-specific knowledge."
+}

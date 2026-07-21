@@ -1,0 +1,31 @@
+{
+  "id": "bench-48",
+  "name": "BeanstalkFarms",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220416-beanstalkfarms---dao--flashloan",
+  "chain": "ethereum",
+  "block_number": 14602790,
+  "attack_txs": [
+    "0xcd314668aaa9bbfebaf1a0bd2b6553d01dd58899c508d4729fa7311dc5d33ad7"
+  ],
+  "vulnerable_address": "0xf480ee81a54e21be47aa02d0f9e29985bc7667c4",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0xc1e088fc1323b20bcbee9bd1b9fc9546db5624c5",
+  "file": "GovernanceFacet.sol",
+  "function": "emergencyCommit",
+  "type": "price-manipulation",
+  "attacker_profit": 75547148.56512837,
+  "source_case_id": "dfhl-0156",
+  "fix_description": "In emergencyCommit (and governance voting), use snapshot-based voting power instead of current token balance. Flash-loaned tokens should not count as voting power. Require votes to be locked/delegated for a minimum period before they can be used, preventing single-transaction governance attacks.",
+  "normal_txs": [
+    "0xd1f0ac8127796737a9812df457f93f96bff06214edb6e60c0b660329c4287e1a",
+    "0x2f53d2dd05297f6d7405a2efb2d90ee697676eb42effd90c68338a9d6ce7463a",
+    "0x0f93530b94b7e73d824aa312252cc330c7506af73fc6f78f5b086c6d3e93d42f",
+    "0x6ee6ff75cc3b685634c302fd84b85f7f2b02dca72439a5e895046e3a6dd65634",
+    "0x462bf722ed7e80f7d7d31b7d45003ab89cfce48bf5b7f832fd5a3652c9430072"
+  ],
+  "attack_date": "2022-04-16",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is a very short, direct exploit with essentially two core interactions against a single swap contract: buy NST, then sell/abuse the returned amount and pull USDT out. It does not require complex protocol knowledge, multi-contract routing, or sophisticated state reasoning beyond identifying the broken swap/accounting logic."
+}

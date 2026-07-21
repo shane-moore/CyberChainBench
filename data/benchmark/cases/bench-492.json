@@ -1,0 +1,23 @@
+{
+  "id": "bench-492",
+  "name": "1inch FusionV1 Settlement",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250305-1inch-fusionv1-settlement---arbitrary-yul-calldata",
+  "chain": "ethereum",
+  "block_number": 21982307,
+  "attack_txs": [
+    "0x04975648e0db631b0620759ca934861830472678dae82b4bed493f1e1e3ed03a"
+  ],
+  "vulnerable_address": "0xa88800cd213da5ae406ce248380802bd53b47647",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Settlement.sol",
+  "function": "_settleOrder",
+  "type": "accounting-error",
+  "attacker_profit": 218436.62330065708,
+  "source_case_id": "dfhl-0654",
+  "fix_description": "At line 118 in _settleOrder, bounds checking after calldataload uses unsigned comparison (gt/lt opcodes). When interactionLength overflows via crafted oversized calldata, the value wraps to a large positive number that passes unsigned checks. This corrupts the suffix offset, allowing attacker to inject a forged resolver address. Fix: replace gt/lt with sgt/slt (signed comparison) so overflow values are interpreted as negative and fail bounds checks. Also add explicit overflow guard: if gt(length, 0x7FFF...F) { revert }.",
+  "attack_date": "2025-03-05",
+  "difficulty": "unknown",
+  "difficulty_reasoning": "No matching PoC file found for automated labeling."
+}

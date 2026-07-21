@@ -1,0 +1,23 @@
+{
+  "id": "bench-484",
+  "name": "- OverNight",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221202---overnight---flashloan-attack",
+  "chain": "avalanche",
+  "block_number": 23097847,
+  "attack_txs": [
+    "0xf10807f9a675dd2db9a45e39f37c68a4116006f9a40e97a68c145e3859557809"
+  ],
+  "vulnerable_address": "0x9e55aa8c57f51655d634c7182a5a44b61db0ed94",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "StrategyEchidnaUsdc.sol",
+  "function": "_totalValue",
+  "type": "price-manipulation",
+  "attacker_profit": 22534.635868666086,
+  "source_case_id": "dfhl-0068",
+  "fix_description": "In _totalValue, the vault value is calculated using platypusLPUsdc.liability() which can be manipulated by creating a fake trader pool with a new token. Fix: validate liability against an independent oracle or TWAP, do not trust raw liability from the LP token when it can be influenced by unwhitelisted pools.",
+  "attack_date": "2022-12-02",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This PoC chains multiple protocols and primitives: nested flash loans across Aave V2/V3, Benqi collateral/borrowing, repeated StableSwap liquidity imbalance operations, USD+ buy/redeem timing constraints across blocks, and final settlement through Platypus/Sicle. Understanding and reproducing the exploit requires deep protocol-specific reasoning about accounting/state changes and a fairly long multi-step attack flow, well beyond a straightforward single-pattern exploit."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-452",
+  "name": "Stepp2p",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250720-stepp2p---logic-flaw",
+  "chain": "bsc",
+  "block_number": 54653987,
+  "attack_txs": [
+    "0xe94752783519da14315d47cde34da55496c39546813ef4624c94825e2d69c6a8"
+  ],
+  "vulnerable_address": "0x99855380E5f48Db0a6BABeAe312B80885a816DCe",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Stepp2p.sol",
+  "function": "cancelSaleOrder",
+  "type": "accounting-error",
+  "attacker_profit": 43382.41201419717,
+  "source_case_id": "dfhl-0610",
+  "fix_description": "In cancelSaleOrder, the refund logic returns both the remaining amount and the sell fee from feeAccount. This allows attackers to create a sale (paying fee), then immediately cancel to receive back both the deposit and the fee \u2014 profiting from the fee refund. Fix: do not refund fees on cancel, or track actual fees paid vs refundable separately. Also set sale.remaining = 0 after cancel.",
+  "attack_date": "2025-07-20",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very short, obvious business-logic double-spend: create a sale order, then call cancelSaleOrder and modifySaleOrder on the same saleId to receive funds twice. The PoC is minimal, uses only a simple flash loan for capital, and requires little protocol-specific or DeFi complexity to reproduce."
+}

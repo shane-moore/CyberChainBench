@@ -1,0 +1,22 @@
+{
+  "id": "bench-321",
+  "name": "MEVbot_0xdd7c",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240723-mevbot_0xdd7c---incorrect-input-validation",
+  "chain": "ethereum",
+  "block_number": 20367789,
+  "attack_txs": [
+    "0x53334c36502bd022bd332f2aa493862fd8f722138d1989132a46efddcc6b04d4"
+  ],
+  "vulnerable_address": "0xDd7c2987686B21f656F036458C874D154A923685",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0xfa461e33",
+  "type": "access-control",
+  "attacker_profit": 18969.441340239424,
+  "source_case_id": "dfhl-0460",
+  "fix_description": "In uniswapV3SwapCallback (0xfa461e33), there is no validation that msg.sender is a legitimate Uniswap V3 pool. Any caller can invoke this callback and trigger token transfers. Add require(msg.sender == computePoolAddress(factory, token0, token1, fee)) to verify the caller.",
+  "attack_date": "2024-07-23",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a multi-step drain using an Aave flash loan plus several crafted low-level calls into a vulnerable router and Curve pool swaps to convert/manipulate assets, so it requires understanding protocol-specific router behavior and token flow rather than a trivial bug pattern. While the exploit code is not very long, identifying the callable function selector and sequencing the cross-contract interactions would likely take an experienced auditor more than a quick pass."
+}

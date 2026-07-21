@@ -1,0 +1,31 @@
+{
+  "id": "bench-534",
+  "name": "- DFXFinance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221110---dfxfinance---reentrancy",
+  "chain": "ethereum",
+  "block_number": 15941704,
+  "attack_txs": [
+    "0x6bfd9e286e37061ed279e4f139fbc03c8bd707a2cdd15f7260549052cbba79b7"
+  ],
+  "vulnerable_address": "0x5fca000f8a1ef45fe2412a8e305ff36d8757be0f",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x46161158b1947d9149e066d6d31af1283b2d377c",
+  "file": "ProportionalLiquidity.sol",
+  "function": "proportionalDeposit",
+  "type": "reentrancy",
+  "attacker_profit": 221475.04473958767,
+  "source_case_id": "dfhl-0079",
+  "fix_description": "Add reentrancy guard to proportionalDeposit. The function performs multiple external token transfers (via Assimilators.intakeNumeraire) and calculates liquidity based on intermediate balances. An attacker can re-enter during one of the token callbacks (e.g., ERC777) before all deposits are complete, exploiting the inconsistent state to mint excess LP tokens.",
+  "normal_txs": [
+    "0x390def749b71f516d8bf4329a4cb07bb3568a3627c25e607556621182a17f1f9",
+    "0x4c0fa70cd8bd86d0fb3f65e0cdc837035630007760099fc0f7305b1367a3545d",
+    "0x081b57fbadbd2f9c8577751e015d3f0dac4b2f03951ed0c110b19df2aa9ba5fa",
+    "0x1703c53b2cb465f4eec50f603a38f3d2ae1facf55874a9172efd335efc136221",
+    "0xce76002b475f3cb6484a2224d9102dc0e2700f45257ce9e6ea1168598ee8998f"
+  ],
+  "attack_date": "2022-11-10",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a multi-step DeFi exploit involving token swaps, querying deposit math, abusing a flash loan callback to deposit under manipulated conditions, then withdrawing for profit. It requires understanding protocol-specific Curve/DFX pool logic and sequencing across several external calls, but the code and attack path are still fairly compact and not deeply complex."
+}

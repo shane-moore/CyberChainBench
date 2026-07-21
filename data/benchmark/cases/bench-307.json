@@ -1,0 +1,23 @@
+{
+  "id": "bench-307",
+  "name": "Caterpillar_Coin_CUT",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240910-caterpillar_coin_cut---price-manipulation",
+  "chain": "bsc",
+  "block_number": 42131697,
+  "attack_txs": [
+    "0x2c123d08ca3d50c4b875c0b5de1b5c85d0bf9979dffbf87c48526e3a67396827"
+  ],
+  "vulnerable_address": "0x7057f3b0f4d0649b428f0d8378a8a0e7d21d36a7",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Main.sol",
+  "function": "actDealLPRemoveBehavior",
+  "type": "price-manipulation",
+  "attacker_profit": 1127812.5990489053,
+  "source_case_id": "dfhl-0442",
+  "fix_description": "valuePreservationByRemoveLP calculates token compensation based on the difference between recorded order price and current reserve ratio. Attacker manipulates the reserve ratio via flash loan before adding LP (records manipulated price), then removes LP to receive inflated compensation. Fix: use TWAP price instead of spot reserves for compensation calculation, or remove the price protection mechanism entirely.",
+  "attack_date": "2024-09-10",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is multi-step and protocol-specific: it uses a flash loan, repeated CREATE2-funded helper contracts, fee-on-transfer token swaps, liquidity addition/removal, and pair burn mechanics to extract value. While the PoC is not extremely long, understanding why the repeated helper-contract cycle works requires reading the token/pair behavior and AMM interactions rather than spotting a simple generic bug."
+}

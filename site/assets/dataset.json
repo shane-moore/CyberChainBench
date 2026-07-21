@@ -1,0 +1,40 @@
+{
+  "total_cases": 541,
+  "total_profit_usd": 1128189891,
+  "median_profit_usd": 47570,
+  "max_profit_usd": 512560113,
+  "has_public_source": 425,
+  "fixable": 153,
+  "chains": {
+    "bsc": 260,
+    "ethereum": 221,
+    "arbitrum": 21,
+    "base": 14,
+    "optimism": 7,
+    "polygon": 7,
+    "avalanche": 6,
+    "fantom": 3,
+    "blast": 2
+  },
+  "vuln_types": {
+    "accounting-error": 175,
+    "price-manipulation": 126,
+    "access-control": 97,
+    "input-validation": 94,
+    "reentrancy": 49
+  },
+  "difficulty": {
+    "medium": 255,
+    "easy": 225,
+    "hard": 61
+  },
+  "years": {
+    "2020": 5,
+    "2021": 23,
+    "2022": 100,
+    "2023": 170,
+    "2024": 157,
+    "2025": 75,
+    "2026": 11
+  }
+}

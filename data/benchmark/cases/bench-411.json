@@ -1,0 +1,23 @@
+{
+  "id": "bench-411",
+  "name": "Pandora",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240208-pandora---integer-underflow",
+  "chain": "ethereum",
+  "block_number": 19184578,
+  "attack_txs": [
+    "0x7c5a909b45014e35ddb89697f6be38d08eff30e7c3d3d553033a6efc3b444fdd"
+  ],
+  "vulnerable_address": "0xddaDF1bf44363D07E750C20219C2347Ed7D826b9",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "ERC404.sol",
+  "function": "transferFrom",
+  "type": "accounting-error",
+  "attacker_profit": 17269.834728999096,
+  "source_case_id": "dfhl-0562",
+  "fix_description": "Contract uses Solidity 0.7.0 without SafeMath. In transferFrom, the allowance subtraction (allowed - amountOrId) can underflow when the caller has insufficient allowance, giving them unlimited approval. Use SafeMath or upgrade to Solidity 0.8+ for built-in overflow/underflow checks.",
+  "attack_date": "2024-02-08",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a short, direct reserve-manipulation exploit enabled by an obvious integer underflow/unsafe transferFrom behavior, with only a few contract interactions and no flash loan or complex cross-protocol logic. An experienced auditor could identify the faulty token/accounting pattern and write this PoC quickly."
+}

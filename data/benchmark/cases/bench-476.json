@@ -1,0 +1,23 @@
+{
+  "id": "bench-476",
+  "name": "Lifeprotocol",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250426-lifeprotocol---price-manipulation",
+  "chain": "bsc",
+  "block_number": 48703546,
+  "attack_txs": [
+    "0x487fb71e3d2574e747c67a45971ec3966d275d0069d4f9da6d43901401f8f3c0"
+  ],
+  "vulnerable_address": "0x42e2773508e2ae8ff9434bea599812e28449e2cd",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "LifeProtocolContract.sol",
+  "function": "handleRatio",
+  "type": "price-manipulation",
+  "attacker_profit": 15022.830578135052,
+  "source_case_id": "dfhl-0636",
+  "fix_description": "In handleRatio, ratio calculation uses manipulable on-chain balance. Fix: use time-weighted values.",
+  "attack_date": "2025-04-26",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very short, single-flash-loan exploit with a simple repeated buy-then-sell pattern against one vulnerable protocol contract. It requires minimal protocol-specific understanding beyond noticing broken pricing/accounting in the buy/sell logic, and a competent auditor could likely reproduce it quickly."
+}

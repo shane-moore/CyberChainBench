@@ -1,0 +1,36 @@
+{
+  "id": "bench-35",
+  "name": "Harmony's Horizon Bridge",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220624-harmonys-horizon-bridge---private-key-compromised",
+  "chain": "ethereum",
+  "block_number": 15012646,
+  "attack_txs": [
+    "0x27981c7289c372e601c9475e5b5466310be18ed10b59d1ac840145f6e7804c97"
+  ],
+  "vulnerable_address": "0x715CdDa5e9Ad30A0cEd14940F9997EE611496De6",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "MultiSigWallet.sol",
+  "type": "access-control",
+  "attacker_profit": 14493049.952100001,
+  "annotation_hints": {
+    "function": {
+      "label": "TODO_FUNCTION",
+      "status": "missing",
+      "expected_schema": {
+        "type": "string",
+        "example": "withdraw"
+      },
+      "hint": "Primary vulnerable function name for the canonical benchmark case."
+    }
+  },
+  "function": "confirmTransaction",
+  "source_case_id": "dfhl-0140",
+  "fix_description": "Increase the multisig threshold from 2 to 4 (require all 4 owners to confirm). A 2/4 threshold is insufficient for securing bridge funds of this magnitude \u2014 the attacker only needed 2 compromised keys to drain over $100M.",
+  "disputed": true,
+  "disputed_reason": "Private key compromise, not a code vulnerability. Attacker obtained 2/4 multisig keys. Agent cannot discover this by reading code.",
+  "attack_date": "2022-06-24",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is a short, mostly single-protocol business-logic exploit: repeatedly call borrow/redeem in a loop to drain MO, then swap the drained tokens for USDT. It does not require flash loans, complex routing, or deep cross-contract reasoning beyond understanding an obvious borrow/redeem accounting flaw."
+}

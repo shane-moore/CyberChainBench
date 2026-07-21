@@ -1,0 +1,23 @@
+{
+  "id": "bench-393",
+  "name": "Juice",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240309-juice---business-logic-flaw",
+  "chain": "ethereum",
+  "block_number": 19395644,
+  "attack_txs": [
+    "0xc9b2cbc1437bbcd8c328b6d7cdbdae33d7d2a9ef07eca18b4922aac0430991e7"
+  ],
+  "vulnerable_address": "0x8584ddbd1e28bca4bc6fb96bafe39f850301940e",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "JuiceStaking.sol",
+  "function": "stake",
+  "type": "input-validation",
+  "attacker_profit": 173290.40594469928,
+  "source_case_id": "dfhl-0539",
+  "fix_description": "In stake, stakeWeek has no upper bound validation. An attacker can pass an extremely large stakeWeek value to inflate bonus rewards. Add require(stakeWeek <= MAX_STAKE_WEEKS) to cap the staking duration.",
+  "attack_date": "2024-03-09",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is a very short, direct exploit: buy tokens, stake once, advance one block, harvest, and sell back. It requires minimal protocol-specific reasoning and no flash loans, complex routing, or multi-contract state manipulation, matching an obvious reward-accounting flaw exploitable in under 30 minutes."
+}

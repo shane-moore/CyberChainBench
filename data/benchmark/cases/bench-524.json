@@ -1,0 +1,31 @@
+{
+  "id": "bench-524",
+  "name": "Makina",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/README.md#20260120-makina---price-oracle-manipulation",
+  "chain": "ethereum",
+  "block_number": 24273362,
+  "attack_txs": [
+    "0x569733b8016ef9418f0b6bde8c14224d9e759e79301499908ecbcd956a0651f5"
+  ],
+  "vulnerable_address": "0xe10572ea8e9ed9cc7f9a528da3856a5caa26c7bf",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x6b006870c83b1cd49e766ac9209f8d68763df721",
+  "file": "MachineUtils.sol",
+  "function": "updateTotalAum",
+  "type": "price-manipulation",
+  "attacker_profit": 4130034.5802574907,
+  "source_case_id": "dfhl-0686",
+  "fix_description": "Add access control to updateTotalAum (restrict to keeper/owner) or add a time delay so the updated AUM cannot be consumed in the same block. Root cause: lastTotalAum is the share-price anchor and any user can refresh it mid-tx from spot-priced positions. Attacker flash-loans 280M USDC to skew Curve pool balances, calls updateTotalAum() to bake manipulated state into accounting, then swaps DUSD at inflated share price.",
+  "normal_txs": [
+    "0xe9abb4af51102966422c10bf3409ddf8fd078866267fdd4bc69c70e6fb8115b8",
+    "0xcb7736dab1ebe41719732e3802c1e593cd33fefd471a260fb81fb413b93edb9e",
+    "0x55e8c87437075b69ec8be2e140f76e685e0de7214947e3560cff7f8f3b544c84",
+    "0x7c57fe0d9d84b1f792bff6b4c3be8944b25c3dad76c9b19263aa8908ecc48afb",
+    "0x847beeb1fe1c68241ae355ec63e5ca5e76390d0ae76729bc16f77c76f2b0cd3d"
+  ],
+  "attack_date": "2026-01-20",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This PoC requires a fairly intricate multi-protocol attack chain: large-scale Curve liquidity manipulations across multiple pools, protocol-specific state updates in Caliber/Machine, and repeating the sequence to maximize profit. Writing it demands deep understanding of Makina\u2019s accounting/AUM logic plus custom instruction encoding and merkle-proof-based position updates, which pushes it well beyond a straightforward flash-loan exploit."
+}

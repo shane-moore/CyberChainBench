@@ -1,0 +1,23 @@
+{
+  "id": "bench-14",
+  "name": "Ragnarok Online Invasion",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220908-ragnarok-online-invasion---broken-access-control",
+  "chain": "bsc",
+  "block_number": 21143796,
+  "attack_txs": [
+    "0x0e14cb7eabeeb2a819c52f313c986a877c1fa19824e899d1b91875c11ba053b0"
+  ],
+  "vulnerable_address": "0xE48b75dc1b131fd3A8364b0580f76eFD04cF6e9c",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "ROIToken.sol",
+  "function": "transferOwnership",
+  "type": "access-control",
+  "attacker_profit": 44013.22594135843,
+  "source_case_id": "dfhl-0116",
+  "fix_description": "Add onlyOwner modifier to transferOwnership: require(msg.sender == _owner). The current implementation allows anyone to call transferOwnership and take over the contract.",
+  "attack_date": "2022-09-08",
+  "difficulty": "unknown",
+  "difficulty_reasoning": "No matching PoC file found for automated labeling."
+}

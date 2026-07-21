@@ -1,0 +1,23 @@
+{
+  "id": "bench-273",
+  "name": "Proxy_b7e1",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20241124-proxy_b7e1---logic-flaw",
+  "chain": "bsc",
+  "block_number": 44294727,
+  "attack_txs": [
+    "0x864d33d006e5c39c9ee8b35be5ae05a2013e556be3e078e2881b0cc6281bb265"
+  ],
+  "vulnerable_address": "0x0df9d225ccfaa21ceb0b2ab6855b13dffa78d253",
+  "has_public_source": false,
+  "fixable": true,
+  "proxy_address": "0xb7e1d1372f2880373d7c5a931cdbaa73c38663c6",
+  "function": "0x9b3e9b92",
+  "type": "accounting-error",
+  "attacker_profit": 8434.83410668665,
+  "source_case_id": "dfhl-0404",
+  "fix_description": "In function 0x9b3e9b92, path B (var5 != 0) calculates mint amount based on balanceOf(address(this)) which includes tokens from previous deposits via path A. Attacker deposits via path A first (no mint), then calls path B which mints based on total contract balance (both deposits combined). Fix by using the current call amount parameter for mint calculation instead of the contract total balance.",
+  "attack_date": "2024-11-24",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is only a few external calls, but it is not an obvious generic bug pattern: the attacker crafts low-level calldata with protocol-specific packed parameters and relies on understanding the target proxy/order logic to drain funds. Writing this PoC would likely require reading the contract internals and reverse-engineering those magic values, putting it above easy but below a truly complex multi-protocol attack."
+}

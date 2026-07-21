@@ -1,0 +1,31 @@
+{
+  "id": "bench-423",
+  "name": "SocketGateway",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240112-socketgateway---lack-of-calldata-validation",
+  "chain": "ethereum",
+  "block_number": 19021454,
+  "attack_txs": [
+    "0xc6c3331fa8c2d30e1ef208424c08c039a89e510df2fb6ae31e5aa40722e28fd6"
+  ],
+  "vulnerable_address": "0xcc5fda5e3ca925bd0bb428c8b2669496ee43067e",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x3a23f943181408eac424116af7b7790c94cb97a5",
+  "file": "swapWrappedImpl.sol",
+  "function": "performAction",
+  "type": "input-validation",
+  "attacker_profit": 2552271.2193027916,
+  "source_case_id": "dfhl-0575",
+  "fix_description": "In performAction, validate swapExtraData before passing to ONEINCH_AGGREGATOR.call(). At minimum: verify the function selector is an expected swap function (e.g., swap/unoswap), and verify the fromToken/toToken/recipient in the calldata match the expected parameters. The current implementation passes arbitrary user-supplied calldata to the aggregator, allowing attackers to craft calls that drain tokens from users who approved SocketGateway.",
+  "normal_txs": [
+    "0x8a18b6cd6cba03229251fa581e519029dfd85e8ee31281daa29eab1b1607913a",
+    "0x705b834c49cdd856a8b2ececfcb63c5ed42e0e8e9a676dfde9f682f6a7d3fbdf",
+    "0xb8932cc593b022bda6a0e9ad1963fb1e34b9fc3f1cefdb93764d1b830e4a87f2",
+    "0xd3c2a6f0cc9f44dbde2470eb4208ea681e4c51e7a85d96cafb2c808f7784ecde",
+    "0x1826d8ff9ce27ae1e6cba18bdb0a937e905c86c08feea1f1865772a7721c02cf"
+  ],
+  "attack_date": "2024-01-12",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is a single-call exploit through a vulnerable route that lets the attacker pass arbitrary calldata to trigger a victim's ERC20 transferFrom, with no flash loans, price manipulation, or complex protocol state reasoning. An auditor familiar with approval-abuse patterns could reproduce this very quickly from the route logic and a short test."
+}

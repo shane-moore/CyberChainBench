@@ -1,0 +1,24 @@
+{
+  "id": "bench-294",
+  "name": "OnyxDAO",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240926-onyxdao---fake-market",
+  "chain": "ethereum",
+  "block_number": 20834658,
+  "attack_txs": [
+    "0x46567c731c4f4f7e27c4ce591f0aebdeb2d9ae1038237a0134de7b13e63d8729"
+  ],
+  "vulnerable_address": "0xf10bc5be84640236c71173d1809038af4ee19002",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x323398de3c35f96053d930d25fe8d92132f83d44",
+  "file": "NFTLiquidation.sol",
+  "function": "liquidateWithSingleRepayFresh",
+  "type": "input-validation",
+  "attacker_profit": 537396.877148722,
+  "source_case_id": "dfhl-0428",
+  "fix_description": "In liquidateWithSingleRepayFresh(), validate that oTokenRepay and oTokenCollateral are registered markets in the Comptroller before proceeding. Without this check, an attacker can pass a fake market contract that returns manipulated values for borrowBalanceCurrent and liquidateBorrow, enabling unauthorized extraction of funds.",
+  "attack_date": "2024-09-26",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This PoC chains a flash loan, market entry, exchange-rate/collateral manipulation on oETH, multiple borrows across markets, and a highly protocol-specific fake oToken liquidation path abusing NFTLiquidationProxy with several custom contracts. Exploiting it requires deep understanding of Onyx/Compound-style accounting and non-obvious state interactions, well beyond a straightforward single-pattern bug."
+}

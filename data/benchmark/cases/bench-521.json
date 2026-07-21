@@ -1,0 +1,23 @@
+{
+  "id": "bench-521",
+  "name": "Moonwell",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/README.md#20260215-moonwell---faulty-oracle",
+  "chain": "base",
+  "block_number": 42194664,
+  "attack_txs": [
+    "0x2f4ff77c77ce2a52c80fcd59a4cac4b05f4285afe1f3b92118b0a004a325953c"
+  ],
+  "vulnerable_address": "0xEC942bE8A8114bFD0396A5052c36027f2cA6a9d0",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "ChainlinkOracle.sol",
+  "function": "getPrice",
+  "type": "accounting-error",
+  "attacker_profit": 533403.7346095653,
+  "source_case_id": "dfhl-0684",
+  "fix_description": "Fix the oracle price calculation in getPrice: the decimal adjustment logic or feed mapping is incorrect, causing certain tokens to be mispriced. Validate that getFeed returns the correct Chainlink feed for the token and that decimal scaling is applied correctly for tokens with non-18 decimals.",
+  "attack_date": "2026-02-15",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a multi-step DeFi exploit involving a flash loan, minting collateral in Moonwell, entering the market, over-borrowing against a mispriced asset, and routing swaps across multiple pools to repay and realize profit. While the code is still fairly short, exploiting it requires understanding cToken collateral mechanics, oracle/mispricing impact, and Uniswap/CL pool callback flows, so it is more than a trivial pattern."
+}

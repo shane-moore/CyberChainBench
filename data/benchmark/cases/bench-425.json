@@ -1,0 +1,23 @@
+{
+  "id": "bench-425",
+  "name": "Gamma",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240104-gamma---price-manipulation",
+  "chain": "arbitrum",
+  "block_number": 166873292,
+  "attack_txs": [
+    "0x025cf2858723369d606ee3abbc4ec01eab064a97cc9ec578bf91c6908679be75"
+  ],
+  "vulnerable_address": "0x61A7b3dae70D943C6f2eA9ba4FfD2fEcc6AF15E4",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Hypervisor.sol",
+  "function": "deposit",
+  "type": "price-manipulation",
+  "attacker_profit": 469068.14877909096,
+  "source_case_id": "dfhl-0579",
+  "fix_description": "In deposit, share calculation uses manipulable pool state. Fix: use TWAP or add flash-loan guards.",
+  "attack_date": "2024-01-04",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This PoC uses a sophisticated multi-contract attack chain with nested flash liquidity, repeated price manipulation loops, Algebra/Uniswap-style swap callbacks, and protocol-specific deposit/withdraw abuse against a Uniproxy-style vault. Writing it requires understanding non-obvious state interactions across several pools and callback flows, which is well beyond a straightforward single-pattern exploit."
+}

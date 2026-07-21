@@ -1,0 +1,23 @@
+{
+  "id": "bench-402",
+  "name": "SwarmMarkets",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240222-swarmmarkets---lack-of-validation",
+  "chain": "ethereum",
+  "block_number": 19286457,
+  "attack_txs": [
+    "0xa4d7ee2ddb9db06961a17e2a5ae71743a266bcb720be138670f4a10e8dfc13e9"
+  ],
+  "vulnerable_address": "0xD08E245Fdb3f1504aea4056e2C71615DA7001440",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "XToken.sol",
+  "function": "mint",
+  "type": "access-control",
+  "attacker_profit": 7600.622253872977,
+  "source_case_id": "dfhl-0550",
+  "fix_description": "Add access control to the mint function. It should require WRAPPER_ROLE or onlyOwner modifier, similar to how burnFrom is documented. Without it, anyone can mint unlimited tokens.",
+  "attack_date": "2024-02-22",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This exploit is a sophisticated multi-contract attack chain involving nested Aave and Balancer flash loans, Curve LP manipulation, Beefy vault collateralization, lending market borrowing, and liquidation orchestration via a helper contract. It relies on non-obvious read-only reentrancy/oracle pricing effects during liquidity removal and requires deep understanding of protocol-specific accounting and callback timing, which would likely take an experienced auditor more than 2 hours to reconstruct."
+}

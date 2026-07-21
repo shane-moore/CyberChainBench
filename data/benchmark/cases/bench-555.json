@@ -1,0 +1,23 @@
+{
+  "id": "bench-555",
+  "name": "Carrot",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221010-carrot---public-functioncall",
+  "chain": "bsc",
+  "block_number": 22055612,
+  "attack_txs": [
+    "0xa624660c29ee97f3f4ebd36232d8199e7c97533c9db711fa4027994aa11e01b9"
+  ],
+  "vulnerable_address": "0xcFF086EaD392CcB39C49eCda8C974ad5238452aC",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "token.sol",
+  "function": "transReward",
+  "type": "access-control",
+  "attacker_profit": 31149.26908603013,
+  "source_case_id": "dfhl-0103",
+  "fix_description": "Add onlyOwner modifier to transReward(). Currently any caller can execute arbitrary function calls on the pool contract via functionCall(data), allowing them to drain pool funds.",
+  "attack_date": "2022-10-10",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a short, mostly direct exploit: call an unprotected function to gain privileged ownership-like control, then use the token\u2019s flawed transferFrom logic to steal tokens and swap them. It involves only a few external calls and no flash loans, timing, or deep protocol-specific accounting."
+}

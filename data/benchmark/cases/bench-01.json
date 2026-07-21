@@ -1,0 +1,31 @@
+{
+  "id": "bench-01",
+  "name": "Nerve Bridge",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2021/README.md#20211214-nerve-bridge---swap-metapool-attack",
+  "chain": "bsc",
+  "block_number": 12653565,
+  "attack_txs": [
+    "0xea95925eb0438e04d0d81dc270a99ca9fa18b94ca8c6e34272fc9e09266fcf1d"
+  ],
+  "vulnerable_address": "0xf642f2a626a8b732619606c493abfc2433dd2d35",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0xd0fbf0a224563d5ffc8a57e4fda6ae080ebcf3d3",
+  "file": "MetaSwapUtils.sol",
+  "function": "_calculateSwap",
+  "type": "accounting-error",
+  "attacker_profit": 42957.389504982864,
+  "source_case_id": "dfhl-0003",
+  "normal_txs": [
+    "0xdefa943b508c4fe85071815b8ae560f868d6da2f879a5283b6733d41e4eb360f",
+    "0x2e910d696c1d43bcf80419e40212c53177653d8b5c16cdde5f0f9c10b9fc75a8",
+    "0x21ec8d33a070077a01120f83d473e51c09a14447ae0996572e8e7c6f9ff7591f",
+    "0x29d9f91ac5372f642f6abd79ee175f7fe5b4302c0ed9edd41bc2aef23fb7ec9d",
+    "0x4726f9db4e54971155ebe7dc8102d37826a7dbd49dcc1b9690d92719cb0b539e"
+  ],
+  "fix_description": "In _calculateSwap (SwapUtils library), multiply the LP token balance by virtualPrice before computing the swap output, consistent with how _calculateSwapUnderlying handles it. This eliminates the pricing discrepancy between swap and swapUnderlying.",
+  "attack_date": "2021-12-14",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a multi-step DeFi attack involving a flash loan, Curve/Saddle-style metapool swaps, LP mint/burn mechanics, and a repeated loop to drain value via protocol-specific accounting. While the PoC is short, understanding why the fusd/metaSwap/3pool interactions are exploitable requires reading the pool logic and stable-swap internals, so it is more than a straightforward bug."
+}

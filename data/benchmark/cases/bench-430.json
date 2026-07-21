@@ -1,0 +1,24 @@
+{
+  "id": "bench-430",
+  "name": "DRLVaultV3",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20251110-drlvaultv3---price-manipulation",
+  "chain": "ethereum",
+  "block_number": 23769387,
+  "attack_txs": [
+    "0xe3eab35b288c086afa9b86a97ab93c7bb61d21b1951a156d2a8f6f5d5715c475"
+  ],
+  "vulnerable_address": "0x8aa6b0e10bd6dbaf5159967f92f2e740afe2b4c3",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x6a06707ab339bee00c6663db17ddb422301ff5e8",
+  "file": "DRLVaultV3.sol",
+  "function": "swapToWETH",
+  "type": "access-control",
+  "attacker_profit": 93948.153265948,
+  "source_case_id": "dfhl-0584",
+  "fix_description": "swapToWETH is public without access control, while swapAllToWETH has onlyOwner. Anyone can call swapToWETH to force the vault to swap at a manipulated price. Fix: add onlyOwner modifier to swapToWETH. Additionally, getQuoteForUSDC may use spot price for slippage calculation which can also be manipulated \u2014 consider using a TWAP-based quote.",
+  "attack_date": "2025-11-10",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is a multi-step DeFi attack involving a flash loan, token purchase, liquidity addition to qualify for rewards, mass deployment of helper contracts via CREATE2, repeated airdrop claims, and then liquidity removal plus unwinding. It requires understanding protocol-specific airdrop logic and LP accounting abuse, but the PoC itself is still fairly direct and not deeply intricate."
+}

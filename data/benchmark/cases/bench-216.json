@@ -1,0 +1,23 @@
+{
+  "id": "bench-216",
+  "name": "SNK",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230510-snk---reward-calculation-error",
+  "chain": "bsc",
+  "block_number": 28074093,
+  "attack_txs": [
+    "0x7394f2520ff4e913321dd78f67dd84483e396eb7a25cbb02e06fe875fc47013a"
+  ],
+  "vulnerable_address": "0xA3f5ea945c4970f48E322f1e70F4CC08e70039ee",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "SNKMiner.sol",
+  "function": "dynamicEarned",
+  "type": "accounting-error",
+  "attacker_profit": 196469.6671549854,
+  "source_case_id": "dfhl-0340",
+  "fix_description": "In dynamicEarned, the reward calculation using _getMyChildersBalanceOf can be manipulated by temporarily inflating children staking balances (e.g., via flash loan). Fix: use time-weighted or snapshotted balances instead of instantaneous balanceOf for referral reward calculations, or add a minimum staking duration requirement before rewards accrue.",
+  "attack_date": "2023-05-10",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is a multi-step reward-accounting abuse that requires understanding the protocol\u2019s parent/child referral staking logic and orchestrating multiple helper contracts plus a flash swap for capital efficiency. While the PoC is not extremely long, it involves protocol-specific state manipulation across many accounts rather than a simple one-call bug, putting it above easy but below hard."
+}

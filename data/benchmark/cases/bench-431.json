@@ -1,0 +1,23 @@
+{
+  "id": "bench-431",
+  "name": "Moonwell",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20251104-moonwell---faulty-oracle",
+  "chain": "base",
+  "block_number": 37722882,
+  "attack_txs": [
+    "0x190a491c0ef095d5447d6d813dc8e2ec11a5710e189771c24527393a2beb05ac"
+  ],
+  "vulnerable_address": "0xEC942bE8A8114bFD0396A5052c36027f2cA6a9d0",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "ChainlinkOracle.sol",
+  "function": "getChainlinkPrice",
+  "type": "price-manipulation",
+  "attacker_profit": 87722.02960462803,
+  "source_case_id": "dfhl-0585",
+  "fix_description": "getChainlinkPrice lacks a staleness check on the oracle response. The contract used a delisted Chainlink market rate feed for wrsETH that returned an abnormal price (~$5.8B). Add require(block.timestamp - updatedAt < MAX_STALENESS) and validate price is within reasonable bounds. Use the exchange rate feed instead of the delisted market rate feed.",
+  "attack_date": "2025-11-04",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a multi-step DeFi attack involving a flash loan, depositing manipulated collateral into Moonwell, borrowing against the mispriced asset, and routing swaps across multiple concentrated-liquidity pools to unwind and repay. While the PoC is not very long, it requires understanding protocol-specific collateral valuation/oracle behavior and Uniswap V3-style callback mechanics, making it more than a straightforward single-bug exploit."
+}

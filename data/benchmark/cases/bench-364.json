@@ -1,0 +1,23 @@
+{
+  "id": "bench-364",
+  "name": "Z123",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240422-z123---price-manipulation",
+  "chain": "bsc",
+  "block_number": 38077211,
+  "attack_txs": [
+    "0xc0c4e99a76da80a4cf43d3110364840151226c0a197c1728bb60dc3f1b3a6a27"
+  ],
+  "vulnerable_address": "0xb000f121A173D7Dd638bb080fEe669a2F3Af9760",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "SesameCloudToken.sol",
+  "function": "update",
+  "type": "input-validation",
+  "attacker_profit": 133866.69307404163,
+  "source_case_id": "dfhl-0508",
+  "fix_description": "Remove the update() function or restrict it to only transfer from address(this). The function allows any minter to call _transfer(pair, dead, amount) which bypasses ERC20 allowance checks and directly removes tokens from the LP pair, enabling price manipulation. A minter should never have the ability to move tokens from arbitrary addresses.",
+  "attack_date": "2024-04-22",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is not a trivial single-call bug: it uses a large flash loan, an initial setup swap, then repeated interactions with the vulnerable router to distort pool ratios before exiting for profit. While the PoC is short, understanding why looping many swaps burns liquidity and creates arbitrage requires protocol-specific reasoning about the victim swap logic and pool accounting."
+}

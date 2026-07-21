@@ -1,0 +1,23 @@
+{
+  "id": "bench-08",
+  "name": "Thunder Brawl",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221001-thunder-brawl---reentrancy",
+  "chain": "bsc",
+  "block_number": 21785005,
+  "attack_txs": [
+    "0x57aa9c85e03eb25ac5d94f15f22b3ba3ab2ef60b603b97ae76f855072ea9e3a0"
+  ],
+  "vulnerable_address": "0xae191Ca19F0f8E21d754c6CAb99107eD62B6fe53",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "House_Wallet.sol",
+  "function": "claimReward",
+  "type": "reentrancy",
+  "attacker_profit": 790.3064131106119,
+  "source_case_id": "dfhl-0109",
+  "fix_description": "In claimReward, follow checks-effects-interactions pattern: update the reward state (zero out pending rewards) before making the external call to transfer tokens. Alternatively, add a nonReentrant modifier to prevent re-entry.",
+  "attack_date": "2022-10-01",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is not just a trivial single-call bug: it uses a flash loan, AMM reserve math, and repeated Pair.skim() calls to manipulate token balances/reserves before swapping back for profit. An experienced auditor could reproduce it without extreme protocol internals, but it still requires understanding UniswapV2 pair accounting and a multi-step attack flow."
+}

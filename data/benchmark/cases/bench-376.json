@@ -1,0 +1,23 @@
+{
+  "id": "bench-376",
+  "name": "BigBangSwap",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240410-bigbangswap---precission-loss",
+  "chain": "bsc",
+  "block_number": 37740105,
+  "attack_txs": [
+    "0x94055664287a565d4867a97ba6d5d2e28c55d10846e3f83355ba84bd1b9280fc"
+  ],
+  "vulnerable_address": "0x6ef66fd568903c072a9654e2c8db9520686932cf",
+  "has_public_source": false,
+  "fixable": true,
+  "proxy_address": "0xa45d4359246dbd523ab690bef01da06b07450030",
+  "function": "0xba531b6d",
+  "type": "accounting-error",
+  "attacker_profit": 4692.8020657841535,
+  "source_case_id": "dfhl-0520",
+  "fix_description": "addLiquidity function (0xba531b6d) has precision loss in LP share calculation. When computing shares = amount * totalSupply / reserve, integer division rounds in favor of the depositor. Attacker loops add/remove liquidity 2880+ times, accumulating rounding profit each cycle. Fix: round down in share calculation (use (amount * totalSupply) / reserve without +1 adjustment), or add minimum deposit threshold.",
+  "attack_date": "2024-04-10",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is a very short, repetitive exploit: flash loan a small amount of BUSD, repeatedly create helper contracts, buy BGG, call the vulnerable sellRewardToken function, and sweep profits. It relies on an obvious protocol-specific logic flaw around per-address/accounting abuse rather than complex DeFi mechanics, with minimal routing and no sophisticated state, timing, or cross-protocol reasoning."
+}

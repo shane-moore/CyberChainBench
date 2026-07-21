@@ -1,0 +1,23 @@
+{
+  "id": "bench-281",
+  "name": "VRug",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20241107-vrug---rug-pull",
+  "chain": "ethereum",
+  "block_number": 21138660,
+  "attack_txs": [
+    "0x5e151627dc06ec4f2db5be2f48248f320ad3450aba42b1bbd00131bcbaa4f0ae"
+  ],
+  "vulnerable_address": "0xc273979bd37ad379d0a274956c49bfe0b9ed88d9",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "VRUG.sol",
+  "function": "vitalikMint",
+  "type": "access-control",
+  "attacker_profit": 8381.92481619056,
+  "source_case_id": "dfhl-0415",
+  "fix_description": "vitalikMint allows the onlyVitalik address to mint unlimited tokens. This is a backdoor/rug-pull function. Fix: remove the function entirely, or add a max supply cap that cannot be exceeded.",
+  "attack_date": "2024-11-07",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This PoC is a single-step exploit with one direct UniswapV2 pair swap and minimal setup, indicating a very straightforward issue rather than a complex protocol interaction. It requires little protocol-specific reasoning beyond recognizing an obvious unsafe callback/recipient pattern, and the exploit code is far below the medium-complexity threshold."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-199",
+  "name": "SellToken04",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230611-selltoken04---price-manipulation",
+  "chain": "bsc",
+  "block_number": 29005755,
+  "attack_txs": [
+    "0xe968e648b2353cea06fc3da39714fb964b9354a1ee05750a3c5cc118da23444b"
+  ],
+  "vulnerable_address": "0x84Be9475051a08ee5364fBA44De7FE83a5eCC4f1",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "miner.sol",
+  "function": "getbnb",
+  "type": "price-manipulation",
+  "attacker_profit": 105058.85442084595,
+  "source_case_id": "dfhl-0318",
+  "fix_description": "Replace getAmountsOut (spot price from AMM) with a TWAP oracle or Chainlink price feed in getbnb. The current implementation reads instantaneous pool reserves which can be manipulated via flash loan to inflate or deflate the returned price.",
+  "attack_date": "2023-06-11",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a multi-step price manipulation against a protocol that naively uses `getAmountOut` as an oracle, combined with two flash loans and interaction between DODO, PancakeSwap, WBNB, and the victim router\u2019s shorting logic. The vulnerability concept is fairly recognizable, but producing the PoC requires understanding the protocol-specific sequencing of inflate price \u2192 set/open short \u2192 dump price \u2192 withdraw profit."
+}

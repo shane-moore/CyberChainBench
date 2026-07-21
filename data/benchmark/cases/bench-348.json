@@ -1,0 +1,23 @@
+{
+  "id": "bench-348",
+  "name": "RedKeysCoin",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240527-redkeyscoin---weak-rng",
+  "chain": "bsc",
+  "block_number": 39079952,
+  "attack_txs": [
+    "0x8d5fb97b35b830f8addcf31c8e0c6135f15bbc2163d891a3701ada0ad654d427"
+  ],
+  "vulnerable_address": "0x71e3056aa4985de9f5441f079e6c74454a3c95f0",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "RedKeysGame.sol",
+  "function": "randomNumber",
+  "type": "accounting-error",
+  "attacker_profit": 2060.985054319651,
+  "source_case_id": "dfhl-0490",
+  "fix_description": "Replace on-chain randomness (block.timestamp, block.prevrandao, block.coinbase, etc.) with a secure off-chain source like Chainlink VRF. All inputs to randomNumber() are known within the same block, allowing an attacker to pre-compute the result in their contract and only bet when they will win.",
+  "attack_date": "2024-05-27",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a straightforward predictable-randomness exploit: the PoC simply mirrors the target contract\u2019s RNG logic on-chain, reads the counter, predicts the next outcome, and calls playGame in a loop. It\u2019s a short single-pattern exploit with minimal protocol complexity and no flash loans, routing, or deep multi-contract reasoning."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-29",
+  "name": "LPC",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220725-lpc---business-logic-flaw--incorrect-recipient-balance-check-did-not-check-senderrecipient-in-transfer",
+  "chain": "bsc",
+  "block_number": 19852597,
+  "attack_txs": [
+    "0x0e970ed84424d8ea51f6460ce6105ab68441d4450a80bc8d749fdf01e504ed8c"
+  ],
+  "vulnerable_address": "0x1E813fA05739Bf145c1F182CB950dA7af046778d",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "LPC.sol",
+  "function": "_transfer",
+  "type": "input-validation",
+  "attacker_profit": 203.9401257094616,
+  "source_case_id": "dfhl-0133",
+  "fix_description": "In _transfer, add check for sender == recipient case: either return early (self-transfer is a no-op) or handle balance updates correctly when sender and recipient are the same address. The current code double-updates the same balance and corrupts totalHolders count.",
+  "attack_date": "2022-07-25",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very short, single-vector exploit: flash borrow the vulnerable token, abuse a broken self-transfer/accounting behavior in a simple loop, then repay. It requires minimal protocol-specific DeFi knowledge beyond Pancake-style flash swaps and the bug pattern is straightforward once the token logic is inspected."
+}

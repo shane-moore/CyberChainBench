@@ -1,0 +1,23 @@
+{
+  "id": "bench-542",
+  "name": "N00d Token",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221026-n00d-token---reentrancy",
+  "chain": "ethereum",
+  "block_number": 15826380,
+  "attack_txs": [
+    "0x8037b3dc0bf9d5d396c10506824096afb8125ea96ada011d35faa89fa3893aea"
+  ],
+  "vulnerable_address": "0x3561081260186E69369E6C32F280836554292E08",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "SushiBar.sol",
+  "function": "enter",
+  "type": "reentrancy",
+  "attacker_profit": 29313.327486269896,
+  "source_case_id": "dfhl-0087",
+  "fix_description": "Add reentrancy guard (nonReentrant modifier) to enter, or follow checks-effects-interactions pattern to update state before making external calls.",
+  "attack_date": "2022-10-26",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit requires understanding ERC777 hook-based reentrancy plus how the SushiBar enter/leave accounting can be abused during a Uniswap V2 flash swap callback. While the PoC is not very long, it is a multi-step attack with repeated flash-swapped reentry loops and protocol-specific logic, making it more than a straightforward pattern match."
+}

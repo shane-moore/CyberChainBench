@@ -1,0 +1,23 @@
+{
+  "id": "bench-222",
+  "name": "NeverFall",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230503-neverfall---price-manipulation",
+  "chain": "bsc",
+  "block_number": 27863178,
+  "attack_txs": [
+    "0xccf513fa8a8ed762487a0dcfa54aa65c74285de1bc517bd68dbafa2813e4b7cb"
+  ],
+  "vulnerable_address": "0x5ABDe8B434133C98c36F4B21476791D95D888bF5",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "NeverFallToken.sol",
+  "function": "sell",
+  "type": "price-manipulation",
+  "attacker_profit": 300160.5677959695,
+  "source_case_id": "dfhl-0345",
+  "fix_description": "In sell, uses manipulable on-chain values for pricing. Fix: use TWAP or oracle.",
+  "attack_date": "2023-05-03",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a short but protocol-specific multi-step attack: take a flash loan, use one contract buy, route a large swap through Pancake to a specific recipient, then exploit the target\u2019s sell logic and repay. It requires understanding the NeverFall token mechanics and how the creator-directed swap manipulates state/pricing, so it is more than a trivial pattern but not a deeply complex attack chain."
+}

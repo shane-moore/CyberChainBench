@@ -1,0 +1,23 @@
+{
+  "id": "bench-135",
+  "name": "uniclyNFT",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230916-uniclynft---reentrancy",
+  "chain": "ethereum",
+  "block_number": 18149402,
+  "attack_txs": [
+    "0xc42fe1ce2516e125a386d198703b2422aa0190b25ef6a7b0a1d3c6f5d199ffad"
+  ],
+  "vulnerable_address": "0xd3c41c85be295607e8ea5c58487ec5894300ee67",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "PointFarm.sol",
+  "function": "deposit",
+  "type": "reentrancy",
+  "attacker_profit": 812.0439154784058,
+  "source_case_id": "dfhl-0254",
+  "fix_description": "Add reentrancy guard (nonReentrant modifier) to deposit, or follow checks-effects-interactions pattern to update state before making external calls.",
+  "attack_date": "2023-09-16",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a short multi-step AMM reserve-manipulation attack using a flash loan, initial swap, repeated token transfers plus skim calls to distort pair balances, and a final swap to extract profit. It requires understanding UniswapV2 pair accounting and skim behavior rather than just spotting a trivial access-control bug, but the PoC is still compact and not deeply protocol-internal."
+}

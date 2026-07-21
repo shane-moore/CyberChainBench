@@ -1,0 +1,23 @@
+{
+  "id": "bench-262",
+  "name": "- GDS",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230103---gds---business-logic-flaw",
+  "chain": "bsc",
+  "block_number": 24451036,
+  "attack_txs": [
+    "0x2bb704e0d158594f7373ec6e53dc9da6c6639f269207da8dab883fc3b5bf6694"
+  ],
+  "vulnerable_address": "0xC1Bb12560468fb255A8e8431BDF883CC4cB3d278",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "GDS.sol",
+  "function": "_settlementLpMining",
+  "type": "price-manipulation",
+  "attacker_profit": 38978.47456604644,
+  "source_case_id": "dfhl-0394",
+  "fix_description": "In _settlementLpMining, reward is calculated using IERC20(pair).balanceOf(_from) which is the instantaneous LP balance. Attacker can flash-loan LP tokens to temporarily inflate their balance and claim disproportionate rewards. Also, transferring LP resets lastEpoch allowing double-claim. Fix: use a staking mechanism that tracks deposited LP rather than balanceOf, or use snapshot-based balance.",
+  "attack_date": "2023-01-03",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This PoC chains multiple protocol-specific steps: initial liquidity seeding, deployment of 100 helper contracts, block advancement, two nested flash loans, repeated reward-claim/withdraw interactions, and final liquidity unwind/swap. Exploiting it requires understanding unusual tokenomics/reward mechanics and state manipulation across many contracts, which is well beyond a straightforward single-pattern bug."
+}

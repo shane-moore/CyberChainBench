@@ -1,0 +1,23 @@
+{
+  "id": "bench-388",
+  "name": "Paraswap",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240320-paraswap---incorrect-access-control",
+  "chain": "ethereum",
+  "block_number": 19470561,
+  "attack_txs": [
+    "0x35a73969f582872c25c96c48d8bb31c23eab8a49c19282c67509b96186734e60"
+  ],
+  "vulnerable_address": "0x00000000fdac7708d0d360bddc1bc7d097f47439",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "UniswapV3Utils.sol",
+  "function": "uniswapV3SwapCallback",
+  "type": "access-control",
+  "attacker_profit": 21238.78470598823,
+  "source_case_id": "dfhl-0534",
+  "fix_description": "In uniswapV3SwapCallback, the multi-hop path (data.length > 160) does not validate that msg.sender is a legitimate Uniswap V3 pool before reading payer from calldata. Add pool address verification (CREATE2 check) in all code paths, not just the single-hop else branch.",
+  "attack_date": "2024-03-20",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is a clear multi-step price-manipulation attack using a flash loan, Pancake V3 swaps, and repeated interaction with a protocol-specific vulnerable swap contract. It is not deeply complex, but writing the PoC requires understanding the contract\u2019s special approved-address logic and sequencing the price distortion correctly across several external calls."
+}

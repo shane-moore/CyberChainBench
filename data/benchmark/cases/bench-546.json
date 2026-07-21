@@ -1,0 +1,23 @@
+{
+  "id": "bench-546",
+  "name": "BEGO",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221020-bego---incorrect-signature-verification",
+  "chain": "bsc",
+  "block_number": 22315680,
+  "attack_txs": [
+    "0x9f4ef3cc55b016ea6b867807a09f80d1b2e36f6cd6fccfaf0182f46060332c57"
+  ],
+  "vulnerable_address": "0xc342774492b54ce5F8ac662113ED702Fc1b34972",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "BGeoToken.sol",
+  "function": "isSigners",
+  "type": "input-validation",
+  "attacker_profit": 3276.887425851919,
+  "source_case_id": "dfhl-0093",
+  "fix_description": "In the isSigned modifier, isSigners only checks that each recovered signer is in the whitelist, but does not check for duplicates. Attacker can reuse the same valid signature multiple times to bypass multi-sig requirements. Fix by checking that all recovered signers are unique (no duplicates in the _signers array).",
+  "attack_date": "2022-10-20",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a straightforward arbitrary mint exploit: the attacker directly calls a vulnerable mint() function with empty proof/signature arrays, then immediately swaps the freely minted tokens for WBNB. The PoC is very short, uses only two main actions, and requires little protocol-specific reasoning beyond spotting missing validation/access control."
+}

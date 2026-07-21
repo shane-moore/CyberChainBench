@@ -1,0 +1,31 @@
+{
+  "id": "bench-569",
+  "name": "AIZPTToken",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20241005-aizpttoken---wrong-price-calculation",
+  "chain": "bsc",
+  "block_number": 42846998,
+  "attack_txs": [
+    "0x5e694707337cca979d18f9e45f40e81d6ca341ed342f1377f563e779a746460d"
+  ],
+  "vulnerable_address": "0xbe779d420b7d573c08eee226b9958737b6218888",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": null,
+  "file": "AIZPT314.sol",
+  "function": "sell(uint256)",
+  "type": "accounting-error",
+  "attacker_profit": 19648.67,
+  "source_case_id": "draft-291",
+  "fix_description": "The ETH payout formula uses the full sell_amount in the denominator (_balances[address(this)] + sell_amount), but only 50% of sell_amount (swap_amount) actually enters the contract reserves \u2014 the other 50% is burned. Fix by using swap_amount instead of sell_amount in the price calculation: ethAmount = (swap_amount * address(this).balance) / (_balances[address(this)] + swap_amount).",
+  "normal_txs": [
+    "0xa5dbf6c21b7f0eca9903c90debae6f5ca6c0e1cf492b5f3c82c9001914ebf888",
+    "0xd13062ab82818a297bd0ecfdb9ce0e3cd9ea3ebc7457a61e8ebd8a935636a1d6",
+    "0x2285bd9886a680d748938592ae1998a8cb86f1a7cd63bdc3cd500c7af70ebf28",
+    "0xbe00f6c3424f86c52188e9dcece668c520154712b0cf9c2f7d2ee4e29c20f9bf",
+    "0x1892b4b896758482c3978b2898377e8e3c02f41f8f57e3b83a1584fd33f77885"
+  ],
+  "attack_date": "2024-10-05",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The exploit is very short and direct: take a flash loan, send BNB to the vulnerable token contract, repeatedly transfer tokens back to the token contract to abuse its flawed accounting/logic, then repay and keep profit. It involves only a couple of contracts and no deep DeFi mechanics beyond a basic flash loan wrapper, so a competent auditor could likely build this PoC quickly."
+}

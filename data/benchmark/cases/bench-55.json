@@ -1,0 +1,23 @@
+{
+  "id": "bench-55",
+  "name": "Auctus",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220326-auctus---arbitrary-call",
+  "chain": "ethereum",
+  "block_number": 14460636,
+  "attack_txs": [
+    "0x2e7d7e7a6eb157b98974c8687fbd848d0158d37edc1302ea08ee5ddb376befea"
+  ],
+  "vulnerable_address": "0xE7597F774fD0a15A617894dc39d45A28B97AFa4f",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "ACOWriter.sol",
+  "function": "_sellACOTokens",
+  "type": "input-validation",
+  "attacker_profit": 723566.1493053271,
+  "source_case_id": "dfhl-0164",
+  "fix_description": "In _sellACOTokens, the _exchange.call{value}(exchangeData) performs an arbitrary external call with user-controlled data. Add reentrancy guard and validate the exchange address against a whitelist.",
+  "attack_date": "2022-03-26",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a single-call exploit with a very obvious arbitrary-call/injection pattern: `acowrite.write` is abused to execute a crafted `transferFrom` payload and drain approved USDC. It requires minimal protocol-specific knowledge, no flash loans or multi-step state manipulation, and the PoC is short and straightforward."
+}

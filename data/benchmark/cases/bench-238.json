@@ -1,0 +1,23 @@
+{
+  "id": "bench-238",
+  "name": "- Poolz",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230315---poolz---integer-overflow",
+  "chain": "bsc",
+  "block_number": 26476259,
+  "attack_txs": [
+    "0x626acb9663ea52d154d61aabf4011c877922dc8fcc4aef7ca0e2cde75a02653f"
+  ],
+  "vulnerable_address": "0x8BfAA473a899439d8E07BF86a8C6cE5De42fE54B",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "LockedDeal.sol",
+  "function": "getArraySum",
+  "type": "accounting-error",
+  "attacker_profit": 2127.5939564148566,
+  "source_case_id": "dfhl-0364",
+  "fix_description": "Use SafeMath or upgrade to Solidity >=0.8.0 for built-in overflow checks. The getArraySum function sums uint256 values without overflow protection, allowing crafted inputs to wrap around and bypass balance checks.",
+  "attack_date": "2023-03-15",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The core bug is a fairly standard arithmetic overflow/underflow style pool-accounting issue in CreateMassPools/WithdrawToken, but the exploit is not single-step: it requires understanding the protocol\u2019s pool creation logic, crafting overflowed amounts, and repeating the drain flow across multiple supported tokens with swaps and a flash loan wrapper. While the primitive is straightforward once identified, the multi-asset sequencing and protocol-specific setup push it beyond easy."
+}

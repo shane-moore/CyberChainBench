@@ -1,0 +1,31 @@
+{
+  "id": "bench-336",
+  "name": "UwULend",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240610-uwulend---price-manipulation",
+  "chain": "ethereum",
+  "block_number": 20061319,
+  "attack_txs": [
+    "0x242a0fb4fde9de0dc2fd42e8db743cbc197ffa2bf6a036ba0bba303df296408b"
+  ],
+  "vulnerable_address": "0x3c0ada81038a078cc1272ac22745ddd1ab8839af",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x2409af0251dcb89ee3dee572629291f9b087c668",
+  "file": "LendingPoolCollateralManager.sol",
+  "function": "_calculateAvailableCollateralToLiquidate",
+  "type": "price-manipulation",
+  "attacker_profit": 7138516.048237952,
+  "source_case_id": "dfhl-0477",
+  "fix_description": "The sUSDe oracle uses a median of multiple Curve pool prices (FRAXUSDe, USDeUSDC, USDeDAI, USDecrvUSD, GHOUSDe). The attacker manipulated 5 of these pools simultaneously via flash loan to skew the median. Fix: use manipulation-resistant price sources (Chainlink) instead of DEX spot prices, or add TWAP requirement and price deviation circuit breakers that reject sudden price changes within a single block.",
+  "normal_txs": [
+    "0x5fc376b57f08c7861660418e8a77f1208cc5d4cc52214acee89091f79a622b0e",
+    "0xc481120251bb3df6137d1ec2c63c5fa0513828c2d2130c242fdc441596c6487d",
+    "0xe360eea99d4175a889732c0ebf8f531b31a5c1d68f86625186166239f4cb1662",
+    "0x4d7789bf7b100fdee2920008cbd1fb90feb28bb9d7da751c7e1ad560c7596b84",
+    "0x30beea89f7b5be41181676b5b215eb4d50e55d6b7541b87afc46ea6cde1b39de"
+  ],
+  "attack_date": "2024-06-10",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The PoC is mechanically short, but the exploit requires understanding protocol-specific collateral/accounting behavior: using transferred uSUSDE to preserve health factor, flash-loaning WETH, borrowing out multiple reserves, then withdrawing the WETH collateral despite the debt. This is more than a trivial missing-access-control bug and depends on reading UWU Lend\u2019s lending logic and health factor calculations."
+}

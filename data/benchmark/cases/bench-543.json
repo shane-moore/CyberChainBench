@@ -1,0 +1,31 @@
+{
+  "id": "bench-543",
+  "name": "Market",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221024-market---read-only-reentrancy",
+  "chain": "polygon",
+  "block_number": 34716801,
+  "attack_txs": [
+    "0xb8efe839da0c89daa763f39f30577dc21937ae351c6f99336a0017e63d387558"
+  ],
+  "vulnerable_address": "0xb6622fe99121bf83df5c172344ed382b894482c5",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x3dc7e6ff0fb79770fa6fb05d1ea4deacce823943",
+  "file": "CToken.sol",
+  "function": "borrowFresh",
+  "type": "price-manipulation",
+  "attacker_profit": 57273.496127052116,
+  "source_case_id": "dfhl-0089",
+  "fix_description": "In borrowFresh, relies on oracle price that can be manipulated. Fix: use manipulation-resistant oracle with TWAP or circuit breakers.",
+  "normal_txs": [
+    "0xafa01fc8639d7aeca0796243e1a2763d52db9ac7827aae4cdf7738c764e22ff6",
+    "0xb90a4739fe0956f2d5b17d928829883629e99ea8bee9b620f7c1e06b4edf5392",
+    "0x5b8a04e7358dcb6f1aa9b24c1ce47c962b4f81c4d17b54ac9293adba129197e4",
+    "0x18b920064e0ccf416696bf0a7552634c254cb59cd0014f62dfb2a9a1352c2886",
+    "0x145d43cc8827ab470b2373d27d4311463848afda269c05139ac60e327d738967"
+  ],
+  "attack_date": "2022-10-24",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This exploit is a sophisticated read-only reentrancy/oracle-manipulation chain involving nested Aave and Balancer flash loans, Curve LP mint/burn mechanics, Beefy vault shares as collateral, lending market accounting, liquidation, and callback-based state manipulation. Writing this PoC requires deep protocol-specific understanding across multiple contracts and timing-sensitive steps, which would likely take an experienced auditor more than 2 hours."
+}

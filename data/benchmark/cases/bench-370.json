@@ -1,0 +1,22 @@
+{
+  "id": "bench-370",
+  "name": "MARS",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240416-mars---bad-reflection",
+  "chain": "bsc",
+  "block_number": 37903300,
+  "attack_txs": [
+    "0x25e2af0a55581d5629a933af9fedd3c70e6d0c320f0b72700ca80e5cdd36c80b"
+  ],
+  "vulnerable_address": "0x436D3629888B50127EC4947D54Bb0aB1120962A0",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0xa9059cbb",
+  "type": "accounting-error",
+  "attacker_profit": 5767.760661937244,
+  "source_case_id": "dfhl-0513",
+  "fix_description": "Reflection/fee token with bad accounting. On transfer, 3% fee is taken from amount and sent to dividend address, but the LP pair balance is not properly updated (reflection mechanism miscalculates). LP pair thinks its token balance unchanged, so swap price stays constant. Attacker loops: swap BNB->MARS (970 MARS), transfer MARS to new address (fee deducted from LP implicitly but LP unaware), swap MARS->BNB at same price. Each cycle profits the fee difference. Fix: sync LP pair after fee-bearing transfers, or exclude LP pair from reflection.",
+  "attack_date": "2024-04-16",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a multi-step flash-loan attack that depends on understanding fee-on-transfer/reflection token behavior and how repeated swaps can distort AMM pricing when the pair accrues reflections. The PoC is not very long, but it requires protocol-specific reasoning about taxed tokens, swap routing, and iterative buy/sell loops rather than a simple obvious bug."
+}

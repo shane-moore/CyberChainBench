@@ -1,0 +1,24 @@
+{
+  "id": "bench-537",
+  "name": "Kashi",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221108-kashi---price-caching-design-defect",
+  "chain": "ethereum",
+  "block_number": 15928290,
+  "attack_txs": [
+    "0x3d163bfbec5686d428a6d43e45e2626a220cc4fcfac7620c620b82c1f2537c78"
+  ],
+  "vulnerable_address": "0x4a9cb5d0b755275fd188f87c0a8df531b0c7c7d2",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0xbb02a884621fb8f5bfd263a67f58b65df5b090f3",
+  "file": "CauldronMediumRiskV1.sol",
+  "function": "borrow",
+  "type": "accounting-error",
+  "attacker_profit": 69939.30657194433,
+  "source_case_id": "dfhl-0082",
+  "fix_description": "In borrow(), call updateExchangeRate() before the solvent check (same as liquidate() does). Currently borrow uses a stale cached exchangeRate in _isSolvent, while liquidate uses the fresh rate, creating an exploitable price discrepancy.",
+  "attack_date": "2022-11-08",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a multi-step DeFi exploit involving a BentoBox batch flash loan, Cauldron collateralization/borrowing, exchange rate update, self-liquidation, and asset swaps to repay the loan. It requires understanding protocol-specific interactions between BentoBox and Abracadabra/Cauldron rather than a generic bug pattern, but the attack path is still fairly direct and compact once understood."
+}

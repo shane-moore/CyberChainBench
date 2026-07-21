@@ -1,0 +1,23 @@
+{
+  "id": "bench-473",
+  "name": "- BBOX",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221205---bbox---flashloan-price-manipulation",
+  "chain": "bsc",
+  "block_number": 23106507,
+  "attack_txs": [
+    "0xac57c78881a7c00dfbac0563e21b5ae3a8e3f9d1b07198a27313722a166cc0a3"
+  ],
+  "vulnerable_address": "0x5DfC7f3EbBB9Cbfe89bc3FB70f750Ee229a59F8c",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "BBOXToken.sol",
+  "function": "_transfer",
+  "type": "price-manipulation",
+  "attacker_profit": 10424.796217737323,
+  "source_case_id": "dfhl-0067",
+  "fix_description": "In _transfer, accumulated pairAmount is burned from the pair and sync() is called on every non-buy transfer. Attacker can inflate pairAmount via large buys (3% accumulates), then trigger the burn via a normal transfer to manipulate pair price. Fix by removing the direct pair balance manipulation or adding a cap/cooldown on the burn mechanism.",
+  "attack_date": "2022-12-05",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a short, straightforward flash-loan-assisted token exploit with only a few steps: borrow WBNB, swap into the vulnerable token via a helper contract to bypass a transfer/sell restriction, swap back, and repay. The PoC is small and does not require deep protocol-specific reasoning beyond spotting a simple transfer-limit bypass pattern."
+}

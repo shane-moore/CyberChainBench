@@ -1,0 +1,23 @@
+{
+  "id": "bench-71",
+  "name": "Bob",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231217-bob---price-manipulation",
+  "chain": "bsc",
+  "block_number": 34428628,
+  "attack_txs": [
+    "0xfb14292a531411f852993e5a3ba4e7eb63ed548220267b9b3f4aacc5572d3a58"
+  ],
+  "vulnerable_address": "0x700ee24c350739e323dcf6a50ae3e7a3329c86ae",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "BOBO_BOY.sol",
+  "function": "_transfer",
+  "type": "accounting-error",
+  "attacker_profit": 724.2393518615021,
+  "source_case_id": "dfhl-0188",
+  "fix_description": "Same pattern as HackDao (bench-40): in _transfer, the sell fee is deducted from sender balance separately rather than from the transfer amount. This creates a discrepancy between pair token balance and reserves when skim is used. Fix: deduct fee from actualAmount (reduce what recipient receives) instead of separately reducing sender balance.",
+  "attack_date": "2023-12-17",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This PoC chains a flash loan, router swaps, LP minting, repeated skim/swap cycles, callback-based pair interaction, and liquidity removal across multiple contracts, requiring understanding of Pancake/Uniswap V2 mechanics and fee-on-transfer token behavior. The exploit logic is non-obvious and protocol-specific, with a 5+ step attack flow that would likely take an experienced auditor more than 2 hours to reconstruct confidently."
+}

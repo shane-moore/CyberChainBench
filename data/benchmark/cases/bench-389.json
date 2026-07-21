@@ -1,0 +1,23 @@
+{
+  "id": "bench-389",
+  "name": "MO",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240314-mo---business-logic-flaw",
+  "chain": "optimism",
+  "block_number": 117395512,
+  "attack_txs": [
+    "0x4ec3061724ca9f0b8d400866dd83b92647ad8c943a1c0ae9ae6c9bd1ef789417"
+  ],
+  "vulnerable_address": "0xAe7b6514Af26BcB2332FEA53B8Dd57bc13A7838E",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Loan.sol",
+  "function": "borrow",
+  "type": "accounting-error",
+  "attacker_profit": 193149.6578178601,
+  "source_case_id": "dfhl-0535",
+  "fix_description": "In borrow, the function claims tokens from the pair and calls sync(), which changes the reserves used by price(). This creates a circular dependency: each borrow raises the price for the next borrow. Fix by computing price before modifying pair state, or use a TWAP/external oracle, and add a cooldown to prevent immediate redeem after borrow.",
+  "attack_date": "2024-03-14",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a multi-step DeFi attack involving a flash loan, VaultRouter deposit flow via ParaSwap calldata, Uniswap V3 pool initialization/manipulation with a crafted liquidity position, and Curve arbitrage to realize profit. It requires protocol-specific understanding across several contracts and pricing assumptions, but the PoC is still fairly direct once the vulnerable pricing path is identified."
+}

@@ -1,0 +1,22 @@
+{
+  "id": "bench-459",
+  "name": "Unverified_b5cb",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250625-unverified_b5cb---access-control",
+  "chain": "bsc",
+  "block_number": 52052680,
+  "attack_txs": [
+    "0x8c026c3939f7e2d0376d13e30859fa918a5a567348ca1329836df88bef30c73e"
+  ],
+  "vulnerable_address": "0xB5CB0555c4A333543DbE0b219923C7B3e9D84a87",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x94655f2b",
+  "type": "access-control",
+  "attacker_profit": 29266.724146157678,
+  "source_case_id": "dfhl-0619",
+  "fix_description": "The fallback function (label_0070/func_0190) processes arbitrary selectors without access control. Add msg.sender validation in the fallback path, similar to the owner check in func_00BC (require msg.sender == owner or isAuthorized).",
+  "attack_date": "2025-06-25",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a short but protocol-specific multi-step attack: flash loan BUSD, swap into UN, abuse the pair via repeated token transfers plus skim calls to manipulate balances/reserves, then swap back for profit and repay. It requires understanding UniswapV2 pair accounting and the skim-based balance mismatch issue, so it is not purely trivial even though the PoC is compact."
+}

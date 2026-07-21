@@ -1,0 +1,25 @@
+{
+  "id": "bench-566",
+  "name": "P719Token",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20241011-p719token---price-manipulation-inflate-attack",
+  "chain": "bsc",
+  "block_number": 43023423,
+  "attack_txs": [
+    "0x9afcac8e82180fa5b2f346ca66cf6eb343cd1da5a2cd1b5117eb7eaaebe953b3"
+  ],
+  "vulnerable_address": "0x6beee2b57b064eac5f432fc19009e3e78734eabc",
+  "has_public_source": false,
+  "fixable": true,
+  "proxy_address": null,
+  "file": null,
+  "function": "0xa9059cbb",
+  "type": "price-manipulation",
+  "attacker_profit": 310464.32,
+  "source_case_id": "draft-288",
+  "fix_description": "The token's transfer function contains built-in LP pair manipulation logic that inflates the token price during transfers. Remove the auto-swap/LP-burn mechanism from the transfer hook, or use a TWAP oracle for external price references instead of relying on spot pair reserves.",
+  "normal_txs": [],
+  "attack_date": "2024-10-11",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This PoC requires a fairly intricate multi-contract attack chain: a PancakeV3 flash loan, dozens of helper contracts, staged buys, token consolidation, split sells across 100 contracts, and final unwinding through a custom liquidity pool. Exploiting it depends on understanding a non-obvious protocol-specific tokenomics flaw in P719\u2019s transfer/sell logic and how repeated burn/fee mechanics inflate price, which is well beyond a straightforward pattern."
+}

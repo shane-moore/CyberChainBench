@@ -1,0 +1,23 @@
+{
+  "id": "bench-340",
+  "name": "SteamSwap",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240606-steamswap---logic-flaw",
+  "chain": "bsc",
+  "block_number": 39381374,
+  "attack_txs": [
+    "0x40f3bdd0a3a8d0476ae6aa2875dc2ec60b80812e2a394b67a88260df57c65522"
+  ],
+  "vulnerable_address": "0xb7D0A1aDaFA3e9e8D8e244C20B6277Bee17a09b6",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "MineSTM.sol",
+  "function": "sell",
+  "type": "price-manipulation",
+  "attacker_profit": 90111.84274827126,
+  "source_case_id": "dfhl-0480",
+  "fix_description": "In sell, lpAmount is calculated using inner_pair.getReserves() which can be manipulated via flash loan. Additionally removeLiquidity uses 0,0 as min amounts (no slippage protection). Fix: use TWAP or internal accounting for reserve values, and set reasonable minimum output amounts.",
+  "attack_date": "2024-06-06",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is a very short, linear attack: flash loan BUSD, swap to STM, call updateAllowance, then repeatedly call sell and repay the loan. It appears to hinge on an obvious protocol-specific allowance/accounting flaw with minimal setup, few external interactions, and no complex cross-protocol reasoning beyond a basic flash-loan-funded token swap."
+}

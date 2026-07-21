@@ -1,0 +1,35 @@
+.git
+__pycache__
+*.pyc
+.DS_Store
+
+# Secrets — never copy into the build context. Use a whitelist for env files:
+# ignore every .env* variant (.env, .env.local, .env.rpc, .env.runtime, ...),
+# then re-allow only the committed example.
+.env*
+!.env.example
+configs/api_keys.json
+**/.env.runtime
+**/.mcp.json
+**/.codex/config.toml
+**/_openhands_config.toml
+**/*_cli_session.log
+
+tmp/
+out/
+cache/
+upstream/
+data/sources/
+data/upstream/
+data/eval/
+data/eval_results/
+data/benchmark_draft/
+data/benchmark/cases/
+datasets/
+papers/
+slides/
+slides.tar.gz
+stderr*.txt
+stdout*.txt
+docker/task_agent/__pycache__
+*.log

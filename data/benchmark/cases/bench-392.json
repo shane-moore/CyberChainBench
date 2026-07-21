@@ -1,0 +1,23 @@
+{
+  "id": "bench-392",
+  "name": "Binemon",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240311-binemon---precission-loss",
+  "chain": "bsc",
+  "block_number": 36864395,
+  "attack_txs": [
+    "0x1999bb5c11a8d8bfa7620fc5cc37f5bc59c1a99d7a9250a8d6076c93bbdbeb5f"
+  ],
+  "vulnerable_address": "0xe56842ed550ff2794f010738554db45e60730371",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Binemon.sol",
+  "function": "sweepTokenForMarketing",
+  "type": "access-control",
+  "attacker_profit": 10439.071985485796,
+  "source_case_id": "dfhl-0538",
+  "fix_description": "Add access control (onlyOwner) or a cooldown period to sweepTokenForMarketing(). Currently anyone can call it repeatedly in one tx to dump all contract tokens at progressively worse prices, crashing the token price for front-running.",
+  "attack_date": "2024-03-11",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is a very short, direct sequence: repeatedly call an externally accessible token function to alter token state, buy the token, let another user buy to move price, then sell. It involves only basic token/router interactions with no flash loan, no complex multi-contract logic, and an obvious access-control/economic design issue."
+}

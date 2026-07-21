@@ -1,0 +1,23 @@
+{
+  "id": "bench-169",
+  "name": "NewFi",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230717-newfi---lack-slippage-protection",
+  "chain": "bsc",
+  "block_number": 30043574,
+  "attack_txs": [
+    "0x557628123d137ea49564e4dccff5f5d1e508607e96dd20fe99a670519b679cb5"
+  ],
+  "vulnerable_address": "0xB8dC09Eec82CaB2E86C7EdC8DD5882dd92d22411",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "StakedV3.sol",
+  "function": "Invest",
+  "type": "price-manipulation",
+  "attacker_profit": 30854.91088319047,
+  "source_case_id": "dfhl-0289",
+  "fix_description": "Do not use on-chain IQuoterV2 to determine amountOutMinimum in the same transaction \u2014 an attacker can manipulate the pool before the quote, making the quoter return a deflated value. Use an off-chain oracle price or user-supplied minimum with a reasonable slippage tolerance.",
+  "attack_date": "2023-07-17",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The PoC uses a multi-step attack with three nested PancakeV3 flash loans, token price manipulation via large swaps, and an exploit of protocol-specific Invest logic, so an auditor must understand both the flash callback flow and how the target contract misprices or mishandles quote amounts. While the code is still fairly short, it is not a trivial single-pattern bug and requires meaningful DeFi-specific reasoning."
+}

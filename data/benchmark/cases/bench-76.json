@@ -1,0 +1,27 @@
+{
+  "id": "bench-76",
+  "name": "HYPR",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231213-hypr---business-logic-flaw",
+  "chain": "ethereum",
+  "block_number": 18774585,
+  "attack_txs": [
+    "0x51ce3d9cfc85c1f6a532b908bb2debb16c7569eb8b76effe614016aac6635f65"
+  ],
+  "vulnerable_address": "0xe468b43b4ae4d750cd6a5d7edacc1a751302c99c",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x40c31236b228935b0329eff066b1ad96e319595e",
+  "file": "L1StandardBridge.sol",
+  "function": "initialize",
+  "type": "access-control",
+  "attacker_profit": 175935.87733246226,
+  "source_case_id": "dfhl-0194",
+  "fix_description": "The initialize function uses reinitializer(2) but was not called during proxy deployment, leaving it callable by anyone. Fix: call initialize immediately in the proxy deployment/upgrade script, or add an explicit onlyOwner/onlyProxyAdmin check to initialize. Alternatively, set the initializer version in the constructor of the implementation to prevent re-initialization.",
+  "normal_txs": [
+    "0x4cdfc7580172bee1a1decbe6190e0a018533259f324923c059f2833336cd0351"
+  ],
+  "attack_date": "2023-12-13",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very short two-step exploit: re-initialize the proxy with an attacker-controlled messenger, then call finalizeERC20Withdrawal to drain tokens. The bug is essentially an obvious improper initialization/access-control issue and the PoC is tiny with minimal protocol-specific complexity."
+}

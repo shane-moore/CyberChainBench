@@ -1,0 +1,31 @@
+{
+  "id": "bench-266",
+  "name": "Harvest Finance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2021/README.md#20201026-harvest-finance---flashloan-attack",
+  "chain": "ethereum",
+  "block_number": 11129474,
+  "attack_txs": [
+    "0x35f8d2f572fceaac9288e5d462117850ef2694786992a8c3f6d02612277b0877"
+  ],
+  "vulnerable_address": "0x9b3be0cc5dd26fd0254088d03d8206792715588b",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0xf0358e8c3cd5fa238a29301d0bea3d63a17bedbe",
+  "file": "Vault.sol",
+  "function": "_deposit",
+  "type": "price-manipulation",
+  "attacker_profit": 686304.1476615308,
+  "source_case_id": "dfhl-0042",
+  "fix_description": "In _deposit, toMint is calculated using underlyingBalanceWithInvestment() which reads from Curve pool and can be manipulated via flash loan. The depositArbCheck was insufficient. Fix: use TWAP-based valuation for underlyingBalanceWithInvestment, or add a time delay between deposit and withdrawal to prevent atomic arbitrage.",
+  "normal_txs": [
+    "0xa5e234a1fced230df602c9f30c552a3cf35d0676f1c3b3a6f8625dd19674ab32",
+    "0x64b552fd99d6abb1127c06cc866e328e9670f82f201f14dfc9895158a927386a",
+    "0x7f9e687c76c8379bcf4b33ad3efbc66cac68db477cb76c135fa4e724ffb4db5f",
+    "0x3d22c1cf871a65ce7e06368aeb86cc5d9e5ab400851ef21ef0bcfeac9751cb09",
+    "0xfdf3165d138da0841da928a02644c2b0d4b91351d14c5b5662b28cfcaed5ea63"
+  ],
+  "attack_date": "2020-10-26",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a multi-step DeFi exploit involving two nested Uniswap V2 flash loans, Curve pool swaps to manipulate vault share pricing, and repeated deposit/withdraw interactions with Harvest. It requires understanding protocol-specific accounting and cross-contract state effects, but the attack flow is still relatively direct and the PoC is compact enough that an experienced auditor could likely reproduce it within 30 minutes to 2 hours."
+}

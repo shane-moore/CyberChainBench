@@ -1,0 +1,31 @@
+{
+  "id": "bench-518",
+  "name": "AlkemiEarn",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/README.md#20260310-alkemiearn---business-logic",
+  "chain": "ethereum",
+  "block_number": 24626979,
+  "attack_txs": [
+    "0xa17001eb39f867b8bed850de9107018a2d2503f95f15e4dceb7d68fff5ef6d9d"
+  ],
+  "vulnerable_address": "0x85a948fd70b2b415bda93324581fb5fff1293df7",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x4822d9172e5b76b9db37b75f5552f9988f98a888",
+  "file": "AlkemiEarnPublic.sol",
+  "function": "liquidateBorrow",
+  "type": "input-validation",
+  "attacker_profit": 89254.57047293714,
+  "source_case_id": "dfhl-0681",
+  "fix_description": "In liquidateBorrow, add require(msg.sender != targetAccount) to prevent self-liquidation. The function lacks this check, allowing attackers to self-liquidate and gain the 10% liquidation discount bonus via storage aliasing when the liquidator and borrower supply/borrow balances point to the same storage slots.",
+  "normal_txs": [
+    "0x5201e2d1871f2cb0a9c815d022937192d82f0c22a0ea85ad6861f01487e03513",
+    "0x1f96f4a9c6620e09da4d85e2c5918efdcd0fcf7b289d426dca619cfce9c313c9",
+    "0x23476b8475ad051af011e336c373f8d0aa754d98a1016e4103ed1320110f9abd",
+    "0xeff5ade00d2c7c621794df21c0bbd73eee3b7f6073cd73d1bd2154982c177821",
+    "0xec64578a5b5248cd05227c13af729f52a22f8e86f1808a7ec41e4c7a46966dd8"
+  ],
+  "attack_date": "2026-03-10",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is a short multi-step self-liquidation chain using a flash loan: supply collateral, borrow against it, liquidate the attacker\u2019s own debt due to flawed liquidation logic, then withdraw collateral and repay. While the PoC is compact, it requires understanding protocol-specific lending/liquidation behavior and why self-liquidation unlocks profit, making it more than a trivial access-control bug."
+}

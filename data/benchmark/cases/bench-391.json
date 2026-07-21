@@ -1,0 +1,27 @@
+{
+  "id": "bench-391",
+  "name": "BBT",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240312-bbt---business-logic-flaw",
+  "chain": "ethereum",
+  "block_number": 19417823,
+  "attack_txs": [
+    "0x4019890fe5a5bd527cd3b9f7ee6d94e55b331709b703317860d028745e33a8ca"
+  ],
+  "vulnerable_address": "0x74463ed91bfa45bca06d59e8b383a89709842f69",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x3541499cda8ca51b24724bb8e7ce569727406E04",
+  "file": "BBTOKENv2.sol",
+  "function": "setRegistry",
+  "type": "access-control",
+  "attacker_profit": 12725.489769582355,
+  "source_case_id": "dfhl-0537",
+  "fix_description": "setRegistry has no access control \u2014 anyone can change the registry address. Add onlyOwner or require(msg.sender == admin) check, consistent with how setMaxSupply is protected.",
+  "normal_txs": [
+    "0x2c9c9ac9505f469b553b7ee259b0c0e055e35ab2313ab2197486b25d22f3ce2e"
+  ],
+  "attack_date": "2024-03-12",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is essentially a missing access control / trust-on-external-registry issue: the attacker deploys a fake registry contract, points the token to it via setRegistry, then mints arbitrary BBT and dumps it through Uniswap. The PoC is short, linear, and requires minimal protocol-specific reasoning beyond basic ERC20 mint-and-sell flow."
+}

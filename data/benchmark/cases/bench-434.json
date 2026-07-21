@@ -1,0 +1,31 @@
+{
+  "id": "bench-434",
+  "name": "MIMSpell3",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20251004-mimspell3---bypassed-insolvency-check",
+  "chain": "ethereum",
+  "block_number": 23504546,
+  "attack_txs": [
+    "0x842aae91c89a9e5043e64af34f53dc66daf0f033ad8afbf35ef0c93f99a9e5e6"
+  ],
+  "vulnerable_address": "0x5e70f7acb8ec0231c00220d11c74dc2b23187103",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x46f54d434063e5f1a2b2cc6d9aaa657b1b9ff82c",
+  "file": "CauldronV4.sol",
+  "function": "_additionalCookAction",
+  "type": "accounting-error",
+  "attacker_profit": 1768480.4405087654,
+  "source_case_id": "dfhl-0590",
+  "fix_description": "_additionalCookAction is an empty virtual function that returns a default CookStatus (all fields false). When cook calls it for action=0, the returned status overwrites the existing status including needsSolvencyCheck=true set by prior borrow actions. Fix by preserving the incoming status fields in the return value, or not allowing action=0 to overwrite the solvency check flag.",
+  "normal_txs": [
+    "0x66c68d1564986f8ea65355d96a5193cd3f5cf0002b728815bacaf99a17879193",
+    "0x0289a6cfb345ed1debc9548aba7b36b240a288d230dca4209dfedd0b48865e0b",
+    "0xacc1f9419a88728544fc642cc1b0c7b176e971954570f1fbf63c3a486b12c3e9",
+    "0x670cb7a50b3a51c20befd0f830bfd76e7929e7aea21207f4ff646251a32b8734",
+    "0xd9766a3f9454f8573fa22dd14a07a08df2f3ca8ea9eee16dcfc34a4730560b83"
+  ],
+  "attack_date": "2025-10-04",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a straightforward arbitrary-call/token-drain style exploit: deposit shares into the swapper, craft malicious swapData, and invoke swap so the vulnerable contract swaps its own USDT to MIM for the attacker. It is a short PoC with only a few external calls and requires limited protocol-specific knowledge beyond recognizing unsafe external call handling."
+}

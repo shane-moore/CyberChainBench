@@ -1,0 +1,23 @@
+{
+  "id": "bench-451",
+  "name": "SWAPPStaking",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250724-swappstaking---incorrect-reward-calculation",
+  "chain": "ethereum",
+  "block_number": 22957533,
+  "attack_txs": [
+    "0xa02b159fb438c8f0fb2a8d90bc70d8b2273d06b55920b26f637cab072b7a0e3e"
+  ],
+  "vulnerable_address": "0x245a551ee0F55005e510B239c917fA34b41B3461",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Staking.sol",
+  "function": "deposit",
+  "type": "reentrancy",
+  "attacker_profit": 851.3613741584242,
+  "source_case_id": "dfhl-0609",
+  "fix_description": "Add reentrancy guard (nonReentrant modifier) to deposit, or follow checks-effects-interactions pattern to update state before making external calls.",
+  "attack_date": "2025-07-24",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is essentially a two-step drain: initialize epochs, then deposit the staking contract\u2019s own cUSDC balance and immediately emergencyWithdraw it. It requires minimal protocol-specific reasoning, no flash loans or complex cross-contract sequencing, and the exploit logic is very short and obvious once the missing validation/accounting issue is noticed."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-249",
+  "name": "Cover Protocol",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2021/README.md#20201229-cover-protocol---incorrect-calculation-via-cached-data",
+  "chain": "ethereum",
+  "block_number": 11542321,
+  "attack_txs": [
+    "0xca135d1c4268d6354a019b66946d4fbe4de6f7ddf0ff56389a5cc2ba695b035f"
+  ],
+  "vulnerable_address": "0xE0B94a7BB45dD905c79bB1992C9879f40F1CAeD5",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Blacksmith.sol",
+  "function": "deposit",
+  "type": "accounting-error",
+  "attacker_profit": 2300493.8810831746,
+  "source_case_id": "dfhl-0040",
+  "fix_description": "In deposit, Pool memory pool = pools[_lpToken] is read BEFORE updatePool(_lpToken), but the cached pool value is used AFTER the update for _claimCoverRewards and rewardWriteoff calculation. The stale accRewardsPerToken causes incorrect reward computation. Fix: move the Pool memory read to AFTER updatePool, or use pools[_lpToken] directly from storage after the update.",
+  "attack_date": "2020-12-29",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is essentially a two-step direct interaction with a single staking/rewards contract: deposit on behalf of an existing account context and immediately claim rewards. It does not involve flash loans, pricing, routing, or complex protocol internals, and the vulnerability pattern appears to be a straightforward rewards/accounting or access-control issue."
+}

@@ -1,0 +1,31 @@
+{
+  "id": "bench-152",
+  "name": "bEarn",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2021/README.md#20210516-bearn---logic-flaw",
+  "chain": "bsc",
+  "block_number": 7457125,
+  "attack_txs": [
+    "0x603b2bbe2a7d0877b22531735ff686a7caad866f6c0435c37b7b49e4bfd9a36c"
+  ],
+  "vulnerable_address": "0x31b38ba067c8b9c63eca3fe14d724ffe10b6a2b2",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0xb390b07fcf76678089cb12d8e615d5fe494b01fb",
+  "file": "BvaultsStrategy.sol",
+  "function": "withdraw",
+  "type": "accounting-error",
+  "attacker_profit": 450019.55806958675,
+  "source_case_id": "dfhl-0029",
+  "fix_description": "In withdraw(), remove the shares truncation logic (line 140). Instead, require that the calculated shares does not exceed balanceOf(msg.sender) before calling controller.withdraw(). The current logic allows users to withdraw more assets than their shares are worth because the burn amount is capped to their balance after the withdrawal has already been executed.",
+  "normal_txs": [
+    "0x5f1188d3152e14d14b3c37f14e5fe5222c257058c7354b6aae5d3de91e464cd7",
+    "0xa03af215781a2ba88f48c51d9b535d89b9e1b0cb8f62dbe26df07232a6b5e398",
+    "0xa29573a81d8a0abd188b9abf5711b09e303927db7950254fac56b16f418f7bb9",
+    "0xc1673c0ca006de08ffdeeac9c066be4f5f57f57d53128c4d849ed775db054279",
+    "0xb55b96441fc97545eda603702e089d94d444a6d8f8a98e9c57ca2c2b701e251c"
+  ],
+  "attack_date": "2021-05-16",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is a very short two-step flash-loan exploit: borrow BUSD, repeatedly call deposit and emergencyWithdraw in a loop, then repay. The vulnerable pattern is straightforward protocol-accounting abuse with minimal setup and only a couple of contract interactions, so a competent auditor could likely reproduce it quickly."
+}

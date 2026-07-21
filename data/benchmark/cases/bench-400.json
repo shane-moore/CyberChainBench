@@ -1,0 +1,23 @@
+{
+  "id": "bench-400",
+  "name": "BlueberryProtocol",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240223-blueberryprotocol---logic-flaw",
+  "chain": "ethereum",
+  "block_number": 19287289,
+  "attack_txs": [
+    "0xf0464b01d962f714eee9d4392b2494524d0e10ce3eb3723873afd1346b8b06e4"
+  ],
+  "vulnerable_address": "0xffadb0bba4379dfabfb20ca6823f6ec439429ec2",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Comptroller.sol",
+  "function": "getHypotheticalAccountLiquidityInternal",
+  "type": "accounting-error",
+  "attacker_profit": 1362104.6188508673,
+  "source_case_id": "dfhl-0549",
+  "fix_description": "The oracle price configuration was incorrect at deployment, causing getHypotheticalAccountLiquidityInternal to miscalculate collateral values. Fix: validate oracle prices against expected ranges before using them in liquidity calculations, or add a price deviation circuit breaker.",
+  "attack_date": "2024-02-23",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The PoC is short, but the exploit is not a trivial single-pattern bug: it requires understanding Blueberry\u2019s market/collateral logic, entering the market with bWETH, minting collateral from a flash-loaned amount, then borrowing multiple assets against it before unwinding via a swap. This is a multi-step DeFi exploit with flash loan and protocol-specific lending mechanics, but still far from a deeply intricate cross-protocol or math-heavy attack chain."
+}

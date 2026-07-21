@@ -1,0 +1,23 @@
+{
+  "id": "bench-49",
+  "name": "Rikkei Finance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220415-rikkei-finance---access-control--price-oracle-manipulation",
+  "chain": "bsc",
+  "block_number": 16956475,
+  "attack_txs": [
+    "0x93a9b022df260f1953420cd3e18789e7d1e095459e36fe2eb534918ed1687492"
+  ],
+  "vulnerable_address": "0xd55f01b4b51b7f48912cd8ca3cdd8070a1a9dba5",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "SimplePriceOracle.sol",
+  "function": "setOracleData",
+  "type": "access-control",
+  "attacker_profit": 1065443.1400804466,
+  "source_case_id": "dfhl-0157",
+  "fix_description": "Add onlyOwner or onlyAdmin modifier to setOracleData. The function is external without any access control, allowing anyone to replace the price oracle with a malicious contract that returns arbitrary prices.",
+  "attack_date": "2022-04-15",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very short, direct exploit centered on an obvious access-control/oracle-manipulation flaw: the attacker repoints the oracle for collateral to their own contract, inflates the reported price, borrows all available USDC, then restores the oracle. It requires only a few calls and minimal protocol-specific reasoning beyond basic lending market collateralization."
+}

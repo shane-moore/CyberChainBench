@@ -1,0 +1,23 @@
+{
+  "id": "bench-462",
+  "name": "BankrollStack",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250619-bankrollstack---incorrect-dividends-calculation",
+  "chain": "bsc",
+  "block_number": 51698204,
+  "attack_txs": [
+    "0x0706425beba4b3f28d5a8af8be26287aa412d076828ec73d8003445c087af5fd"
+  ],
+  "vulnerable_address": "0x16d0a151297a0393915239373897bCc955882110",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "BankrollNetworkStack.sol",
+  "function": "distribute",
+  "type": "accounting-error",
+  "attacker_profit": 5351.195685784958,
+  "source_case_id": "dfhl-0622",
+  "fix_description": "In distribute, cap the time elapsed (now - lastPayout) to a maximum of one distribution interval. Currently if distribute() has not been called for a long time, all accumulated dividends are released at once to current holders. An attacker can buy in right before triggering distribute to claim disproportionate rewards.",
+  "attack_date": "2025-06-19",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The exploit is a very short flash-loan-assisted abuse of protocol-specific accounting in essentially two phases: buy once, repeatedly call buyFor on the vulnerable contract itself, then sell/withdraw. Despite using a flash loan, the PoC is compact and the attack path is straightforward once the flawed buyFor logic is identified, so an experienced auditor could likely reproduce it in under 30 minutes."
+}

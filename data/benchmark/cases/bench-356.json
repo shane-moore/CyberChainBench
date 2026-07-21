@@ -1,0 +1,23 @@
+{
+  "id": "bench-356",
+  "name": "- Rubic",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221225---rubic---arbitrary-external-call-vulnerability",
+  "chain": "ethereum",
+  "block_number": 16260581,
+  "attack_txs": [
+    "0x9a97d85642f956ad7a6b852cf7bed6f9669e2c2815f3279855acf7f1328e7d46"
+  ],
+  "vulnerable_address": "0x3335A88bb18fD3b6824b59Af62b50CE494143333",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "RubicProxy.sol",
+  "function": "routerCallNative",
+  "type": "input-validation",
+  "attacker_profit": 1413214.4772760523,
+  "source_case_id": "dfhl-0054",
+  "fix_description": "In routerCallNative, although _params.router is checked against a whitelist, the _data calldata is passed without validation. Attacker can craft _data to call transferFrom on tokens that victims have approved to the whitelisted router. Fix: validate that _data encodes only permitted swap operations, or restrict which function selectors can be called on the router.",
+  "attack_date": "2022-12-25",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a straightforward arbitrary-call/token-drain exploit caused by insufficient validation around the router call, letting the attacker invoke USDC.transferFrom against victims who had approved the proxy. The PoC is simple, requires no flash loans or DeFi mechanics, and mainly loops over victim addresses to drain approved balances."
+}

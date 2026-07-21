@@ -1,0 +1,23 @@
+{
+  "id": "bench-516",
+  "name": "EST Token",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/README.md#20260327-est-token---incorrect-token-burn-mechanism",
+  "chain": "bsc",
+  "block_number": 89060337,
+  "attack_txs": [
+    "0x2f1c33eaaaace728f6101ff527793387341021ef465a4a33f53a0037f5bd1626"
+  ],
+  "vulnerable_address": "0xD4524Be41cd452576aB9FF7b68a0b89aF8498a91",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "ESTToken.sol",
+  "function": "_transfer",
+  "type": "price-manipulation",
+  "attacker_profit": 92062.44444263673,
+  "source_case_id": "dfhl-0679",
+  "fix_description": "Remove the direct pair balance manipulation in _transfer: do not modify _tOwned[uniswapV2Pair] and call sync(). The delayed sell burn mechanism directly reduces pair token balance creating a desync between reserves and actual balance, enabling skim() exploitation. If deflation is needed, burn from the contract own balance instead.",
+  "attack_date": "2026-03-27",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This PoC requires a non-trivial multi-step attack chain: flash loan funding, repeated deposits into a protocol-specific deposit contract, staged swaps, intentional state desynchronization by transferring EST to the deposit contract, and a 100-iteration skim loop exploiting Uniswap pair accounting. It also depends on understanding an EOA-only restriction bypass via EIP-7702-style delegation and how token/pair/deposit-contract balances interact, which is well beyond a straightforward pattern."
+}

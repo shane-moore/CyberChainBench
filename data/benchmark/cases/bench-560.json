@@ -1,0 +1,25 @@
+{
+  "id": "bench-560",
+  "name": "CoW",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20241107-cow---access-control",
+  "chain": "ethereum",
+  "block_number": 21135438,
+  "attack_txs": [
+    "0x2fc9f2fd393db2273abb9b0451f9a4830aa2ebd5490d453f1a06a8e9e5edc4f9"
+  ],
+  "vulnerable_address": "0xA58cA3013Ed560594557f02420ed77e154De0109",
+  "has_public_source": false,
+  "fixable": true,
+  "proxy_address": null,
+  "file": null,
+  "function": "0xfa461e33",
+  "type": "access-control",
+  "attacker_profit": 7693.7,
+  "source_case_id": "draft-280",
+  "fix_description": "Validate msg.sender by computing the expected Uniswap V3 pool address using CREATE2 (factory + token pair + fee), instead of trusting an address from the callback bytes parameter.",
+  "normal_txs": [],
+  "attack_date": "2024-11-07",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is essentially a single direct call into an exposed callback with attacker-controlled parameters, followed by unwrapping WETH and withdrawing funds. It is very short, requires minimal protocol-specific setup, and matches an obvious unsafe-callback / missing validation pattern that an experienced auditor could reproduce quickly."
+}

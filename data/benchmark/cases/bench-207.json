@@ -1,0 +1,23 @@
+{
+  "id": "bench-207",
+  "name": "BabyDogeCoin",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230529-babydogecoin---lack-slippage-protection",
+  "chain": "bsc",
+  "block_number": 28593355,
+  "attack_txs": [
+    "0x098e7394a1733320e0887f0de22b18f5c71ee18d48a0f6d30c76890fb5c85375"
+  ],
+  "vulnerable_address": "0xc748673057861a797275cd8a068abb95a902e8de",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "CoinToken.sol",
+  "function": "swapTokensForEth",
+  "type": "price-manipulation",
+  "attacker_profit": 134684.02903302867,
+  "source_case_id": "dfhl-0327",
+  "fix_description": "In swapTokensForEth, set a non-zero amountOutMin parameter instead of 0. Calculate a reasonable minimum based on oracle price or use a percentage-based slippage tolerance to prevent sandwich attacks.",
+  "attack_date": "2023-05-29",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This exploit is a long, protocol-specific multi-step chain combining a Pancake V3 flash loan, Venus collateral/borrow logic, fee-on-transfer token mechanics, custom fee-free liquidity routing, and a sandwich around BabyDoge\u2019s auto-liquidity behavior. Writing this PoC requires deep understanding of several interacting contracts and non-obvious state manipulation across many calls, which is well beyond a quick straightforward exploit."
+}

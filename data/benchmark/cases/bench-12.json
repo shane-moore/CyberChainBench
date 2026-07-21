@@ -1,0 +1,23 @@
+{
+  "id": "bench-12",
+  "name": "DPC",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220909-dpc---incorrect-reward-calculation",
+  "chain": "bsc",
+  "block_number": 21179285,
+  "attack_txs": [
+    "0x92cab23d536d2e13ecb7c473350121165de0ae6c6c81be94ba502ac7db72e86f"
+  ],
+  "vulnerable_address": "0xb75ca3c3e99747d0e2f6e75a9fbd17f5ac03cebe",
+  "has_public_source": false,
+  "fixable": true,
+  "proxy_address": "0xb75ca3c3e99747d0e2f6e75a9fbd17f5ac03cebe",
+  "function": "0xbd586299",
+  "type": "accounting-error",
+  "attacker_profit": 75216.06065651448,
+  "source_case_id": "dfhl-0114",
+  "fix_description": "In func_283D (getClaimQuota), the formula accumulates oldClaimQuota without resetting it after each claim. Fix: clear oldClaimQuota after it is added to the new quota, so repeated claims cannot grow the quota indefinitely.",
+  "attack_date": "2022-09-09",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is a short, linear sequence of standard token swaps, liquidity add/stake, time warp, repeated claims, and final swap-out with no flash loan, reentrancy, or complex cross-protocol logic. It appears to exploit obvious reward/airdrop accounting flaws in a single protocol, which a competent auditor could reproduce quickly after reading the staking and airdrop functions."
+}

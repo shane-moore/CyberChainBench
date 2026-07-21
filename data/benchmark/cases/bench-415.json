@@ -1,0 +1,23 @@
+{
+  "id": "bench-415",
+  "name": "XSIJ",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240130-xsij---business-logic-flaw",
+  "chain": "bsc",
+  "block_number": 35702096,
+  "attack_txs": [
+    "0xf477089602fefcfc1dbdce15834476267914d64a1e6a52f07d3f135f091e1d27"
+  ],
+  "vulnerable_address": "0x31bfA137C76561ef848c2af9Ca301b60451CaAC0",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "GGGTOKEN.sol",
+  "function": "autoBurnLiquidityPairTokens",
+  "type": "accounting-error",
+  "attacker_profit": 51274.656366384086,
+  "source_case_id": "dfhl-0566",
+  "fix_description": "autoBurnLiquidityPairTokens is called on every sell with no cooldown. Each sell burns a fixed removePoolAmount from the pair and syncs, allowing attackers to repeatedly sell small amounts to drain the pair. Add a time-based cooldown (e.g., once per hour) or cap cumulative burns per period.",
+  "attack_date": "2024-01-30",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a short multi-step price/accounting manipulation using a flash loan, a swap into a fee-on-transfer token, repeated tiny transfers to the pair to push pool state past a threshold, and a swap back for profit. It is not deeply complex, but it requires understanding the token/pair-specific behavior and why desynchronizing the pool balance triggers the vulnerable logic, so it is beyond a trivial single-pattern bug."
+}

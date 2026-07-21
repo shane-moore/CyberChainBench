@@ -1,0 +1,32 @@
+{
+  "id": "bench-551",
+  "name": "EFLeverVault",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221014-eflevervault---verify-flashloan-callback",
+  "chain": "ethereum",
+  "block_number": 15746342,
+  "attack_txs": [
+    "0x160c5950a01b88953648ba90ec0a29b0c5383e055d35a7835d905c53a3dda01e"
+  ],
+  "vulnerable_address": "0x071108ad85d7a766b41e0f5e5195537a8fc8e74d",
+  "has_public_source": false,
+  "fixable": true,
+  "proxy_address": "0xe39fd820b58f83205db1d9225f28105971c3d309",
+  "file": "EFLeverVault.sol",
+  "function": "0xd05c78da",
+  "type": "access-control",
+  "attacker_profit": 356319.14022994746,
+  "annotation_hints": {
+    "function": {
+      "label": "NEEDS_SELECTOR",
+      "status": "invalid",
+      "original_value": "receiveFlashLoan",
+      "hint": "has_public_source is false \u2014 the eval agent only sees bytecode. Use get_decompiled_contract or get_tx_trace to find the 4-byte selector and replace this human-readable name."
+    }
+  },
+  "source_case_id": "dfhl-0098",
+  "fix_description": "In receiveFlashLoan (0xf04f2707), no validation that msg.sender is the legitimate Balancer Vault. Any caller can invoke this callback. Add require(msg.sender == BALANCER_VAULT).",
+  "attack_date": "2022-10-14",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This PoC is a very short, direct balance-manipulation exploit: deposit a small amount, trigger a flash loan into the vulnerable vault to skew its ETH balance/accounting, then withdraw for profit. It uses a single external primitive (Balancer flash loan) and minimal multi-contract reasoning, so an experienced auditor could likely reproduce it in well under 30 minutes."
+}

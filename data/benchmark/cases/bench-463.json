@@ -1,0 +1,23 @@
+{
+  "id": "bench-463",
+  "name": "- RFB",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221205---rfb---predicting-random-numbers",
+  "chain": "bsc",
+  "block_number": 23649424,
+  "attack_txs": [
+    "0xcc8fdb3c6af8bb9dfd87e913b743a13bbf138a143c27e0f387037887d28e3c7a"
+  ],
+  "vulnerable_address": "0x26f1457f067bF26881F311833391b52cA871a4b5",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "RFB.sol",
+  "function": "randMod",
+  "type": "accounting-error",
+  "attacker_profit": 10561.887270406072,
+  "source_case_id": "dfhl-0066",
+  "fix_description": "randMod uses on-chain public data (block.number, block.timestamp, buyer address, pair balance) as randomness source. An attacker contract can pre-compute the result and only execute when the lottery condition is met. Use Chainlink VRF or commit-reveal scheme for unpredictable randomness.",
+  "attack_date": "2022-12-05",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very short flash-loan-funded buy/sell loop against a likely vulnerable fee-on-transfer token, with only a few protocol interactions: borrow WBNB, swap BNB->token, swap token->BNB, and repay. Although it uses a flash loan and a small brute-force loop to find a profitable amount, the exploit logic is straightforward and does not require deep protocol-specific reasoning."
+}

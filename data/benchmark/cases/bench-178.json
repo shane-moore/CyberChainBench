@@ -1,0 +1,22 @@
+{
+  "id": "bench-178",
+  "name": "Civfund",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230708-civfund---lack-of-access-control",
+  "chain": "ethereum",
+  "block_number": 17646142,
+  "attack_txs": [
+    "0xc42fc0e22a0f60cc299be80eb0c0ddce83c21c14a3dddd8430628011c3e20d6b"
+  ],
+  "vulnerable_address": "0x7caec5e4a3906d0919895d113f7ed9b3a0cbf826",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x5ffe72b7",
+  "type": "access-control",
+  "attacker_profit": 181742.08374356196,
+  "source_case_id": "dfhl-0297",
+  "fix_description": "Function 0x5ffe72b7 only checks !paused() but has no access control. Anyone can call it to make the contract mint Uniswap V3 liquidity positions with attacker-controlled parameters (tick range, amounts). Attacker provides liquidity at an unfavorable range then swaps against it. Fix by adding onlyOwner or authorized-caller check.",
+  "attack_date": "2023-07-08",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a short but protocol-specific multi-step attack: flash-loan BUSD, swap into UN, abuse the pair via repeated token transfers plus skim calls to distort balances/reserves, then swap back for profit and repay. It requires understanding Uniswap V2 pair accounting and skim behavior rather than just spotting a simple access-control bug, but the PoC is still relatively compact and self-contained."
+}

@@ -1,0 +1,31 @@
+{
+  "id": "bench-564",
+  "name": "Vista",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20241022-vista---flashmint-receive-error",
+  "chain": "bsc",
+  "block_number": 43305238,
+  "attack_txs": [
+    "0x84c385aab658d86b64e132e8db0c092756d5a9331a1131bf05f8214d08efba56"
+  ],
+  "vulnerable_address": "0x493361D6164093936c86Dcb35Ad03b4C0D032076",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": null,
+  "file": "VistaFinance.sol",
+  "function": "flashLoan(address,address,uint256,bytes)",
+  "type": "input-validation",
+  "attacker_profit": 29249.39,
+  "source_case_id": "draft-286",
+  "fix_description": "Validate that the receiver parameter cannot be the LP pair or other critical protocol addresses. Additionally, add a fee to flash loans or restrict the flash mint amount to prevent temporary supply inflation from being exploited to manipulate DEX pair prices.",
+  "normal_txs": [
+    "0x4673af996a1aa337d9d0f2ccae9221d51b29f52fdcd707df724c353e401fe633",
+    "0x3d12685121f31603ca4ccaef4fe7da3d3b4f2c700dbf09b075dd61f3050908b8",
+    "0x9ef2444b727c2239826c0e6ce6d625bd942733b2003d79bdeeb1c708185e6e4a",
+    "0x08139b2acc166467e815f9e9e823eab3b565d33ce070ff99fcd387b14267bf72",
+    "0x528e36a9d7d3583bab6c689fa0075a8d0850fe80bdb373b92537379b8bc5400f"
+  ],
+  "attack_date": "2024-10-22",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is a short multi-step chain: take a flash loan, swap USDT to BUSD, stake into a presale to receive VISTA, abuse VISTA's flashLoan/free-balance accounting, then sell for profit and repay. It requires understanding protocol-specific token/presale/flash-loan logic rather than just spotting a trivial access-control bug, but the PoC is still relatively compact and uses only a few contracts."
+}

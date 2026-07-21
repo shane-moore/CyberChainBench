@@ -1,0 +1,31 @@
+{
+  "id": "bench-236",
+  "name": "- DBW",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230325---dbw---business-logic-flaw",
+  "chain": "bsc",
+  "block_number": 26745692,
+  "attack_txs": [
+    "0x3b472f87431a52082bae7d8524b4e0af3cf930a105646259e1249f2218525607"
+  ],
+  "vulnerable_address": "0xb9ea86ca6ee0b2f4030c26ab54b6c5eb62d5c629",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0xbf5baea5113e9eb7009a6680747f2c7569dfc2d6",
+  "file": "DBW.sol",
+  "function": "pledge_lp",
+  "type": "accounting-error",
+  "attacker_profit": 19781.676302403637,
+  "source_case_id": "dfhl-0361",
+  "fix_description": "In pledge_lp, when a new user stakes LP, _staticsTime is not initialized to block.timestamp. Combined with staticIncome calculating rewards based on current LP balance and elapsed time, a new staker can immediately claim rewards accumulated over the entire history. Attacker transfers LP to fresh sub-contracts which pledge and claim full rewards. Fix: set _staticsTime[msg.sender] = block.timestamp in pledge_lp when user has no prior stake.",
+  "normal_txs": [
+    "0x74db39629424547f0bf1da4c94f9db524d11c079f5bef16dcdc248e9542fa583",
+    "0xeedf47ed4cba1ce2ebcdb80afa83b08b668c9fe729546e8fbe9b6a2e7fa75198",
+    "0x81834026675a97a3fab00f0d648c7c70ea41573a5c6d8096d742c3b9aa84b01d",
+    "0x3cc96e139bb9505a5cbeaaadbd03d997f3e0ce2785568ff286a19a2d8be283c4",
+    "0x01820bf80b5264757eaea21587500cccdf8f9668cead34fe880428ffcc26a97f"
+  ],
+  "attack_date": "2023-03-25",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This PoC requires a non-trivial attack chain: nested multi-source flash loans, AMM swaps/liquidity operations, CREATE2-based mini-proxy cloning, delegatecall execution, and repeated reward extraction via protocol-specific LP accounting flaws. Understanding and reproducing it demands deep reasoning about the target\u2019s dividend logic, LP state transitions, and cross-contract execution flow, which is well beyond a straightforward exploit."
+}

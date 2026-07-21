@@ -1,0 +1,23 @@
+{
+  "id": "bench-59",
+  "name": "Popsicle",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2021/README.md#20210804-popsicle---repeated-reward-claim---logic-flaw",
+  "chain": "ethereum",
+  "block_number": 12955063,
+  "attack_txs": [
+    "0xcd7dae143a4c0223349c16237ce4cd7696b1638d116a72755231ede872ab70fc"
+  ],
+  "vulnerable_address": "0xc4ff55a4329f84f9Bf0F5619998aB570481EBB48",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "SorbettoFragola.sol",
+  "function": "_updateFeesReward",
+  "type": "accounting-error",
+  "attacker_profit": 20718349.352168307,
+  "source_case_id": "dfhl-0017",
+  "fix_description": "In _updateFeesReward, the reward accounting does not properly reset when LP shares are transferred. New holders inherit unclaimed rewards from previous holders, allowing the same fees to be claimed multiple times. Fix: update perSharePaid for both sender and recipient in the transfer function, or track rewards per-token-id rather than per-address.",
+  "attack_date": "2021-08-04",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is a repeated multi-step fee-accounting abuse across several Popsicle vaults using a large multi-asset flash loan, token-share transfers between helper contracts, and carefully ordered collect/withdraw calls. While the underlying bug is not extremely obscure, reproducing it requires understanding protocol-specific reward/share logic and orchestrating multiple contract interactions rather than a simple one-call exploit."
+}

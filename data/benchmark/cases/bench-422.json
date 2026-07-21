@@ -1,0 +1,23 @@
+{
+  "id": "bench-422",
+  "name": "BmiZapper",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240117-bmizapper---arbitrary-external-call-vulnerability",
+  "chain": "ethereum",
+  "block_number": 19029290,
+  "attack_txs": [
+    "0x97201900198d0054a2f7a914f5625591feb6a18e7fc6bb4f0c964b967a6c15f6"
+  ],
+  "vulnerable_address": "0x4622aff8e521a444c9301da0efd05f6b482221b8",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "BMIZapper.sol",
+  "function": "_primitiveToBMI",
+  "type": "reentrancy",
+  "attacker_profit": 107727.52549636485,
+  "source_case_id": "dfhl-0573",
+  "fix_description": "Add reentrancy guard (nonReentrant modifier) to _primitiveToBMI, or follow checks-effects-interactions pattern to update state before making external calls.",
+  "attack_date": "2024-01-17",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very straightforward arbitrary external call / missing validation issue: the attacker passes a malicious aggregator address and calldata so the vulnerable contract executes USDC.transferFrom against a victim who had approved it. The PoC is a single-step exploit with minimal setup, no DeFi complexity, and only one meaningful external interaction."
+}

@@ -1,0 +1,27 @@
+{
+  "id": "bench-559",
+  "name": "ChiSale",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20241107-chisale---logic-flaw",
+  "chain": "ethereum",
+  "block_number": 21132838,
+  "attack_txs": [
+    "0x586a2a4368a1a45489a8a9b4273509b524b672c33e6c544d2682771b44f05e87"
+  ],
+  "vulnerable_address": "0x050163597d9905ba66400f7b3ca8f2ef23df702d",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": null,
+  "file": "ChiSale.sol",
+  "function": "buy(address)",
+  "type": "accounting-error",
+  "attacker_profit": 16340.53,
+  "source_case_id": "draft-279",
+  "fix_description": "In the constructor, change `if (i > bonusThresholds.length - 1)` to `if (i == bonusThresholds.length - 1)` so that maxBonusThreshold is properly set to the final tier threshold, preventing buy() from using the full token balance as the purchase cap.",
+  "normal_txs": [
+    "0x10203a2ff6c16b9ccc89bf4047fa5a61aa78232770966727280dbf55dca4aead"
+  ],
+  "attack_date": "2024-11-07",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is extremely short and effectively just triggers a single Balancer flashLoan call to a vulnerable receiver, with no meaningful multi-step exploit logic, price manipulation, or complex protocol interactions. A competent auditor could identify and reproduce this kind of flash-loan receiver/access-control issue very quickly."
+}

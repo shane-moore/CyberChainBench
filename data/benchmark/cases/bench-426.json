@@ -1,0 +1,31 @@
+{
+  "id": "bench-426",
+  "name": "RadiantCapital",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240102-radiantcapital---loss-of-precision",
+  "chain": "arbitrum",
+  "block_number": 166405687,
+  "attack_txs": [
+    "0x1ce7e9a9e3b6dd3293c9067221ac3260858ce119ecb7ca860eac28b2474c7c9b"
+  ],
+  "vulnerable_address": "0xd1b589c00c940c4c3f7b25e53c8d921c44ef9140",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0xf4b1486dd74d07706052a33d31d7c0aafd0659e1",
+  "file": "ReserveLogic.sol",
+  "function": "cumulateToLiquidityIndex",
+  "type": "accounting-error",
+  "attacker_profit": 211020.19108758622,
+  "source_case_id": "dfhl-0581",
+  "fix_description": "In cumulateToLiquidityIndex, when totalLiquidity is near zero, amountToLiquidityRatio becomes extremely large, inflating liquidityIndex. Subsequent deposit/withdraw operations using the inflated index suffer precision errors that attackers exploit via repeated operations. Fix: require minimum totalLiquidity (prevent empty-market manipulation), or cap the maximum change to liquidityIndex per update to prevent extreme inflation.",
+  "normal_txs": [
+    "0x6271509b818aa924033c72e2c5c871a550c9b03db82c2d732210f7b4c862c776",
+    "0x144c98ad5b733957d4ac58634e6ed3b0bc74e5d831653fe8529ec4ecfdcb24e0",
+    "0x22e76d3de80bf488d5e10df6612526c571b209a5c78029e7b85ce8952ecc96d8",
+    "0x79a476b3d3c1672e28a0ca2705e254479f5eee105dec8e19fc86589967b305ef",
+    "0x6d0a8a0fb349e64d50cbb023a46a27cde21d0a1a1e88a7af741a4ed85998235d"
+  ],
+  "attack_date": "2024-01-02",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This PoC involves a non-obvious protocol-specific accounting exploit: repeated nested flash loans to distort Radiant\u2019s liquidityIndex, then exploiting a rounding flaw in rayDiv across deposit/withdraw flows, plus collateralized borrowing and Uniswap V3 swaps to realize profit. The attack spans multiple contracts and phases with looped state manipulation, requiring deep understanding of lending index mechanics rather than a simple single-pattern bug."
+}

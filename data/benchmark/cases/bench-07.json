@@ -1,0 +1,23 @@
+{
+  "id": "bench-07",
+  "name": "BabySwap",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221001-babyswap---parameter-access-control",
+  "chain": "bsc",
+  "block_number": 21811980,
+  "attack_txs": [
+    "0xcca7ea9d48e00e7e32e5d005b57ec3cac28bc3ad0181e4ca208832e62aa52efe"
+  ],
+  "vulnerable_address": "0x8317c460C22A9958c27b4B6403b98d2Ef4E2ad32",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "BabySmartRouter.sol",
+  "function": "_swap",
+  "type": "input-validation",
+  "attacker_profit": 64790.732075399326,
+  "source_case_id": "dfhl-0107",
+  "fix_description": "In _swap, validate that the factory parameter is the legitimate BabySwap factory address (whitelist check). Reject any swap call with an unrecognized factory to prevent fake swaps from earning mining rewards.",
+  "attack_date": "2022-10-01",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The exploit is a short, direct reward-farming abuse: deploy a fake factory/pair, perform two crafted swaps through the router so swap mining credits rewards, then withdraw and dump the reward token. It relies on an obvious trust issue in external pair/factory validation and needs only a few calls with minimal protocol complexity."
+}

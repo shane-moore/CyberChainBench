@@ -1,0 +1,30 @@
+{
+  "id": "bench-101",
+  "name": "MEVBot_0x8c2d",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231112-mevbot_0x8c2d---lack-of-access-control",
+  "chain": "bsc",
+  "block_number": 33435893,
+  "attack_txs": [
+    "0x3dcb26a1f49eb4d02ca29960b4833bfb2e83d7b5d9591aed1204168944c8c9b3"
+  ],
+  "vulnerable_address": "0x19a23DdAA47396335894229E0439D3D187D89eC9",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0xac3994ec",
+  "type": "access-control",
+  "attacker_profit": 354606.61153564736,
+  "source_case_id": "dfhl-0219",
+  "fix_description": "In function 0xac3994ec, the internal func_0352 constructs a transferFrom call using msg.sender as the from address but never validates msg.sender is the owner. Add require(msg.sender == owner) at the entry of 0xac3994ec to prevent unauthorized callers from triggering token transfers from the bot.",
+  "attack_date": "2023-11-12",
+  "acceptable_alternatives": {
+    "function": [
+      "0x1270d364"
+    ],
+    "type": [
+      "input-validation"
+    ]
+  },
+  "difficulty": "medium",
+  "difficulty_reasoning": "The PoC is short, but the exploit is a multi-step drain requiring understanding of a protocol-specific router bug, token balances held by the router, and Curve pool interactions to convert stolen assets and manipulate repayment flow. It is not a simple single-call access control issue, but it also lacks the deep cross-transaction/state reasoning of a hard case."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-255",
+  "name": "- SHOCO",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230119---shoco---reflection-token",
+  "chain": "ethereum",
+  "block_number": 16440979,
+  "attack_txs": [
+    "0x2e832f044b4a0a0b8d38166fe4d781ab330b05b9efa9e72a7a0895f1b984084b"
+  ],
+  "vulnerable_address": "0x31A4F372AA891B46bA44dC64Be1d8947c889E9c6",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Shoco.sol",
+  "function": "_getCurrentSupply",
+  "type": "accounting-error",
+  "attacker_profit": 10710.059002803075,
+  "source_case_id": "dfhl-0385",
+  "fix_description": "Same reflection token vulnerability. In deliver(), add a maximum limit on tAmount. The _getCurrentSupply function has a fallback condition that can be manipulated when _rTotal is drastically reduced, causing incorrect rate calculation and enabling pair balance inflation for arbitrage.",
+  "attack_date": "2023-01-19",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a short multi-step reflection-token price manipulation that requires understanding SHOCO\u2019s reflection accounting, direct storage reads to derive rTotal/rExcluded, and Uniswap reserve math to size the swaps. The PoC is not very long, but it is more than a trivial access-control bug because the attacker must understand protocol-specific token mechanics and sequence the buy/deliver/sell steps correctly."
+}

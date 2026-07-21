@@ -1,0 +1,32 @@
+{
+  "id": "bench-277",
+  "name": "DeltaPrime",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20241111-deltaprime---reentrancy",
+  "chain": "arbitrum",
+  "block_number": 273278742,
+  "attack_txs": [
+    "0x6a2f989b5493b52ffc078d0a59a3bf9727d134b403aa6e0bf309fd513a728f7f"
+  ],
+  "vulnerable_address": "0xc7144ee9b57ff6a84127ed7a57e0919e84538467",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x62cf82fb0484af382714cd09296260edc1dc0c6c",
+  "file": "TraderJoeV2Facet.sol",
+  "function": "claimReward",
+  "type": "reentrancy",
+  "attacker_profit": 200520.70122166877,
+  "source_case_id": "dfhl-0411",
+  "notes": "DeFiHackLabs labels this as reentrancy. The vulnerable_address (SmartLoanLiquidationFacet) does not contain claimReward \u2014 likely in a different Diamond facet. Type changed to unsafe-external-call per reentrancy classification. Needs further verification.",
+  "fix_description": "In claimReward (TraderJoeV2Facet), the function makes an external call to claim rewards from TraderJoe before updating internal accounting state. An attacker can re-enter during the callback and exploit the stale state. Fix: add nonReentrant modifier or follow checks-effects-interactions pattern.",
+  "normal_txs": [
+    "0x4183bec6ed03429f1582850d2e04d6d8b3898ddca971f1665190c62ede981ecd",
+    "0xd20ca47b8b4bb54539798ede422099d56efea2f67f7d2a9a96214271f2bab651",
+    "0x6d2977a93fff1e6cf6a68318f3ab236ba6adf0fde79883bb3ce8800d6753ce53",
+    "0x13a92d7b0405d8f68e97cf215292308e53081dc53363f220836edc213662f6aa",
+    "0x93b5f4ec10e33e7cef865e750cbeb8afb44d665de22b3bbaa17c928a3105adfd"
+  ],
+  "attack_date": "2024-11-11",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a multi-step attack involving a flash loan, creation of a malicious loan position, crafted ParaSwap swap data, and a reentrant reward-claim path through a fake pair contract. It requires understanding protocol-specific SmartLoan accounting and callback flow rather than just spotting a generic bug, but the PoC is still fairly direct once that logic is understood."
+}

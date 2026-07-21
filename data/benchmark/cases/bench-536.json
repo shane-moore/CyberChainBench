@@ -1,0 +1,22 @@
+{
+  "id": "bench-536",
+  "name": "MEV_0ad8",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221108-mev_0ad8---arbitrary-call",
+  "chain": "ethereum",
+  "block_number": 15926097,
+  "attack_txs": [
+    "0x674f74b30a3d7bdf15fa60a7c29d96a402ea894a055f624164a8009df98386a0"
+  ],
+  "vulnerable_address": "0x0AD8229D4bC84135786AE752B9A9D53392A8afd4",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x090f88ca",
+  "type": "access-control",
+  "attacker_profit": 91575.27156916594,
+  "source_case_id": "dfhl-0081",
+  "fix_description": "The only function 0x090f88ca lacks access control, allowing anyone to call it. It executes transferFrom on arbitrary token addresses using the contract as the operator. Since the MEV bot has token approvals for trading, attackers can drain all approved tokens. Add onlyOwner or signature-based authentication.",
+  "attack_date": "2022-11-08",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This PoC is a single-call arbitrary-call/insufficient validation style exploit: the attacker crafts calldata so the vulnerable contract executes an ERC20 transferFrom against a victim who had approved it. It requires little protocol-specific DeFi knowledge, no flash loans or multi-step state manipulation, and the exploit logic is very short and straightforward."
+}

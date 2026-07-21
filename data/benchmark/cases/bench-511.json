@@ -1,0 +1,23 @@
+{
+  "id": "bench-511",
+  "name": "Mosca",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250106-mosca---logic-flaw",
+  "chain": "bsc",
+  "block_number": 45519931,
+  "attack_txs": [
+    "0x4e5bb7e3f552f5ee6ee97db9a9fcf07287aae9a1974e24999690855741121aff"
+  ],
+  "vulnerable_address": "0x1962b3356122d6A56f978e112d14f5E23a25037D",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Mosca.sol",
+  "function": "withdrawAll",
+  "type": "accounting-error",
+  "attacker_profit": 19449.883124728134,
+  "source_case_id": "dfhl-0675",
+  "fix_description": "In withdrawAll, zero out user.balance, user.balanceUSDT, and user.balanceUSDC after transferring funds. Currently the function transfers the full balance but never resets the state, allowing repeated withdrawals of the same amount.",
+  "attack_date": "2025-01-06",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is very short and the exploit flow is straightforward: join, take a flash loan, call buy, exit, then repeat join/exit in a simple loop to extract value. It involves only one protocol plus a standard flash loan callback, with no complex pricing math, cross-protocol state reasoning, or deep protocol internals required."
+}

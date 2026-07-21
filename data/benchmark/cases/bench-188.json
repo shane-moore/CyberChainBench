@@ -1,0 +1,22 @@
+{
+  "id": "bench-188",
+  "name": "STRAC",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230627-strac---business-logic-flaw",
+  "chain": "bsc",
+  "block_number": 29474566,
+  "attack_txs": [
+    "0x1147b3c0f3ebdd524c4e58430bb736eba9f7fa522158f5ad81eb3e2394b466d0"
+  ],
+  "vulnerable_address": "0x1f90bdeb5674833868ee9b36707b929024e7a513",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x4a75084c",
+  "type": "accounting-error",
+  "attacker_profit": 22748.818062704395,
+  "source_case_id": "dfhl-0306",
+  "fix_description": "Function 0x4a75084c performs a 1:1 token swap (transferFrom arg2 of tokenIn, transfer arg2 of tokenOut) without any price/rate calculation. It assumes all tokens are equal value. Attacker deposits a worthless/fake token and withdraws a valuable token at the same amount. Fix: implement proper pricing mechanism or oracle-based exchange rate.",
+  "attack_date": "2023-06-27",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The exploit is a very short, direct drain: call the vulnerable contract with a crafted selector, abuse a fake transferFrom that always returns true, then dump the received tokens to the LP. It relies on an obvious unsafe external token interaction / missing return-value verification pattern and requires minimal protocol-specific reasoning."
+}

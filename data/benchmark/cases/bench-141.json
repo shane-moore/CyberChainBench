@@ -1,0 +1,23 @@
+{
+  "id": "bench-141",
+  "name": "FloorDAO",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230905-floordao---rebasing-logic-issue",
+  "chain": "ethereum",
+  "block_number": 18068773,
+  "attack_txs": [
+    "0x1274b32d4dfacd2703ad032e8bd669a83f012dde9d27ed92e4e7da0387adafe4"
+  ],
+  "vulnerable_address": "0x759c6De5bcA9ADE8A1a2719a31553c4B7DE02539",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Staking.sol",
+  "function": "stake",
+  "type": "accounting-error",
+  "attacker_profit": 65051.20772911871,
+  "source_case_id": "dfhl-0262",
+  "fix_description": "Same rebasing logic issue as HeavensGate (bench-140). In stake, rebase() is called between receiving input token and sending staked token. Attacker stakes right before rebase to capture reward without holding risk. Fix: calculate staked token amount based on post-rebase exchange rate.",
+  "attack_date": "2023-09-05",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is only a few core actions, but it requires understanding protocol-specific staking/circulating-supply accounting and how repeated stake/unstake cycles with a flash-borrowed balance extract value. It also involves Uniswap V3 flash liquidity and swap callbacks, making it more than a trivial single-pattern bug but still not a deeply complex multi-protocol attack chain."
+}

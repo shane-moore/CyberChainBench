@@ -1,0 +1,23 @@
+{
+  "id": "bench-491",
+  "name": "SBR Token",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250307-sbr-token---price-manipulation",
+  "chain": "ethereum",
+  "block_number": 21991722,
+  "attack_txs": [
+    "0xe4c1aeacf8c93f8e39fe78420ce7a114ecf59dea90047cd2af390b30af54e7b9"
+  ],
+  "vulnerable_address": "0x460B1AE257118Ed6F63Ed8489657588a326a206D",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0xa9059cbb",
+  "type": "price-manipulation",
+  "attacker_profit": 18386.80816815756,
+  "source_case_id": "dfhl-0653",
+  "_skip_reason": "Likely rug pull. Transfer calls external contract at storage[0x52] (set by owner) which can manipulate transfers. Not a vulnerability exploitable by third parties.",
+  "fix_description": "In transfer (func_0B74), the sender balance deduction calls an external contract at storage[0x52] (selector 0x569937dd) with the transfer amount. The external call result determines how much is actually deducted from the sender balance. An attacker can manipulate the external contract state (e.g., via pool reserve manipulation) to reduce the deduction, effectively minting tokens. Fix: compute balance deductions internally without relying on manipulable external state, or use a TWAP-based fee calculation.",
+  "attack_date": "2025-03-07",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a short, direct AMM/pair-manipulation exploit with only a few obvious steps: buy token, call skim/sync on the Uniswap V2 pair, then dump the inflated balance. The PoC is small and does not require flash loans, deep protocol internals, or complex multi-contract reasoning beyond basic understanding of Uniswap V2 pair mechanics."
+}

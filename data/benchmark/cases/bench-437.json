@@ -1,0 +1,23 @@
+{
+  "id": "bench-437",
+  "name": "EverValueCoin",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250830-evervaluecoin---arbitrage",
+  "chain": "arbitrum",
+  "block_number": 373990723,
+  "attack_txs": [
+    "0xb13b2ab202cb902b8986cbd430d7227bf3ddca831b79786af145ccb5f00fcf3f"
+  ],
+  "vulnerable_address": "0x03339ECAE41bc162DAcAe5c2A275C8f64D6c80A0",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "OrderBookFactory.sol",
+  "function": "fillOrder",
+  "type": "accounting-error",
+  "attacker_profit": 597613.3254415084,
+  "source_case_id": "dfhl-0593",
+  "fix_description": "The order book matching in fillOrder has an accounting inconsistency: when a taker buys, the contract sends base tokens to the taker and credits the maker internal balance with quote tokens, but does not properly verify that the maker deposited the base tokens when creating the sell order. This creates an arbitrage opportunity where orders can be filled at stale prices without proper collateralization. Fix: ensure all sell orders require upfront base token deposit, and validate balances during matching.",
+  "attack_date": "2025-08-30",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This PoC is a short, direct attack: take a flash loan, call the vulnerable orderbook function with attacker-controlled parameters, then dump the acquired tokens through two swaps. It uses only a few steps and limited protocol-specific reasoning, so an experienced auditor could likely reproduce it quickly."
+}

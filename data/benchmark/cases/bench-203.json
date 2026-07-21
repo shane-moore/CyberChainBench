@@ -1,0 +1,22 @@
+{
+  "id": "bench-203",
+  "name": "NST Simple Swap",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230602-nst-simple-swap---unverified-contract-wrong-approval",
+  "chain": "polygon",
+  "block_number": 43430815,
+  "attack_txs": [
+    "0xa1f2377fc6c24d7cd9ca084cafec29e5d5c8442a10aae4e7e304a4fbf548be6d"
+  ],
+  "vulnerable_address": "0x9D101E71064971165Cd801E39c6B07234B65aa88",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x6e41592c",
+  "type": "accounting-error",
+  "attacker_profit": 28945.20754719578,
+  "source_case_id": "dfhl-0322",
+  "fix_description": "In buyNST (0x6e41592c) and sellNST (0x7cd0599b), the contract calls token.approve(msg.sender, amount) which gives the user allowance over the contract holdings. This is backwards \u2014 the contract should use transferFrom to pull tokens from the user, not approve its own tokens to the user. Remove the erroneous approve calls.",
+  "attack_date": "2023-06-02",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is extremely short and effectively a two-step exploit against a single swap contract: buy NST, sell it back via raw selector calls, then directly drain USDT with transferFrom. It requires little protocol-specific DeFi knowledge, no complex routing or state reasoning, and matches an obvious broken-access-control/approval logic pattern."
+}

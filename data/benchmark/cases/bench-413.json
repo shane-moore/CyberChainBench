@@ -1,0 +1,23 @@
+{
+  "id": "bench-413",
+  "name": "ADC",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240202-adc---incorrect-access-control",
+  "chain": "ethereum",
+  "block_number": 19138641,
+  "attack_txs": [
+    "0xcf834aff4de9992f5da9c443600dad9c6277a8a00de5007842fece51564992db"
+  ],
+  "vulnerable_address": "0xdE46fcF6aB7559E4355b8eE3D7fBa0f2730CDdd8",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "MainPool.sol",
+  "function": "calcStepIncome",
+  "type": "access-control",
+  "attacker_profit": 40192.44614,
+  "source_case_id": "dfhl-0564",
+  "fix_description": "calcStepIncome is public with no access control. Anyone can call it with arbitrary parameters to credit income to any player and drain mainPoolBalance. Add onlyOwner or restrict to authorized callers only.",
+  "attack_date": "2024-02-02",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is only a few on-chain steps, but it depends on understanding dYdX Solo Margin's generic Call action and crafting opaque ABI-encoded calldata to make a victim contract approve token spending. The core bug is not a standard pattern visible at a glance, and reproducing the payload requires protocol-specific reasoning and decoding effort beyond a simple access-control exploit."
+}

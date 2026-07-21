@@ -1,0 +1,23 @@
+{
+  "id": "bench-40",
+  "name": "HackDao",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220524-hackdao---skim-token-balance",
+  "chain": "bsc",
+  "block_number": 18073757,
+  "attack_txs": [
+    "0x04673c95054247588bb8380dbc7d361f08f8f0baa319366f48ad46e51d08422d"
+  ],
+  "vulnerable_address": "0x94e06c77b02Ade8341489Ab9A23451F68c13eC1C",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Token.sol",
+  "function": "_transfer",
+  "type": "accounting-error",
+  "attacker_profit": 56838.89029755128,
+  "source_case_id": "dfhl-0147",
+  "fix_description": "In _transfer, when recipient is uniswapV2Pair (sell case), the extra fee is deducted from sender balance separately from the transfer amount. This creates a discrepancy between the pair actual token balance and its recorded reserves when tokens are skimmed between pairs. Fix: deduct fee from the transfer amount itself (reduce actualAmount) rather than separately reducing sender balance, or exclude pair-to-pair transfers from fee logic.",
+  "attack_date": "2022-05-24",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a short multi-step DeFi attack using a flash loan, fee-on-transfer token behavior, and PancakePair skim/sync reserve manipulation across two LPs before dumping for profit. It is not a trivial access-control bug, but the PoC is still compact and the attack flow is understandable within typical AMM mechanics, so it fits medium rather than hard."
+}

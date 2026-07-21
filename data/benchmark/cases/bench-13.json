@@ -1,0 +1,23 @@
+{
+  "id": "bench-13",
+  "name": "YYDS",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220908-yyds---pair-manipulate",
+  "chain": "bsc",
+  "block_number": 21157029,
+  "attack_txs": [
+    "0x04a1f0d1694242515ecb14faa71053901f11a1286cd21c27fe5542f9eeb62356"
+  ],
+  "vulnerable_address": "0x970A76aEa6a0D531096b566340C0de9B027dd39D",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "consumptionReturnPool.sol",
+  "function": "getPriceOfUSDT",
+  "type": "price-manipulation",
+  "attacker_profit": 732251.9760406947,
+  "source_case_id": "dfhl-0115",
+  "fix_description": "Replace the spot price calculation in getPriceOfUSDT (reading pair balanceOf directly) with a TWAP oracle or Chainlink price feed that cannot be manipulated within a single transaction by flash loans.",
+  "attack_date": "2022-09-08",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This PoC is a short, direct flash-swap exploit with only a few protocol calls: borrow USDT, invoke claim plus three withdraw functions, then repay using a simple pair calculation. It does not require deep protocol internals, complex multi-protocol routing, or a long attack chain, so an experienced auditor could likely reproduce it quickly."
+}

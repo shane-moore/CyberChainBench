@@ -1,0 +1,23 @@
+{
+  "id": "bench-107",
+  "name": "RBalancer",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231107-rbalancer---business-logic-flaw",
+  "chain": "ethereum",
+  "block_number": 18523441,
+  "attack_txs": [
+    "0xbf5b2d22fa88965ddfc6e6d685fc7cfc683340c49e126386759ed9e4027b1415"
+  ],
+  "vulnerable_address": "0xA62F9C5af106FeEE069F38dE51098D9d81B90572",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "StoneVault.sol",
+  "function": "currentSharePrice",
+  "type": "accounting-error",
+  "attacker_profit": 6478195.171530615,
+  "source_case_id": "dfhl-0224",
+  "fix_description": "In currentSharePrice, do not use AssetsVault.getBalance() (which includes ETH sent directly to the vault without minting shares). Instead, track deposited ETH with an internal accounting variable that only increases through the legitimate deposit flow. This prevents share price manipulation via direct ETH transfers to the vault.",
+  "attack_date": "2023-11-07",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This exploit requires deep Balancer-specific knowledge of boosted pool accounting, virtualSupply/rate cache behavior, and a non-obvious precision-loss manipulation chain across multiple pools. The PoC uses a flash loan, drains a nested pool leg, performs a 7-step batch swap sequence with carefully chosen amounts, then unwinds through several pools and a DEX, which is well beyond a straightforward single-pattern exploit."
+}

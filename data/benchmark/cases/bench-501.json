@@ -1,0 +1,23 @@
+{
+  "id": "bench-501",
+  "name": "- MBC & ZZSH",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221129---mbc--zzsh---business-logic-flaw--access-control",
+  "chain": "bsc",
+  "block_number": 23474461,
+  "attack_txs": [
+    "0xdc53a6b5bf8e2962cf0e0eada6451f10956f4c0845a3ce134ddb050365f15c86"
+  ],
+  "vulnerable_address": "0x4E87880A72f6896E7e0a635A5838fFc89b13bd17",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "MBC.sol",
+  "function": "swapAndLiquifyStepv1",
+  "type": "price-manipulation",
+  "attacker_profit": 5878.486423413547,
+  "source_case_id": "dfhl-0070",
+  "fix_description": "Add slippage protection in swapAndLiquifyStepv1: check that the current price has not deviated significantly from a TWAP or reference price before calling addLiquidity. The min amounts (currently 0) should enforce a reasonable minimum output.",
+  "attack_date": "2022-11-29",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The PoC is a multi-step, protocol-specific exploit involving a special constructor-time setup, liquidity pair reserve manipulation/sync, a V3 flash loan, and abusing a flawed token function to extract value. It is not deeply complex or cross-protocol-heavy enough for hard, but it clearly requires more than a straightforward single-bug exploit and understanding of AMM/pair mechanics."
+}

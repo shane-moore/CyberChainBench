@@ -1,0 +1,23 @@
+{
+  "id": "bench-42",
+  "name": "Poly Network",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2021/README.md#20210811-poly-network---bridge-getting-around-modifier-through-cross-chain-message",
+  "chain": "ethereum",
+  "block_number": 12996671,
+  "attack_txs": [
+    "0xad7a2c70c958fcd3effbf374d0acf3774a9257577625ae4c838e24b0de17602a"
+  ],
+  "vulnerable_address": "0x838bf9E95CB12Dd76a54C9f9D2E3082EAF928270",
+  "has_public_source": false,
+  "fixable": false,
+  "file": "EthCrossChainManager.sol",
+  "function": "0xd450e04c",
+  "type": "input-validation",
+  "attacker_profit": 8972888.109178262,
+  "source_case_id": "dfhl-0015",
+  "fix_description": "In verifyHeaderAndExecuteTx (0xd450e04c), _executeCrossChainTx executes arbitrary target calls as EthCrossChainManager. Add a blacklist to prevent calling EthCrossChainData (or any admin contract): require(target != address(ethCrossChainData)). This prevents cross-chain messages from modifying the keeper.",
+  "attack_date": "2021-08-11",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is more than a trivial missing-access-control bug because the auditor must understand Poly Network\u2019s cross-chain verification flow, craft or replay valid-looking header/proof data, and abuse privileged internal calls to the owner-gated data contract before triggering the asset release. Although the underlying flaw is conceptually straightforward once identified, the PoC involves multi-step cross-chain message execution and protocol-specific serialization/details, putting it above easy but below hard."
+}

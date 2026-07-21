@@ -1,0 +1,23 @@
+{
+  "id": "bench-279",
+  "name": "ChiSale",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20241107-chisale---logic-flaw",
+  "chain": "ethereum",
+  "block_number": 21132838,
+  "attack_txs": [
+    "0x586a2a4368a1a45489a8a9b4273509b524b672c33e6c544d2682771b44f05e87"
+  ],
+  "vulnerable_address": "0x050163597d9905ba66400f7b3ca8f2ef23df702d",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "ChiSale.sol",
+  "function": "buy",
+  "type": "accounting-error",
+  "attacker_profit": 16340.5255943941,
+  "source_case_id": "dfhl-0413",
+  "fix_description": "In buy, the referral reward ETH is calculated based on msg.value (total ETH sent) instead of the actual ETH spent (msg.value - remainder). When a buyer sends more ETH than needed, the excess is refunded but the reward is still calculated on the full amount. Fix: calculate reward based on (msg.value - remainder) which is the actual purchase amount.",
+  "attack_date": "2024-11-07",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is extremely short and effectively demonstrates a single-step issue: calling Balancer Vault.flashLoan with an arbitrary recipient that already implements receiveFlashLoan. It requires minimal protocol-specific reasoning, no swap/price manipulation logic, and only one meaningful external interaction."
+}

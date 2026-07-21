@@ -1,0 +1,23 @@
+{
+  "id": "bench-205",
+  "name": "Cellframenet",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230601-cellframenet---calculation-issues-during-liquidity-migration",
+  "chain": "bsc",
+  "block_number": 28708274,
+  "attack_txs": [
+    "0x943c2a5f89bc0c17f3fe1520ec6215ed8c6b897ce7f22f1b207fea3f79ae09a6"
+  ],
+  "vulnerable_address": "0xB4E47c13dB187D54839cd1E08422Af57E5348fc1",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "LpMigration.sol",
+  "function": "migrate",
+  "type": "price-manipulation",
+  "attacker_profit": 74984.30547365178,
+  "source_case_id": "dfhl-0324",
+  "fix_description": "In migrate, do not use instantaneous pool reserves (getReserves) to calculate the token ratio for adding liquidity. Use a TWAP oracle or a fixed predetermined ratio. The current cell/eth calculation from spot reserves can be manipulated via flash loan before calling migrate.",
+  "attack_date": "2023-06-01",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC requires understanding a multi-stage DeFi attack chain: a preparatory setup, nested flash loans from two sources, repeated LP migration abuse, LP burn/unwind, and multi-DEX swaps across V2 and V3. While the code is not extremely long, the exploit depends on protocol-specific migration and liquidity mechanics rather than an obvious single-bug pattern, putting it beyond easy but short of truly hard."
+}

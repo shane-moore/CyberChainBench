@@ -1,0 +1,31 @@
+{
+  "id": "bench-405",
+  "name": "DualPools",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240215-dualpools---precision-truncation",
+  "chain": "bsc",
+  "block_number": 36145772,
+  "attack_txs": [
+    "0x90f374ca33fbd5aaa0d01f5fcf5dee4c7af49a98dc56b47459d8b7ad52ef1e93"
+  ],
+  "vulnerable_address": "0xfffed596edcc9c557f67222c9aff0fd1a27c5b66",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x8fbcc81e5983d8347495468122c65e2dc274eed9",
+  "file": "VToken.sol",
+  "function": "redeemFresh",
+  "type": "accounting-error",
+  "attacker_profit": 41549.62279226516,
+  "source_case_id": "dfhl-0556",
+  "fix_description": "In redeemFresh, after computing redeemTokens via divScalarByExpTruncate, add a check: require(redeemTokens > 0). Without this, precision truncation allows redeeming underlying tokens while burning zero vTokens when the redeem amount is small relative to the exchange rate.",
+  "normal_txs": [
+    "0x3cffab6d14000f3b20b259db8f1ad99dff6173c0c33291663f473e7b3160587a",
+    "0x6eb3b2141c0e7cb0270825fa61ab0e54ea1393999eb67668f205ad4367d9cda8",
+    "0x54a924bc2ae11ecf0305b9476eb85bc51b812dc2319f7890efae9a58cd4b081d",
+    "0x5da660e89c82b8f23c3e0a0d54085ccb92347ec39f8ed80cdf4c797b0d554085",
+    "0xf39055903a05ab4eeb96ea730791de9e8e5099d09ba2fb5428ad9de0aebf0ff2"
+  ],
+  "attack_date": "2024-02-15",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a multi-step exploit involving nested flash loans, Pancake swap/flash callback flows, Venus market entry and collateralized borrowing, plus interaction with a protocol-specific Dualpools market. While the bug is exploitable in a single transaction, writing it requires understanding several DeFi primitives and protocol-specific lending logic, making it more than a straightforward access-control or simple reentrancy case."
+}

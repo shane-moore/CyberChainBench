@@ -1,0 +1,31 @@
+{
+  "id": "bench-181",
+  "name": "BaoCommunity",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230704-baocommunity---donate-inflation-exchangerate--rounding-error",
+  "chain": "ethereum",
+  "block_number": 17620871,
+  "attack_txs": [
+    "0xdd7dd68cd879d07cfc2cb74606baa2a5bf18df0e3bda9f6b43f904f4f7bbdfc1"
+  ],
+  "vulnerable_address": "0xdb3401bef8f66e7f6cd95984026c26a4f47eee84",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0xb0f8fe96b4880adbdede0ddf446bd1e7ef122c4e",
+  "file": "CToken.sol",
+  "function": "redeemFresh",
+  "type": "accounting-error",
+  "attacker_profit": 46012.18680756909,
+  "source_case_id": "dfhl-0300",
+  "fix_description": "Prevent empty-pool exchange rate manipulation: require a minimum initial deposit that cannot be withdrawn (dead shares), or add a virtual offset to totalSupply/totalCash to prevent exchangeRate from being inflated via donation. This eliminates the rounding error exploit in redeemFresh when exchangeRate is artificially high.",
+  "normal_txs": [
+    "0xbdc1125cebab8d66f8ee6999f4eeb5ca90f60644b7d2c3cda06aa1a8c0cd5550",
+    "0x94d72db2d46df49fe0ba67c5130abb2ef233b474c85479b4e39cbe55284d1b48",
+    "0x3a4f3ade162978763bee71779853e866594a92fd2111b036e2080b71dc222d21",
+    "0xb7d462be307475d344b79ddac68d9d4fe291397dc24925c0a39d519fa756ec10",
+    "0xfeb450e65f958b8bad025d58cf1500b94a1caad64b3af6f57988370547e74a96"
+  ],
+  "attack_date": "2023-07-04",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This is a multi-step AMM reserve-manipulation exploit using a flash loan, a swap into the target token, repeated transfer+skim abuse to distort pair balances, then a swap back for profit. It requires understanding UniswapV2 pair accounting and the skim/reserve mismatch behavior, but the PoC is still fairly short and localized to one protocol interaction."
+}

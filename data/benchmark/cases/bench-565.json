@@ -1,0 +1,28 @@
+{
+  "id": "bench-565",
+  "name": "MorphoBlue",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20241013-morphoblue---overpriced-asset-in-oracle",
+  "chain": "ethereum",
+  "block_number": 20956052,
+  "attack_txs": [
+    "0x256979ae169abb7fbbbbc14188742f4b9debf48b48ad5b5207cadcc99ccb493b"
+  ],
+  "vulnerable_address": "0xDd1778F71a4a1C6A0eFebd8AE9f8848634CE1101",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": null,
+  "file": "src/morpho-chainlink/MorphoChainlinkOracleV2.sol",
+  "function": "price()",
+  "type": "price-manipulation",
+  "attacker_profit": 228677.88,
+  "source_case_id": "draft-287",
+  "fix_description": "The price() function relies on BASE_VAULT.getAssets() which returns the ERC4626 vault's convertToAssets value. This can be manipulated via donation attacks that inflate the vault's share price. Add a TWAP or validate vault share price against a trusted baseline to prevent single-block manipulation of the vault conversion rate.",
+  "normal_txs": [
+    "0x1dd35b088d3ce9df1da08cfb9897bdc5f034539738e968a509f8b0ba575a3b0f",
+    "0xb5e13ad4cca4d28b17cc40e90f9b927778b8745240fe52ebdb7fb6dbbcad9f22"
+  ],
+  "attack_date": "2024-10-13",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is a short flash-loan-driven multi-step attack involving Uniswap V2/V3 interactions plus Morpho Bundler authorization, collateral supply, and borrow logic, so it requires understanding protocol-specific flow beyond a trivial bug. While the PoC is not very large, reproducing it needs DeFi knowledge of flash swaps, swap callbacks, and the Morpho multicall path, putting it above easy but below hard."
+}

@@ -1,0 +1,27 @@
+{
+  "id": "bench-223",
+  "name": "Level",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230502-level---business-logic-flaw",
+  "chain": "bsc",
+  "block_number": 27835718,
+  "attack_txs": [
+    "0xe1f257041872c075cbe6a1212827bc346df3def6d01a07914e4006ec43027165"
+  ],
+  "vulnerable_address": "0x9f00fbd6c095d2c542687ed5afb68d9c3fb2f464",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x977087422c008233615b572fbc3f209ed300063a",
+  "file": "LevelReferralControllerV2.sol",
+  "function": "claimMultiple",
+  "type": "accounting-error",
+  "attacker_profit": 95565.18141801104,
+  "source_case_id": "dfhl-0346",
+  "fix_description": "In claimMultiple, users[epoch][msg.sender].claimed is set to the claimable amount (the delta) rather than the cumulative vested amount. This means on subsequent claims during vesting, the claimed value is reset to a lower value, allowing repeated claims of the same rewards. Fix: use claimed += reward (accumulate) or set claimed to the total vested amount, not the incremental claimable.",
+  "normal_txs": [
+    "0xcb2c525c588390add11e0ce497761b9aafae5ed9ee02eccc4d4f6d40e4e6a5f4"
+  ],
+  "attack_date": "2023-05-02",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The root bug is simple\u2014claiming multiple times by passing duplicate epoch IDs to claimMultiple\u2014but the PoC requires several protocol-specific setup steps: creating a referral tree, generating referral/trading points via repeated wash trades with a flash loan, advancing epochs with privileged timing on a fork, then exploiting duplicate-array claims repeatedly. An experienced auditor could reproduce it within 30 minutes to 2 hours after understanding the referral reward mechanics, but it is more than a trivial single-call exploit."
+}

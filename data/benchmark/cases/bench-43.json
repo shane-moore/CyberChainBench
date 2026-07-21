@@ -1,0 +1,24 @@
+{
+  "id": "bench-43",
+  "name": "Saddle Finance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220430-saddle-finance---swap-metapool-attack",
+  "chain": "ethereum",
+  "block_number": 14684307,
+  "attack_txs": [
+    "0x2b023d65485c4bb68d781960c2196588d03b871dc9eb1c054f596b7ca6f7da56"
+  ],
+  "vulnerable_address": "0x88cc4aa0dd6cf126b00c012dda9f6f4fd9388b17",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x824dcd7b044d60df2e89b1bb888e66d8bcf41491",
+  "file": "MetaSwapUtils.sol",
+  "function": "_calculateSwap",
+  "type": "accounting-error",
+  "attacker_profit": 9542519.16707329,
+  "source_case_id": "dfhl-0150",
+  "fix_description": "In _calculateSwap (MetaSwapUtils library), multiply the LP token balance by virtualPrice before computing the swap output, consistent with how _calculateSwapUnderlying handles it. This is the same vulnerability as Nerve Bridge (Saddle fork).",
+  "attack_date": "2022-04-30",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This is a flash-loan-based, multi-contract exploit involving Euler, Curve, and Saddle, so an auditor must understand protocol-specific swap paths and why the round-trip through Saddle is profitable. The PoC is still fairly short and only a few steps, but it is beyond an obvious single-bug pattern and requires some DeFi pool/accounting analysis."
+}

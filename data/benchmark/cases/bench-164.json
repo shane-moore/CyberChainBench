@@ -1,0 +1,23 @@
+{
+  "id": "bench-164",
+  "name": "SUT",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230721-sut---business-logic-flaw",
+  "chain": "bsc",
+  "block_number": 30165902,
+  "attack_txs": [
+    "0xfa1ece5381b9e2b2b83cb10faefde7632ca411bb38dd6bafe1f1140b1360f6ae"
+  ],
+  "vulnerable_address": "0xF075c5C7BA59208c0B9c41afcCd1f60da9EC9c37",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "SUTTokenSale.sol",
+  "function": "buyTokens",
+  "type": "accounting-error",
+  "attacker_profit": 8014.325807256871,
+  "source_case_id": "dfhl-0284",
+  "fix_description": "In buyTokens(), fix the integer division truncation: (_numberOfTokens/1e18)*tokenPrice truncates to 0 when _numberOfTokens < 1e18. Change to (_numberOfTokens * tokenPrice) / 1e18 to maintain precision, or require _numberOfTokens >= 1e18.",
+  "attack_date": "2023-07-21",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a short, straightforward exploit: take a flash loan, exploit an incorrectly priced token sale purchase, then swap the bought tokens back to WBNB and repay. The vulnerability pattern is obvious from the PoC and only involves a few external calls with minimal protocol-specific complexity."
+}

@@ -1,0 +1,31 @@
+{
+  "id": "bench-84",
+  "name": "Chainswap",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2021/README.md#20210702-chainswap---bridge-logic-flaw",
+  "chain": "ethereum",
+  "block_number": 12751488,
+  "attack_txs": [
+    "0x5c5688a9f981a07ed509481352f12f22a4bd7cea46a932c6d6bbe67cca3c54be"
+  ],
+  "vulnerable_address": "0xec2c74c9e2457d328bc6216858280ea13e740e8a",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x7fe68fc06e1a870dcbee0acae8720396dc12fc86",
+  "file": "TokenMapped.sol",
+  "function": "receive",
+  "type": "input-validation",
+  "attacker_profit": 4706.115905972583,
+  "source_case_id": "dfhl-0020",
+  "normal_txs": [
+    "0xc96d16847c65be141aa9f87ba11299bdee0c1d7881c5039211b27aa5713bbee1",
+    "0x794418c29ba4379bc918e84e9c7e1c6ee3f5cbe1abf15117a7f70d014ae15fc5",
+    "0x917323775ea403772892d48b144bfc1cd9a198f68e259d0944fdf50e33888cc6",
+    "0x123211995a9cfd0820440af89c48288a13f3032724b86a5827617725a9657c01",
+    "0x89fda3f27b39335d25387cee6abcea8a20a0a836000ffdf6539d1ec53a24b22b"
+  ],
+  "fix_description": "In the receive function, add a whitelist check that each signatures[i].signatory is a registered authorized signer (e.g. require(isAuthorizedSigner[signatures[i].signatory])). Currently the function only verifies that ecrecover matches the self-declared signatory and that the signatory has sufficient authQuota \u2014 but the auto-quota mechanism (authQuotaOf) grants any never-used address a full quotaCap because lasttimeUpdateQuotaOf defaults to 0, making now.sub(0) enormous. An attacker can use arbitrary fresh addresses as signatories, sign messages with their own private keys, and pass all checks to drain bridge funds.",
+  "attack_date": "2021-07-02",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is a single direct call to a bridge receive function with a forged/reused signature payload, with no multi-step setup, flash loan, or complex protocol interaction. This looks like a straightforward signature/authentication validation flaw that a competent auditor could reproduce quickly."
+}

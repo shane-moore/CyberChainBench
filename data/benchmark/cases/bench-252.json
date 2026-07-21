@@ -1,0 +1,31 @@
+{
+  "id": "bench-252",
+  "name": "- Orion Protocol",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230203---orion-protocol---reentrancy",
+  "chain": "ethereum",
+  "block_number": 16542148,
+  "attack_txs": [
+    "0xa6f63fcb6bec8818864d96a5b1bb19e8bd85ee37b2cc916412e720988440b2aa"
+  ],
+  "vulnerable_address": "0x98a877bb507f19eb43130b688f522a13885cf604",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0xb5599f568d3f3e6113b286d010d2bca40a7745aa",
+  "file": "Exchange.sol",
+  "function": "depositAsset",
+  "type": "reentrancy",
+  "attacker_profit": 2767306.195440657,
+  "source_case_id": "dfhl-0381",
+  "fix_description": "In depositAsset, add reentrancy guard. The function performs external token transfers that can trigger callbacks before deposit accounting is finalized.",
+  "normal_txs": [
+    "0xf94828a971f66ca4ed444a7f2cce10b0047a376aeaf3236a0fb0ca4ff3b1c472",
+    "0x75a73d88d107f41f5e16f3ea1839023dc951225f4f0b0d892875a5d303b47379",
+    "0x0cce24449629e9307c60026b69a32d02198e034c948bdfe443b5245f4a407334",
+    "0x82ab8f103665149753d25f76bd8b2034c742e8e58b4098cd7b34017fbced8894",
+    "0xb48270b6330b73b0a308094554189bed2168e83aba5e2119f30d2e4ae3dca253"
+  ],
+  "attack_date": "2023-02-03",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a protocol-specific reentrancy exploit that requires setting up malicious liquidity pairs, using a flash swap, triggering a callback via a custom token transfer, and understanding Orion\u2019s internal balance accounting during swap/deposit/withdraw flows. While not extremely long, it involves multiple contracts and nontrivial DeFi interaction beyond a simple single-function bug."
+}

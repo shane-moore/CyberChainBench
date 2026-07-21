@@ -1,0 +1,23 @@
+{
+  "id": "bench-201",
+  "name": "VINU",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230606-vinu---price-manipulation",
+  "chain": "ethereum",
+  "block_number": 17421007,
+  "attack_txs": [
+    "0xaf46a42fe1ed7193b25c523723dc047c7500e50a00ecb7bbb822d665adb3e1f3"
+  ],
+  "vulnerable_address": "0xF7ef0D57277ad6C2baBf87aB64bA61AbDd2590D2",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "VINU.sol",
+  "function": "addLiquidityETH",
+  "type": "access-control",
+  "attacker_profit": 6630.910787560314,
+  "source_case_id": "dfhl-0320",
+  "fix_description": "Add onlyOwner modifier to addLiquidityETH. Currently anyone can call it with an arbitrary devaddr and steal 80% of that address token balance by transferring it to the contract and adding liquidity.",
+  "attack_date": "2023-06-06",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a short, direct exploit centered on abusing a token\u2019s unsafe addLiquidityETH integration by supplying a fake router, then syncing and swapping against the manipulated Uniswap pair. It involves only a few external calls and no flash loan or deep protocol-specific reasoning, so a competent auditor could likely reproduce it quickly."
+}

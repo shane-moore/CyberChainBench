@@ -1,0 +1,23 @@
+{
+  "id": "bench-512",
+  "name": "- SEAMAN",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221129---seaman---business-logic-flaw",
+  "chain": "bsc",
+  "block_number": 23467516,
+  "attack_txs": [
+    "0x6f1af27d08b10caa7e96ec3d580bf39e29fd5ece00abda7d8955715403bf34a8"
+  ],
+  "vulnerable_address": "0x6bc9b4976ba6f8C9574326375204eE469993D038",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "SEAMAN.sol",
+  "function": "swapAndLiquifyV3",
+  "type": "accounting-error",
+  "attacker_profit": 7741.652344283464,
+  "source_case_id": "dfhl-0071",
+  "fix_description": "Remove the cross-pair swap logic in swapAndLiquifyV3/V1 that converts SEAMAN to external tokens (GVC/lpToken) affecting the BUSD-GVC pair. Token transfer should not have side effects on unrelated trading pairs. If fee distribution is needed, keep it within the SEAMAN pair only.",
+  "attack_date": "2022-11-29",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is a short multi-step price-manipulation attack using a flash loan, token swaps, and repeated transfers to a pair to corrupt token/pair accounting before dumping back to USDT. It is not deeply complex, but it does require understanding fee-on-transfer/tokenomics behavior and AMM pair interaction beyond a trivial access-control bug."
+}

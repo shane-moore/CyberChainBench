@@ -1,0 +1,27 @@
+{
+  "id": "bench-332",
+  "name": "Dyson_money",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240617-dyson_money---business-logic-flaw",
+  "chain": "bsc",
+  "block_number": 39684703,
+  "attack_txs": [
+    "0xbac614f4d103939a9611ca35f4ec9451e1e98512d573c822fbff70fafdbbb5a0"
+  ],
+  "vulnerable_address": "0x6e668080ff8fa5f606cdc200229d054aa5b8fb13",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x2836b64a39d5b73d8f534c9fd6c6abd81df2beb7",
+  "file": "DysonVault.sol",
+  "function": "deposit",
+  "type": "accounting-error",
+  "attacker_profit": 31377.0771506465,
+  "source_case_id": "dfhl-0473",
+  "fix_description": "Classic vault share inflation (first depositor attack). In deposit(), when totalSupply()==0, an attacker can manipulate the share price by depositing 1 wei then donating tokens directly to inflate balance(). Fix: mint a minimum number of dead shares on first deposit (e.g., mint 1000 shares to address(0)), or require a minimum initial deposit amount.",
+  "normal_txs": [
+    "0xb445d0df83e14b42f8d63701b46602fc040f09b95ba3afb7b041bc3189b4c237"
+  ],
+  "attack_date": "2024-06-17",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is a short, direct business-logic exploit against a single protocol flow: repeatedly borrow/redeem, then drain liquidity and swap out. It requires little DeFi sophistication beyond understanding basic token approvals and a final swap, with no flash loan, complex routing, or deep multi-contract state reasoning."
+}

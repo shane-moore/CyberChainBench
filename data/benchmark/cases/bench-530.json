@@ -1,0 +1,23 @@
+{
+  "id": "bench-530",
+  "name": "- AnnexFinance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221119---annexfinance---verify-flashloan-callback",
+  "chain": "bsc",
+  "block_number": 23165447,
+  "attack_txs": [
+    "0x3757d177482171dcfad7066c5e88d6f0f0fe74b28f32e41dd77137cad859c777"
+  ],
+  "vulnerable_address": "0xe65E970F065643bA80E5822edfF483A1d75263E3",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Liquidator.sol",
+  "function": "pancakeCall",
+  "type": "input-validation",
+  "attacker_profit": 1954.4233390881625,
+  "source_case_id": "dfhl-0075",
+  "fix_description": "In pancakeCall, validate that msg.sender is a legitimate PancakeSwap pair by computing the expected pair address from the factory and token addresses. Without this check, anyone can call pancakeCall directly to trigger liquidation logic with arbitrary parameters.",
+  "attack_date": "2022-11-19",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a protocol-specific multi-step attack involving a flash loan, creating a malicious token and liquidity pool, abusing a callback/liquidation flow against an external Liquidator contract, then draining funds and unwinding liquidity. While the PoC is short, understanding why the fake pair and callback-based token transfer work requires reading the target protocol logic rather than spotting a trivial bug."
+}

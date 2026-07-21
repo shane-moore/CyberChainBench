@@ -1,0 +1,23 @@
+{
+  "id": "bench-412",
+  "name": "BurnsDefi",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240205-burnsdefi---price-manipulation",
+  "chain": "bsc",
+  "block_number": 35858190,
+  "attack_txs": [
+    "0x1d0af3a963682748493f21bf9e955ce3a950bee5817401bf2486db7a0af104b4"
+  ],
+  "vulnerable_address": "0x4fb9657Ac5d311dD54B37A75cFB873b127Eb21FD",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "burnsBuild.sol",
+  "function": "burnToHolder",
+  "type": "price-manipulation",
+  "attacker_profit": 66204.91488648336,
+  "source_case_id": "dfhl-0563",
+  "fix_description": "In burnToHolder, the ETH payout (deserved) is calculated using uniswapRouter.getAmountsOut which reads instant AMM reserves. An attacker can flash-loan manipulate the pair price before calling burnToHolder to extract disproportionate ETH. Use a TWAP oracle or fixed exchange rate instead of spot price.",
+  "attack_date": "2024-02-05",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a flash-loan-driven price manipulation against protocol-specific reward logic: it requires understanding how burnToHolder derives value from the Burns/WBNB pool and coordinating several swaps across multiple pairs before claiming rewards. While the attack flow is not extremely long, it involves multi-contract DeFi interactions and nontrivial reserve/math reasoning, putting it above a simple obvious bug."
+}

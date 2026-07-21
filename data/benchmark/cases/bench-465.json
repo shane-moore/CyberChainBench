@@ -1,0 +1,42 @@
+{
+  "id": "bench-465",
+  "name": "MetaPool",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250617-metapool---access-control",
+  "chain": "ethereum",
+  "block_number": 22722911,
+  "attack_txs": [
+    "0x57ee419a001d85085478d04dd2a73daa91175b1d7c11d8a8fb5622c56fd1fa69"
+  ],
+  "vulnerable_address": "0x3747484567119592ff6841df399cf679955a111a",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x48afbbd342f64ef8a9ab1c143719b63c2ad81710",
+  "function": "0x94bf804d",
+  "type": "accounting-error",
+  "attacker_profit": 27465585.701603092,
+  "annotation_hints": {
+    "file": {
+      "label": "TODO_FILE",
+      "status": "missing",
+      "expected_schema": {
+        "type": "string",
+        "example": "Vault.sol"
+      },
+      "hint": "Primary vulnerable source file basename for the canonical benchmark case."
+    }
+  },
+  "source_case_id": "dfhl-0624",
+  "file": "Staking.sol",
+  "fix_description": "In the ERC4626 mint/deposit flow, the _deposit function mints shares without properly verifying that the corresponding assets were actually transferred in. Fix: ensure _deposit validates that msg.value or transferFrom amount matches the required assets before minting shares. The current implementation allows free minting of mpETH without paying the underlying ETH.",
+  "normal_txs": [
+    "0x4f43fc6d674e85f7d306debb4a3d48e7688c2fe5a6332dd9ad57558a15c86ef9",
+    "0xc7ace6881c3474afb6bd979c5936539961c1576f1dab9cb5762e38577ef31c55",
+    "0x0a64d598bc8f0659bec4bf686a27568f41043fbf81c927f7afbf47e169d42142",
+    "0x690949894f13904037b0c2c0ba7a8b61a000a38104ecfb0c5b91f66f7e8b021c",
+    "0xf86ed927fac6eb761861ceb3bf627f1ba1ca51bc2316f5c6c0a672e0416308bb"
+  ],
+  "attack_date": "2025-06-17",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The PoC is a multi-step DeFi exploit involving a Balancer flash loan, protocol-specific mpETH mint/deposit flow, draining value via the mpETH/ETH pool, and a Uniswap V3 swap before repayment. While the code is not extremely long, reproducing it requires understanding the vulnerable staking token mechanics and coordinating several contract interactions, which is beyond a trivial bug pattern."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-419",
+  "name": "NBLGAME",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240125-nblgame---reentrancy",
+  "chain": "optimism",
+  "block_number": 115293069,
+  "attack_txs": [
+    "0xf4fc3b638f1a377cf22b729199a9aeb27fc62fe2983a65c4d14b99ee5c5b2328"
+  ],
+  "vulnerable_address": "0x5499178919C79086fd580d6c5f332a4253244D91",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "NblNftStake.sol",
+  "function": "withdrawNft",
+  "type": "reentrancy",
+  "attacker_profit": 157919.88196464852,
+  "source_case_id": "dfhl-0571",
+  "fix_description": "Add reentrancy guard (nonReentrant modifier) to withdrawNft, or follow checks-effects-interactions pattern to update state before making external calls.",
+  "attack_date": "2024-01-25",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a straightforward reentrancy exploit against a bid/refund flow combined with an obvious logic bug in the minimum bid check. The PoC is short, uses a single target contract with simple repeated external calls, and does not require advanced DeFi or multi-protocol knowledge."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-150",
+  "name": "ZunamiProtocol",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230814-zunamiprotocol---price-manipulation",
+  "chain": "ethereum",
+  "block_number": 17908950,
+  "attack_txs": [
+    "0x0788ba222970c7c68a738b0e08fb197e669e61f9b226ceec4cab9b85abe8cceb"
+  ],
+  "vulnerable_address": "0x2ffCC661011beC72e1A9524E12060983E74D14ce",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Zunami.sol",
+  "function": "totalHoldings",
+  "type": "price-manipulation",
+  "attacker_profit": 2125990.6710783695,
+  "source_case_id": "dfhl-0271",
+  "fix_description": "In lpPrice(), use a TWAP (time-weighted average price) mechanism instead of instantaneous totalHoldings()/totalSupply(). This prevents single-block donation attacks from immediately inflating the LP price used by downstream contracts like cacheAssetPrice.",
+  "attack_date": "2023-08-14",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a short but protocol-specific multi-step attack: flash loan BUSD, swap into UN, abuse the pair via repeated transfer+skim reserve/accounting manipulation, then swap back and repay. It requires understanding UniswapV2 pair mechanics and how skim can be abused with this token/pool behavior, so it is less obvious than a basic access-control bug but still not a deeply complex attack chain."
+}

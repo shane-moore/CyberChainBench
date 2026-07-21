@@ -1,0 +1,25 @@
+{
+  "id": "bench-563",
+  "name": "Erc20transfer",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20241022-erc20transfer---access-control",
+  "chain": "ethereum",
+  "block_number": 21019772,
+  "attack_txs": [
+    "0x7f2540af4a1f7b0172a46f5539ebf943dd5418422e4faa8150d3ae5337e92172"
+  ],
+  "vulnerable_address": "0x43Dc865E916914FD93540461FdE124484FBf8fAa",
+  "has_public_source": false,
+  "fixable": true,
+  "proxy_address": null,
+  "file": null,
+  "function": "0x0a1b0b91",
+  "type": "access-control",
+  "attacker_profit": 14752.8,
+  "source_case_id": "draft-285",
+  "fix_description": "Add an onlyOwner modifier or msg.sender check to the erc20TransferFrom function so that only authorized callers can execute transferFrom on behalf of addresses that approved this contract.",
+  "normal_txs": [],
+  "attack_date": "2024-10-22",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a single-call exploit against an obviously unsafe public token transfer helper, likely missing access control/authorization checks around transferFrom behavior. The PoC is extremely short and requires no DeFi primitives, flash loans, or multi-step protocol reasoning."
+}

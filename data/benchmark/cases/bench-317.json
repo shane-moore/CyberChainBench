@@ -1,0 +1,23 @@
+{
+  "id": "bench-317",
+  "name": "YodlRouter",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240814-yodlrouter---arbitrary-call",
+  "chain": "ethereum",
+  "block_number": 20520369,
+  "attack_txs": [
+    "0x54f659773dae6e01f83184d4b6d717c7f1bb71c0aa59e8c8f4a57c25271424b3"
+  ],
+  "vulnerable_address": "0xe3a0bc3483ae5a04db7ef2954315133a6f7d228e",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "AbstractYodlRouter.sol",
+  "function": "transferFee",
+  "type": "input-validation",
+  "attacker_profit": 47570.346950147825,
+  "source_case_id": "dfhl-0454",
+  "fix_description": "In transferFee, the function is public and accepts arbitrary from/to parameters. When from != address(this), it calls safeTransferFrom(token, from, to, fee) which transfers tokens from any address that has approved the router. Attacker calls transferFee with from=victim to steal their approved tokens. Fix: require(from == msg.sender || from == address(this)) to prevent transferring from arbitrary addresses.",
+  "attack_date": "2024-08-14",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a straightforward arbitrary token transfer / missing access control issue: the attacker directly calls transferFee with victim addresses as the from parameter and 100% feeBps to drain approved USDC. The PoC is very short, involves no complex DeFi primitives or multi-contract chaining, and a competent auditor could reproduce it quickly."
+}

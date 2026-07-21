@@ -1,0 +1,24 @@
+{
+  "id": "bench-488",
+  "name": "wKeyDAO",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250316-wkeydao---unprotected-function",
+  "chain": "bsc",
+  "block_number": 47469060,
+  "attack_txs": [
+    "0xc9bccafdb0cd977556d1f88ac39bf8b455c0275ac1dd4b51d75950fb58bad4c8"
+  ],
+  "vulnerable_address": "0xc39c54868a4f842b02a99339f4a57a44efc310b8",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0xd511096a73292a7419a94354d4c1c73e8a3cd851",
+  "file": "Sales.sol",
+  "function": "buy",
+  "type": "access-control",
+  "attacker_profit": 689961.0728877289,
+  "source_case_id": "dfhl-0649",
+  "fix_description": "Add access control to buy() function (e.g., whitelist, onlyOwner, or time-limited sale window). Currently anyone can call buy() to purchase tokens at the configured low price and immediately sell on DEX at market price for profit.",
+  "attack_date": "2025-03-16",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is a very short flash-loan-assisted loop: borrow BUSD, repeatedly call buy() on the vulnerable contract, immediately dump the received token on PancakeSwap, then repay. It involves only a few contracts and a straightforward exploitation pattern without deep protocol internals or complex state reasoning."
+}

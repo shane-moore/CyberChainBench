@@ -1,0 +1,23 @@
+{
+  "id": "bench-337",
+  "name": "Bazaar",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240610-bazaar---insufficient-permission-check",
+  "chain": "blast",
+  "block_number": 4619717,
+  "attack_txs": [
+    "0x7fdd140f7631f62d62f7256ee4a38af51a4723ad5d66adc9b9685bf78f750f2d"
+  ],
+  "vulnerable_address": "0xefb4e3Cc438eF2854727A7Df0d0baf844484EdaB",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "BazaarVault.sol",
+  "function": "exitPool",
+  "type": "input-validation",
+  "attacker_profit": 1441779.8285906056,
+  "source_case_id": "dfhl-0478",
+  "fix_description": "In exitPool, add require(sender == msg.sender) to prevent callers from specifying arbitrary sender addresses. Currently anyone can pass any address as sender to exit the pool on behalf of other users without authorization, draining their LP positions.",
+  "attack_date": "2024-06-10",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This PoC is a single-call exploit: it directly invokes exitPool on the vulnerable vault using another holder as the sender, indicating an obvious missing authorization/access-control issue. It requires little protocol-specific complexity, no flash loans or multi-step state manipulation, and the exploit logic is very short and straightforward."
+}

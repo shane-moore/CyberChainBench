@@ -1,0 +1,22 @@
+{
+  "id": "bench-406",
+  "name": "Babyloogn",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240215-babyloogn---lack-of-validation",
+  "chain": "bsc",
+  "block_number": 36159516,
+  "attack_txs": [
+    "0xd081d6bb96326be5305a6c00dd51d1799971794941576554341738abc1ceb202"
+  ],
+  "vulnerable_address": "0x971d08bba900230298add23e61e04b04226b5073",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0xfbe81135",
+  "type": "input-validation",
+  "attacker_profit": 597.3153161165582,
+  "source_case_id": "dfhl-0557",
+  "fix_description": "Function 0xfbe81135(tokenId, amount) allows users to exchange ERC1155 NFTs for a fixed ERC20 reward (storage[0x03]). It checks msg.sender balance and approval, transfers NFTs to the contract, then sends fixed reward. No validation on tokenId - attacker can use any cheap/self-minted NFT tokenId to claim the reward. Fix: validate tokenId against an allowed list of redeemable token IDs.",
+  "attack_date": "2024-02-15",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is a very short, direct exploit: approve NFT/operator permissions, repeatedly call the vulnerable airdrop function in a loop, then swap the drained tokens to WBNB. It involves no flash loans, no complex DeFi primitives, and only minimal protocol understanding beyond spotting that the claim logic can be abused repeatedly."
+}

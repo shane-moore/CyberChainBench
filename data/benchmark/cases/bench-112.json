@@ -1,0 +1,31 @@
+{
+  "id": "bench-112",
+  "name": "OnyxProtocol",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231101-onyxprotocol---precission-loss-vulnerability",
+  "chain": "ethereum",
+  "block_number": 18476513,
+  "attack_txs": [
+    "0xf7c21600452939a81b599017ee24ee0dfd92aaaccd0a55d02819a7658a6ef635"
+  ],
+  "vulnerable_address": "0x9dcb6bc351ab416f35aeab1351776e2ad295abc4",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x5fdbcd61bc9bd4b6d3fd1f49a5d253165ea11750",
+  "file": "OErc20Delegate.sol",
+  "function": "mintFresh",
+  "type": "accounting-error",
+  "attacker_profit": 2083007.3335802522,
+  "source_case_id": "dfhl-0231",
+  "fix_description": "In mintFresh, when totalSupply is 0 (first deposit), mint a minimum amount of cTokens to a dead address (similar to Uniswap V2 MINIMUM_LIQUIDITY) to prevent the exchange rate from being manipulated by direct token transfers to the contract.",
+  "normal_txs": [
+    "0x6c54df4078930216711175d6a606ad8e71d4cbf564dd06d4e184a70d58842c3d",
+    "0x23f2fa0d0b305173c6afdb82ea8af301f8baf89a9cc0171e6d424afb25895560",
+    "0x1437b9f6c3fa9aabab1d864674c1fabeb216172c9f6cbf4a9b1da2991b104e97",
+    "0x01f023d9961ea9d807a6d15edad964b1cafbabd42539743381a24c8cff0499a1",
+    "0xef664554b654554852c000d26523e44d3d2052a0243def7ad1c46914ec2522a2"
+  ],
+  "attack_date": "2023-11-01",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This PoC is a long multi-contract attack chain using an Aave flash loan, Uniswap swaps, custom intermediate contracts, Compound/Onyx-style market entry/borrow/liquidation mechanics, and repeated draining across several collateral markets. Writing it requires deep protocol-specific understanding of oToken accounting and liquidation math rather than spotting a simple bug, so it would likely take an experienced auditor well over 2 hours."
+}

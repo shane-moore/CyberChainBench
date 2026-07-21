@@ -1,0 +1,23 @@
+{
+  "id": "bench-335",
+  "name": "JokInTheBox",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240611-jokinthebox---business-logic-flaw",
+  "chain": "ethereum",
+  "block_number": 20064929,
+  "attack_txs": [
+    "0xe8277ef6ba8611bd12dc5a6e7ca4b984423bc0b3828159f83b466fdcf4fe054f"
+  ],
+  "vulnerable_address": "0xA6447f6156EFfD23EC3b57d5edD978349E4e192d",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "JokInTheBoxStaking (1).sol",
+  "function": "unstake",
+  "type": "accounting-error",
+  "attacker_profit": 34239.91807465571,
+  "source_case_id": "dfhl-0476",
+  "fix_description": "In unstake, add require(!stakes[msg.sender][stakeIndex].unstaked) check at the beginning. The function sets unstaked=true but never checks it, allowing the same stake to be withdrawn repeatedly until the contract is drained.",
+  "attack_date": "2024-06-11",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The exploit is very short and essentially a single-bug abuse: stake once, warp time, then repeatedly call unstake in a loop to drain rewards/tokens due to flawed unstake/accounting logic. It involves only one protocol plus simple swaps in and out, with no complex DeFi primitives, flash-loan mechanics, or deep multi-contract reasoning."
+}

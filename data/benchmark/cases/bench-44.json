@@ -1,0 +1,31 @@
+{
+  "id": "bench-44",
+  "name": "Rari Capital/Fei Protocol",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220430-rari-capitalfei-protocol---flashloan-attack--reentrancy",
+  "chain": "ethereum",
+  "block_number": 14684814,
+  "attack_txs": [
+    "0xab486012f21be741c9e674ffda227e30518e8a1e37a5f1d58d0b0d41f6e76530"
+  ],
+  "vulnerable_address": "0xd77e28a1b9a9cfe1fc2eee70e391c05d25853cbf",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x26267e41ceca7c8e0f143554af707336f27fa051",
+  "file": "CToken.sol",
+  "function": "borrowFresh",
+  "type": "reentrancy",
+  "attacker_profit": 12846952.104797123,
+  "source_case_id": "dfhl-0151",
+  "fix_description": "In borrowFresh, update accountBorrows and totalBorrows BEFORE calling doTransferOut (checks-effects-interactions). Currently ETH is sent to the borrower before state is updated, allowing reentrancy via the receive fallback to borrow repeatedly without the debt being recorded.",
+  "normal_txs": [
+    "0x254735c6c14e4d338b1cc5bca43aab6b0f395ae06085013b1b2527180d270a31",
+    "0x0742b138a78ad9bd5d0b55221d514637313bc64c40272ca98c8d0417a519e2e4",
+    "0x0f75349606610313cb666277eeda612e72be624cae061d017e503056bbf4d8e0",
+    "0xadbe5cf9269a001d50990d0c29075b402bcc3a0b0f3258821881621b787b35c6",
+    "0x62824a156107cae1e26530ae0ff50a5a542bc9c09bb2bfa3a8d7f1ef62e5d6d2"
+  ],
+  "attack_date": "2022-04-30",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a short but protocol-specific multi-step exploit: flash-loan USDC, mint fUSDC, enter the market, borrow ETH, then use a receive-hook during ETH transfer to call exitMarket and redeem collateral before repaying the flash loan. It requires understanding Compound/Rari market membership and the callback-based reentrancy angle, so it is not purely trivial but still far from a deeply complex attack chain."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-225",
+  "name": "Axioma",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230424-axioma---business-logic-flaw",
+  "chain": "bsc",
+  "block_number": 27620321,
+  "attack_txs": [
+    "0x05eabbb665a5b99490510d0b3f93565f394914294ab4d609895e525b43ff16f2"
+  ],
+  "vulnerable_address": "0x2C25aEe99ED08A61e7407A5674BC2d1A72B5D8E3",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "AxiomaPresale.sol",
+  "function": "buyToken",
+  "type": "access-control",
+  "attacker_profit": 10768.626610439998,
+  "source_case_id": "dfhl-0349",
+  "fix_description": "Add a time-based or admin-controlled close mechanism to buyToken(). The presale should be disabled once the token is live on DEX, preventing arbitrage between presale price and market price.",
+  "attack_date": "2023-04-24",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very short two-step arbitrage-style exploit: flash-loan WBNB, buy underpriced presale tokens, then immediately dump them on PancakeSwap for profit. It relies on a simple pricing discrepancy rather than complex protocol internals, and the PoC is concise with minimal contract interaction."
+}

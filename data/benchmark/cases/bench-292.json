@@ -1,0 +1,23 @@
+{
+  "id": "bench-292",
+  "name": "FireToken",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20241001-firetoken---pair-manipulation-with-transfer-function",
+  "chain": "ethereum",
+  "block_number": 20869375,
+  "attack_txs": [
+    "0xd20b3b31a682322eb0698ecd67a6d8a040ccea653ba429ec73e3584fa176ff2b"
+  ],
+  "vulnerable_address": "0x18775475f50557b96C63E8bbf7D75bFeB412082D",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "FireToken.sol",
+  "function": "_transfer",
+  "type": "accounting-error",
+  "attacker_profit": 22341.222071627835,
+  "source_case_id": "dfhl-0426",
+  "fix_description": "In _transfer, when selling (to == pair), the contract additionally deducts sellAmount from the pair balance and sends it to DEAD_ADDRESS, then calls sync(). This directly reduces pair token reserves and manipulates the price upward on every sell. Attacker exploits this by repeatedly selling small amounts to inflate price. Fix: remove the direct pair balance deduction and burn logic from the transfer function.",
+  "attack_date": "2024-10-01",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a multi-step DeFi exploit involving an Aave flash loan, Uniswap V2 fee-on-transfer token behavior, direct pair reserve manipulation, and a constructor-based bypass of an anti-contract transfer check. The vulnerability is not just a trivial access control issue; it requires understanding token transfer side effects, AMM reserve accounting, and why repeated contract creation is used, but the overall attack path is still fairly short and self-contained."
+}

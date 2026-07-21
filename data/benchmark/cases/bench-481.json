@@ -1,0 +1,23 @@
+{
+  "id": "bench-481",
+  "name": "Laundromat",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250408-laundromat---logic-flaw",
+  "chain": "ethereum",
+  "block_number": 22222687,
+  "attack_txs": [
+    "0x08ffb5f7ab6421720ab609b6ab0ff5622fba225ba351119c21ef92c78cb8302c"
+  ],
+  "vulnerable_address": "0x934cbbe5377358e6712b5f041d90313d935c501c",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Laundromat.sol",
+  "function": "deposit",
+  "type": "input-validation",
+  "attacker_profit": 1567.565214,
+  "source_case_id": "dfhl-0642",
+  "fix_description": "In deposit, the msg.value check is commented out (//if(msg.value != payment) throw). Uncomment it to require depositors to send exactly the required payment amount. Without this check, anyone can register a pubkey without depositing ETH, then withdraw other participants funds.",
+  "attack_date": "2025-04-08",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a short but protocol-specific multi-step attack: flash-loan BUSD, swap into UN, abuse the pair via repeated token transfers plus skim() to distort balances/reserves behavior, then swap back for profit and repay. It requires understanding Uniswap V2 pair mechanics and skim-based reserve/balance manipulation, making it more involved than a trivial access-control bug but not a deeply complex multi-protocol chain."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-146",
+  "name": "GSS",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230824-gss---skim-token-balance",
+  "chain": "bsc",
+  "block_number": 31108559,
+  "attack_txs": [
+    "0x4f8cb9efb3cc9930bd38af5f5d34d15ce683111599a80df7ae50b003e746e336"
+  ],
+  "vulnerable_address": "0x37e42B961AE37883BAc2fC29207A5F88eFa5db66",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "GSS.sol",
+  "function": "_tokenTransfer1",
+  "type": "accounting-error",
+  "attacker_profit": 24595.19877774334,
+  "source_case_id": "dfhl-0267",
+  "fix_description": "In _tokenTransfer1, the fee distribution logic causes token balance in the LP pair to diverge from reserves. Fees are transferred from sender to various receivers but the accounting causes pair.balanceOf(token) > reserve, allowing attacker to call pair.skim() to extract the excess. Fix: ensure fee transfers do not create balance/reserve discrepancy in the pair, or call sync() after fee operations.",
+  "attack_date": "2023-08-24",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This is a short PoC, but the exploit is not just a trivial access-control bug: it combines a flash loan, a fee-on-transfer token swap, and UniswapV2-style pair reserve manipulation using transfer/skim/sync across two pools. An auditor would need to understand pair accounting and protocol-specific token/pool behavior, but the attack path is still only a few steps and not deeply complex."
+}

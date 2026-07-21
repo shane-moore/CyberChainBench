@@ -1,0 +1,23 @@
+{
+  "id": "bench-259",
+  "name": "- UPSToken",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230118---upstoken---business-logic-flaw",
+  "chain": "ethereum",
+  "block_number": 16433821,
+  "attack_txs": [
+    "0x4b3df6e9c68ae482c71a02832f7f599ff58ff877ec05fed0abd95b31d2d7d912"
+  ],
+  "vulnerable_address": "0x35a254223960c18B69C0526c46B013D022E93902",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "UpSwing.sol",
+  "function": "_transfer",
+  "type": "accounting-error",
+  "attacker_profit": 1274.6698887939447,
+  "source_case_id": "dfhl-0388",
+  "fix_description": "In _transfer, the amount variable is modified after the actual balance transfer is completed. The sellPressure accounting uses the recalculated amount instead of the actual transferred amount, creating an inconsistency. Fix by using a separate variable for the sellPressure calculation, or move the amount recalculation before the balance update.",
+  "attack_date": "2023-01-18",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a multi-step business-logic attack involving a flash loan, reserve manipulation via sync/skim, and exploiting fee-on-transfer or pair-accounting behavior before extracting value through swaps. It is not a trivial bug pattern and requires understanding AMM reserve mechanics and this token/pair interaction, but the PoC is still fairly short and the attack flow is contained to a few contracts."
+}

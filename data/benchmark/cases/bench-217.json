@@ -1,0 +1,23 @@
+{
+  "id": "bench-217",
+  "name": "MCC",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230509-mcc---reflection-token",
+  "chain": "ethereum",
+  "block_number": 17221446,
+  "attack_txs": [
+    "0xf72f1d10fc6923f87279ce6c0aef46e372c6652a696f280b0465a301a92f2e26"
+  ],
+  "vulnerable_address": "0x1a7981D87E3b6a95c1516EB820E223fE979896b3",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "MultiChainCapital.sol",
+  "function": "deliver",
+  "type": "accounting-error",
+  "attacker_profit": 104523.52112251834,
+  "source_case_id": "dfhl-0341",
+  "fix_description": "In deliver, reducing _rTotal changes the global reflect rate, which creates a discrepancy between the LP pair actual balance and its recorded reserves (since pair may be excluded from reflection). Attacker calls deliver to manipulate the rate, then exploits the balance/reserve mismatch. Fix: exclude LP pair from rate changes, or add reentrancy/same-block protection on deliver + swap combinations.",
+  "attack_date": "2023-05-09",
+  "difficulty": "unknown",
+  "difficulty_reasoning": "No matching PoC file found for automated labeling."
+}

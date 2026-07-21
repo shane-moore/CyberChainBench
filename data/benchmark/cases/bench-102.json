@@ -1,0 +1,23 @@
+{
+  "id": "bench-102",
+  "name": "MEVBot_0xa247",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231112-mevbot_0xa247---incorrect-access-control",
+  "chain": "ethereum",
+  "block_number": 18552867,
+  "attack_txs": [
+    "0x53eeab4447db331dbb47f93fd58a95d6faa230d559acde0687f8b5f5829e7a45"
+  ],
+  "vulnerable_address": "0xb4ba49c919309ab66177ac7dece4d5cd6ef714e7",
+  "has_public_source": false,
+  "fixable": true,
+  "proxy_address": "0xa2473460f86e1058bdd0a2c531b15534fd403d97",
+  "function": "0xe7d25975",
+  "type": "access-control",
+  "attacker_profit": 117973.25817814819,
+  "source_case_id": "dfhl-0220",
+  "fix_description": "In function 0xe7d25975, there is no msg.sender validation in the handler (func_0594). Any caller can execute the MEV bot operations via delegatecall through the proxy. Add require(msg.sender == owner) to restrict access.",
+  "attack_date": "2023-11-12",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a multi-step drain involving an Aave flash loan, repeated crafted low-level calls into a router using a specific function selector, and Curve pool swaps to convert and realize profit. While the exploit path is not extremely long, understanding why arbitrary router-held balances can be swapped and how to sequence the DeFi interactions requires protocol-specific reasoning beyond a simple access control bug."
+}

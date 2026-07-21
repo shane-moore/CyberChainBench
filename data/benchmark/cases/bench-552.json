@@ -1,0 +1,23 @@
+{
+  "id": "bench-552",
+  "name": "MEVBOTa47b",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221014-mevbota47b---price-oracle-manipulation",
+  "chain": "ethereum",
+  "block_number": 15741333,
+  "attack_txs": [
+    "0x35ecf595864400696853c53edf3e3d60096639b6071cadea6076c9c6ceb921c1"
+  ],
+  "vulnerable_address": "0x770200a211315a0688c289f437317ea117cb4d23",
+  "has_public_source": false,
+  "fixable": true,
+  "proxy_address": "0x00000000000a47b1298f18cf67de547bbe0d723f",
+  "function": "0xf04f2707",
+  "type": "access-control",
+  "attacker_profit": 239614.30314499076,
+  "source_case_id": "dfhl-0099",
+  "fix_description": "In receiveFlashLoan (0xf04f2707), no validation that msg.sender is the legitimate Balancer Vault. Any caller can invoke this callback. Add require(msg.sender == BALANCER_VAULT).",
+  "attack_date": "2022-10-14",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a multi-step drain involving an Aave flash loan, repeated arbitrary low-level calls into a vulnerable router, and Curve pool swaps to convert/drain assets, so it requires understanding protocol-specific token/pool interactions rather than just spotting a basic bug. The exploit flow is still fairly direct and the PoC is short, so it is not hard, but an auditor would likely need more than a trivial amount of time to reconstruct the attack."
+}

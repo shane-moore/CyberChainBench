@@ -1,0 +1,23 @@
+{
+  "id": "bench-374",
+  "name": "- Nmbplatform",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221214---nmbplatform---flashloan-price-manipulation",
+  "chain": "bsc",
+  "block_number": 23886615,
+  "attack_txs": [
+    "0x42f56d3e86fb47e1edffa59222b33b73e7407d4b5bb05e23b83cb1771790f6c1"
+  ],
+  "vulnerable_address": "0x3aA2B9de4ce397d93E11699C3f07B769b210bBD5",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "StakingRewardsFixedAPY.sol",
+  "function": "getTokenAmountForToken",
+  "type": "price-manipulation",
+  "attacker_profit": 76496.92829881996,
+  "source_case_id": "dfhl-0056",
+  "fix_description": "In getTokenAmountForToken, uses manipulable on-chain price/balance values. Fix: use TWAP oracle or add flash-loan protection.",
+  "attack_date": "2022-12-14",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a multi-step DeFi attack involving pre-positioned staking across three reward contracts, time advancement, a flash loan plus flash swap, and reward-price manipulation before harvesting and unwinding positions. It requires understanding protocol-specific reward accounting and token price dependencies across several contracts, but the attack flow is still relatively direct once the vulnerable reward logic is identified."
+}

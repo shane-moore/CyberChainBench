@@ -1,0 +1,22 @@
+{
+  "id": "bench-143",
+  "name": "DAppSocial",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230902-dappsocial---business-logic-flaw",
+  "chain": "ethereum",
+  "block_number": 18048983,
+  "attack_txs": [
+    "0xbd72bccec6dd824f8cac5d9a3a2364794c9272d7f7348d074b580e3c6e44312e"
+  ],
+  "vulnerable_address": "0x319Ec3AD98CF8b12a8BE5719FeC6E0a9bb1ad0D1",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0xbafac6bd",
+  "type": "accounting-error",
+  "attacker_profit": 16917.410952001876,
+  "source_case_id": "dfhl-0263",
+  "fix_description": "Function 0xbafac6bd checks allowance of storage[0x04][arg0][msg.sender] but deducts from storage[0x04][arg0][arg1]. Attacker passes a different arg1 address to bypass the allowance check while spending someone elses allowance. Fix: ensure the allowance check and deduction operate on the same address, or validate arg1 == msg.sender.",
+  "attack_date": "2023-09-02",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a short, direct exploit against flawed token-lock/alt-account withdrawal logic with only a few contract interactions and no flash loans, pricing, or advanced DeFi mechanics. A competent auditor could identify and reproduce the issue quickly from the protocol-specific functions `lockTokens`, `withdrawTokensWithAlt`, and `withdrawTokens`."
+}

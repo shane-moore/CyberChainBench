@@ -1,0 +1,24 @@
+{
+  "id": "bench-538",
+  "name": "MooCAKECTX",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221107-moocakectx---flashloan-attack",
+  "chain": "bsc",
+  "block_number": 22832428,
+  "attack_txs": [
+    "0x03d363462519029cf9a544d44046cad0c7e64c5fb1f2adf5dd5438a9a0d2ec8e"
+  ],
+  "vulnerable_address": "0xC2562DD7E4CAeE53DF0f9cD7d4dDDAa53bcD3D9b",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "StrategySyrup.sol",
+  "function": "balanceOf",
+  "type": "accounting-error",
+  "attacker_profit": 252114.53961240704,
+  "source_case_id": "dfhl-0083",
+  "fix_description": "balanceOf() returns balanceOfCake() + balanceOfPool(), where balanceOfCake() reads IERC20(cake).balanceOf(address(this)) \u2014 the instantaneous contract balance. Attacker flash loans cake, transfers to the contract to inflate balanceOf, deposits to get more shares, withdraws after balance normalizes. Fix: track deposited amounts via internal accounting instead of relying on instantaneous token balance, or add deposit/withdraw time delay.",
+  "notes": "vulnerable_address points to Strategy but the actual vulnerability is in the Vault contract that uses strategy.balanceOf() to calculate share price during deposit/withdraw. Strategy balanceOf reads instantaneous balance which is manipulable.",
+  "attack_date": "2022-11-07",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a multi-step DeFi exploit involving token acquisition, collateralization in Venus, borrowing, interacting with a Beefy vault/strategy harvest flow, then unwinding and repaying a flash loan. It requires understanding protocol-specific interactions across several contracts rather than a single obvious bug, but the chain is still fairly short and the PoC is not deeply complex."
+}

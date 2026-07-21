@@ -1,0 +1,31 @@
+{
+  "id": "bench-159",
+  "name": "Palmswap",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230724-palmswap---business-logic-flaw",
+  "chain": "bsc",
+  "block_number": 30248638,
+  "attack_txs": [
+    "0x62dba55054fa628845fecded658ff5b1ec1c5823f1a5e0118601aa455a30eac9"
+  ],
+  "vulnerable_address": "0x02a4b53926bad267df700ff8e9f5d4a2516bb1fc",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0xd990094a611c3de34664dd3664ebf979a1230fc1",
+  "file": "LiquidityEvent.sol",
+  "function": "unstakeAndRedeemPlp",
+  "type": "price-manipulation",
+  "attacker_profit": 855102.4307422373,
+  "source_case_id": "dfhl-0280",
+  "fix_description": "Set a non-zero cooldownDuration to prevent same-transaction stake and unstake. Additionally, use TWAP for PLP price calculation instead of instantaneous Vault USDT balance, which can be manipulated via buyUSDP in the same transaction.",
+  "normal_txs": [
+    "0x01b3a4a83db9d5acac250bb5c9271e77bd358f24c098a9d808f46f36d9b281d6",
+    "0x55dabd148c235c9d66230c24f17d1d7ab3c1b759c021b6ff74ca7a527a85ab46",
+    "0x84b1237ad36496678a8aecc38d1b91275cef397930d060762a104ef66bcbd641",
+    "0x35a5f8c48e035df5423979d785a8276f1a9bbc21dfce78d240a0c779780cc1e0",
+    "0xaf6fd9c079529aa3bac741ade1cc5ac4d1e7101ef136678b32a564d26cdcdd5d"
+  ],
+  "attack_date": "2023-07-24",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is a short multi-step DeFi attack involving a flash loan, liquidity mint/redeem flow, and vault buy/sell interactions to exploit a mispriced PLP/USDP exchange rate. It requires understanding protocol-specific accounting between LiquidityEvent and Vault rather than just spotting a trivial access control bug, but the PoC itself is still fairly compact and straightforward once the flaw is known."
+}

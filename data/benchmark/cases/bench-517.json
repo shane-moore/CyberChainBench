@@ -1,0 +1,24 @@
+{
+  "id": "bench-517",
+  "name": "Venus THE",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/README.md#20260315-venus-the---borrowbehalf--donation-attack",
+  "chain": "bsc",
+  "block_number": 86731941,
+  "attack_txs": [
+    "0x4f477e941c12bbf32a58dc12db7bb0cb4d31d41ff25b2457e6af3c15d7f5663f"
+  ],
+  "vulnerable_address": "0x1be1ce8352328278ac4e0488436c0f1607282550",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x86e06eafa6a1ea631eab51de500e3d474933739f",
+  "file": "VToken.sol",
+  "function": "exchangeRateStoredInternal",
+  "type": "accounting-error",
+  "attacker_profit": 2404428.8903752095,
+  "source_case_id": "dfhl-0680",
+  "fix_description": "In exchangeRateStoredInternal, prevent donation-based exchange rate inflation by implementing dead shares (minimum initial deposit that cannot be withdrawn) or adding a virtual offset to totalSupply/totalCash. The borrowBehalf function enables the attacker to create a position with inflated exchange rate, extracting value from subsequent depositors.",
+  "attack_date": "2026-03-15",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a multi-step Venus-specific attack that requires understanding borrowBehalf semantics, collateral/accounting effects from donating directly into a vToken market, and how to recycle borrowed funds into additional collateral before borrowing more assets. The PoC itself is not huge, but reproducing it requires protocol-specific reasoning across several contracts and 5+ coordinated actions rather than an obvious single-pattern bug."
+}

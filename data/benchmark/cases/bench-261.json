@@ -1,0 +1,23 @@
+{
+  "id": "bench-261",
+  "name": "- BRA",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230110---bra---business-logic-flaw",
+  "chain": "bsc",
+  "block_number": 24655772,
+  "attack_txs": [
+    "0x6759db55a4edec4f6bedb5691fc42cf024be3a1a534ddcc7edd471ef205d4047"
+  ],
+  "vulnerable_address": "0x449fea37d339a11efe1b181e5d5462464bba3752",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "BRAToken.sol",
+  "function": "_transfer",
+  "type": "accounting-error",
+  "attacker_profit": 184384.23637488286,
+  "source_case_id": "dfhl-0393",
+  "fix_description": "In _transfer, the sell tax fee is transferred to the pancake pair (or an address that routes to pair) without calling pair.sync() afterwards. This causes pair balance > reserve. Attacker repeatedly calls skim() to extract the excess tokens. Fix: call pair.sync() after transferring tax to pair, or send tax to a non-pair address.",
+  "attack_date": "2023-01-10",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a short, direct exploit against an arbitrary-call/token-validation flaw in the zapper: the attacker crafts fake token callbacks and malicious zap parameters to make the contract execute a USDC transferFrom from a victim with existing allowance. It is essentially a single-core-step exploit with minimal DeFi complexity and a compact PoC."
+}

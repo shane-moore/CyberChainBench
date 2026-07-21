@@ -1,0 +1,23 @@
+{
+  "id": "bench-503",
+  "name": "IdolsNFT",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250114-idolsnft---logic-flaw",
+  "chain": "ethereum",
+  "block_number": 21624240,
+  "attack_txs": [
+    "0x5e989304b1fb61ea0652db4d0f9476b8882f27191c1f1d2841f8977cb8c5284c"
+  ],
+  "vulnerable_address": "0x439cac149b935ae1d726569800972e1669d17094",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "IdolMain.sol",
+  "function": "_beforeTokenTransfer",
+  "type": "accounting-error",
+  "attacker_profit": 40680.424621045066,
+  "source_case_id": "dfhl-0667",
+  "fix_description": "In _beforeTokenTransfer, do not delete claimedSnapshots[_from] when balance reaches 0. Instead, keep the snapshot value so that if the user re-acquires an NFT, they cannot re-claim previously claimed rewards. The current delete allows repeated reward claims by cycling NFT ownership.",
+  "attack_date": "2025-01-14",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very straightforward logic bug exploit: deploy a contract constructor to bypass an isContract check, then repeatedly self-transfer the same NFT to trigger duplicate reward accounting. It involves only a few simple steps, no flash loans or complex DeFi mechanics, and the PoC is short and easy to derive from the vulnerable reward-on-transfer logic."
+}

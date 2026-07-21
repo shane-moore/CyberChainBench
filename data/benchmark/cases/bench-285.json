@@ -1,0 +1,22 @@
+{
+  "id": "bench-285",
+  "name": "Erc20transfer",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20241022-erc20transfer---access-control",
+  "chain": "ethereum",
+  "block_number": 21019772,
+  "attack_txs": [
+    "0x7f2540af4a1f7b0172a46f5539ebf943dd5418422e4faa8150d3ae5337e92172"
+  ],
+  "vulnerable_address": "0x43Dc865E916914FD93540461FdE124484FBf8fAa",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x0a1b0b91",
+  "type": "input-validation",
+  "attacker_profit": 14752.796240959373,
+  "source_case_id": "dfhl-0419",
+  "fix_description": "Function 0x0a1b0b91 = erc20TransferFrom(address,address,address,uint256) accepts a user-supplied from address and calls transferFrom without validating msg.sender == from. Anyone can pass victim addresses to drain their approved tokens. Fix: validate from == msg.sender, or remove the from parameter.",
+  "attack_date": "2024-10-22",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a single-call exploit against an obviously unsafe external function that lets the caller trigger an arbitrary ERC20 transferFrom-like action. The PoC is extremely short, requires no DeFi knowledge, no flash loans, and almost no setup beyond forking and calling the vulnerable contract once."
+}

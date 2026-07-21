@@ -1,0 +1,23 @@
+{
+  "id": "bench-291",
+  "name": "AIZPTToken",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20241005-aizpttoken---wrong-price-calculation",
+  "chain": "bsc",
+  "block_number": 42846998,
+  "attack_txs": [
+    "0x5e694707337cca979d18f9e45f40e81d6ca341ed342f1377f563e779a746460d"
+  ],
+  "vulnerable_address": "0xbe779d420b7d573c08eee226b9958737b6218888",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "AIZPT314.sol",
+  "function": "sell",
+  "type": "accounting-error",
+  "attacker_profit": 19648.6748727603,
+  "source_case_id": "dfhl-0425",
+  "fix_description": "In sell, ethAmount is calculated using the full sell_amount, but only 50% (swap_amount) is actually transferred to the contract - the other 50% is burned. This means ETH payout is based on 100% but reserves only receive 50% of tokens. Fix: calculate ethAmount based on swap_amount (the portion actually entering the contract), not the full sell_amount.",
+  "attack_date": "2024-10-05",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very short, direct exploit: take a flash loan, send BNB to the vulnerable token contract, repeatedly transfer the token to itself to trigger the flawed logic, then wrap and repay. It uses only a small number of contracts/calls and does not require deep protocol-specific reasoning beyond spotting the token\u2019s broken transfer/accounting behavior."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-133",
+  "name": "KubSplit",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230924-kubsplit---pool-manipulation",
+  "chain": "bsc",
+  "block_number": 32021100,
+  "attack_txs": [
+    "0x2b0877b5495065e90d956e44ffde6aaee5e0fcf99dd3c86f5ff53e33774ea52d"
+  ],
+  "vulnerable_address": "0xc98E183D2e975F0567115CB13AF893F0E3c0d0bD",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Split.sol",
+  "function": "setPair",
+  "type": "access-control",
+  "attacker_profit": 21900.49180860449,
+  "source_case_id": "dfhl-0252",
+  "fix_description": "There are two setPair functions - one with onlyOwner and one without any access control. The unprotected setPair allows anyone to change the pair address, enabling pool manipulation. Fix: add onlyOwner to the unprotected setPair, or remove the duplicate.",
+  "attack_date": "2023-09-24",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This PoC involves a long multi-stage attack chain with nested flash loans, AMM reserve manipulation, custom pair creation using an attacker-controlled fake token, staking reward abuse across multiple contracts, and repeated skim/sync interactions. Writing it requires deep protocol-specific understanding of the token/pair mechanics and reward accounting, well beyond a straightforward exploit."
+}

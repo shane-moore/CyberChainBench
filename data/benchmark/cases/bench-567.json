@@ -1,0 +1,31 @@
+{
+  "id": "bench-567",
+  "name": "SASHAToken",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20241006-sashatoken---price-manipulation",
+  "chain": "ethereum",
+  "block_number": 20905302,
+  "attack_txs": [
+    "0xd9fdc7d03eec28fc2453c5fa68eff82d4c297f436a6a5470c54ca3aecd2db17e"
+  ],
+  "vulnerable_address": "0xD1456D1b9CEb59abD4423a49D40942a9485CeEF6",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": null,
+  "file": "SASHA.sol",
+  "function": "_transfer(address,address,uint256)",
+  "type": "reentrancy",
+  "attacker_profit": 600080.71,
+  "source_case_id": "draft-289",
+  "fix_description": "The _transfer function calls swapBack() which triggers an external call to the Uniswap router during the token transfer. This creates a reentrancy vector where the router calls back into the token's _transfer before the original transfer state is finalized. Move the swapBack() logic to execute after the core transfer state changes are complete, or use a proper reentrancy guard that prevents any re-entry during the entire _transfer execution.",
+  "normal_txs": [
+    "0x4336430cf38c879409024a9b19f8f3fee84da693fa6276c6ab759d3369e460ae",
+    "0x415024f28789cca9c60993b93bb6e10a53193f0052dfb416ade1f7fd0eff1ef3",
+    "0x265fad2c3be2ed3783f5bb8a0fcb56e1465ed5da94224e8070289065bd1bca82",
+    "0xd7583a142cc5d3a3d6134ee76cdbe2e45da64585031d767a97edfa7d7213248b",
+    "0xec3282760fb1de760bf4588ec8f504f669a6085ef214c14255afa8cb73d0251e"
+  ],
+  "attack_date": "2024-10-06",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is very short and executes a simple sequence: buy the token on Uniswap V2, directly transfer tokens to the V2 pair to skew state, then dump via Uniswap V3 for profit. It uses standard swap primitives with no flash loan, no complex cross-transaction setup, and only minimal protocol-specific understanding beyond basic AMM interaction."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-439",
+  "name": "0xf340",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250827-0xf340---access-control",
+  "chain": "ethereum",
+  "block_number": 23232613,
+  "attack_txs": [
+    "0x103b4550a1a2bdb73e3cb5ea484880cd8bed7e4842ecdd18ed81bf67ed19e03c"
+  ],
+  "vulnerable_address": "0xd92a9110beaf09115bc9628d8a296c2778041fe0",
+  "has_public_source": false,
+  "fixable": true,
+  "proxy_address": "0xf340bd3eb3e82994cff5b8c3493245edbce63436",
+  "function": "0xd73f349b",
+  "type": "access-control",
+  "attacker_profit": 3893.297134447965,
+  "source_case_id": "dfhl-0595",
+  "fix_description": "Add access control to initVrf (0xd73f349b). Currently anyone can call it to set an arbitrary address into storage, which is then used by 0x607d60e6 as the LINK transfer recipient. Add onlyOwner or require that it can only be called once during initialization.",
+  "attack_date": "2025-08-27",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a straightforward missing access control exploit: the attacker calls an unprotected init function to set a beneficiary/token address, then repeatedly invokes a callable function to drain LINK and swaps it for ETH. The PoC is short, uses only a few contracts, and does not require complex DeFi mechanics or protocol-specific reasoning."
+}

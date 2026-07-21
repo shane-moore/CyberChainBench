@@ -1,0 +1,23 @@
+{
+  "id": "bench-382",
+  "name": "LavaLending",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240328-lavalending---business-logic-flaw",
+  "chain": "arbitrum",
+  "block_number": 195240643,
+  "attack_txs": [
+    "0xcb1a2f5eeb1a767ea5ccbc3665351fadc1af135d12a38c504f8f6eb997e9e603"
+  ],
+  "vulnerable_address": "0x7746872c6892bcfb4254390283719f2bd2d4da76",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "WrapperOracle.sol",
+  "function": "latestAnswer",
+  "type": "price-manipulation",
+  "attacker_profit": 333664.6664813032,
+  "source_case_id": "dfhl-0529",
+  "fix_description": "In latestAnswer, getAssetsBasedOnPrice reads pool balances that can be manipulated via flash loan (changing r0/r1 ratio). Even though oracle prices p0/p1 are used, the pool reserves r0/r1 are from instantaneous state. Fix: use TWAP-based pool reserves or add a manipulation check comparing the reported balances against expected ranges based on oracle prices.",
+  "attack_date": "2024-03-28",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This PoC is a long, highly protocol-specific multi-contract attack chain involving nested flash loans from four sources, LP deposit/withdraw/compound mechanics, lending market collateral manipulation, oracle/price-sensitive borrowing, and multiple swap callbacks. Writing it requires deep understanding of the vulnerable protocol\u2019s accounting and how several external protocols interact, which is well beyond a straightforward exploit."
+}

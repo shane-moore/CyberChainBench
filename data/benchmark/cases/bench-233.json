@@ -1,0 +1,31 @@
+{
+  "id": "bench-233",
+  "name": "Allbridge",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230402-allbridge---flashloan-price-manipulation",
+  "chain": "bsc",
+  "block_number": 26982068,
+  "attack_txs": [
+    "0x7ff1364c3b3b296b411965339ed956da5d17058f3164425ce800d64f1aef8210"
+  ],
+  "vulnerable_address": "0x179aaD597399B9ae078acFE2B746C09117799ca0",
+  "has_public_source": false,
+  "fixable": false,
+  "file": "Pool.sol",
+  "function": "0x2e1a7d4d",
+  "type": "price-manipulation",
+  "attacker_profit": 541765.4196609976,
+  "annotation_hints": {
+    "function": {
+      "label": "NEEDS_SELECTOR",
+      "status": "invalid",
+      "original_value": "_withdrawLp",
+      "hint": "has_public_source is false \u2014 the eval agent only sees bytecode. Use get_decompiled_contract or get_tx_trace to find the 4-byte selector and replace this human-readable name."
+    }
+  },
+  "source_case_id": "dfhl-0358",
+  "fix_description": "In withdraw (0x2e1a7d4d), the LP share value is calculated using storage[0x0b] (virtual USD balance) which can be manipulated in the same transaction via the swap function (0xbed428bf). Attacker deposits, swaps to inflate vBalance, then withdraws at inflated value. Fix by using a time-weighted or snapshot-based balance for withdrawal calculations, or prevent deposit+swap+withdraw in the same block.",
+  "attack_date": "2023-04-02",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a multi-step DeFi exploit involving a flash loan, several pool deposits/withdrawals, token swaps, and interaction with a bridge whose accounting/dividend logic must be understood. While the code is not very large, the attack requires protocol-specific reasoning across multiple contracts rather than a simple obvious bug pattern."
+}

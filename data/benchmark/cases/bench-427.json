@@ -1,0 +1,23 @@
+{
+  "id": "bench-427",
+  "name": "- MU&MUG",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221210---mumug---flashloan-price-manipulation",
+  "chain": "avalanche",
+  "attack_txs": [
+    "0xab39a17cdc200c812ecbb05aead6e6f574712170eafbd73736b053b168555680"
+  ],
+  "vulnerable_address": "0x4aA679402c6afcE1E0F7Eb99cA4f09a30ce228ab",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "MuBank.sol",
+  "function": "_get_mug_bond_quote",
+  "type": "price-manipulation",
+  "attacker_profit": 55709.865831929084,
+  "block_number": 23435294,
+  "source_case_id": "dfhl-0062",
+  "fix_description": "In _get_mug_bond_quote, price calculation reads manipulable on-chain values. Fix: use TWAP or Chainlink price feed.",
+  "attack_date": "2022-12-10",
+  "difficulty": "unknown",
+  "difficulty_reasoning": "No matching PoC file found for automated labeling."
+}

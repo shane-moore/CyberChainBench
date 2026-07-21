@@ -1,0 +1,23 @@
+{
+  "id": "bench-64",
+  "name": "Multichain (Anyswap)",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220118-multichain-anyswap---insufficient-token-validation",
+  "chain": "ethereum",
+  "block_number": 14037237,
+  "attack_txs": [
+    "0xe50ed602bd916fc304d53c4fed236698b71691a95774ff0aeeb74b699c6227f7"
+  ],
+  "vulnerable_address": "0x6b7a87899490EcE95443e979cA9485CBE7E71522",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "AnyswapV4Router.sol",
+  "function": "anySwapOutUnderlyingWithPermit",
+  "type": "input-validation",
+  "attacker_profit": 859813.0118814202,
+  "source_case_id": "dfhl-0180",
+  "fix_description": "In anySwapOutUnderlyingWithPermit, the token parameter is not validated against a whitelist of registered AnyswapV1ERC20 tokens. Attacker passes a malicious contract as token whose underlying() returns a legitimate token (e.g. WETH), then steals funds from users who previously approved the router. Fix: validate token against a registry of authorized anyswap tokens.",
+  "attack_date": "2022-01-18",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very short, single-call exploit that abuses a missing validation/trust assumption in anySwapOutUnderlyingWithPermit by passing a malicious contract as the token and stubbing the expected interface methods. It requires minimal protocol knowledge, no flash loan or multi-step state manipulation, and the PoC is well under 100 lines."
+}

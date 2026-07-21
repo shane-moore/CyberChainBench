@@ -1,0 +1,22 @@
+{
+  "id": "bench-508",
+  "name": "HORS",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250108-hors---access-control",
+  "chain": "bsc",
+  "block_number": 45587949,
+  "attack_txs": [
+    "0xc8572846ed313b12bf835e2748ff37dacf6b8ee1bab36972dc4ace5e9f25fed7"
+  ],
+  "vulnerable_address": "0x6f3390c6C200e9bE81b32110CE191a293dc0eaba",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0xf78283c7",
+  "type": "input-validation",
+  "attacker_profit": 10281.78409950494,
+  "source_case_id": "dfhl-0672",
+  "fix_description": "Function 0xf78283c7 (func_0094) transfers contract-held tokens and adds liquidity via a caller-supplied router address, with no access control. Any caller can pass a malicious router address to receive token approvals, draining the contract. Fix: add onlyOwner modifier, and validate that the router parameter matches a trusted router address stored in contract state.",
+  "attack_date": "2025-01-08",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a short, straightforward fake-router/input-validation exploit: the attacker flash-borrows a small amount, tricks the vulnerable contract into calling attacker-controlled addLiquidity, pulls LP tokens, and removes liquidity. It involves only a few steps and standard AMM interactions, with an obvious missing validation issue and a compact PoC."
+}

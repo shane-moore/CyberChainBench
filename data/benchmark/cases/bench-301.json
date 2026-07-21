@@ -1,0 +1,22 @@
+{
+  "id": "bench-301",
+  "name": "Unverified_5697",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240913-unverified_5697---access-control",
+  "chain": "ethereum",
+  "block_number": 20738428,
+  "attack_txs": [
+    "0x3f0dc68dc89fce3250b9d2de2611384b8af258e83f7a711f666917c5590d13d2"
+  ],
+  "vulnerable_address": "0x56974D5AF75B1eF96722052a57735187E9b91751",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x213d8e67",
+  "type": "access-control",
+  "attacker_profit": 11873.631104125529,
+  "source_case_id": "dfhl-0436",
+  "fix_description": "In function 0x213d8e67, the isWhitelisted check only validates address format (address mask), not actual whitelist membership. Any valid address passes. Add proper whitelist storage mapping check: require(whitelist[msg.sender]) or require(msg.sender == owner).",
+  "attack_date": "2024-09-13",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This is a multi-step exploit involving a flash loan, AMM reserve math, and a protocol-specific abuse of UniswapV2Pair.skim via repeated token transfers to manipulate balances before swapping back. While the PoC is short, it still requires understanding pair reserve/balance mechanics and how skim can be abused, making it more than a trivial single-pattern exploit."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-372",
+  "name": "FIL314",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240412-fil314---insufficient-validation-and-price-manipulation",
+  "chain": "bsc",
+  "block_number": 37795992,
+  "attack_txs": [
+    "0x9f2eb13417190e5139d57821422fc99bced025f24452a8b31f7d68133c9b0a6c"
+  ],
+  "vulnerable_address": "0xe8a290c6fc6fa6c0b79c9cfae1878d195aeb59af",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "ERC314.sol",
+  "function": "hourBurn",
+  "type": "accounting-error",
+  "attacker_profit": 8638.40947040836,
+  "source_case_id": "dfhl-0517",
+  "fix_description": "The condition in hourBurn is inverted: \"if (hourBurnTime + 3600 < block.timestamp) return\" should be \"if (hourBurnTime + 3600 > block.timestamp) return\". Currently it only executes burn when less than an hour has passed, allowing repeated calls in one tx to drain the contract balance.",
+  "attack_date": "2024-04-12",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This PoC is a very short, direct exploit against a single vulnerable contract with no flash loan, routing, or cross-protocol interaction. The attack flow is simple: buy tokens, repeatedly call an exposed burn/deflation function, then sell back in a loop, which fits an obvious business-logic flaw an auditor could script quickly."
+}

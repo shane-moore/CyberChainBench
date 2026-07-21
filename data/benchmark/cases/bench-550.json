@@ -1,0 +1,23 @@
+{
+  "id": "bench-550",
+  "name": "INUKO",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221014-inuko---flashloan-price-manipulation",
+  "chain": "bsc",
+  "block_number": 22226575,
+  "attack_txs": [
+    "0xc8c50cd5492e43c87f16ba29c7859c99765f380a1b0e58be398c372bee206274"
+  ],
+  "vulnerable_address": "0x09beDDae85a9b5Ada57a5bd7979bb7b3dd08B538",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Bond.sol",
+  "function": "LpToSig",
+  "type": "price-manipulation",
+  "attacker_profit": 64457.36045072935,
+  "source_case_id": "dfhl-0097",
+  "fix_description": "In LpToSig, uses manipulable on-chain price/balance values. Fix: use TWAP oracle or add flash-loan protection.",
+  "attack_date": "2022-10-14",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This PoC uses a long multi-contract attack chain with 8 nested DODO flash loans, Venus lending/collateral manipulation, LP/bond-specific logic, and time-dependent claiming, which requires substantial protocol-specific understanding. Even if the core issue is bond pricing/accounting misuse, reproducing the exploit and determining the exact sequence would likely take an experienced auditor well over 2 hours."
+}

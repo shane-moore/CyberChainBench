@@ -1,0 +1,23 @@
+{
+  "id": "bench-302",
+  "name": "OTSeaStaking",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240913-otseastaking---logic-flaw",
+  "chain": "ethereum",
+  "block_number": 20738191,
+  "attack_txs": [
+    "0x90b4fcf583444d44efb8625e6f253cfcb786d2f4eda7198bdab67a54108cd5f4"
+  ],
+  "vulnerable_address": "0xF2c8e860ca12Cde3F3195423eCf54427A4f30916",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "OTSeaStaking.sol",
+  "function": "_claimMultiple",
+  "type": "input-validation",
+  "attacker_profit": 82465.93549375328,
+  "source_case_id": "dfhl-0437",
+  "fix_description": "In _claimMultiple, validate that _indexes array contains no duplicates, or use a mapping to track already-claimed indexes within the same transaction to prevent double-claiming rewards.",
+  "attack_date": "2024-09-13",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is a straightforward repeated abuse of staking claim/withdraw logic using crafted index arrays, followed by a simple token dump on Uniswap. It does not require flash loans, price manipulation, or deep cross-protocol reasoning; once the indexing/accounting bug is identified, writing the exploit is relatively quick."
+}

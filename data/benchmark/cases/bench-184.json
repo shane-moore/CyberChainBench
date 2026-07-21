@@ -1,0 +1,23 @@
+{
+  "id": "bench-184",
+  "name": "Spartan",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2021/README.md#20210502-spartan---logic-flaw",
+  "chain": "bsc",
+  "block_number": 7048833,
+  "attack_txs": [
+    "0xb64ae25b0d836c25d115a9368319902c972a0215bd108ae17b1b9617dfb93af8"
+  ],
+  "vulnerable_address": "0xcaf0366af95e8a03e269e52ddb3dbb8a00295f91",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Utils.sol",
+  "function": "calcLiquidityShare",
+  "type": "accounting-error",
+  "attacker_profit": 18120966.433097508,
+  "source_case_id": "dfhl-0032",
+  "fix_description": "In calcLiquidityShare, use cached balances (baseAmountPooled/tokenAmountPooled) instead of querying current balance (which can be inflated via direct transfer). This prevents attackers from inflating the pool balance before burning LP tokens to claim disproportionate underlying assets.",
+  "attack_date": "2021-05-02",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This exploit requires understanding a non-obvious LP share/accounting flaw in SpartanPool, specifically how add/remove liquidity interacts with spot balances versus reserves, then chaining repeated swaps, liquidity adds, donations, and withdrawals in a precise sequence. Even though the PoC is not very long, it is a protocol-specific multi-step attack with repeated state manipulation and reserve desynchronization that would likely take an experienced auditor more than 2 hours to derive from scratch."
+}

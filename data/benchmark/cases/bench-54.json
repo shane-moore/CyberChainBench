@@ -1,0 +1,23 @@
+{
+  "id": "bench-54",
+  "name": "Revest Finance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220327-revest-finance---reentrancy",
+  "chain": "ethereum",
+  "block_number": 14465357,
+  "attack_txs": [
+    "0xe0b0c2672b760bef4e2851e91c69c8c0ad135c6987bbf1f43f5846d89e691428"
+  ],
+  "vulnerable_address": "0xe952bda8c06481506e4731c4f54ced2d4ab81659",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "FNFTHandler.sol",
+  "function": "mint",
+  "type": "reentrancy",
+  "attacker_profit": 107712.07087462978,
+  "source_case_id": "dfhl-0163",
+  "fix_description": "In mint, the ERC1155 _mint call triggers onERC1155Received callback on the recipient, allowing reentrancy before supply state is fully consistent. Add nonReentrant guard, or ensure all state updates in the RevestController are complete before minting the FNFT token.",
+  "attack_date": "2022-03-27",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This exploit requires a fairly non-obvious chain: flash loan funding, repeated deposits into a protocol-specific deposit contract, token-state desynchronization via direct transfer, iterative pair skim() abuse, and an EOA-only bypass using EIP-7702 delegation. Writing the PoC demands deep understanding of the target\u2019s internal accounting and multiple interacting contracts, which is well beyond a straightforward pattern exploit."
+}

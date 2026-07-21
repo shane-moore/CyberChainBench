@@ -1,0 +1,23 @@
+{
+  "id": "bench-540",
+  "name": "VTF Token",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221027-vtf-token---incorrect-reward-calculation",
+  "chain": "bsc",
+  "block_number": 22535103,
+  "attack_txs": [
+    "0xeeaf7e9662a7488ea724223c5156e209b630cdc21c961b85868fe45b64d9b086"
+  ],
+  "vulnerable_address": "0xc6548caF18e20F88cC437a52B6D388b0D54d830D",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "VTF.sol",
+  "function": "getUserCanMint",
+  "type": "price-manipulation",
+  "attacker_profit": 58115.93838353172,
+  "source_case_id": "dfhl-0085",
+  "fix_description": "In getUserCanMint, do not use super.balanceOf(account) (instant balance) to calculate rewards. Use a recorded balance that is set at deposit/transfer time, or reset userStartTime on every balance increase so that newly received tokens (e.g., via flashloan) have zero elapsed time and produce zero rewards.",
+  "attack_date": "2022-10-27",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is multi-step and protocol-specific: it uses a flash loan, token swaps, timestamp manipulation, mass deployment of helper contracts, and chained reward-claim calls to amplify an accounting flaw. While the PoC is not extremely long, understanding why repeated create2-based contracts and updateUserBalance calls extract value requires reading the target token\u2019s custom reward logic rather than spotting a simple generic bug."
+}

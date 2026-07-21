@@ -1,0 +1,23 @@
+{
+  "id": "bench-333",
+  "name": "WIFCOIN_ETH",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240616-wifcoin_eth---business-logic-flaw",
+  "chain": "ethereum",
+  "block_number": 20103194,
+  "attack_txs": [
+    "0x58424115c6576b19cfb78b0b7ff00e0c13daa06d259f2a67210c112731519e09"
+  ],
+  "vulnerable_address": "0xa1ce40702e15d0417a6c74d0bab96772f36f4e99",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "WIFStaking.sol",
+  "function": "claimEarned",
+  "type": "accounting-error",
+  "attacker_profit": 13177.911732879518,
+  "source_case_id": "dfhl-0474",
+  "fix_description": "In claimEarned, the reward calculation does not account for staking duration \u2014 it computes amount*apr/10000 regardless of how long tokens have been staked. Add time-based reward calculation (e.g., multiply by elapsed time since last claim) and prevent repeated claims within the same period.",
+  "attack_date": "2024-06-16",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is a very short, direct exploit with only a few obvious steps: buy token, stake, repeatedly call claimEarned until failure, then sell back. It requires minimal DeFi knowledge and no complex flash loan, routing, or multi-protocol state reasoning, making it straightforward for an experienced auditor to reproduce quickly."
+}

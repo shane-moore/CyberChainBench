@@ -1,0 +1,24 @@
+{
+  "id": "bench-41",
+  "name": "ApeCoin (APE)",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220517-apecoin-ape---flashloan",
+  "chain": "ethereum",
+  "block_number": 14403949,
+  "attack_txs": [
+    "0xeb8c3bebed11e2e4fcd30cbfc2fb3c55c4ca166003c7f7d319e78eaab9747098"
+  ],
+  "vulnerable_address": "0x025C6da5BD0e6A5dd1350fda9e3B6a614B205a1F",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "AirdropGrapesToken.sol",
+  "function": "getClaimableTokenAmountAndGammaToClaim",
+  "type": "input-validation",
+  "attacker_profit": 288808.9169666041,
+  "source_case_id": "dfhl-0148",
+  "normal_txs": [],
+  "fix_description": "In claimTokens, add require(msg.sender == tx.origin) to prevent contract callers (including flash loan callbacks) from claiming. Alternatively, record each address's last interaction block and require block.number > lastInteractionBlock[msg.sender] before allowing a claim, ensuring the caller held the NFT for at least one block. The exploit uses a flash loan to temporarily hold BAYC NFTs within a single transaction, calls claimTokens to collect APE for those never-claimed tokenIds, then returns the NFTs \u2014 all atomically in one tx.",
+  "attack_date": "2022-05-17",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a short, direct exploit: flash-loan NFTX vault tokens, redeem BAYC NFTs, claim the ApeCoin airdrop, then remint/repay. It relies on an obvious airdrop-claim eligibility oversight around temporary NFT ownership and requires only a few protocol interactions with minimal complex DeFi reasoning."
+}

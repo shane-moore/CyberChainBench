@@ -1,0 +1,23 @@
+{
+  "id": "bench-290",
+  "name": "HYDT",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20241010-hydt---oracle-price-manipulation",
+  "chain": "bsc",
+  "block_number": 42985311,
+  "attack_txs": [
+    "0xa9df1bd97cf6d4d1d58d3adfbdde719e46a1548db724c2e76b4cd4c3222f22b3"
+  ],
+  "vulnerable_address": "0xA2268Fcc2FE7A2Bb755FbE5A7B3Ac346ddFeDB9B",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "InitialMintV2.sol",
+  "function": "initialMint",
+  "type": "price-manipulation",
+  "attacker_profit": 19113.24716390643,
+  "source_case_id": "dfhl-0424",
+  "fix_description": "In initialMint, DataFetcher.quote reads PancakeSwap WBNB/USDT pair spot price to determine how many HYDT to mint. Attacker manipulates pair reserves via flash loan to inflate the quote. Fix: use Chainlink BNB/USD price feed instead of AMM spot price.",
+  "attack_date": "2024-10-10",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This is a flash-loan-driven price manipulation exploit against protocol-specific mint logic, requiring understanding that MintV2 relies on the WBNB-USDT pair price during initialMint(). The PoC is still fairly short and linear, but it involves multiple swaps across V2/V3, a flash callback, and coordinated repayment rather than a trivial single-step bug."
+}

@@ -1,0 +1,22 @@
+{
+  "id": "bench-482",
+  "name": "AIRWA",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250404-airwa---access-control",
+  "chain": "bsc",
+  "block_number": 48050724,
+  "attack_txs": [
+    "0x5cf050cba486ec48100d5e5ad716380660e8c984d80f73ba888415bb540851a4"
+  ],
+  "vulnerable_address": "0x3Af7DA38C9F68dF9549Ce1980eEf4AC6B635223A",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x189d165e",
+  "type": "access-control",
+  "attacker_profit": 33586.47995244562,
+  "source_case_id": "dfhl-0643",
+  "fix_description": "The setBurnRate function (0x189d165e / func_02A3) directly writes to storage[0x12] without any access control check. Add onlyOwner modifier so only the contract owner can modify the burn rate. Currently anyone can set an extreme burn rate to manipulate token transfers and drain LP pair.",
+  "attack_date": "2025-04-04",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The exploit is a very short, direct sequence: buy the token, call an obviously unrestricted privileged function (`setBurnRate`), trigger the effect with a transfer, then sell back for profit. It relies on a simple access-control failure and basic PancakeSwap interaction, with no flash loan, complex state reasoning, or deep protocol knowledge required."
+}

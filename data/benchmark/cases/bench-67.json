@@ -1,0 +1,31 @@
+{
+  "id": "bench-67",
+  "name": "DominoTT",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231228-dominott---precision-loss",
+  "chain": "bsc",
+  "block_number": 34141660,
+  "attack_txs": [
+    "0x1ee617cd739b1afcc673a180e60b9a32ad3ba856226a68e8748d58fcccc877a8"
+  ],
+  "vulnerable_address": "0xae5be6d490c47c7417e91b7911d3a0ce3553438d",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x0dabdc92af35615443412a336344c591faed3f90",
+  "file": "MulticallUpgradeable.sol",
+  "function": "multicall",
+  "type": "reentrancy",
+  "attacker_profit": 265.6029281210189,
+  "source_case_id": "dfhl-0184",
+  "fix_description": "Add reentrancy guard (nonReentrant modifier) to multicall, or follow checks-effects-interactions pattern to update state before making external calls.",
+  "normal_txs": [
+    "0x67af906c1efc05067a01f197bd780ebf4e0a76729d54288a400e715f87ea50c7",
+    "0xc678131779a31ecdcc8a1550cdf92bc2c1322843449bc04dfdca129ee3e24723",
+    "0xcb3bd1cac0be5005b6d1fdc63028239dcf578f2bb01feb66a30c7fe8068d5992",
+    "0x16e75266f7d56edd5924ed4f75b00aab78f18cf5ed3508f21256a43cf9deb5b0",
+    "0xe2ad251552a71a5dc8e55a487c75472c26e68df4e84ff562fdeb0fea4e8c8356"
+  ],
+  "attack_date": "2023-12-28",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is a short multi-step chain: flash loan WBNB, buy the token, abuse a meta-transaction/forwarder call with a reusable signature to invoke burn via multicall, sync the pair, and dump back to WBNB. It requires understanding the protocol-specific interaction between the token\u2019s burn logic, the forwarder signature misuse, and AMM reserve syncing, so it is more than a trivial pattern but not deeply complex."
+}

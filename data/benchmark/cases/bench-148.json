@@ -1,0 +1,31 @@
+{
+  "id": "bench-148",
+  "name": "BTC20",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230819-btc20---price-manipulation",
+  "chain": "ethereum",
+  "block_number": 17949215,
+  "attack_txs": [
+    "0xcdd93e37ba2991ce02d8ca07bf6563bf5cd5ae801cbbce3dd0babb22e30b2dbe"
+  ],
+  "vulnerable_address": "0xdb0618e0b850cab3f756d030398be22929226d5c",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x1f006f43f57c45ceb3659e543352b4fae4662df7",
+  "file": "PresaleV4.sol",
+  "function": "fetchPrice",
+  "type": "price-manipulation",
+  "attacker_profit": 30490.020178224273,
+  "source_case_id": "dfhl-0269",
+  "fix_description": "In fetchPrice, router.getAmountsIn reads the AMM spot price which can be manipulated via flash loan. Fix: use TWAP oracle or Chainlink price feed instead of Uniswap router getAmountsIn for price calculation.",
+  "attack_date": "2023-08-19",
+  "normal_txs": [
+    "0x353de92074d723d57eec92937c06e9b6a3195d241943f2ad521bdcd51bff0590",
+    "0x9e1fa75fea793066b85ad5cde3c5ff91f78c11a77036c5456c7336eb2adf4d18",
+    "0x0510a29a237a4f4ab3d1a6de2c3516630fac20f7d399fd23777470aeb7a890ca",
+    "0x4f797c7cba3c36dffd51d86b1afc62dd1ed3fd2943c2727002baa664a1ea5307",
+    "0x0744fb56dc897f7cbd4779621097ed1bcf2108707172739ed2473766f852de58"
+  ],
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a multi-step DeFi exploit involving a Balancer flash loan, two nested Uniswap V3 flash borrows, V2/V3 swaps, and interaction with a presale contract, so it requires understanding protocol-specific pricing and token sale logic rather than a single obvious bug. While the code is not extremely long, reproducing and reasoning about the attack path would likely take an experienced auditor more than a quick review but not require deeply exotic cross-transaction state analysis."
+}

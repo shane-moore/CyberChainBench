@@ -1,0 +1,23 @@
+{
+  "id": "bench-38",
+  "name": "Discover",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220606-discover---flashloan--price-oracle-manipulation",
+  "chain": "bsc",
+  "block_number": 18446846,
+  "attack_txs": [
+    "0x8a33a1f8c7af372a9c81ede9e442114f0aabb537e5c3a22c0fd7231c4820f1e9"
+  ],
+  "vulnerable_address": "0xe732a7bD6706CBD6834B300D7c56a8D2096723A7",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "ETHpledge.sol",
+  "function": "getprice",
+  "type": "price-manipulation",
+  "attacker_profit": 14197.757098322012,
+  "source_case_id": "dfhl-0145",
+  "fix_description": "Replace spot price calculation in getprice (reading LP pair balanceOf directly) with a TWAP oracle or Chainlink price feed that cannot be manipulated within a single transaction.",
+  "attack_date": "2022-06-06",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This PoC is a very short, single-flashswap demonstration with one meaningful protocol call into `pledgein`, and it does not even include repayment logic. The exploit path appears straightforward and likely hinges on an obvious flaw in `ETHpledge` business logic rather than complex multi-contract state reasoning or advanced DeFi mechanics."
+}

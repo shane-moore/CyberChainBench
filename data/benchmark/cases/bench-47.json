@@ -1,0 +1,23 @@
+{
+  "id": "bench-47",
+  "name": "Zeed Finance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220421-zeed-finance---incorrect-calculation",
+  "chain": "bsc",
+  "block_number": 17132515,
+  "attack_txs": [
+    "0x0507476234193a9a5c7ae2c47e4c4b833a7c3923cefc6fd7667b72f3ca3fa83a"
+  ],
+  "vulnerable_address": "0xe7748FCe1D1e2f2Fd2dDdB5074bD074745dDa8Ea",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "YEED.sol",
+  "function": "_takeReward",
+  "type": "accounting-error",
+  "attacker_profit": 1030467.8169957865,
+  "source_case_id": "dfhl-0155",
+  "fix_description": "In _takeReward, each pair balance is incorrectly incremented by the full rewardFee instead of the calculated share. Fix: _balances[swapPair].add(usdtReward), _balances[swapPairZeed].add(zeedReward), _balances[swapPairHo].add(hoReward). Current code inflates token supply by 3x the intended reward amount.",
+  "attack_date": "2022-04-21",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a multi-step DeFi-specific reserve/accounting manipulation using a flash swap callback and repeated skim calls across three pairs before swapping out for profit. It is short in code, but understanding why looping skim between interconnected pairs extracts value requires protocol-specific AMM reserve knowledge beyond an obvious bug pattern."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-264",
+  "name": "Moonhacker",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20241223-moonhacker---improper-input-validation",
+  "chain": "optimism",
+  "block_number": 129697251,
+  "attack_txs": [
+    "0xd12016b25d7aef681ade3dc3c9d1a1cc12f35b2c99953ff0e0ee23a59454c4fe"
+  ],
+  "vulnerable_address": "0xd9b45e2c389b6ad55dd3631abc1de6f2d2229847",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "MoonHacker.sol",
+  "function": "executeOperation",
+  "type": "input-validation",
+  "attacker_profit": 313059.6157820008,
+  "source_case_id": "dfhl-0396",
+  "fix_description": "In executeOperation (flash loan callback), there is no validation that msg.sender is the Aave Pool, no check that initiator is authorized, and mToken from params is user-controlled. Anyone can call this function directly with malicious params to manipulate the contract. Fix: add require(msg.sender == address(POOL)) and require(initiator == address(this) || initiator == owner).",
+  "attack_date": "2024-12-23",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is not just a trivial one-call bug: it requires understanding the vulnerable vault\u2019s generic executeOperation flow, Moonwell mToken repay/redeem mechanics, and chaining a flash loan with repeated redeem/return-funds cycles. The PoC is still fairly compact and linear, so it\u2019s more involved than easy but not complex enough to be hard."
+}

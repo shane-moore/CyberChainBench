@@ -1,0 +1,27 @@
+{
+  "id": "bench-449",
+  "name": "SuperRare",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250728-superrare---access-control",
+  "chain": "ethereum",
+  "block_number": 23016423,
+  "attack_txs": [
+    "0xd813751bfb98a51912b8394b5856ae4515be6a9c6e5583e06b41d9255ba6e3c1"
+  ],
+  "vulnerable_address": "0xffb512b9176d527c5d32189c3e310ed4ab2bb9ec",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x3f4d749675b3e48bccd932033808a7079328eb48",
+  "file": "RareStakingV1.sol",
+  "function": "updateMerkleRoot",
+  "type": "access-control",
+  "attacker_profit": 25725.53568281726,
+  "source_case_id": "dfhl-0607",
+  "fix_description": "In updateMerkleRoot(), the require condition uses (msg.sender != owner() || msg.sender != addr) which is always true (tautology). Fix: change to require(msg.sender == owner() || msg.sender == addr) so only authorized addresses can update the root.",
+  "normal_txs": [
+    "0xf5b6531ead5023568b5063b131068a6dd4d8c9eac66a51666982d99af1a0d520"
+  ],
+  "attack_date": "2025-07-28",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is a very short, direct two-step exploit: unauthorized merkle root update followed by a claim using an empty proof. It matches an obvious missing access control pattern, requires little protocol-specific DeFi knowledge, and could be reproduced quickly by a competent auditor."
+}

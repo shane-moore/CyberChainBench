@@ -1,0 +1,23 @@
+{
+  "id": "bench-37",
+  "name": "InverseFinance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220616-inversefinance---flashloan--price-oracle-manipulation",
+  "chain": "ethereum",
+  "block_number": 14972419,
+  "attack_txs": [
+    "0x958236266991bc3fe3b77feaacea120f172c0708ad01c7a715b255f218f9313c"
+  ],
+  "vulnerable_address": "0xE8b3bC58774857732C6C1147BFc9B9e5Fb6F427C",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "YVCrv3CryptoFeed.sol",
+  "function": "latestAnswer",
+  "type": "price-manipulation",
+  "attacker_profit": 7145744.254993474,
+  "source_case_id": "dfhl-0142",
+  "fix_description": "In latestAnswer, do not use balanceOf(CRV3CRYPTO) to calculate LP token price as pool balances can be manipulated via flash loans. Use Curve get_virtual_price() or a TWAP-based mechanism that is resistant to single-transaction manipulation.",
+  "attack_date": "2022-06-16",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a multi-step DeFi exploit involving an Aave flash loan, Curve/Yearn liquidity and vault interactions, oracle price manipulation, then borrowing from Inverse and unwinding across several pools. While it follows a known flash-loan-plus-oracle-manipulation pattern, reproducing it requires protocol-specific understanding across multiple contracts and more than a trivial exploit flow."
+}

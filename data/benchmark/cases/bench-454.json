@@ -1,0 +1,23 @@
+{
+  "id": "bench-454",
+  "name": "Unverified",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250705-unverified---access-control",
+  "chain": "ethereum",
+  "block_number": 22855569,
+  "attack_txs": [
+    "0xa57ec56af91ec70517ca71ca50101958d9c2ec9fdb61edcf35a9081c375725c2"
+  ],
+  "vulnerable_address": "0xbc4b1d58b28c497b7afda6fb90fe1471fa0672cc",
+  "has_public_source": false,
+  "fixable": true,
+  "proxy_address": "0x54cd23460df45559fd5feeaada7ba25f89c13525",
+  "function": "0x03b79c24",
+  "type": "access-control",
+  "attacker_profit": 285640.46778269164,
+  "source_case_id": "dfhl-0614",
+  "fix_description": "Add access control (onlyOwner or role-based) to function 0x03b79c24. After a contract upgrade, this function was left without any msg.sender validation, allowing anyone to drain all tokens from the contract.",
+  "attack_date": "2025-07-05",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit needs understanding of UniswapV2 pair accounting and the non-obvious abuse of repeated skim calls after manipulating token balances, plus a flash-loan-funded round trip through the pool. Although the PoC is short, it is more than a trivial access-control bug and requires protocol-specific reasoning about reserves vs. balances to craft correctly."
+}

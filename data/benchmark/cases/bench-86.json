@@ -1,0 +1,22 @@
+{
+  "id": "bench-86",
+  "name": "UnverifiedContr_0x431abb",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231201-unverifiedcontr_0x431abb---business-logic-flaw",
+  "chain": "bsc",
+  "block_number": 33972131,
+  "attack_txs": [
+    "0xbeea4ff215b15870e22ed0e4d36ccd595974ffd55c3d75dad2230196cc379a52"
+  ],
+  "vulnerable_address": "0x431Abb27dAB05f4E7cDeAA18390fE39364197500",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0xd9574d4c",
+  "type": "price-manipulation",
+  "attacker_profit": 486307.7970915193,
+  "source_case_id": "dfhl-0203",
+  "fix_description": "In function 0xd9574d4c, the price is calculated as tokenA.balanceOf(addr) * 1e18 / tokenB.balanceOf(addr), using instant balances that can be manipulated via flashloan. Use TWAP or cached price with staleness checks instead of spot balance ratios.",
+  "attack_date": "2023-12-01",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is a short multi-step attack using a flash loan, AMM reserve math, and repeated abuse of UniswapV2Pair.skim to manipulate balances before swapping back for profit. It requires understanding pair reserve/accounting behavior and protocol-specific token/pair interaction, but the PoC is still relatively compact and not deeply complex."
+}

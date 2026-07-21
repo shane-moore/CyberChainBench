@@ -1,0 +1,23 @@
+{
+  "id": "bench-228",
+  "name": "yearnFinance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230413-yearnfinance---misconfiguration",
+  "chain": "ethereum",
+  "block_number": 17036779,
+  "attack_txs": [
+    "0xd55e43c1602b28d4fd4667ee445d570c8f298f5401cf04e62ec329759ecda95d"
+  ],
+  "vulnerable_address": "0x83f798e925BcD4017Eb265844FDDAbb448f1707D",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "yUSDT.sol",
+  "function": "constructor",
+  "type": "accounting-error",
+  "attacker_profit": 3576829.711115368,
+  "source_case_id": "dfhl-0353",
+  "fix_description": "The constructor misconfigured bZxUSDC (Fulcrum iUSDC) instead of bZxUSDT (Fulcrum iUSDT) as one of the yield providers. When the vault rebalances into bZxUSDC and withdraws, it receives USDC not USDT, but pool value only counts USDT derivatives \u2014 so bZxUSDC value is lost, reducing share price to 0. Fix: correct the bZx token address in the constructor from iUSDC to iUSDT. This bug existed since deploy (1000+ days) but was not exploited until rebalancing was triggered.",
+  "attack_date": "2023-04-13",
+  "difficulty": "medium",
+  "difficulty_reasoning": "Although the visible file is dominated by setup data, the exploit appears to require protocol-specific understanding of Yearn/Aave-style vault interactions and iterating over many Aave V1 debt users rather than a trivial single-call bug. This is more than an obvious access-control issue, but it still does not look like an exceptionally deep multi-transaction or cross-domain exploit chain."
+}

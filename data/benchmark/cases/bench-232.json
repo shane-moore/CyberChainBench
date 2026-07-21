@@ -1,0 +1,23 @@
+{
+  "id": "bench-232",
+  "name": "Sentiment",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230405-sentiment---read-only-reentrancy",
+  "chain": "arbitrum",
+  "block_number": 77026913,
+  "attack_txs": [
+    "0xa9ff2b587e2741575daf893864710a5cbb44bb64ccdc487a100fa20741e0f74d"
+  ],
+  "vulnerable_address": "0x16F3ae9C1727ee38c98417cA08BA785BB7641b5B",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "WeightedBalancerLPOracle.sol",
+  "function": "getPrice",
+  "type": "price-manipulation",
+  "attacker_profit": 961762.5444784326,
+  "source_case_id": "dfhl-0357",
+  "fix_description": "In getPrice, uses AMM spot price which can be manipulated via flash loan. Fix: use TWAP oracle or Chainlink price feed.",
+  "attack_date": "2023-04-05",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is only a few onchain steps, but it requires understanding the ERC2771Context + Multicall arbitrary address spoofing issue and how to weaponize it against this specific token\u2019s burn logic to manipulate the Uniswap pair reserves. It also involves protocol-specific setup with a trusted forwarder, crafted calldata, and AMM reserve syncing/swap flow, which is more involved than a simple access-control bug."
+}

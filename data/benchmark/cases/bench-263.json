@@ -1,0 +1,28 @@
+{
+  "id": "bench-263",
+  "name": "Bizness",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20241227-bizness---reentrancy",
+  "chain": "base",
+  "block_number": 24282214,
+  "attack_txs": [
+    "0x984cb29cdb4e92e5899e9c94768f8a34047d0e1074f9c4109364e3682e488873"
+  ],
+  "vulnerable_address": "0xd6a7cfa86a41b8f40b8dfeb987582a479eb10693",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x80b9C9C883e376c4aA43d72413aB1Bd6A64A0654",
+  "file": "Locker.sol",
+  "function": "_feeHandler",
+  "type": "reentrancy",
+  "attacker_profit": 15658.93394107723,
+  "source_case_id": "dfhl-0395",
+  "fix_description": "Add reentrancy guard (nonReentrant modifier) to _feeHandler, or follow checks-effects-interactions pattern to update state before making external calls.",
+  "normal_txs": [
+    "0xddb94c69c25a4a2281d24e10fdad4cfa4ad35f83d440595478b8ab595631a655",
+    "0xa9cdc8b4a056641c4586adcf16b50d383944bbb0900efa8bcc80b578ef6d93ec"
+  ],
+  "attack_date": "2024-12-27",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a straightforward reentrancy exploit triggered during splitLock via the receive() fallback, followed by withdrawing the original lock before state is safely updated. The PoC is short, uses only a couple of protocol calls, and requires minimal DeFi-specific knowledge beyond recognizing the vulnerable external call ordering."
+}

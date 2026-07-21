@@ -1,0 +1,23 @@
+{
+  "id": "bench-127",
+  "name": "ZS",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231008-zs---business-logic-flaw",
+  "chain": "bsc",
+  "block_number": 32429594,
+  "attack_txs": [
+    "0xbc88aa6057f9da6f88e28bc908baad111ae7545e69fb0c90fbdfd485c9e72192"
+  ],
+  "vulnerable_address": "0x12b3b6b1055b8ad1ae8f60a0b6c79a9825bcb4bc",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "ZS.sol",
+  "function": "destory_pair_amount",
+  "type": "access-control",
+  "attacker_profit": 13941.49203769091,
+  "source_case_id": "dfhl-0245",
+  "fix_description": "Add onlyOwner modifier to destory_pair_amount. The function is public without access control, allowing anyone to burn tokens from the pancake pair and call sync() to manipulate the token price.",
+  "attack_date": "2023-10-08",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a multi-step DeFi attack involving a constructor-based setup to bypass token transfer logic, liquidity pair reserve manipulation, a flash loan, and abuse of a protocol-specific flawed burn/destruction function. It requires understanding Pancake/Uniswap V2-V3 mechanics and the vulnerable token\u2019s custom logic, but the overall chain is still fairly contained and not deeply intricate."
+}

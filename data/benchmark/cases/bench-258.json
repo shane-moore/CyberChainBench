@@ -1,0 +1,23 @@
+{
+  "id": "bench-258",
+  "name": "- QTNToken",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230118---qtntoken---business-logic-flaw",
+  "chain": "ethereum",
+  "block_number": 16431497,
+  "attack_txs": [
+    "0xfde10ad92566f369b23ed5135289630b7a6453887c77088794552c2a3d1ce8b7"
+  ],
+  "vulnerable_address": "0xC9fa8F4CFd11559b50c5C7F6672B9eEa2757e1bd",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "QUATERNION.sol",
+  "function": "_transfer",
+  "type": "accounting-error",
+  "attacker_profit": 2294.8178188181573,
+  "source_case_id": "dfhl-0387",
+  "fix_description": "In _transfer(), the rebase condition calculates newBalance = currentBalance + amount, but currentBalance already includes amount (since _tokenTransfer was called before). This double-counts amount in the condition check, making rebasePlus trigger more easily. Fix by computing currentBalance before _tokenTransfer, or use balanceOf(to) - amount as the pre-transfer balance.",
+  "attack_date": "2023-01-18",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is not a simple one-call bug: it requires understanding a fee-on-transfer/tokenomics flaw around Uniswap pair skimming, repeated deployment of helper contracts, timed waits to bypass the token\u2019s last-buy restriction, and then unwinding back to WETH. While the PoC is fairly short, it is a multi-step, protocol-specific attack involving Uniswap pair mechanics and token transfer restrictions, placing it above easy."
+}

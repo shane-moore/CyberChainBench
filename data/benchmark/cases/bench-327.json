@@ -1,0 +1,23 @@
+{
+  "id": "bench-327",
+  "name": "DeFiPlaza",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240705-defiplaza---loss-of-precision",
+  "chain": "ethereum",
+  "block_number": 20240539,
+  "attack_txs": [
+    "0xa245deda8553c6e4c575baff9b50ef35abf4c8f990f8f36897696f896f240e3a"
+  ],
+  "vulnerable_address": "0xE68c1d72340aEeFe5Be76eDa63AE2f4bc7514110",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "DeFiPlaza.sol",
+  "function": "addMultiple",
+  "type": "price-manipulation",
+  "attacker_profit": 195489.85778775773,
+  "source_case_id": "dfhl-0467",
+  "fix_description": "In addMultiple, actualRatio is calculated from IERC20(token).balanceOf(address(this)) which can be manipulated via flash loan or donation. Use internal accounting of deposited amounts instead of balanceOf to calculate the deposit ratio and LP minting amount.",
+  "attack_date": "2024-07-05",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This PoC uses a sophisticated multi-contract attack chain with nested Balancer and Aave flash loans, many coordinated swaps across numerous assets, liquidity add/remove manipulation, and debt/repay handling. Writing it requires deep protocol-specific understanding of DeFiPlaza\u2019s accounting plus careful state orchestration across many steps, clearly beyond a quick straightforward exploit."
+}

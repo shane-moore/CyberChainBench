@@ -1,0 +1,23 @@
+{
+  "id": "bench-494",
+  "name": "Pump",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250304-pump---not-slippage-protection",
+  "chain": "bsc",
+  "block_number": 47169116,
+  "attack_txs": [
+    "0xdebaa13fb06134e63879ca6bcb08c5e0290bdbac3acf67914c0b1dcaf0bdc3dd"
+  ],
+  "vulnerable_address": "0x09762e00Ce0DE8211F7002F70759447B1F2b1892",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Token.sol",
+  "function": "_makeLiquidityPool",
+  "type": "price-manipulation",
+  "attacker_profit": 6427.912248125182,
+  "source_case_id": "dfhl-0655",
+  "fix_description": "In _makeLiquidityPool, addLiquidity uses 0 minimum amounts. Fix: set reasonable minimum based on oracle price.",
+  "attack_date": "2025-03-04",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a short, repetitive exploit against multiple similarly vulnerable tokens using the same simple pattern: flash-borrow WBNB, abuse a flawed buyToken/liquidity flow, then dump tokens back to WBNB. It involves only a few straightforward external interactions and no deep protocol-specific reasoning, so a competent auditor could likely reproduce it quickly."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-70",
+  "name": "TransitFinance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231220-transitfinance---lack-of-validation-pool",
+  "chain": "bsc",
+  "block_number": 34506417,
+  "attack_txs": [
+    "0x93ae5f0a121d5e1aadae052c36bc5ecf2d406d35222f4c6a5d63fef1d6de1081"
+  ],
+  "vulnerable_address": "0x00000047bB99ea4D791bb749D970DE71EE0b1A34",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "UniswapV3Router.sol",
+  "function": "_verifyPool",
+  "type": "input-validation",
+  "attacker_profit": 43731.943191462466,
+  "source_case_id": "dfhl-0187",
+  "fix_description": "In _verifyPool, after computing poolSalt from token0/token1/fee, verify that the pool address matches the CREATE2-derived address from the legitimate factory: require(address(uint160(pool)) == computeAddress(factory, poolSalt, POOL_INIT_CODE_HASH)). Currently the function only checks that the pool returns matching token0/token1/fee but does not verify the pool was deployed by the real factory, allowing fake pools to pass validation.",
+  "attack_date": "2023-12-20",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very short single-call exploit that abuses unsafe trust in user-supplied pool data by pointing the router to the attacker contract masquerading as a UniswapV3 pool. It requires minimal protocol knowledge, no flash loans or complex sequencing, and the PoC is well under 100 lines with only straightforward interface spoofing."
+}

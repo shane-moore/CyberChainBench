@@ -1,0 +1,23 @@
+{
+  "id": "bench-352",
+  "name": "Sonne Finance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240514-sonne-finance---precision-loss",
+  "chain": "optimism",
+  "block_number": 120063159,
+  "attack_txs": [
+    "0x9312ae377d7ebdf3c7c3a86f80514878deb5df51aad38b6191d55db53e42b7f0"
+  ],
+  "vulnerable_address": "0xe3b81318B1b6776F0877c3770AfDdFf97b9f5fE5",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "CToken.sol",
+  "function": "exchangeRateStoredInternal",
+  "type": "accounting-error",
+  "attacker_profit": 2971279.9886064692,
+  "source_case_id": "dfhl-0494",
+  "fix_description": "Compound fork empty-pool donation attack. In exchangeRateStoredInternal, when totalSupply is near zero, the exchangeRate can be inflated via donation to exploit rounding in redeem. Fix: implement dead shares (minimum initial deposit that cannot be withdrawn) or add virtual offset to totalSupply/totalCash calculations.",
+  "attack_date": "2024-05-14",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a multi-step exploit involving timelock proposal execution, a flash loan, cToken mint/transfer accounting manipulation, market entry, borrowing, and redeem logic across several protocol contracts. While the code is not very large, understanding why the soVELO collateral can be inflated and then borrowed against requires protocol-specific Compound-style market/accounting knowledge beyond a simple bug pattern."
+}

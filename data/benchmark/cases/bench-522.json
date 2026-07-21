@@ -1,0 +1,22 @@
+{
+  "id": "bench-522",
+  "name": "SynapLogic",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/README.md#20260120-synaplogic---business-logic-flaw",
+  "chain": "base",
+  "block_number": 41038634,
+  "attack_txs": [
+    "0xc54c00046364b6e889db18c73beee9b81df6b5ca822b6d262b3d30cdf376c4b1"
+  ],
+  "vulnerable_address": "0xC859aC8429fB4A5E24F24a7BEd3fE3a8Db4fb371",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x670a3267",
+  "type": "input-validation",
+  "attacker_profit": 98456.69100295061,
+  "source_case_id": "dfhl-0685",
+  "fix_description": "The buy function (0x670a3267) accepts an address[] refBy parameter giving each referral 10% of the payment. No validation prevents duplicate addresses or self-referral. Attacker passes refBy=[self]*31, receiving 310% back. Fix by requiring unique non-sender addresses in refBy and capping total referral payout below 100%.",
+  "attack_date": "2026-01-20",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is a very straightforward parameter-abuse exploit: it passes arrays with repeated recipients, fixed refund rates, and refund flags to drain excess ETH/USDC in a single call per path. It requires little protocol-specific DeFi knowledge, no flash loans or complex routing, and the exploit logic is simple enough for an experienced auditor to reproduce quickly."
+}

@@ -1,0 +1,22 @@
+{
+  "id": "bench-554",
+  "name": "Rabby Wallet SwapRouter",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221011-rabby-wallet-swaprouter---arbitrary-external-call-vulnerability",
+  "chain": "ethereum",
+  "block_number": 15724452,
+  "attack_txs": [
+    "0x914c1ae4f03657064f0b1d5ddc6e06f39e82bce6fb2f726efdca52c092fbfc26"
+  ],
+  "vulnerable_address": "0x6eb211caf6d304a76efe37d9abdfaddc2d4363d1",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x32854cc2",
+  "type": "input-validation",
+  "attacker_profit": 46741.25540020671,
+  "source_case_id": "dfhl-0101",
+  "fix_description": "In func_0A37, the function executes an external call to a user-supplied target address (arg4) with user-supplied calldata without validating the target. Attacker passes a token contract address and transferFrom calldata to drain tokens from users who approved the router. Fix by whitelisting allowed call targets before executing the external call.",
+  "attack_date": "2022-10-11",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a classic arbitrary external call/approval-drain issue with a very direct exploit path: identify victims who approved the router, then invoke swap() so it calls USDC.transferFrom on their behalf. The PoC is short, uses no flash loans or complex DeFi mechanics, and mostly loops over victim addresses with a single protocol interaction."
+}

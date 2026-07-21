@@ -1,0 +1,23 @@
+{
+  "id": "bench-104",
+  "name": "Eleven Finance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2021/README.md#20210622-eleven-finance---doesnt-burn-shares",
+  "chain": "bsc",
+  "block_number": 8530974,
+  "attack_txs": [
+    "0x6450d8f4db09972853e948bee44f2cb54b9df786dace774106cd28820e906789"
+  ],
+  "vulnerable_address": "0x27DD6E51BF715cFc0e2fe96Af26fC9DED89e4BE8",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "ElevenNeverSellVault.sol",
+  "function": "emergencyBurn",
+  "type": "accounting-error",
+  "attacker_profit": 641461.7497277734,
+  "source_case_id": "dfhl-0023",
+  "fix_description": "In emergencyBurn, add _burn(msg.sender, balan) before the token.safeTransfer call to destroy the user shares. Without burning shares, the user can call emergencyBurn repeatedly to drain the vault since balanceOf(msg.sender) never decreases.",
+  "attack_date": "2021-06-22",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a multi-step DeFi attack involving a flash loan, token swaps, adding/removing liquidity, vault deposit/withdraw interactions, and abusing a protocol-specific emergencyBurn flow. While the PoC is not very long, understanding why the vault accounting breaks requires reading Eleven Finance\u2019s vault logic rather than spotting a simple generic bug."
+}

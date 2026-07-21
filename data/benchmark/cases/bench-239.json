@@ -1,0 +1,31 @@
+{
+  "id": "bench-239",
+  "name": "- EulerFinance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230313---eulerfinance---business-logic-flaw",
+  "chain": "ethereum",
+  "block_number": 16817996,
+  "attack_txs": [
+    "0xc310a0affe2169d1f6feec1c63dbc7f7c62a887fa48795d327d4d2da2d6b111d"
+  ],
+  "vulnerable_address": "0xbb0d4bb654a21054af95456a3b29c63e8d1f4c0a",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x27182842e098f60e3d576794a5bffb0777e025d3",
+  "file": "EToken.sol",
+  "function": "donateToReserves",
+  "type": "input-validation",
+  "attacker_profit": 6382422.729658469,
+  "source_case_id": "dfhl-0365",
+  "fix_description": "In donateToReserves, the function allows users to donate their eToken balance to reserves without checking if the account remains healthy (collateral > debt) after the donation. Attacker deposits, borrows, then donates most collateral to reserves making themselves under-collateralized, then self-liquidates at a discount. Fix: add a liquidity check after the donation to ensure the account is not left in violation.",
+  "normal_txs": [
+    "0xd6465ac3fe5e7d54643c7b9ec5b75d409048c95b10686285a84e063a3d73c047",
+    "0xa25fce1f91d2320c3a9ba6a2da134a6e066760986c136296574d13a20ff33ce9",
+    "0x2ab26097f4be0cd940cf33ea64eb056b7ad629eff554359dfacdebae03bd70b3",
+    "0xd30d0fb8242168e85cb4133bef25f91c3d2cc411f85b2a0a6b989103c16aee31",
+    "0x451d6539122897577fd6cb8372d1099dafaa166ec62363fce1f84d8b786e8444"
+  ],
+  "attack_date": "2023-03-13",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a multi-step protocol-specific attack involving flash-loaned capital, recursive Euler mint/repay flows, reserve donation to manipulate account health, and then liquidation via a separate contract. While the PoC is short, understanding why the sequence works requires meaningful knowledge of Euler\u2019s collateral/debt accounting and liquidation mechanics, so it is more than a straightforward pattern."
+}

@@ -1,0 +1,24 @@
+{
+  "id": "bench-371",
+  "name": "ChaingeFinance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240415-chaingefinance---arbitrary-external-call",
+  "chain": "bsc",
+  "block_number": 37880388,
+  "attack_txs": [
+    "0x051276afa96f2a2bd2ac224339793d82f6076f76ffa8d1b9e6febd49a4ec11b2"
+  ],
+  "vulnerable_address": "0x80a0D7A6FD2A22982Ce282933b384568E5c852bF",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "MinterProxyV2.sol",
+  "function": "swap",
+  "type": "input-validation",
+  "attacker_profit": 303566.0901130323,
+  "source_case_id": "dfhl-0515",
+  "fix_description": "In swap, after safeApprove(target, MAX_UINT256), the contract calls target.functionCall(callData) with arbitrary user-supplied target and callData. Attacker sets target=tokenAddr and callData=transferFrom(this, attacker, balance) to drain approved tokens. Fix: (1) Never approve target with MAX_UINT256 \u2014 only approve the exact amount needed. (2) Require target to be in a whitelist of approved DEX routers. (3) After the call, reset approval to 0. (4) Validate callData selector is a known swap function, not transferFrom/transfer/approve.",
+  "notes": "No detailed post-mortem report found. PeckShield confirmed insufficient input verification as root cause.",
+  "attack_date": "2024-04-15",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The exploit is a very straightforward arbitrary-call/approval-abuse case: the attacker abuses the vulnerable swap function to make the proxy invoke transferFrom on tokens already approved by the victim. The PoC is short, requires no flash loans or complex DeFi knowledge, and the attack flow is essentially just iterating over approved tokens and draining them."
+}

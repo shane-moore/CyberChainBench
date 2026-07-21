@@ -1,0 +1,24 @@
+{
+  "id": "bench-353",
+  "name": "PredyFinance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240514-predyfinance---reentrancy",
+  "chain": "arbitrum",
+  "block_number": 211107442,
+  "attack_txs": [
+    "0xbe163f651d23f0c9e4d4a443c0cc163134a31a1c2761b60188adcfd33178f50f"
+  ],
+  "vulnerable_address": "0x7b8b944ab2f24c829504a7a6d70fce5298f2147c",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x9215748657319b17fecb2b5d086a3147bfbc8613",
+  "file": "TradeLogic.sol",
+  "function": "callTradeAfterCallback",
+  "type": "reentrancy",
+  "attacker_profit": 456089.2144300043,
+  "source_case_id": "dfhl-0495",
+  "fix_description": "Add reentrancy guard (nonReentrant modifier) to callTradeAfterCallback, or follow checks-effects-interactions pattern to update state before making external calls.",
+  "attack_date": "2024-05-14",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is only a few core steps, but it depends on understanding protocol-specific PredyPool internals: registering a malicious pair with attacker-controlled price feed/owner, using the trade callback/locker flow to take and resupply assets, then withdrawing all pool funds. This is not a generic pattern like simple missing access control, and an auditor would need to reason through callback-based accounting and safety-check bypasses across multiple functions."
+}

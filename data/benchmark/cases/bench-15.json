@@ -1,0 +1,22 @@
+{
+  "id": "bench-15",
+  "name": "NewFreeDAO",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220908-newfreedao---flashloans-attack",
+  "chain": "bsc",
+  "block_number": 21140435,
+  "attack_txs": [
+    "0x1fea385acf7ff046d928d4041db017e1d7ead66727ce7aacb3296b9d485d4a26"
+  ],
+  "vulnerable_address": "0x8B068E22E9a4A9bcA3C321e0ec428AbF32691D1E",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x6811e3b9",
+  "type": "price-manipulation",
+  "attacker_profit": 822938.8066708007,
+  "source_case_id": "dfhl-0117",
+  "fix_description": "In func_1848 (reward claim function, selector 0x6811e3b9), rewards are calculated based on the caller instant token balance (balanceOf). Use a recorded/snapshotted balance or add same-block protection to prevent flashloan inflation of balance for reward calculation.",
+  "attack_date": "2022-09-08",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is a straightforward flash-loan-funded token buy followed by repeatedly calling an obviously vulnerable reward-claim function via fresh helper contracts to bypass per-address accounting, then swapping back and repaying. It uses standard router swaps and a simple looped abuse pattern, with no deep protocol internals or complex multi-protocol state reasoning required."
+}

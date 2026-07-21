@@ -1,0 +1,23 @@
+{
+  "id": "bench-455",
+  "name": "RANT",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250705-rant---logic-flaw",
+  "chain": "bsc",
+  "block_number": 52974382,
+  "attack_txs": [
+    "0x2d9c1a00cf3d2fda268d0d11794ad2956774b156355e16441d6edb9a448e5a99"
+  ],
+  "vulnerable_address": "0xc321ac21a07b3d593b269acdace69c3762ca2dd0",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "RANT.sol",
+  "function": "_sellBurnLiquidityPairTokens",
+  "type": "accounting-error",
+  "attacker_profit": 203693.86941087997,
+  "source_case_id": "dfhl-0615",
+  "fix_description": "In _sellBurnLiquidityPairTokens, do not directly transfer tokens from the LP pair to dead/node addresses. This drains the pair balance and manipulates price after sync. Fix: add per-block rate limit or replace with a proper buyback-and-burn via swap router.",
+  "attack_date": "2025-07-05",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The PoC is short, but the exploit is a multi-step DeFi interaction involving a Pancake V3 flash loan, a Pancake pair callback-based swap, and protocol-specific abuse of the vulnerable token via transferring tokens to the token contract itself. It requires understanding callback flows and token-specific logic rather than just spotting a trivial access control bug, but it is still not a deeply complex 5+ step attack chain."
+}

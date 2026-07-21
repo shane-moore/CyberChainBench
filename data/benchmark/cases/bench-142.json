@@ -1,0 +1,31 @@
+{
+  "id": "bench-142",
+  "name": "PancakeBunny",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2021/README.md#20210519-pancakebunny---price-oracle-manipulation",
+  "chain": "bsc",
+  "block_number": 7556391,
+  "attack_txs": [
+    "0x897c2de73dd55d7701e1b69ffb3a17b0f4801ced88b0c75fe1551c5fcce6a979"
+  ],
+  "vulnerable_address": "0x81ef2bc1e02fee5414e46accc6ae14d833eebba0",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x542c06a5dc3f27e0fbdc9fb7bc6748f26d54ddb0",
+  "file": "PriceCalculatorBSCV1.sol",
+  "function": "valueOfAsset",
+  "type": "price-manipulation",
+  "attacker_profit": 74818044.85160507,
+  "source_case_id": "dfhl-0028",
+  "fix_description": "In valueOfAsset, LP token valuation uses IPancakePair.getReserves() which returns instantaneous reserves manipulable via flash loans. Fix: use a TWAP-based oracle for reserve values, or use the fair LP pricing formula that calculates LP value from individual token prices obtained from a manipulation-resistant oracle (e.g., Chainlink) rather than from pool reserves directly.",
+  "normal_txs": [
+    "0x561399aa20ae5dcc3046342cfaa8488b5137c05f36791d4262d57934b5e48c32",
+    "0x1dcfadef7ac3620d0920b7c3e84739475904c66c612aa989ef67ff75ab003e24",
+    "0x8f3d5de75e06f0e856ade64ac64607c2b417c39cb1ee235bf178238660f5fb8f",
+    "0x8e7e8c68f141a49c8b4e135baecd18addc7a85809029984d6a6021de7bac7ed8",
+    "0xbdd2a501d7566117fb8e849148f5846f156f437d2fab9d658140eb95a9090b3b"
+  ],
+  "attack_date": "2021-05-19",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very short, single-idea exploit that abuses a reflection token\u2019s deliver() mechanic to alter the pair balance, then directly profits via pair.swap. It requires minimal protocol-specific setup, no flash loan orchestration, and the PoC is well under 100 lines with essentially one core interaction pattern."
+}

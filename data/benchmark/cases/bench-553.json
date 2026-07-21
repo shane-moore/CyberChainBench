@@ -1,0 +1,23 @@
+{
+  "id": "bench-553",
+  "name": "ATK",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221012-atk---flashloan-manipulate-price",
+  "chain": "bsc",
+  "block_number": 22102839,
+  "attack_txs": [
+    "0x55983d8701e40353fee90803688170a16424ee702f6b21bb198bb8e7282112cd"
+  ],
+  "vulnerable_address": "0x9cb928bf50ed220ac8f703bce35be5ce7f56c99c",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "ATK.sol",
+  "function": "getPrice",
+  "type": "price-manipulation",
+  "attacker_profit": 332.2220935488493,
+  "source_case_id": "dfhl-0100",
+  "fix_description": "In getPrice, uses AMM spot price which can be manipulated via flash loan. Fix: use TWAP oracle or Chainlink price feed.",
+  "attack_date": "2022-10-12",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This PoC is a very short flashswap-based price manipulation with essentially one core exploit action: borrow BUSDT, skew the ATK/BUSDT pair state, call the vulnerable reward claim, and repay. It relies on an obvious unsafe price dependency in getPrice() and requires only minimal multi-contract interaction and DeFi knowledge."
+}

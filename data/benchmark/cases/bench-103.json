@@ -1,0 +1,31 @@
+{
+  "id": "bench-103",
+  "name": "MahaLend",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231111-mahalend---donate-inflation-exchangerate--rounding-error",
+  "chain": "ethereum",
+  "block_number": 18544605,
+  "attack_txs": [
+    "0x2881e839d4d562fad5356183e4f6a9d427ba6f475614ce8ef64dbfe557a4a2cc"
+  ],
+  "vulnerable_address": "0xac3418ce48dbd35fe213dcfdfb70f044a47f9b0f",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x658b0f629b9e3753aa555c189d0cb19c1ed59632",
+  "file": "ScaledBalanceTokenBase.sol",
+  "function": "_mintScaled",
+  "type": "accounting-error",
+  "attacker_profit": 239.07421254500622,
+  "source_case_id": "dfhl-0221",
+  "fix_description": "In _mintScaled, prevent first-depositor share inflation attack. Fix by minting a minimum amount of dead shares on first deposit (similar to Uniswap V2 MINIMUM_LIQUIDITY) that are permanently locked, making it economically infeasible to inflate the exchange rate. Alternatively, use virtual shares/assets (Aave V3.1 approach) so the index cannot be manipulated to cause rounding to zero for subsequent depositors.",
+  "normal_txs": [
+    "0xa93776d5c9cd2f827d3d041be17e9ecafd1aebbe0f0b944b146a84915c9102d5",
+    "0x67520832a8ce71d2a6134e97fa6afb85167c3390ca57a36a70318f6234f792f3",
+    "0xfab0ae8bb9967197d416eff6b3b52a530d5e45bec91762436dd3149083f0a4fd",
+    "0x103f358faaf3d4f5570aa672f34f0f26004378f2b7b372e08712d115bbe38d7b",
+    "0x90f4fbb49f505a24a54e20a98ffb86fb6fe04e365b527fc9a5b0f02f098f7654"
+  ],
+  "attack_date": "2023-11-11",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This exploit relies on deep protocol-specific accounting manipulation: inflating the liquidity index via donated flashloan funds, collapsing supply to near-zero, repeating flashloans to accumulate index changes, then exploiting rounding behavior to mint shares and drain assets. Although the PoC is not extremely long, understanding why the 55 flashloans, index math, and rounding-based recovery work would likely take an experienced auditor well over 2 hours."
+}

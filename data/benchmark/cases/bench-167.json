@@ -1,0 +1,23 @@
+{
+  "id": "bench-167",
+  "name": "APEDAO",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230718-apedao---business-logic-flaw",
+  "chain": "bsc",
+  "block_number": 30072294,
+  "attack_txs": [
+    "0x8d35dfd9968ce61fb969ffe8dcc29eeeae864e466d2cb0b7d26ce63644691994"
+  ],
+  "vulnerable_address": "0xB47955B5B7EAF49C815EBc389850eb576C460092",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "APE2.sol",
+  "function": "goDead",
+  "type": "access-control",
+  "attacker_profit": 7088.845086896927,
+  "source_case_id": "dfhl-0287",
+  "fix_description": "Add access control (onlyOwner or similar modifier) to goDead(). The function is public and allows anyone to burn tokens from the pair and call sync(), manipulating the pool reserve and token price.",
+  "attack_date": "2023-07-18",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a multi-step DeFi attack: chaining several flash loans, swapping into the vulnerable token, repeatedly abusing pair skim mechanics, triggering a token-specific burn via goDead(), then exiting through manipulated pool pricing. It requires understanding AMM reserve/accounting behavior and protocol-specific token logic, so it is more involved than a simple access control bug but not deeply complex."
+}

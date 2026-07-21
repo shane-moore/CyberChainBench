@@ -1,0 +1,24 @@
+{
+  "id": "bench-129",
+  "name": "StarsArena",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231007-starsarena---reentrancy",
+  "chain": "avalanche",
+  "attack_txs": [
+    "0x4f37ffecdad598f53b8d5a2d9df98e3c00fbda4328585eb9947a412b5fe17ac5"
+  ],
+  "vulnerable_address": "0x44c383235a71ee4bc68501bfff10bb3c29f995b9",
+  "has_public_source": false,
+  "fixable": true,
+  "proxy_address": "0xA481B139a1A654cA19d2074F174f17D7534e8CeC",
+  "function": "0xb51d0534",
+  "type": "reentrancy",
+  "attacker_profit": 2963236.2214119267,
+  "block_number": 36136405,
+  "source_case_id": "dfhl-0247",
+  "_review_note": "Decompiler limitation: ethervm returns \"Error: Could not resolve method call return address\" for key functions. Reentrancy confirmed via trace (0xb51d0534 called during AVAX transfer callback). But decompiled code is incomplete - cannot verify exact state update ordering from bytecode alone.",
+  "fix_description": "In sellShares (func_2847), AVAX is sent to msg.sender via func_3139 (low-level call with value) BEFORE updating the share balance in storage. This enables reentrancy: the attacker receives AVAX, re-enters sellShares in the fallback, and sells the same shares again since the balance has not been decremented yet. Fix: update storage[shares_mapping] before sending AVAX (checks-effects-interactions pattern), or add a reentrancy guard.",
+  "attack_date": "2023-10-07",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very short, direct reentrancy-style exploit with only a couple of external calls and a fallback reentry, fitting an obvious vulnerability pattern. It does not require complex DeFi primitives, flash loans, or deep protocol-specific setup to reproduce from the PoC."
+}

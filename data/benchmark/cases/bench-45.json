@@ -1,0 +1,23 @@
+{
+  "id": "bench-45",
+  "name": "Wiener DOGE",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220424-wiener-doge---flashloan",
+  "chain": "bsc",
+  "block_number": 17248706,
+  "attack_txs": [
+    "0x4f2005e3815c15d1a9abd8588dd1464769a00414a6b7adcbfd75a5331d378e1d"
+  ],
+  "vulnerable_address": "0x46bA8a59f4863Bd20a066Fd985B163235425B5F9",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "WDOGE.sol",
+  "function": "_transfer",
+  "type": "accounting-error",
+  "attacker_profit": 30179.72714782548,
+  "source_case_id": "dfhl-0153",
+  "fix_description": "Fix the double-deduction in _transfer: sender balance is reduced by full amount, but _burn is also called on sender which deducts again. Either deduct fees from the transferred amount only (not from sender twice), or adjust _burn to only reduce totalSupply without touching sender balance.",
+  "attack_date": "2022-04-24",
+  "difficulty": "unknown",
+  "difficulty_reasoning": "No matching PoC file found for automated labeling."
+}

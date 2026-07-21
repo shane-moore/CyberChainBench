@@ -1,0 +1,77 @@
+# Harbor job config for CyberChainBench
+#
+# Usage:
+#   1. Build base image:  docker build -t cyberchainbench .
+#   2. Generate tasks:    PYTHONPATH=src python src/scripts/1_benchmark/benchmark.py -s harbor --clean
+#   3. Run all tasks:     harbor run -c configs/harbor_job.yaml
+#   4. Run one task type: harbor run -c configs/harbor_job.yaml --dataset data/benchmark/harbor_tasks/exploit
+#
+# Environment variables required:
+#   ANTHROPIC_API_KEY    — for Claude Code agent
+#   ETHERSCAN_API_KEYS   — comma-separated block explorer keys
+#   ETH_RPC_URL, BSC_RPC_URL, etc. — chain RPC endpoints
+
+jobs_dir: data/eval/harbor_jobs
+n_attempts: 1
+timeout_multiplier: 1.5
+
+orchestrator:
+  type: local
+  n_concurrent_trials: 2
+  quiet: false
+
+environment:
+  type: docker
+  docker_image: cyberchainbench:latest
+  force_build: false
+  delete: false
+  env:
+    - ANTHROPIC_API_KEY
+    - ANTHROPIC_BASE_URL
+    - OPENAI_API_KEY
+    - GEMINI_API_KEY
+    - GOOGLE_API_KEY
+    - ETHERSCAN_API_KEYS
+    - ETH_RPC_URL
+    - BSC_RPC_URL
+    - POLYGON_RPC_URL
+    - ARBITRUM_RPC_URL
+    - OPTIMISM_RPC_URL
+    - BASE_RPC_URL
+    - AVALANCHE_RPC_URL
+    - FANTOM_RPC_URL
+    - GNOSIS_RPC_URL
+    - BLAST_RPC_URL
+    - MOONRIVER_RPC_URL
+    - LINEA_RPC_URL
+    - MANTLE_RPC_URL
+    - SEI_RPC_URL
+    - BSC_TRACE_RPC_URL
+    - ETH_TRACE_RPC_URL
+    - POLYGON_TRACE_RPC_URL
+    - ARBITRUM_TRACE_RPC_URL
+    - OPTIMISM_TRACE_RPC_URL
+    - BASE_TRACE_RPC_URL
+    - FANTOM_TRACE_RPC_URL
+
+agents:
+  - import_path: harbor.agents.installed.codex:Codex
+    model_name: openai/gpt-5.4
+    datasets:
+      - path: data/benchmark/harbor_tasks/detect
+      - path: data/benchmark/harbor_tasks/exploit
+      - path: data/benchmark/harbor_tasks/patch
+
+  - import_path: harbor.agents.installed.gemini_cli:GeminiCli
+    model_name: google/gemini-2.5-pro
+    datasets:
+      - path: data/benchmark/harbor_tasks/detect
+      - path: data/benchmark/harbor_tasks/exploit
+      - path: data/benchmark/harbor_tasks/patch
+
+  - import_path: harbor.agents.installed.hermes:Hermes
+    model_name: openai/gpt-5.4
+    datasets:
+      - path: data/benchmark/harbor_tasks/detect
+      - path: data/benchmark/harbor_tasks/exploit
+      - path: data/benchmark/harbor_tasks/patch

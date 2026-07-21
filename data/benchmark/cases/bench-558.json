@@ -1,0 +1,22 @@
+{
+  "id": "bench-558",
+  "name": "Transit Swap",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221002-transit-swap---incorrect-owner-address-validation",
+  "chain": "bsc",
+  "block_number": 21816546,
+  "attack_txs": [
+    "0x181a7882aac0eab1036eedba25bc95a16e10f61b5df2e99d240a16c334b9b189"
+  ],
+  "vulnerable_address": "0xeD1afC8C4604958C2F38a3408FA63B32E737c428",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x0a5ea466",
+  "type": "access-control",
+  "attacker_profit": 391346.510701222,
+  "source_case_id": "dfhl-0106",
+  "fix_description": "claimTokens performs transferFrom on behalf of any user who approved the contract, but has no effective access control \u2014 the owner address validation checks the wrong storage slot (executor instead of owner). Fix by adding proper require(msg.sender == owner) check, or restricting claimTokens to only be callable by the verified bridge contract.",
+  "attack_date": "2022-10-02",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a straightforward arbitrary-from/incorrect owner validation exploit: the attacker supplies a victim address that previously approved the helper contract, and the protocol performs transferFrom to the attacker. Although the PoC uses opaque precomputed calldata, the actual exploit logic is essentially one external call and minimal DeFi-specific reasoning."
+}

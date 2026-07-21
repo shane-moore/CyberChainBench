@@ -1,0 +1,23 @@
+{
+  "id": "bench-51",
+  "name": "WaultFinace",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2021/README.md#20210804-waultfinace---flashloan-price-manipulation",
+  "chain": "bsc",
+  "block_number": 9728756,
+  "attack_txs": [
+    "0x31262f15a5b82999bf8d9d0f7e58dcb1656108e6031a2797b612216a95e1670e"
+  ],
+  "vulnerable_address": "0xa79Fe386B88FBee6e492EEb76Ec48517d1eC759a",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "WUSDMaster.sol",
+  "function": "stake",
+  "type": "price-manipulation",
+  "attacker_profit": 920587.4126937757,
+  "source_case_id": "dfhl-0016",
+  "fix_description": "In stake, the WUSD mint amount should account for the actual swap result rather than the full input amount. The swap uses swapExactTokensForTokens with 0 minimum output (no slippage protection), and the minted WUSD is based on the pre-swap amount. Use the actual USDT remaining after swap, or add proper slippage checks.",
+  "attack_date": "2021-08-04",
+  "difficulty": "unknown",
+  "difficulty_reasoning": "No matching PoC file found for automated labeling."
+}

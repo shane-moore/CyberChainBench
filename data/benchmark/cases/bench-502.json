@@ -1,0 +1,23 @@
+{
+  "id": "bench-502",
+  "name": "Paribus",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250118-paribus---bad-oracle",
+  "chain": "arbitrum",
+  "block_number": 296699667,
+  "attack_txs": [
+    "0xf5e753d3da60db214f2261343c1e1bc46e674d2fa4b7a953eaf3c52123aeebd2"
+  ],
+  "vulnerable_address": "0x738b6098bf382b810f2d915f44e940bef62a3659",
+  "has_public_source": false,
+  "fixable": true,
+  "proxy_address": "0xaffd437801434643b734d0b2853654876f66f7d7",
+  "function": "0xc5ebeaec",
+  "type": "price-manipulation",
+  "attacker_profit": 39965.79333766526,
+  "source_case_id": "dfhl-0666",
+  "fix_description": "The borrow function (0xc5ebeaec) in this Compound-fork (pToken) uses a price oracle that can be manipulated. The oracle likely reads spot prices from an AMM or uses a stale/manipulable price feed. Replace with a TWAP oracle, Chainlink feed, or add borrowing caps and collateral factor limits to mitigate oracle manipulation.",
+  "attack_date": "2025-01-18",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The PoC is a multi-step DeFi exploit involving an Aave flash loan, token swaps, minting a Camelot LP NFT, entering NFT collateral markets, and borrowing across several Paribus markets before unwinding. It requires understanding protocol-specific NFT collateral/valuation logic and interactions across multiple contracts, but the attack flow is still fairly linear and the PoC is not especially large or deeply stateful."
+}

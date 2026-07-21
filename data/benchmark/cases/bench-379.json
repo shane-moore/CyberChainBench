@@ -1,0 +1,24 @@
+{
+  "id": "bench-379",
+  "name": "HoppyFrogERC",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240402-hoppyfrogerc---business-logic-flaw",
+  "chain": "ethereum",
+  "block_number": 19570745,
+  "attack_txs": [
+    "0x6fb7f8e9eb09d6ae17dbe82b2b42f46f64fb9c3197438b68ecf03e832d5fc791"
+  ],
+  "vulnerable_address": "0xE5c6F5fEF89B64f36BfcCb063962820136bAc42F",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Hoppy.sol",
+  "function": "_transfer",
+  "type": "input-validation",
+  "attacker_profit": 7442.489973287,
+  "source_case_id": "dfhl-0524",
+  "fix_description": "In swapTokensForEth, the amountOutMinimum is set to 0, meaning the contract accepts any output amount without validation. Set a reasonable minimum output based on oracle price or TWAP to reject swaps at manipulated prices.",
+  "_review_note": "DISPUTED: Same pattern as bench-297. amountOutMin=0 sandwich vulnerability. Unclear if input-validation or price-manipulation.",
+  "attack_date": "2024-04-02",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a short, direct exploit using a single Uniswap V3 flash loan followed by a few swaps and a token transfer to manipulate a fee-on-transfer/token-specific behavior. It involves limited protocol complexity, few moving parts, and the PoC is well under 100 lines of actual exploit logic."
+}

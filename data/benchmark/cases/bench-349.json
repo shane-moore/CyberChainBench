@@ -1,0 +1,23 @@
+{
+  "id": "bench-349",
+  "name": "NORMIE",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240526-normie---business-logic-flaw",
+  "chain": "base",
+  "block_number": 14952783,
+  "attack_txs": [
+    "0xa618933a0e0ffd0b9f4f0835cc94e523d0941032821692c01aa96cd6f80fc3fd"
+  ],
+  "vulnerable_address": "0x7F12d13B34F5F4f0a9449c16Bcd42f0da47AF200",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "NORMIE.sol",
+  "function": "_transfer",
+  "type": "accounting-error",
+  "attacker_profit": 371469.33909111883,
+  "source_case_id": "dfhl-0491",
+  "fix_description": "In _transfer, remove the logic that adds amount to _balances[address(this)] when isMarketPair[sender] && premarket_user[recipient]. This creates tokens out of thin air - the full amount is credited to both the contract and the recipient, inflating total supply. The attacker exploits this by triggering swapAndLiquify with the inflated contract balance.",
+  "attack_date": "2024-05-26",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The PoC is a multi-step attack involving an initial buy, a V2 flash swap, a V3 flash loan, router-based swaps, and repeated skim/transfer abuse against a fee-on-transfer token pair. While the exploit logic is not deeply protocol-internal, it requires understanding AMM pair accounting, flash loan callbacks, and the specific skim-loop mechanics, so it is more than a straightforward single-pattern bug."
+}

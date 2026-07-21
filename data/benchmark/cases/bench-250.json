@@ -1,0 +1,23 @@
+{
+  "id": "bench-250",
+  "name": "- CowSwap",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230207---cowswap---arbitrary-external-call-vulnerability",
+  "chain": "ethereum",
+  "block_number": 16574049,
+  "attack_txs": [
+    "0x90b468608fbcc7faef46502b198471311baca3baab49242a4a85b73d4924379b"
+  ],
+  "vulnerable_address": "0xcD07a7695E3372aCD2B2077557DE93e667B92bd8",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "SwapGuard.sol",
+  "function": "envelope",
+  "type": "input-validation",
+  "attacker_profit": 113852.51386079137,
+  "source_case_id": "dfhl-0378",
+  "fix_description": "Add access control to envelope() (onlyOwner or whitelist callers). The function is public and executes arbitrary external calls (target.call with user-supplied callData), allowing anyone to make the contract perform any action on behalf of itself, including transferring tokens it has been approved to spend.",
+  "attack_date": "2023-02-07",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is essentially a single direct call into an exposed callback with attacker-controlled parameters, followed by unwrapping WETH and transferring ETH out. It is very short, requires minimal protocol-specific setup, and matches an obvious unsafe-callback/access-control style issue that an experienced auditor could reproduce quickly."
+}

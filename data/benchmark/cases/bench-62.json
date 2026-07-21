@@ -1,0 +1,23 @@
+{
+  "id": "bench-62",
+  "name": "Bacon Protocol",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220305-bacon-protocol---reentrancy",
+  "chain": "ethereum",
+  "block_number": 14326932,
+  "attack_txs": [
+    "0x7d2296bcb936aa5e2397ddf8ccba59f54a178c3901666b49291d880369dbcf31"
+  ],
+  "vulnerable_address": "0x781ad73f140815763d9a4d4752daf9203361d07d",
+  "has_public_source": false,
+  "fixable": true,
+  "proxy_address": "0xb8919522331c59f5c16bdfaa6a121a6e03a91f62",
+  "function": "0xa6aa57ce",
+  "type": "reentrancy",
+  "attacker_profit": 954075.2650630102,
+  "source_case_id": "dfhl-0173",
+  "fix_description": "In lend (0xa6aa57ce), add reentrancy guard (nonReentrant modifier). The function makes an external call before updating state, allowing recursive re-entry that mints excess shares. Apply checks-effects-interactions pattern or add a reentrancy lock.",
+  "attack_date": "2022-03-05",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit uses a flash swap from Uniswap plus protocol-specific reentrancy via ERC777/ERC1820-style tokensReceived hooks to recursively call lend before redeeming, so it requires understanding multiple contracts and token callback mechanics. The PoC is still fairly short, but it is more than a trivial single-step bug and needs DeFi-specific reasoning about flash liquidity and callback-driven state abuse."
+}

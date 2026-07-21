@@ -1,0 +1,23 @@
+{
+  "id": "bench-226",
+  "name": "OLIFE",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230419-olife---reflection-token",
+  "chain": "bsc",
+  "block_number": 27470679,
+  "attack_txs": [
+    "0xa21692ffb561767a74a4cbd1b78ad48151d710efab723b1efa5f1e0147caab0a"
+  ],
+  "vulnerable_address": "0xb5a0Ce3Acd6eC557d39aFDcbC93B07a1e1a9e3fa",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "OceanLife.sol",
+  "function": "deliver",
+  "type": "accounting-error",
+  "attacker_profit": 11058.596892998636,
+  "source_case_id": "dfhl-0350",
+  "fix_description": "Same reflect token deliver vulnerability as MCC/HODL. In deliver, reducing _rTotal manipulates the global reflect rate, creating balance/reserve mismatch in LP pair. Fix: exclude LP pair from rate changes or add same-block protection.",
+  "attack_date": "2023-04-19",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a multi-step tokenomics-specific attack: flash loan WBNB, buy the reflection token, manipulate reflection accounting via repeated self-transfers plus deliver(), then directly drain the pair using reserve/balance mismatch. It is not deeply complex, but it does require understanding reflection-token internals and AMM reserve math beyond a simple access-control or reentrancy bug."
+}

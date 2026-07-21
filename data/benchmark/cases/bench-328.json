@@ -1,0 +1,22 @@
+{
+  "id": "bench-328",
+  "name": "UnverifiedContr_0x452E25",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240703-unverifiedcontr_0x452e25---lack-of-access-control",
+  "chain": "ethereum",
+  "block_number": 20223095,
+  "attack_txs": [
+    "0x1194e1d6085885ce054a7ff8cd3cd0c3fa308ec87e4ccde8dd0549842fef4f1b"
+  ],
+  "vulnerable_address": "0x452E253EeB3Bb16e40337D647c01b6c910Aa84B3",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0xfa461e33",
+  "type": "access-control",
+  "attacker_profit": 92235.744117251,
+  "source_case_id": "dfhl-0468",
+  "fix_description": "In uniswapV3SwapCallback (0xfa461e33), no validation that msg.sender is a legitimate Uniswap V3 pool. Any caller can invoke this callback and trigger token transfers. Add pool address verification.",
+  "attack_date": "2024-07-03",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a multi-step AMM reserve-manipulation attack using a flash loan, a swap into the target token, repeated token transfers plus skim calls to distort pair balances, and a final swap back for profit. It requires understanding UniswapV2 pair accounting and the effect of skim on excess balances, making it more protocol-specific than a simple bug but still not deeply complex."
+}

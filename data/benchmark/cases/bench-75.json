@@ -1,0 +1,23 @@
+{
+  "id": "bench-75",
+  "name": "NFTTrader",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231216-nfttrader---reentrancy",
+  "chain": "ethereum",
+  "block_number": 18799488,
+  "attack_txs": [
+    "0xec7523660f8b66d9e4a5931d97ad8b30acc679c973b20038ba4c15d4336b393d"
+  ],
+  "vulnerable_address": "0xC310e760778ECBca4C65B6C559874757A4c4Ece0",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "BatchSwap.sol",
+  "function": "closeSwapIntent",
+  "type": "reentrancy",
+  "attacker_profit": 112.1646399,
+  "source_case_id": "dfhl-0192",
+  "fix_description": "Add reentrancy guard (nonReentrant modifier) to closeSwapIntent, or follow checks-effects-interactions pattern to update state before making external calls.",
+  "attack_date": "2023-12-16",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a multi-step NFT swap/reentrancy case requiring understanding of the protocol-specific swap intent flow, ERC721 callbacks, and how counterparties are edited during receipt to steal victim-approved NFTs. The PoC is not deeply complex, but it involves several contract interactions, timing/block manipulation, and non-obvious logic rather than a simple single-call bug."
+}

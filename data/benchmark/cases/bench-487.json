@@ -1,0 +1,23 @@
+{
+  "id": "bench-487",
+  "name": "BBXToken",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250320-bbxtoken---price-manipulation",
+  "chain": "bsc",
+  "block_number": 47626727,
+  "attack_txs": [
+    "0x0dd486368444598610239b934dd9e8c6474a06d11380d1cfec4d91568b5ac581"
+  ],
+  "vulnerable_address": "0x67Ca347e7B9387af4E81c36cCA4eAF080dcB33E9",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "BBXToken.sol",
+  "function": "_transfer",
+  "type": "accounting-error",
+  "attacker_profit": 11835.265115268903,
+  "source_case_id": "dfhl-0647",
+  "fix_description": "In _transfer, the burn logic checks block.timestamp >= lastBurnTime + lastBurnGapTime but never updates lastBurnTime after burning. The condition is always true, so every transfer burns from the pair and syncs. Fix by adding lastBurnTime = block.timestamp after the burn.",
+  "attack_date": "2025-03-20",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The exploit is a very simple protocol-specific logic abuse: buy a small amount of BBX, repeatedly call transfer(address(this), 0) to trigger the flawed burn/liquidity logic, then dump inflated value into the LP. It is only a few steps, uses no flash loan or complex multi-contract routing, and the PoC is short and straightforward once the token bug is identified."
+}

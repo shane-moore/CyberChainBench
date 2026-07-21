@@ -1,0 +1,23 @@
+{
+  "id": "bench-499",
+  "name": "Peapods Finance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250208-peapods-finance---price-manipulation",
+  "chain": "ethereum",
+  "block_number": 21800591,
+  "attack_txs": [
+    "0x2c1a19982aa88bee8a5d9a5dfeb406f2bfe1cfc1213f20e91d91ce3b55c86cc5"
+  ],
+  "vulnerable_address": "0x7d48D6D775FaDA207291B37E3eaA68Cc865bf9Eb",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "TokenRewards.sol",
+  "function": "depositFromPairedLpToken",
+  "type": "input-validation",
+  "attacker_profit": 909.3242671788481,
+  "source_case_id": "dfhl-0663",
+  "fix_description": "In depositFromPairedLpToken, the _slippageOverride parameter has no upper bound validation. An attacker can set it to 999 (99.9% slippage tolerance) to force the contract to accept highly unfavorable swap prices after manipulating the pool. Fix by restricting _slippageOverride to a reasonable range (e.g., max 50 = 5%).",
+  "attack_date": "2025-02-08",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a short flash-swap-based multi-step exploit involving Uniswap V2 callback logic, two Uniswap V3 swaps, and a protocol-specific rewards deposit function that must be understood in context. It is not deeply complex, but it does require reading the target protocol logic and chaining several interactions beyond a trivial access control or single-call bug."
+}

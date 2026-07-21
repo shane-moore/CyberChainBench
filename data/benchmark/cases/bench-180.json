@@ -1,0 +1,23 @@
+{
+  "id": "bench-180",
+  "name": "BambooIA",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230704-bambooia---price-manipulation-attack",
+  "chain": "bsc",
+  "block_number": 29668036,
+  "attack_txs": [
+    "0x88a6c2c3ce86d4e0b1356861b749175884293f4302dbfdbfb16a5e373ab58a10"
+  ],
+  "vulnerable_address": "0xed56784bc8f2c036f6b0d8e04cb83c253e4a6a94",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "BambooAI.sol",
+  "function": "updatePool",
+  "type": "price-manipulation",
+  "attacker_profit": 2914.8316562856667,
+  "source_case_id": "dfhl-0299",
+  "fix_description": "Add a per-block rate limit to updatePool (e.g., require(lastUpdateBlock != block.number)) so it only executes once per block. The attacker triggers 802 transfers in a single tx, each calling updatePool to drain 1% from the LP pair. With per-block limiting, only one drain occurs regardless of transfer count.",
+  "attack_date": "2023-07-04",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is not a trivial single-call bug: it requires understanding PancakeSwap pair mechanics, buying a large amount of the token, repeatedly abusing `skim()` in a loop to extract value from the token/pair interaction, and then unwinding back to WBNB. While the PoC is fairly short, the vulnerability depends on protocol-specific tokenomics/AMM behavior rather than an obvious generic pattern, so it would likely take an experienced auditor 30 minutes to 2 hours to derive confidently."
+}

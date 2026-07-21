@@ -1,0 +1,23 @@
+{
+  "id": "bench-251",
+  "name": "- FDP",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230206---fdp---reflection-token",
+  "chain": "bsc",
+  "block_number": 25430419,
+  "attack_txs": [
+    "0x09925028ce5d6a54801d04ff8f39e79af6c24289e84b301ddcdb6adfa51e901b"
+  ],
+  "vulnerable_address": "0x1954b6bd198c29c3ecf2d6f6bc70a4d41ea1cc07",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "FIREDRAKE.sol",
+  "function": "deliver",
+  "type": "accounting-error",
+  "attacker_profit": 5259.428088034958,
+  "source_case_id": "dfhl-0379",
+  "fix_description": "Exclude the LP pair from reflections (add to _isExcluded). Currently the pair is not excluded, so its balanceOf is computed via _rOwned/rate. When deliver() reduces _rTotal, the rate decreases and the pair balance inflates, enabling arbitrage. Excluding the pair makes its balance use _tOwned which is unaffected by rate changes.",
+  "attack_date": "2023-02-06",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a multi-step DeFi attack involving a flash loan, swapping into a reflective fee-on-transfer token, abusing the token\u2019s `deliver()` mechanics to distort the pair\u2019s effective balances, and then draining value via the AMM pair swap. It is not a generic bug pattern and requires understanding reflective token accounting plus UniswapV2-style pair behavior, but the PoC itself is still fairly short and contained."
+}

@@ -1,0 +1,31 @@
+{
+  "id": "bench-149",
+  "name": "ExactlyProtocol",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230818-exactlyprotocol---insufficient-validation",
+  "chain": "optimism",
+  "block_number": 108375558,
+  "attack_txs": [
+    "0x3d6367de5c191204b44b8a5cf975f257472087a9aadc59b5d744ffdef33a520e"
+  ],
+  "vulnerable_address": "0x16748cb753a68329ca2117a7647aa590317ebf41",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x675d410dcf6f343219aae8d1dde0bfab46f52106",
+  "file": "DebtManager.sol",
+  "function": "noTransferLeverage",
+  "type": "reentrancy",
+  "attacker_profit": 2447778.819059956,
+  "source_case_id": "dfhl-0270",
+  "fix_description": "In noTransferLeverage, add reentrancy guard or follow checks-effects-interactions. External calls during leverage operation allow re-entry before position state is updated.",
+  "attack_date": "2023-08-18",
+  "normal_txs": [
+    "0xd919b7896d94fc0509564b6b48c31c9cb01a3c588a9391c0a77a8bdd28ea89bf",
+    "0xae99e60982468239ac246fa3e8a38f7f54c1122aab9a22cbe14aacd6cba05231",
+    "0x6accb0211684a195a59e38c9676af17a263e09fb6c24b17e85ec74c846bd537b",
+    "0x679367dce837e4cffa60bb6e695ad71ff1646a3cdfdf111b56e260cb6da49baa",
+    "0x4fd91f842715da3a4ca3baa5224acc9f6689093f84833bc0bda7ce15c9af6234"
+  ],
+  "difficulty": "hard",
+  "difficulty_reasoning": "This exploit requires deep protocol-specific understanding of Exactly\u2019s DebtManager, Auditor liquidity accounting, ERC4626 share-to-asset conversion, and how backupEarnings can be manipulated across maturities to force liquidations. The PoC is a long multi-stage attack using cloned fake markets, victim-specific state abuse, Uniswap V3 pool setup, collateral distortion, and liquidation chaining, which is well beyond a straightforward bug pattern."
+}

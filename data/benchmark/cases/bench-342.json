@@ -1,0 +1,23 @@
+{
+  "id": "bench-342",
+  "name": "NCD",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240604-ncd---business-logic-flaw",
+  "chain": "bsc",
+  "block_number": 39289513,
+  "attack_txs": [
+    "0xbfb9b3b8a0d3c589a02f06c516b5c7b7569739edd00f9836645080f2148aefc7"
+  ],
+  "vulnerable_address": "0x9601313572eCd84B6B42DBC3e47bc54f8177558E",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "NCD.sol",
+  "function": "doReward",
+  "type": "price-manipulation",
+  "attacker_profit": 1932.2289151327668,
+  "source_case_id": "dfhl-0482",
+  "fix_description": "In doReward, reward is calculated based on the current balance (_balances[_sender]) which can be inflated via flash loan. Fix by using a time-weighted average balance (checkpoint-based) or by adding a minimum holding period requirement before rewards accrue.",
+  "attack_date": "2024-06-04",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is multi-step and protocol-specific: it abuses a custom reward/mineStartTime mechanism across many freshly deployed helper contracts, uses time advancement, repeated token redistribution, and finally unwinds through swaps back to USDC. While the PoC is not extremely long and avoids deep cross-protocol complexity, understanding why the reward logic can be farmed this way requires more than spotting a simple access control bug."
+}

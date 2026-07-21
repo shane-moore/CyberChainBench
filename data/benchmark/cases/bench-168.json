@@ -1,0 +1,23 @@
+{
+  "id": "bench-168",
+  "name": "BNO",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230718-bno---invalid-emergency-withdraw-mechanism",
+  "chain": "bsc",
+  "block_number": 30056630,
+  "attack_txs": [
+    "0x33fed54de490797b99b2fc7a159e43af57e9e6bdefc2c2d052dc814cfe0096b9"
+  ],
+  "vulnerable_address": "0xdCA503449899d5649D32175a255A8835A03E4006",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Pool.sol",
+  "function": "emergencyWithdraw",
+  "type": "accounting-error",
+  "attacker_profit": 587.8787430582728,
+  "source_case_id": "dfhl-0288",
+  "fix_description": "In emergencyWithdraw(), update the global total staked amount (e.g. totalAllocPoint or totalStaked) when clearing the user stake. The current implementation only resets user-level state but not pool-level accounting, allowing reward calculation manipulation.",
+  "attack_date": "2023-07-18",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very straightforward exploit centered on an obvious logic flaw in emergencyWithdraw/unstakeNft accounting. The PoC is short, uses only a simple flash swap for capital, and repeatedly performs the same 4-call sequence without requiring deep protocol knowledge or complex cross-contract reasoning."
+}

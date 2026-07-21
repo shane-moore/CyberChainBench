@@ -1,0 +1,31 @@
+{
+  "id": "bench-378",
+  "name": "wsm",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240404-wsm---manipulating-price",
+  "chain": "bsc",
+  "block_number": 37569861,
+  "attack_txs": [
+    "0x5a475a73343519f899527fdb9850f68f8fc73168073c72a3cff8c0c7b8a1e520"
+  ],
+  "vulnerable_address": "0xc0afd0e40bb3dcaebd9451aa5c319b745bf792b4",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0xfb071837728455c581f370704b225ac9eabdfa4a",
+  "file": "PresaleBSCV5Flat.sol",
+  "function": "fetchPrice",
+  "type": "price-manipulation",
+  "attacker_profit": 1703.3666458277646,
+  "source_case_id": "dfhl-0523",
+  "fix_description": "In fetchPrice, uses AMM spot price which can be manipulated via flash loan. Fix: use TWAP oracle or Chainlink price feed.",
+  "normal_txs": [
+    "0x27995a5cc63062f0421d2862677d82fb5c2e0d5b50beef36a44b760b2fb231c2",
+    "0xe4ca3f1b92fe3b9eb6d38ba5506bfd5c733c2a14afc10e17326418f4579c71c0",
+    "0x8648de388b65d559a1e7b5a31046699239ccd63e9dcdd3402cb7febb9b83175a",
+    "0xd8e6b37b959cb70c1637290a36365a712fed1700b5c4a7e61c99dac4472d7a36",
+    "0x1fd804066a50b5e41c3b380c285e2f653caa59f4da162c47d6ca80a4bb4c7598"
+  ],
+  "attack_date": "2024-04-04",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a short but protocol-specific price manipulation using a Uniswap V3 flash loan, a swap to distort the WBNB/WSM price, and then abusing presale pricing via buyWithBNB() before unwinding and repaying. It is only a few steps and not deeply complex, but it requires understanding flash-loan-driven price skew and how the vulnerable presale contract derives token amounts from manipulated pool state."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-271",
+  "name": "Pledge",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20241203-pledge---access-control",
+  "chain": "bsc",
+  "block_number": 44555338,
+  "attack_txs": [
+    "0x63ac9bc4e53dbcfaac3a65cb90917531cfdb1c79c0a334dda3f06e42373ff3a0"
+  ],
+  "vulnerable_address": "0x061944c0f3c2d7DABafB50813Efb05c4e0c952e1",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Pledge.sol",
+  "function": "swapTokenU",
+  "type": "access-control",
+  "attacker_profit": 14889.80112822074,
+  "source_case_id": "dfhl-0402",
+  "fix_description": "In swapTokenU, the function is public without access control. Anyone can call it to swap the contract token balance to USDT and send to an arbitrary _target address. Fix: add onlyOwner modifier.",
+  "attack_date": "2024-12-03",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is a single-call exploit that directly drains the vulnerable contract by passing its full token balance into swapTokenU, suggesting an obvious missing validation/access control issue. It requires minimal protocol understanding, no flash loans or multi-contract orchestration, and the exploit code is extremely short."
+}

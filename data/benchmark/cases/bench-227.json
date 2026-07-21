@@ -1,0 +1,23 @@
+{
+  "id": "bench-227",
+  "name": "Swapos V2",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230416-swapos-v2---error-k-value-attack",
+  "chain": "ethereum",
+  "block_number": 17057443,
+  "attack_txs": [
+    "0x78edc292af51a93f89ac201a742bce9fa9c5d9a7007f034aa30535e35082d50a"
+  ],
+  "vulnerable_address": "0xf40593a22398c277237266a81212f7d41023b630",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "SwaposV2Pair.sol",
+  "function": "swap",
+  "type": "accounting-error",
+  "attacker_profit": 94649.76731534213,
+  "source_case_id": "dfhl-0351",
+  "fix_description": "In swap, the K-value invariant check uses mismatched scaling: left side uses mul(10000) but right side uses mul(1000**2). The fee was changed from 0.3% to 0.1% by adjusting the left side scaling to 10000, but the right side constant was not updated from 1000**2 to 10000**2. This weakens the K check by 100x, allowing swaps that violate the invariant. Fix: change require to balance0Adjusted.mul(balance1Adjusted) >= _reserve0.mul(_reserve1).mul(10000**2).",
+  "attack_date": "2023-04-16",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is a single-pool, essentially one-step exploit with only a tiny setup and one critical swap call after transferring dust WETH. It does not require flash loans, multi-contract coordination, or deep protocol-specific reasoning beyond recognizing a straightforward swap/reserve imbalance issue."
+}

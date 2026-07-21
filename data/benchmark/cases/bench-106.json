@@ -1,0 +1,23 @@
+{
+  "id": "bench-106",
+  "name": "grok",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231110-grok---lack-of-slippage-protection",
+  "chain": "ethereum",
+  "block_number": 18538679,
+  "attack_txs": [
+    "0x3e9bcee951cdad84805e0c82d2a1e982e71f2ec301a1cbd344c832e0acaee813"
+  ],
+  "vulnerable_address": "0x8390a1DA07E376ef7aDd4Be859BA74Fb83aA02D5",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "GROK.sol",
+  "function": "swapTokensForEth",
+  "type": "price-manipulation",
+  "attacker_profit": 71721.151341688,
+  "source_case_id": "dfhl-0223",
+  "fix_description": "In swapTokensForEth, the amountOutMin parameter is set to 0 (no slippage protection). Fix by calculating a reasonable minimum output amount based on an oracle price or TWAP, rejecting swaps that would execute at a significantly worse price than expected. This prevents sandwich attacks on the tax-swap mechanism.",
+  "attack_date": "2023-11-10",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a straightforward lack-of-access-control exploit: the attacker simply acquires LP tokens, deposits them, then directly calls an unrestricted updatePool to set an absurd rewardPerBlock and claims rewards. It is a short, linear attack with minimal protocol complexity and no flash loans, reentrancy, or deep accounting reasoning required."
+}

@@ -1,0 +1,22 @@
+{
+  "id": "bench-81",
+  "name": "ElephantStatus",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231206-elephantstatus---price-manipulation",
+  "chain": "bsc",
+  "block_number": 34114761,
+  "attack_txs": [
+    "0xd423ae0e95e9d6c8a89dcfed243573867e4aad29ee99a9055728cbbe0a523439"
+  ],
+  "vulnerable_address": "0x8Cf0A553aB3896e4832ebCC519a7A60828AB5740",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x35faa416",
+  "type": "price-manipulation",
+  "attacker_profit": 112175.80784046832,
+  "source_case_id": "dfhl-0199",
+  "fix_description": "In sweep (0x35faa416), the function reads instant token balances or prices that can be manipulated via flashloan. Add TWAP-based price checks or restrict sweep to only be callable by authorized addresses with time delays.",
+  "attack_date": "2023-12-06",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is a multi-step chain using four nested PancakeV3 flash loans to accumulate enough BUSD, then performing a price-moving swap before calling an unprotected protocol function and unwinding via another swap. While the core bug is simple access control on `sweep()`, writing the PoC requires understanding the protocol-specific price impact and coordinating several external calls/flash callbacks."
+}

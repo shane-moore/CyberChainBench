@@ -1,0 +1,24 @@
+{
+  "id": "bench-24",
+  "name": "EGD Finance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220807-egd-finance---flashloans--price-manipulation",
+  "chain": "bsc",
+  "block_number": 20245540,
+  "attack_txs": [
+    "0x50da0b1b6e34bce59769157df769eb45fa11efc7d0e292900d6b0a86ae66a2b3"
+  ],
+  "vulnerable_address": "0x93c175439726797dcee24d08e4ac9164e88e7aee",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x34bd6dba456bc31c2b3393e499fa10bed32a9370",
+  "file": "EGD_Defi.sol",
+  "function": "getEGDPrice",
+  "type": "price-manipulation",
+  "attacker_profit": 36000.217675693886,
+  "source_case_id": "dfhl-0128",
+  "fix_description": "Replace spot price calculation in getEGDPrice (reading pair balanceOf directly) with a TWAP oracle or Chainlink price feed that cannot be manipulated within a single transaction by flash loans.",
+  "attack_date": "2022-08-07",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a multi-step flash-loan price manipulation against a protocol-specific reward calculation: pre-stake, first flash loan, second flash loan draining LP reserves to distort price, claim inflated rewards, swap out, and repay both loans. It requires understanding AMM reserve-based pricing and the target contract\u2019s reward logic, but the PoC is still fairly direct and not deeply complex."
+}

@@ -1,0 +1,24 @@
+{
+  "id": "bench-362",
+  "name": "XBridge",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240424-xbridge---logic-flaw",
+  "chain": "ethereum",
+  "block_number": 19723706,
+  "attack_txs": [
+    "0x903d88a92cbc0165a7f662305ac1bff97430dbcccaa0fe71e101e18aa9109c92"
+  ],
+  "vulnerable_address": "0x354cca2f55dde182d36fe34d673430e226a3cb8c",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x47ddb6a433b76117a98fbeab5320d8b67d468e31",
+  "file": "XBridge4.sol",
+  "function": "listToken",
+  "type": "access-control",
+  "attacker_profit": 190029.64181481206,
+  "source_case_id": "dfhl-0506",
+  "fix_description": "Add onlyOwner or onlyAdmin modifier to listToken(). The function is external with no access control, allowing anyone to register arbitrary token pairs with _isMintable=true, enabling attackers to mint tokens through the bridge without legitimate backing.",
+  "attack_date": "2024-04-24",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The exploit is a very short, two-step attack: call a token-listing function with attacker-controlled parameters, then immediately withdraw all of that token from the bridge. This is an obvious access-control/validation failure with minimal protocol-specific reasoning and only a couple of external calls."
+}

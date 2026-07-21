@@ -1,0 +1,22 @@
+{
+  "id": "bench-126",
+  "name": "BH",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231011-bh---price-manipulation",
+  "chain": "bsc",
+  "block_number": 32512074,
+  "attack_txs": [
+    "0xc11e4020c0830bcf84bfa197696d7bfad9ff503166337cb92ea3fade04007662"
+  ],
+  "vulnerable_address": "0x8cA7835aa30b025b38A59309DD1479d2F452623a",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x4e290832",
+  "type": "price-manipulation",
+  "attacker_profit": 1134484.9184327472,
+  "source_case_id": "dfhl-0244",
+  "fix_description": "Function 0x4e290832 uses balanceOf checks on the pair contract to determine token value/rewards. Attacker manipulates pair balances via Upgrade() function calls (which move USDT in/out of the contract without proper price validation), then calls 0x4e290832 to extract tokens at inflated value. Fix: use TWAP oracle instead of instantaneous balanceOf for price determination.",
+  "attack_date": "2023-10-11",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This PoC uses a long multi-stage attack chain with several nested flash loans, cross-protocol callbacks, repeated protocol-specific function abuse on an unverified contract, liquidity manipulation, and iterative liquidity removal. Writing it would require substantial reverse engineering of custom contract logic and state effects, well beyond a straightforward auditor pattern match."
+}

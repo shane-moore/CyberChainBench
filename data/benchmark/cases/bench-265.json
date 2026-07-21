@@ -1,0 +1,23 @@
+{
+  "id": "bench-265",
+  "name": "SlurpyCoin",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20241218-slurpycoin---logic-flaw",
+  "chain": "bsc",
+  "block_number": 44990635,
+  "attack_txs": [
+    "0x6c729ee778332244de099ba0cb68808fcd7be4a667303fcdf2f54dd4b3d29051"
+  ],
+  "vulnerable_address": "0x72c114A1A4abC65BE2Be3E356eEde296Dbb8ba4c",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "SlurpyCoin.sol",
+  "function": "swapEthForTokens",
+  "type": "price-manipulation",
+  "attacker_profit": 5311.525077220771,
+  "source_case_id": "dfhl-0397",
+  "fix_description": "In swapEthForTokens, the swap is executed with 0 minimum output (no slippage protection). Called from BuyOrSell during auto-buyback, attacker manipulates pair price then triggers buyback via a transfer to sandwich the swap. Fix: set reasonable amountOutMin based on oracle or TWAP price.",
+  "attack_date": "2024-12-18",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a multi-step tokenomics/manipulation attack using a flash loan, repeated transfer-triggered side effects, helper contracts, and staged dumping to realize profit. While not deeply complex protocol-internals work, it requires understanding the custom SLURPY transfer/BuyOrSell behavior and orchestrating several coordinated interactions beyond a simple one-call bug."
+}

@@ -1,0 +1,22 @@
+{
+  "id": "bench-383",
+  "name": "- FPR",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221214---fpr---access-control",
+  "chain": "bsc",
+  "block_number": 23904153,
+  "attack_txs": [
+    "0xec1b969e1435a1449dd5179404c54b5c60e49f15a1bf6bf8922e8d2978102f4a"
+  ],
+  "vulnerable_address": "0x81c5664be54d89E725ef155F14cf34e6213297B7",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x704b6c02",
+  "type": "access-control",
+  "attacker_profit": 26132.038047742037,
+  "source_case_id": "dfhl-0057",
+  "fix_description": "In setAdmin (0x704b6c02), there is no msg.sender check. Anyone can overwrite storage[0x00] (admin address). Add require(msg.sender == currentAdmin) before updating.",
+  "attack_date": "2022-12-14",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The exploit is a very straightforward access-control failure: the attacker simply calls setAdmin on vulnerable contracts, drains assets via remaining, and swaps/removes liquidity for profit. It requires minimal protocol-specific reasoning, no flash loans or complex state manipulation, and the PoC is short with only a few direct external calls."
+}

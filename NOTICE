@@ -1,0 +1,53 @@
+CyberChainBench — Third-Party Attribution and Licensing Notice
+==============================================================
+
+The source code in this repository is released under the MIT License (see the
+LICENSE file). The notice below covers third-party data, datasets, and assets
+that are NOT covered by the MIT License and that carry their own licenses and
+attribution requirements. The MIT License applies to the original code only,
+not to the third-party material described here.
+
+
+1. Benchmark cases derived from DeFiHackLabs
+--------------------------------------------
+The benchmark cases are derived from real-world DeFi incident reproductions in
+the DeFiHackLabs project:
+
+    DeFiHackLabs — https://github.com/SunWeb3Sec/DeFiHackLabs
+    Licensed under the GNU Affero General Public License v3.0 (AGPL-3.0).
+
+The exploit reproductions, vulnerable-contract references, and associated
+proof-of-concept material that this benchmark builds upon originate from
+DeFiHackLabs and remain subject to AGPL-3.0. Any redistribution or use of the
+derived case data must comply with the terms of AGPL-3.0, including its source
+availability requirements. This benchmark's MIT license does NOT relicense that
+upstream material.
+
+Note: the case data itself (data/benchmark/cases/, data/sources/DeFiHackLabs/)
+is dataset-dependent and is not bundled in this repository. See the README for
+how to obtain and regenerate it.
+
+
+2. Smart contract source code (via block explorers)
+----------------------------------------------------
+Verified contract source code fetched at runtime through the Etherscan family
+of block-explorer APIs belongs to its respective authors and is subject to
+whatever license each contract publishes (often none). It is retrieved for
+analysis only and is not redistributed as part of this repository.
+
+
+3. Model / vendor icons (site/assets/icon/)
+--------------------------------------------
+The model and vendor logos used in the project website (e.g. OpenAI/ChatGPT,
+Anthropic/Claude, Google/Gemini, DeepSeek) are trademarks of their respective
+owners. They are included solely to identify the corresponding models in
+result visualizations and imply no endorsement or affiliation. Each remains the
+property of its owner and is used under nominative/fair-use terms; they are not
+covered by this project's MIT License.
+
+
+4. Third-party software dependencies
+------------------------------------
+This project depends on third-party software (Foundry, Harbor, the agent CLIs,
+and the Python packages listed in pyproject.toml). Each is distributed under its
+own license; refer to the respective projects for terms.

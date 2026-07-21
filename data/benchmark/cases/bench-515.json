@@ -1,0 +1,31 @@
+{
+  "id": "bench-515",
+  "name": "LAURAToken",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250101-lauratoken---pair-balance-manipulation",
+  "chain": "ethereum",
+  "block_number": 21529888,
+  "attack_txs": [
+    "0xef34f4fdf03e403e3c94e96539354fb4fe0b79a5ec927eacc63bc04108dbf420"
+  ],
+  "vulnerable_address": "0x539d54074e052ae82de4936ae6bb213ab773559e",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x05641e33fd15baf819729df55500b07b82eb8e89",
+  "file": "PumpToken.sol",
+  "function": "removeLiquidityWhenKIncreases",
+  "type": "accounting-error",
+  "attacker_profit": 41128.73003599358,
+  "source_case_id": "dfhl-0678",
+  "fix_description": "Remove or restrict the token burn logic in removeLiquidityWhenKIncreases. The function should not burn tokens directly from the pair based on K value changes, as this allows anyone to manipulate pair reserves by first adding liquidity to increase K, triggering the burn, and profiting from the resulting price change.",
+  "normal_txs": [
+    "0xcc134294bec0f6713bac929c595f612c35555d06f8801a024725c12254f6afcf",
+    "0x703f1af1db81320b4ab59947bd6c0dc95b310fca29cad9e0ffbf7be40298eaab",
+    "0xb57f844f63a367386057d5b2924bc1c977cc23ee03db950934f4e623bd690b59",
+    "0x3389f103198037468eb053c52749bc74146b1d9ad5be6f7f82f71adb2b34d031",
+    "0xa01a2e440be1bc9cf15b957e19b50cd03353fc71ab31004700562867e5f99473"
+  ],
+  "attack_date": "2025-01-01",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very straightforward missing access control exploit: the attacker directly calls privileged functions to change node price and reward rate, then creates a node and claims inflated rewards. The PoC is short, uses only simple swaps plus a few direct contract calls, and requires little protocol-specific reasoning."
+}

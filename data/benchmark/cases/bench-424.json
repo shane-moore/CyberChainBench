@@ -1,0 +1,23 @@
+{
+  "id": "bench-424",
+  "name": "Freedom",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240110-freedom---lack-of-access-control",
+  "chain": "bsc",
+  "block_number": 35123711,
+  "attack_txs": [
+    "0x309523343cc1bb9d28b960ebf83175fac941b4a590830caccff44263d9a80ff0"
+  ],
+  "vulnerable_address": "0x8afebc3244769a21504d73e94a56d56fe3698c25",
+  "has_public_source": false,
+  "fixable": true,
+  "proxy_address": "0xae3ada8787245977832c6dab2d4474d3943527ab",
+  "function": "0x057466ea",
+  "type": "access-control",
+  "attacker_profit": 17645.09220454566,
+  "source_case_id": "dfhl-0577",
+  "fix_description": "Add onlyOwner or access control modifier to buyToken (func_0287/0x057466ea). Currently anyone can call it to swap tokens using the contract funds without authorization.",
+  "attack_date": "2024-01-10",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This PoC is a very short, direct flash-loan-assisted exploit with only a few steps: borrow WBNB, swap to FREE, call the vulnerable buyToken with a manipulated parameter, swap back, and repay. It does not require deep protocol internals or complex cross-contract state reasoning, and an experienced auditor could likely reproduce it quickly after identifying the flawed buyToken logic."
+}

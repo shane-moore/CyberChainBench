@@ -1,0 +1,23 @@
+{
+  "id": "bench-65",
+  "name": "Channels",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231231-channels---price-manipulation",
+  "chain": "bsc",
+  "block_number": 34847596,
+  "attack_txs": [
+    "0xcf729a9392b0960cd315d7d49f53640f000ca6b8a0bd91866af5821fdf36afc5"
+  ],
+  "vulnerable_address": "0xbeba905188a00b8c2fa2789e2550a3a3144b1c8f",
+  "has_public_source": false,
+  "fixable": true,
+  "proxy_address": "0x93790c641d029d1cbd779d87b88f67704b6a8f4c",
+  "function": "0xa6afed95",
+  "type": "price-manipulation",
+  "attacker_profit": 4262.789336491878,
+  "source_case_id": "dfhl-0181",
+  "fix_description": "exchangeRateStored() (0x182df0f5) calculates the exchange rate by reading PancakeSwap MasterChef poolInfo, which reflects manipulable pool state. Attacker manipulates the pool via flash loan, inflating the exchange rate, then calls redeemUnderlying to withdraw more assets. Fix: use TWAP or checkpoint-based calculation for exchange rate instead of reading instantaneous pool state.",
+  "attack_date": "2023-12-31",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The PoC is a multi-step DeFi exploit involving a flash loan, LP mint/burn flow, entering lending markets, borrowing from two cToken-like markets, redeeming collateral, and routing a swap to repay the flash loan. It requires understanding protocol-specific collateral/accounting behavior across several contracts, but the exploit path is still contained in a single transaction and the code is well under the complexity typical of truly hard cases."
+}

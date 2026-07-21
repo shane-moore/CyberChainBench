@@ -1,0 +1,23 @@
+{
+  "id": "bench-528",
+  "name": "- AUR",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221122---aur---lack-of-permission-check",
+  "chain": "bsc",
+  "block_number": 23282171,
+  "attack_txs": [
+    "0x7f031e8543e75bd5c85168558be89d2e08b7c02a32d07d76517cdbb10e279782"
+  ],
+  "vulnerable_address": "0x70678291bDDfd95498d1214BE368e19e882f7614",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "AurumNodePool.sol",
+  "function": "changeRewardPerNode",
+  "type": "access-control",
+  "attacker_profit": 13085.219282595615,
+  "source_case_id": "dfhl-0073",
+  "fix_description": "Add onlyOwner modifier to changeRewardPerNode(). Currently any external caller can set rewardPerDay to an arbitrary value and drain rewards.",
+  "attack_date": "2022-11-22",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a straightforward missing access control exploit: the attacker directly calls admin-like functions to change node price and reward rate, then creates a node and claims inflated rewards. The PoC is short, requires minimal protocol-specific reasoning, and uses only a simple buy/claim/sell flow without flash loans or complex multi-contract interactions."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-113",
+  "name": "SwampFinance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231101-swampfinance---business-logic-flaw",
+  "chain": "bsc",
+  "block_number": 33112359,
+  "attack_txs": [
+    "0x13e75878a21af9a9b2207f5d9e18f19a43083a9ffbac36df5a7d4d67a52c164f"
+  ],
+  "vulnerable_address": "0xdA937DDD1F2bd57F507f5764a4F9550c750F7B31",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "StrategyBelt_Token.sol",
+  "function": "deposit",
+  "type": "accounting-error",
+  "attacker_profit": 304.20533925039973,
+  "source_case_id": "dfhl-0232",
+  "fix_description": "In deposit, claim/settle pending rewards before updating the user share. Currently rewards accumulated before a new deposit are distributed to the new depositor. Fix by calling the reward distribution/claim logic before modifying stake balances.",
+  "attack_date": "2023-11-01",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a multi-step DeFi exploit involving a flash loan, Venus collateralization/borrowing, Belt vault deposit/withdraw, farming interaction, and strategy triggering before unwinding the position. It is not extremely long, but it requires understanding protocol-specific interactions across several contracts rather than exploiting a simple obvious bug."
+}

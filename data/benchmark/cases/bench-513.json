@@ -1,0 +1,23 @@
+{
+  "id": "bench-513",
+  "name": "SorStaking",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250104-sorstaking---incorrect-reward-calculation",
+  "chain": "ethereum",
+  "block_number": 21550968,
+  "attack_txs": [
+    "0x6439d63cc57fb68a32ea8ffd8f02496e8abad67292be94904c0b47a4d14ce90d"
+  ],
+  "vulnerable_address": "0x5d16b8Ba2a9a4ECA6126635a6FFbF05b52727d50",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "sorraStaking.sol",
+  "function": "_calculateRewards",
+  "type": "accounting-error",
+  "attacker_profit": 17212.6811993942,
+  "source_case_id": "dfhl-0676",
+  "fix_description": "In _calculateRewards, the reward is calculated from dep.amount (original deposit) every time without tracking whether rewards have already been claimed. Add a rewardClaimed flag or reduce dep.amount after withdrawal so that the same deposit cannot yield rewards repeatedly.",
+  "attack_date": "2025-01-04",
+  "difficulty": "unknown",
+  "difficulty_reasoning": "No matching PoC file found for automated labeling."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-244",
+  "name": "- DYNA",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230222---dyna---business-logic-flaw",
+  "chain": "bsc",
+  "block_number": 25879487,
+  "attack_txs": [
+    "0xc09678fec49c643a30fc8e4dec36d0507dae7e9123c270e1f073d335deab6cf0"
+  ],
+  "vulnerable_address": "0xa7B5eabC3Ee82c585f5F4ccC26b81c3Bd62Ff3a9",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "StakingDYNA.sol",
+  "function": "deposit",
+  "type": "accounting-error",
+  "attacker_profit": 22636.002673355775,
+  "source_case_id": "dfhl-0371",
+  "fix_description": "In deposit, when user adds more stake (firstStakeAt != 0), lastProcessAt is not updated. getInterest calculates reward as principal * duration where duration = now - lastProcessAt. Attacker deposits small amount, waits, then deposits large amount (inflating principal without resetting time), then immediately redeems for oversized interest. Fix: settle pending interest before updating principal on subsequent deposits (pendingReward += getInterest(); lastProcessAt = block.timestamp).",
+  "attack_date": "2023-02-22",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is multi-step and protocol-specific: it uses a flash swap, manipulates the token\u2019s sold-amount restriction via tx.origin behavior, and farms staking rewards across many helper contracts after a time warp. While the PoC is not extremely long, understanding why the repeated deposit/withdraw across 200 contracts works and how the transfer limit is bypassed requires more than spotting a simple bug."
+}

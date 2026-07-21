@@ -1,0 +1,23 @@
+{
+  "id": "bench-120",
+  "name": "kTAF",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231019-ktaf---compoundv2-inflation-attack",
+  "chain": "ethereum",
+  "block_number": 18385886,
+  "attack_txs": [
+    "0x325999373f1aae98db2d89662ff1afbe0c842736f7564d16a7b52bf5c777d3a4"
+  ],
+  "vulnerable_address": "0xf5140fc35c6f94d02d7466f793feb0216082d7e5",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "CErc20Immutable.sol",
+  "function": "exchangeRateStoredInternal",
+  "type": "accounting-error",
+  "attacker_profit": 8166.883088090613,
+  "source_case_id": "dfhl-0238",
+  "fix_description": "Classic Compound V2 share inflation attack. In exchangeRateStoredInternal, when totalSupply is very small (e.g. 1 wei), an attacker can donate tokens directly to inflate the exchange rate, causing subsequent depositors to mint 0 shares due to integer division truncation. Fix: enforce a minimum initial deposit that mints dead shares, or use virtual shares/assets offset (like OpenZeppelin ERC4626 mitigation).",
+  "attack_date": "2023-10-19",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This PoC involves a non-obvious lending market exploit with repeated liquidation calculations, cToken collateral seizure constraints, helper-contract orchestration, market entry, borrow/redeem edge cases, and draining protocol liquidity via looping state manipulation. An auditor would need to understand Compound-style internals and protocol-specific accounting across multiple contracts and iterations, which likely takes well over 2 hours to derive from scratch."
+}

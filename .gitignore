@@ -1,0 +1,50 @@
+datasets/
+papers/
+paper/
+__pycache__/
+*.pyc
+.DS_Store
+.env
+.env.local
+.venv/
+configs/api_keys.json
+
+# Runtime secret-bearing files written during evaluation (never commit/share)
+.env.runtime
+**/.env.runtime
+**/.mcp.json
+**/.codex/config.toml
+**/_openhands_config.toml
+**/*_cli_session.log
+upstream/
+data/sources/
+out/
+cache/
+tmp/
+data/benchmark/drafts/batch_*/
+data/benchmark/harbor_tasks/
+data/benchmark/harbor_jobs/
+data/benchmark/benchmark_case_*/
+data/benchmark_complete/
+slides.tar.gz
+slides/
+harbor/
+runtime_artifacts/
+verified_source/
+*.png
+stdout*.txt
+stderr*.txt
+data/eval/
+
+# Script run artifacts dropped at repo root
+figures/
+icon/
+.cache/
+.matplotlib-cache/
+
+# Landing-page assets (figures + model icons) — keep despite global *.png and
+# figures/ / icon/ directory ignores above (un-ignore the dirs first, then the files)
+!site/assets/figures/
+!site/assets/figures/*.png
+!site/assets/icon/
+!site/assets/icon/*.png

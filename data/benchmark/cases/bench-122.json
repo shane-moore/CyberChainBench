@@ -1,0 +1,22 @@
+{
+  "id": "bench-122",
+  "name": "MicDao",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231018-micdao---price-manipulation",
+  "chain": "bsc",
+  "block_number": 32711748,
+  "attack_txs": [
+    "0x24a2fbb27d433d91372525954f0d7d1af7509547b9ada29cc6c078e732c6d075"
+  ],
+  "vulnerable_address": "0x19345233ea7486c1d5d780a19f0e303597e480b5",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0xd3986f08",
+  "type": "price-manipulation",
+  "attacker_profit": 12195.442196652448,
+  "source_case_id": "dfhl-0240",
+  "fix_description": "SwapContract.swap uses a fixed exchange rate (storage[0x07]) set by owner. Attacker pumps MicDao market price on DEX via flash loan, then buys MicDao cheaply from the contract at the stale fixed rate, and sells at the inflated market price. Fix by using a real-time oracle or TWAP for the exchange rate instead of a static owner-set value, or add a circuit breaker that pauses swap when market price deviates significantly from the internal rate.",
+  "attack_date": "2023-10-18",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is more than a trivial bug because it combines a flash loan, DEX swaps, and repeated interaction through freshly deployed helper contracts to abuse protocol-specific swap logic. While the PoC is still fairly short and the core attack is straightforward once understood, an auditor would need to read the victim flow and recognize why looping via new contracts amplifies the gain."
+}

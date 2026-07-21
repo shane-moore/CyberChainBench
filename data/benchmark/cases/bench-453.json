@@ -1,0 +1,23 @@
+{
+  "id": "bench-453",
+  "name": "- AES (Deflationary token)",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221207---aes-deflationary-token---business-logic-flaw--flashloan-price-manipulation",
+  "chain": "bsc",
+  "block_number": 23695905,
+  "attack_txs": [
+    "0xca4d0d24aa448329b7d4eb81be653224a59e7b081fc7a1c9aad59c5a38d0ae19"
+  ],
+  "vulnerable_address": "0xdDc0CFF76bcC0ee14c3e73aF630C029fe020F907",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "AEST.sol",
+  "function": "distributeFee",
+  "type": "accounting-error",
+  "attacker_profit": 61239.39938408121,
+  "source_case_id": "dfhl-0065",
+  "fix_description": "distributeFee is public and directly transfers tokens from the LP pair to multiple wallets. Fix: add access control (onlyOwner) to distributeFee, or remove the direct pair balance manipulation \u2014 instead swap tokens through the router. Also add rate limiting so accumulated fees cannot be distributed all at once after manipulation via skim.",
+  "attack_date": "2022-12-07",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is a short multi-step price/accounting manipulation using a flash loan, AMM pair skim/sync behavior, and a protocol-specific fee distribution function. It is not a trivial access-control bug, but it also does not require a deeply complex cross-protocol chain or advanced state reasoning beyond understanding tokenomics plus UniswapV2 pair mechanics."
+}

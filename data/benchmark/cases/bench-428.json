@@ -1,0 +1,31 @@
+{
+  "id": "bench-428",
+  "name": "OrbitChain",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240101-orbitchain---incorrect-input-validation",
+  "chain": "ethereum",
+  "block_number": 18908050,
+  "attack_txs": [
+    "0xe0bada18fdc56dec125c31b1636490f85ba66016318060a066ed7050ff7271f9"
+  ],
+  "vulnerable_address": "0xc3430bc8c2c05fc6b42114bf7f82a3e2f3ee9454",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x1bf68a9d1eaee7826b3593c20a0ca93293cb489a",
+  "file": "EthVault.impl.sol",
+  "function": "withdraw",
+  "type": "input-validation",
+  "attacker_profit": 9659031.202787483,
+  "source_case_id": "dfhl-0582",
+  "notes": "SKIP: This was a private key compromise (multisig validators keys leaked), not a code vulnerability. The withdraw function validates signatures correctly via ecrecover. DeFiHackLabs label incorrect input validation is misleading.",
+  "normal_txs": [
+    "0xafdc36278fcef8d54824b09ec019147cfe2afd995abf6754e52d273a2c1b07ca",
+    "0x958aeec58ea2f0f9700adda24e43fb76f9e052e4c20773f180c49d7529d95f16",
+    "0x9e514aca4fe039bbb6c93678a7a5d9703ee3290f116d3306a6f801982d9ab589",
+    "0x32b9a1c3f9c00155a56413000bdec6acb144ec698fe914f3c4732d62959d4e67",
+    "0xd082ca50f50b781fa7d572ecb3fc2e732faa482e735923c696a019e1a65d96a5"
+  ],
+  "attack_date": "2024-01-01",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The core bug is a signature malleability/replay-style issue in burnToken, but turning it into profit requires a flash loan, multiple swaps, price manipulation via repeated burns, and understanding the token/pair mechanics. The exploit is not conceptually opaque, but it is a multi-step DeFi attack with protocol-specific setup rather than a trivial single-call bug."
+}

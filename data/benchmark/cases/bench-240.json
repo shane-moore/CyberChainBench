@@ -1,0 +1,23 @@
+{
+  "id": "bench-240",
+  "name": "Yearn YDai",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2021/README.md#20210204-yearn-ydai---slippage-proection-absent",
+  "chain": "ethereum",
+  "block_number": 11792184,
+  "attack_txs": [
+    "0x59faab5a1911618064f1ffa1e4649d85c99cfd9f0d64dcebbc1af7d7630da98b"
+  ],
+  "vulnerable_address": "0xACd43E627e64355f1861cEC6d3a6688B31a6F952",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "yVault.sol",
+  "function": "earn",
+  "type": "price-manipulation",
+  "attacker_profit": 19558.984607819828,
+  "source_case_id": "dfhl-0038",
+  "fix_description": "In earn, uses manipulable on-chain price/balance values. Fix: use TWAP oracle or add flash-loan protection.",
+  "attack_date": "2021-02-04",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This exploit is a non-obvious, protocol-specific accounting manipulation against Yearn/Curve that requires understanding how repeated pool imbalance affects yvDAI share pricing and withdraw behavior across multiple iterations. The PoC uses a multi-step attack loop with cross-protocol state manipulation rather than a simple bug pattern, so reproducing it correctly would likely take an experienced auditor more than 2 hours."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-161",
+  "name": "Conic Finance 02",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230722-conic-finance-02---price-manipulation",
+  "chain": "ethereum",
+  "block_number": 17743470,
+  "attack_txs": [
+    "0x37acd17a80a5f95728459bfea85cb2e1f64b4c75cf4a4c8dcb61964e26860882"
+  ],
+  "vulnerable_address": "0x369cbc5c6f139b1132d3b91b87241b37fc5b971f",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "ConicPoolV2.sol",
+  "function": "depositFor",
+  "type": "price-manipulation",
+  "attacker_profit": 21934.40042370733,
+  "source_case_id": "dfhl-0282",
+  "fix_description": "In depositFor(), the exchange rate calculation relies on _curveLpToUnderlying which calls priceOracle.getUSDPrice(curveLpToken). If this oracle uses manipulable spot prices from Curve pools, use a manipulation-resistant oracle (TWAP, Chainlink, or Curve EMA oracle) to prevent flash-loan attacks on the deposit exchange rate.",
+  "attack_date": "2023-07-22",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This PoC uses a sophisticated multi-stage attack chain with nested Aave v2/v3 and Balancer flash loans, repeated pool state manipulation, and three separate read-only reentrancy entry points across Curve-style pools before exploiting Conic\u2019s depeg handling/withdraw logic. Writing it requires deep understanding of protocol-specific oracle/accounting behavior and callback timing across multiple contracts, which is well beyond a straightforward exploit."
+}

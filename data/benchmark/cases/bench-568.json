@@ -1,0 +1,31 @@
+{
+  "id": "bench-568",
+  "name": "HYDT",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20241010-hydt---oracle-price-manipulation",
+  "chain": "bsc",
+  "block_number": 42985311,
+  "attack_txs": [
+    "0xa9df1bd97cf6d4d1d58d3adfbdde719e46a1548db724c2e76b4cd4c3222f22b3"
+  ],
+  "vulnerable_address": "0xA2268Fcc2FE7A2Bb755FbE5A7B3Ac346ddFeDB9B",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": null,
+  "file": "contracts/InitialMintV2.sol",
+  "function": "initialMint()",
+  "type": "price-manipulation",
+  "attacker_profit": 19113.25,
+  "source_case_id": "draft-290",
+  "fix_description": "Replace DataFetcher.quote() which reads spot AMM reserves (amountA * reserveB / reserveA) with a TWAP oracle (e.g., Chainlink BNB/USD feed) to prevent single-block reserve manipulation from inflating the minted HYDT amount.",
+  "normal_txs": [
+    "0x0eb821acf700cfcff5614ff50fe677cc6656b820a97c56232aef2cfc7dcdce93",
+    "0xebafa2656f2e8fd71be04ee2a15d9d3fa3fb53ebe597f0a7508d414829fcf8ac",
+    "0xb54c6bbb17cf093946308c82970856c20723fc2a99613443d70b41c058cdef73",
+    "0x8e2737c16a9620abaf308a8350385d032aac5be83958f01bce34912c57820646",
+    "0x33fcf20b59a179776824255632b5745fcdd79f2d5c8d82fdda6e55079dc0d949"
+  ],
+  "attack_date": "2024-10-10",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This is a flash-loan-based price manipulation exploit that requires understanding how MintV2 incorrectly relies on the WBNB-USDT pair price during minting, plus coordinating several swaps across Pancake V2/V3 and a mint call. While the vulnerability pattern is recognizable, the multi-step flow and protocol-specific setup make it more involved than a simple access control or basic reentrancy bug."
+}

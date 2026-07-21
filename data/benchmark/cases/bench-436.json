@@ -1,0 +1,23 @@
+{
+  "id": "bench-436",
+  "name": "- TIFIToken",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221210---tifitoken---flashloan-price-manipulation",
+  "chain": "bsc",
+  "block_number": 23778727,
+  "attack_txs": [
+    "0x1c5272ce35338c57c6b9ea710a09766a17bbf14b61438940c3072ed49bfec402"
+  ],
+  "vulnerable_address": "0x8A6F7834A9d60090668F5db33FEC353a7Fb4704B",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "LendingPool.sol",
+  "function": "getPriceWBNB",
+  "type": "price-manipulation",
+  "attacker_profit": 25126.06067925204,
+  "source_case_id": "dfhl-0063",
+  "fix_description": "In getPriceWBNB, price calculation reads manipulable on-chain values. Fix: use TWAP or Chainlink price feed.",
+  "attack_date": "2022-12-10",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a short flash-loan-based price manipulation against protocol-specific collateral/borrow logic: borrow from a Pancake pair, deposit BUSD, skew the WBNB-BUSD reserve used by TIFI, then overborrow TIFI and unwind. The PoC is compact, but identifying and reproducing it requires understanding how TIFI values collateral from AMM reserves and how the swap sequence affects that pricing."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-213",
+  "name": "LW",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230512-lw---flashloan-price-manipulation",
+  "chain": "bsc",
+  "block_number": 28133286,
+  "attack_txs": [
+    "0xb846f3aeb9b3027fe138b23bbf41901c155bd6d4b24f08d6b83bd37a975e4e4a"
+  ],
+  "vulnerable_address": "0x7b8c378df8650373d82ceb1085a18fe34031784f",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "GGGTOKEN.sol",
+  "function": "receive",
+  "type": "access-control",
+  "attacker_profit": 34376.27786041629,
+  "source_case_id": "dfhl-0337",
+  "fix_description": "Remove the token burn logic from receive(). The burn mechanism (transferFrom + swapTokensForDead) should not be triggered by anyone sending BNB. Move it to a separate function with onlyOwner or a time-lock, so attackers cannot repeatedly trigger burns by sending minimal BNB.",
+  "attack_date": "2023-05-12",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is a multi-step chain involving a flash swap, token price manipulation through protocol-specific functions, repeated LP skim abuse in a loop, and final asset conversion/repayment. It requires understanding custom token mechanics and AMM/LP behavior rather than a simple generic bug, but the PoC is still fairly compact and contained within a single callback flow."
+}

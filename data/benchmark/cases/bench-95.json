@@ -1,0 +1,23 @@
+{
+  "id": "bench-95",
+  "name": "ShibaToken",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231117-shibatoken---business-logic-flaw",
+  "chain": "bsc",
+  "block_number": 33528883,
+  "attack_txs": [
+    "0x75a26224da9faf37c2b3a4a634a096af7fec561f631a02c93e11e4a19d159477"
+  ],
+  "vulnerable_address": "0x13B1F2E227cA6f8e08aC80368fd637f5084F10a5",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Token.sol",
+  "function": "batchTransferLockToken",
+  "type": "access-control",
+  "attacker_profit": 25686.298292778505,
+  "source_case_id": "dfhl-0213",
+  "fix_description": "Add onlyOwner modifier to batchTransferLockToken. The function is public without access control, allowing anyone to call it and transfer tokens from the contract to arbitrary addresses.",
+  "attack_date": "2023-11-17",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The PoC is a multi-step DeFi exploit involving a flash loan, interaction with a token sale contract, abuse of protocol-specific token locking/airdrop logic, a Pancake pair swap, and final routing through PancakeRouter. While the code is not very long, identifying why sending locked tokens to the pair enables extraction requires understanding the specific SHIBA token mechanics and AMM interaction, making it more than a straightforward bug."
+}

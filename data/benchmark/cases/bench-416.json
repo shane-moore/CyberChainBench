@@ -1,0 +1,31 @@
+{
+  "id": "bench-416",
+  "name": "MIMSpell",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240130-mimspell---precission-loss",
+  "chain": "ethereum",
+  "block_number": 19118660,
+  "attack_txs": [
+    "0x26a83db7e28838dd9fee6fb7314ae58dcc6aee9a20bf224c386ff5e80f7e4cf2"
+  ],
+  "vulnerable_address": "0xc4113ae18e0d3213c6a06947a2ffc70ad3517c77",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x7259e152103756e1616a77ae982353c3751a6a90",
+  "file": "CauldronV4.sol",
+  "function": "repayForAll",
+  "type": "accounting-error",
+  "attacker_profit": 4174845.8962981794,
+  "source_case_id": "dfhl-0567",
+  "fix_description": "repayForAll reduces totalBorrow.elastic without proportionally adjusting totalBorrow.base, breaking the elastic/base ratio. This allows precision loss exploitation: attackers can manipulate the ratio so that subsequent borrow/repay operations round in their favor. Fix: when reducing elastic, also reduce base proportionally (totalBorrow.base -= amount * totalBorrow.base / totalBorrow.elastic), or restrict repayForAll to authorized callers only.",
+  "normal_txs": [
+    "0x87dc6ab7a0276ebfd095f100f0b1ed10e0c45cf9be81682ee6bb789f62f74e45",
+    "0xf4a82965a8f541f12878c5520356eaad30f1f06a0ba99ce04dc2970a796b4500",
+    "0x5e9b0bbb799bb279fa16c1c81c04d3a41ff36800bb32d1b4843fb1f553c02548",
+    "0xe6d0500cd4880db856814873be5728460f1ecae21511c6095565f5252c995f54",
+    "0xcbe95e5d72f5835654c89301a380cd74b5ed8f06a100371c681e5416cc89539c"
+  ],
+  "attack_date": "2024-01-30",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a straightforward arbitrary-call/token-drain style exploit: the attacker deposits SUSDT, crafts malicious swapData, and abuses the swapper\u2019s unchecked external call so the contract swaps its own USDT and sends MIM directly to the attacker. The PoC is short, uses only a few steps and standard contract interactions, and does not require deep protocol-specific reasoning beyond noticing the dangerous call path."
+}

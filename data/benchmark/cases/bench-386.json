@@ -1,0 +1,23 @@
+{
+  "id": "bench-386",
+  "name": "SSS",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240321-sss---token-balance-doubles-on-transfer-to-self",
+  "chain": "blast",
+  "block_number": 1111439,
+  "attack_txs": [
+    "0x62e6b906bb5aafdc57c72cd13e20a18d2de3a4a757cd2f24fde6003ce5c9f2c6"
+  ],
+  "vulnerable_address": "0xdfDCdbC789b56F99B0d0692d14DBC61906D9Deed",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "SSS.sol",
+  "function": "_update",
+  "type": "input-validation",
+  "attacker_profit": 4616626.285725343,
+  "source_case_id": "dfhl-0532",
+  "fix_description": "In the overridden _update, when from == to (self-transfer), _balances[from] is first reduced then _balances[to] is set to toBalance (original + amount). Since from==to, the second assignment overwrites the first, effectively doubling the balance. Fix: add require(from != to) or handle the self-transfer case separately to prevent balance duplication.",
+  "attack_date": "2024-03-21",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is not a simple one-call bug: it requires understanding a protocol-specific token flaw where self-transfers inflate balance, then carefully sizing the manipulated token amount, burning excess to avoid pair overflow, respecting maxAmountPerTx limits, and finally extracting value through the AMM pair. While the PoC is fairly short, it involves several coordinated steps and some DeFi/AMM reserve math rather than an obvious boilerplate vulnerability."
+}

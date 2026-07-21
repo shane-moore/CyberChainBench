@@ -1,0 +1,23 @@
+{
+  "id": "bench-485",
+  "name": "Alkimiya_IO",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250328-alkimiya_io---unsafecast",
+  "chain": "ethereum",
+  "block_number": 22146340,
+  "attack_txs": [
+    "0x9b9a6dd05526a8a4b40e5e1a74a25df6ecccae6ee7bf045911ad89a1dd3f0814"
+  ],
+  "vulnerable_address": "0xf3F84cE038442aE4c4dCB6A8Ca8baCd7F28c9bDe",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "SilicaPools.sol",
+  "function": "_collateralizedMint",
+  "type": "accounting-error",
+  "attacker_profit": 95436.28901927403,
+  "source_case_id": "dfhl-0645",
+  "fix_description": "In _collateralizedMint, the shares value is unsafely cast from uint256 to uint128, truncating high bits and resulting in sharesMinted=1 when it should be much larger. Use SafeCast or keep the variable as uint256 to prevent precision loss from type truncation.",
+  "attack_date": "2025-03-28",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a multi-step protocol-specific attack using a flash loan, crafted pool parameters, ERC1155 callback state manipulation, and an unsafe uint128 cast during collateralized minting. It is not a basic bug pattern and requires understanding SilicaPools\u2019 mint/start/end/redeem flow plus the fake index contract behavior, but the PoC itself is still relatively compact and direct once the root cause is known."
+}

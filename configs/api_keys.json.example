@@ -1,0 +1,17 @@
+{
+  "_notes": "Optional. Copy this file to configs/api_keys.json and fill only the keys you actually use. The benchmark test entrypoints also load matching keys from .env when present.",
+  "OPENAI_API_KEY": "",
+  "ANTHROPIC_API_KEY": "",
+  "GOOGLE_API_KEY": "",
+  "DEEPSEEK_API_KEY": "",
+  "XAI_API_KEY": "",
+  "TOGETHER_API_KEY": "",
+  "DASHSCOPE_API_KEY": "",
+  "LLM_API_KEY": "",
+  "AWS_ACCESS_KEY_ID": "",
+  "AWS_SECRET_ACCESS_KEY": "",
+  "AWS_SESSION_TOKEN": "",
+  "AWS_PROFILE": "",
+  "AWS_DEFAULT_REGION": "",
+  "CODEX_PROFILE": ""
+}

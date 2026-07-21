@@ -1,0 +1,23 @@
+{
+  "id": "bench-192",
+  "name": "MIMSpell",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230620-mimspell---arbitrary-external-call-vulnerability",
+  "chain": "ethereum",
+  "block_number": 17521639,
+  "attack_txs": [
+    "0x2c9f87e285026601a2c8903cf5f10e5b3655fbd0264490c41514ce073c42a9c3"
+  ],
+  "vulnerable_address": "0xa5564a2d1190a141cac438c9fde686ac48a18a79",
+  "has_public_source": false,
+  "fixable": false,
+  "file": "ZeroXStargateLPSwapper.sol",
+  "function": "0xa5d4096b",
+  "type": "input-validation",
+  "attacker_profit": 17920.10641502584,
+  "source_case_id": "dfhl-0310",
+  "fix_description": "Function 0xa5d4096b (swap) performs an arbitrary external call with user-supplied target/calldata without whitelist validation. Attacker exploits this to steal tokens approved to the contract. Fix: validate call targets against a whitelist of approved swap routers.",
+  "attack_date": "2023-06-20",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a straightforward arbitrary-call / insufficient validation issue in the swapper: the attacker deposits tokens, crafts malicious swapData, and invokes swap so the contract swaps its own USDT balance and sends MIM to the attacker. The PoC is short, uses only a few calls, and does not require deep DeFi reasoning beyond understanding the swapper\u2019s external call path."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-399",
+  "name": "CompoundUni",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240223-compounduni---oracle-bad-price",
+  "chain": "ethereum",
+  "block_number": 19290921,
+  "attack_txs": [
+    "0xaee0f8d1235584a3212f233b655f87b89f22f1d4890782447c4ef742b37af58d"
+  ],
+  "vulnerable_address": "0x50ce56A3239671Ab62f185704Caedf626352741e",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "UniswapAnchoredView.sol",
+  "function": "priceInternal",
+  "type": "price-manipulation",
+  "attacker_profit": 2435.5713326570576,
+  "source_case_id": "dfhl-0548",
+  "fix_description": "In priceInternal, uses manipulable on-chain price/balance values. Fix: use TWAP oracle or add flash-loan protection.",
+  "attack_date": "2024-02-23",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a flash-loan-assisted multi-step price/accounting manipulation against a specific UniswapV2 pair using repeated token transfers plus skim calls before swapping back. It is not deeply complex, but it does require understanding pair reserve/balance behavior and protocol-specific interaction beyond an obvious single-step bug."
+}

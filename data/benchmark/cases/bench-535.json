@@ -1,0 +1,23 @@
+{
+  "id": "bench-535",
+  "name": "BrahTOPG",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221109-brahtopg---arbitrary-external-call-vulnerability",
+  "chain": "ethereum",
+  "block_number": 15933795,
+  "attack_txs": [
+    "0xeaef2831d4d6bca04e4e9035613be637ae3b0034977673c1c2f10903926f29c0"
+  ],
+  "vulnerable_address": "0xD248B30A3207A766d318C7A87F5Cf334A439446D",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Zapper.sol",
+  "function": "zap",
+  "type": "reentrancy",
+  "attacker_profit": 89210.25773753643,
+  "source_case_id": "dfhl-0080",
+  "fix_description": "Add reentrancy guard (nonReentrant modifier) to zap, or follow checks-effects-interactions pattern to update state before making external calls.",
+  "attack_date": "2022-11-09",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is a short multi-step arbitrary-call/unsafe zap flow abuse that requires understanding how the zapper trusts user-supplied token/swap targets and triggers a victim's pre-existing allowance to drain USDC. While the PoC is compact, it is not just a trivial missing access control bug and needs protocol-specific reasoning about the zap sequence and allowance mechanics."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-514",
+  "name": "98Token",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250104-98token---unprotected-public-function",
+  "chain": "bsc",
+  "block_number": 45462898,
+  "attack_txs": [
+    "0x61da5b502a62d7e9038d73e31ceb3935050430a7f9b7e29b9b3200db3095f91d"
+  ],
+  "vulnerable_address": "0xB040D88e61EA79a1289507d56938a6AD9955349C",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Main.sol",
+  "function": "swapTokensForTokens",
+  "type": "access-control",
+  "attacker_profit": 27786.891500403362,
+  "source_case_id": "dfhl-0677",
+  "fix_description": "Remove the unlimited allowance (type(uint256).max) from Main contract to router, or add access control to swapTokensForTokens so only authorized callers can trigger swaps using the contract held tokens.",
+  "attack_date": "2025-01-04",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a single-step exploit against an unprotected public function: the attacker directly calls the victim swap contract with crafted calldata to swap out its token balance to themselves. It requires minimal protocol-specific knowledge, no flash loans or complex state manipulation, and the PoC is very short and straightforward."
+}

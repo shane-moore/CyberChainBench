@@ -1,0 +1,23 @@
+{
+  "id": "bench-100",
+  "name": "OKC Project",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231114-okc-project---instant-rewards-unlocked",
+  "chain": "bsc",
+  "block_number": 33464599,
+  "attack_txs": [
+    "0xd85c603f71bb84437bc69b21d785f982f7630355573566fa365dbee4cd236f08"
+  ],
+  "vulnerable_address": "0x36016C4F0E0177861E6377f73C380c70138E13EE",
+  "has_public_source": false,
+  "fixable": false,
+  "file": "OKC.sol",
+  "function": "0xb8af22db",
+  "type": "price-manipulation",
+  "attacker_profit": 6238.359579187488,
+  "source_case_id": "dfhl-0218",
+  "fix_description": "processLPReward (0xb8af22db) distributes rewards based on current LP balance at the time of distribution, without tracking how long each holder has held their LP tokens. The only time check is a global 86400-second cooldown between distributions, but no per-holder holding time requirement. Fix: track each holders LP deposit timestamp and only accrue rewards proportional to holding duration. Also addHolder uses extcodesize() which returns 0 during contract construction via CREATE2, allowing contracts to bypass the EOA-only restriction.",
+  "attack_date": "2023-11-14",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This PoC uses a long multi-stage attack chain with 5+ steps: nested DODO flash loans, a Pancake V3 flash, pair-level swap callback behavior, LP mint/remove manipulation, deterministic precomputed contract addresses, and an external minerPool reward trigger. Writing it requires deep protocol-specific understanding of the target token\u2019s reward/accounting logic and cross-contract state interactions, which is well beyond a straightforward exploit."
+}

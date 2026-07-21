@@ -1,0 +1,23 @@
+{
+  "id": "bench-381",
+  "name": "ETHFIN",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240329-ethfin---lack-of-access-control",
+  "chain": "bsc",
+  "block_number": 37400485,
+  "attack_txs": [
+    "0xfe031685d84f3bae1785f5b2bd0ed480b87815c3f23ce6ced73b8573b7e367c6"
+  ],
+  "vulnerable_address": "0x17Bd2E09fA4585c15749F40bb32a6e3dB58522bA",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "EthernalFinanceII.sol",
+  "function": "doBuyback",
+  "type": "access-control",
+  "attacker_profit": 1363.283317494092,
+  "source_case_id": "dfhl-0527",
+  "fix_description": "Change doBuyback() from public to private. The developer even left a comment \"//set to private\" but forgot to apply it. As public, anyone can trigger the buyback at a manipulated price to drain BuybackPotBNB.",
+  "attack_date": "2024-03-29",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a multi-step, protocol-specific attack involving holder-count manipulation, a flash loan, several swaps across different Pancake pairs, skim abuse, and triggering a buyback at the right state. It requires understanding the token\u2019s bespoke buyback/holder logic and coordinating multiple contract interactions, but it is still a single-transaction DeFi exploit rather than a deeply complex cross-protocol chain."
+}

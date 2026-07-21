@@ -1,0 +1,23 @@
+{
+  "id": "bench-369",
+  "name": "SATX",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240416-satx---logic-flaw",
+  "chain": "bsc",
+  "block_number": 37914434,
+  "attack_txs": [
+    "0x7e02ee7242a672fb84458d12198fae4122d7029ba64f3673e7800d811a8de93f"
+  ],
+  "vulnerable_address": "0xFd80a436dA2F4f4C42a5dBFA397064CfEB7D9508",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "SATX.sol",
+  "function": "destroyPoolToken",
+  "type": "price-manipulation",
+  "attacker_profit": 26417.51436326667,
+  "source_case_id": "dfhl-0512",
+  "fix_description": "In destroyPoolToken, burning/destroying tokens from the LP pair and calling sync() manipulates the price. Fix: add access control or time-lock to prevent exploitation in same block.",
+  "attack_date": "2024-04-16",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a multi-step flash-loan-based attack involving PancakePair callbacks, liquidity provisioning, pair reserve manipulation via skim/sync, and fee-on-transfer swap handling. It requires understanding AMM pair mechanics and protocol-specific token behavior, but the PoC is still relatively compact and not deeply dependent on obscure internals."
+}

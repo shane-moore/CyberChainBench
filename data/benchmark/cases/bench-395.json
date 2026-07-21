@@ -1,0 +1,27 @@
+{
+  "id": "bench-395",
+  "name": "ALP",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240306-alp---public-internal-function",
+  "chain": "bsc",
+  "block_number": 36727074,
+  "attack_txs": [
+    "0x9983ca8eaee9ee69629f74537eaf031272af75f1e5a7725911d8b06df17c67ca"
+  ],
+  "vulnerable_address": "0x1eabb7b90fac3b4143c551a02b41e741f7457efa",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0xd188492217f09d18f2b0ece3f8948015981e961a",
+  "file": "BasePortfolioV2.sol",
+  "function": "_swap",
+  "type": "access-control",
+  "attacker_profit": 10547.103931095768,
+  "source_case_id": "dfhl-0542",
+  "fix_description": "Change _swap visibility from public to internal. As a public function, anyone can call it with arbitrary aggregatorData to drain the contract tokens via the 1inch aggregator.",
+  "normal_txs": [
+    "0x541260769bd8c389a5896fb46982ff4f8821a8b22b6e1e4399bf01e841fb9ce4"
+  ],
+  "attack_date": "2024-03-06",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC uses a multi-step attack chain with nested flash loans, Pancake swap/flash callback flow, Venus market entry/collateralization, borrowing across several Dualpools markets, and final unwind/repayment. While the core bug is protocol-specific rather than deeply cryptographic, reproducing the exploit requires understanding lending market mechanics and coordinating several contracts, which is more than a quick obvious-pattern exploit."
+}

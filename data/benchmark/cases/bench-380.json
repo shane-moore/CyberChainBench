@@ -1,0 +1,23 @@
+{
+  "id": "bench-380",
+  "name": "ATM",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240401-atm---business-logic-flaw",
+  "chain": "bsc",
+  "block_number": 37483301,
+  "attack_txs": [
+    "0xee10553c26742bec9a4761fd717642d19012bab1704cbced048425070ee21a8a"
+  ],
+  "vulnerable_address": "0xa5957E0E2565dc93880da7be32AbCBdF55788888",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Token.sol",
+  "function": "swapTokensForCurrency",
+  "type": "price-manipulation",
+  "attacker_profit": 145599.52789883086,
+  "source_case_id": "dfhl-0525",
+  "fix_description": "In swapTokensForCurrency, swap executed with 0 or insufficient slippage protection. Fix: set reasonable amountOutMin based on oracle price.",
+  "attack_date": "2024-04-01",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a multi-step DeFi attack using a flash loan, several swaps, and repeated transfer/skim reserve desynchronization against a fee-on-transfer token pair, which requires understanding AMM reserve accounting and protocol-specific business logic. The PoC is not deeply complex, but it is more than a straightforward bug pattern and would likely take an experienced auditor some focused analysis to reproduce."
+}

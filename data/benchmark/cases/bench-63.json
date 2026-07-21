@@ -1,0 +1,23 @@
+{
+  "id": "bench-63",
+  "name": "TecraSpace",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220204-tecraspace---any-token-is-destroyed",
+  "chain": "ethereum",
+  "block_number": 14139082,
+  "attack_txs": [
+    "0x81e9918e248d14d78ff7b697355fd9f456c6d7881486ed14fdfb69db16631154"
+  ],
+  "vulnerable_address": "0xe38b72d6595fd3885d1d2f770aa23e94757f91a1",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "TcrToken.sol",
+  "function": "burnFrom",
+  "type": "accounting-error",
+  "attacker_profit": 637130.0534706783,
+  "source_case_id": "dfhl-0178",
+  "fix_description": "In burnFrom, the allowance check is reversed: _allowances[msg.sender][from] should be _allowances[from][msg.sender]. Similarly, _approve(msg.sender, from, ...) should be _approve(from, msg.sender, ...). The current code checks/deducts the wrong direction of allowance, allowing anyone to burn any holders tokens.",
+  "attack_date": "2022-02-04",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very short, direct exploit built around an obvious missing-access-control issue: the attacker can call burnFrom on the pool's TCR balance, then sync the pair and dump their own TCR for inflated USDT. The PoC is under 100 lines, uses only a few straightforward external calls, and requires minimal DeFi knowledge beyond basic Uniswap pair reserve syncing."
+}

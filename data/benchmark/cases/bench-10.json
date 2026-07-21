@@ -1,0 +1,23 @@
+{
+  "id": "bench-10",
+  "name": "RADT-DAO",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220923-radt-dao---pair-manipulate",
+  "chain": "bsc",
+  "block_number": 21572419,
+  "attack_txs": [
+    "0xd692f71de2768017390395db815d34033013136c378177c05d0d46ef3b6f0897"
+  ],
+  "vulnerable_address": "0x9122191d7b2ccf11a2600de4eafd6b8cd3d03a62",
+  "has_public_source": false,
+  "fixable": true,
+  "proxy_address": "0x01112ea0679110cbc0ddea567b51ec36825aef9b",
+  "function": "0xd9caed12",
+  "type": "access-control",
+  "attacker_profit": 93838.300560432,
+  "source_case_id": "dfhl-0112",
+  "fix_description": "Add access control to withdraw(address,address,uint256). Currently any caller can withdraw tokens from the contract/pair without authorization.",
+  "attack_date": "2022-09-23",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a short but protocol-specific multi-step attack: take a flash loan, buy into the target token, abuse an external wrap.withdraw to inject tokens into the LP, sync reserves, then dump back for profit. It is not deeply complex, but it requires understanding AMM reserve manipulation and the vulnerable protocol interaction rather than just spotting a trivial access-control bug."
+}

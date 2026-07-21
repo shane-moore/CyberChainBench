@@ -1,0 +1,22 @@
+{
+  "id": "bench-87",
+  "name": "EEE",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231130-eee---price-manipulation",
+  "chain": "bsc",
+  "block_number": 33940984,
+  "attack_txs": [
+    "0x7312d9f9c13fc69f00f58e92a112a3e7f036ced7e65f7e0fa67382488d5557dc"
+  ],
+  "vulnerable_address": "0x0506e571aba3dd4c9d71bed479a4e6d40d95c833",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x022c0d9f",
+  "type": "reentrancy",
+  "attacker_profit": 26891.478624659252,
+  "source_case_id": "dfhl-0204",
+  "fix_description": "In swap (0x022c0d9f), the function makes an external callback before updating reserves, allowing the attacker to re-enter and perform mint/burn/swap loops within a single transaction. Add nonReentrant modifier or update reserves before making external calls (CEI pattern).",
+  "attack_date": "2023-11-30",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a multi-step price/manipulation-style exploit using a flash swap, direct LP token transfers, repeated router swaps, and final settlement, so it requires understanding the protocol-specific LP/router behavior rather than just spotting a trivial bug. The exploit flow is still fairly short and the PoC is compact, so it is not hard, but it is more involved than a simple single-call access control or reentrancy case."
+}

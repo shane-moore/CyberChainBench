@@ -1,0 +1,23 @@
+{
+  "id": "bench-460",
+  "name": "GradientMakerPool",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250623-gradientmakerpool---price-oracle-manipulation",
+  "chain": "ethereum",
+  "block_number": 22765114,
+  "attack_txs": [
+    "0xb5cfa3f86ce9506e2364475dc43c44de444b079d4752edbffcdad7d1654b1f67"
+  ],
+  "vulnerable_address": "0x37Ea5f691bCe8459C66fFceeb9cf34ffa32fdadC",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "GradientMarketMakerPool.sol",
+  "function": "provideLiquidity",
+  "type": "price-manipulation",
+  "attacker_profit": 5251.049045575285,
+  "source_case_id": "dfhl-0620",
+  "fix_description": "In provideLiquidity, addLiquidity uses 0 minimum amounts. Fix: set reasonable minimum based on oracle price.",
+  "attack_date": "2025-06-23",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is a short, linear attack using a single flash loan, one swap, one liquidity add, and one withdrawal against the vulnerable pool. It does not require deep protocol internals, complex state reasoning, or multi-protocol chaining beyond straightforward setup and execution."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-183",
+  "name": "Biswap",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230630-biswap---v3migrator-exploit",
+  "chain": "bsc",
+  "block_number": 29554462,
+  "attack_txs": [
+    "0xebe5248820241d8de80bcf66f4f1bfaaca62962824efaaa662db84bd27f5e47e"
+  ],
+  "vulnerable_address": "0x839b0AFD0a0528ea184448E890cbaAFFD99C1dbf",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "V3Migrator.sol",
+  "function": "migrate",
+  "type": "input-validation",
+  "attacker_profit": 53139.15633032425,
+  "source_case_id": "dfhl-0302",
+  "fix_description": "In migrate, validate that params.recipient == msg.sender to prevent attackers from migrating other users LP tokens. Additionally validate params.pair is a legitimate pair created by the Biswap factory. The current code allows anyone to specify an arbitrary recipient (victim who approved LP to migrator) and drain their LP tokens.",
+  "attack_date": "2023-06-30",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This is a multi-step protocol-specific exploit: the attacker abuses the migrator by first burning a victim\u2019s LP position into the migrator, then crafting fake tokens/pair and invoking migrate again to redirect the stranded underlying assets. While the PoC is not very long, it requires understanding the Biswap V3 migrator flow, LP migration assumptions, and how fake pair/burn behavior can be used to drain assets, which is more than a simple one-step bug."
+}

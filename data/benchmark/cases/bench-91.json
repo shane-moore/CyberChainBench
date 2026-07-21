@@ -1,0 +1,23 @@
+{
+  "id": "bench-91",
+  "name": "TheNFTV2",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231125-thenftv2---logic-flaw",
+  "chain": "ethereum",
+  "block_number": 18647465,
+  "attack_txs": [
+    "0xd5b4d68432cbbd912130bbb5b93399031ddbb400d8f723c78050574de7533106"
+  ],
+  "vulnerable_address": "0x79a7D3559D73EA032120A69E59223d4375DEb595",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "TheNFTv2.sol",
+  "function": "transferFrom",
+  "type": "input-validation",
+  "attacker_profit": 3430.0087496737506,
+  "source_case_id": "dfhl-0210",
+  "fix_description": "In transferFrom, add a check that _from != DEAD_ADDRESS to prevent transferring burned NFTs back. The root cause is that DEAD_ADDRESS (0x74eda0) is a low address whose private key can be brute-forced, allowing the attacker to setApprovalForAll and then repeatedly burn NFTs for DAO token refunds and transferFrom them back.",
+  "attack_date": "2023-11-25",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is not a simple one-call bug: it requires understanding the NFT burn/transfer flaw, using a Uniswap V2 flash swap, calculating repayment, and looping the NFT redemption to mint enough TheDAO before settling the pair. While the PoC is still fairly short, it involves multi-step cross-contract interaction and protocol-specific token/NFT logic rather than an obvious generic pattern."
+}

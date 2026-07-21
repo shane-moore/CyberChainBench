@@ -1,0 +1,22 @@
+{
+  "id": "bench-497",
+  "name": "unverified_d4f1",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250215-unverified_d4f1---access-control",
+  "chain": "bsc",
+  "block_number": 46681363,
+  "attack_txs": [
+    "0xc7fc7e066ec2d4ea659061b75308c9016c0efab329d1055c2a8d91cc11dc3868"
+  ],
+  "vulnerable_address": "0xD4F1AFD0331255e848c119CA39143D41144f7Cb3",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x8129fc1c",
+  "type": "access-control",
+  "attacker_profit": 15168.59544687984,
+  "source_case_id": "dfhl-0661",
+  "fix_description": "The initialize() function (0x8129fc1c) lacks an initializer modifier or initialized flag check, allowing anyone to call it and take ownership of the contract. Add OpenZeppelin Initializable modifier or require(!initialized) check at the start of initialize().",
+  "attack_date": "2025-02-15",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a short but protocol-specific multi-step attack: flash-loan BUSD, swap into the vulnerable token, abuse repeated UniswapV2 pair skims via direct token transfers to distort balances/reserves, then swap back for profit. It is not deeply complex, but understanding why repeated skim calls extract value requires familiarity with AMM pair accounting beyond a trivial access-control or basic reentrancy bug."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-475",
+  "name": "Nalakuvara_LotteryTicket50",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250509-nalakuvara_lotteryticket50---price-manipulation",
+  "chain": "base",
+  "block_number": 30001613,
+  "attack_txs": [
+    "0x16a99aef4fab36c84ba4616668a03a5b37caa12e2fc48923dba4e711d2094699"
+  ],
+  "vulnerable_address": "0x172119155a48DE766B126de95c2cb331D3A5c7C2",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "LotteryTicketSwap50.sol",
+  "function": "transferToken",
+  "type": "price-manipulation",
+  "attacker_profit": 99883.67204123503,
+  "source_case_id": "dfhl-0635",
+  "fix_description": "In transferToken(), the swap call uses minAmountOut=1 and addLiquidity has no slippage protection. Add proper slippage checks (e.g., calculate expected output from reserves and require minimum 95-99% of that). This prevents flashloan price manipulation from draining value during the swap+addLiquidity step.",
+  "attack_date": "2025-05-09",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a clear multi-step price manipulation using a flash loan, two interactions with a vulnerable swap contract, and PancakeSwap V3 routing to distort and then realize value. While the PoC is short and straightforward once understood, it still requires protocol-specific reasoning about token pricing and sequencing across several contracts, which puts it above an easy case."
+}

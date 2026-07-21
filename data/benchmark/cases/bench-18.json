@@ -1,0 +1,23 @@
+{
+  "id": "bench-18",
+  "name": "LuckyTiger NFT",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220824-luckytiger-nft---predicting-random-numbers",
+  "chain": "ethereum",
+  "block_number": 15403431,
+  "attack_txs": [
+    "0x804ff3801542bff435a5d733f4d8a93a535d73d0de0f843fd979756a7eab26af"
+  ],
+  "vulnerable_address": "0x9c87A5726e98F2f404cdd8ac8968E9b2C80C0967",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "luckytiger.sol",
+  "function": "_getRandom",
+  "type": "input-validation",
+  "attacker_profit": 743.9946497999999,
+  "source_case_id": "dfhl-0123",
+  "fix_description": "Replace on-chain predictable randomness (block.difficulty, block.timestamp) in _getRandom with Chainlink VRF or commit-reveal scheme that cannot be predicted by miners or contract callers in the same transaction.",
+  "attack_date": "2022-08-24",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This PoC is a very simple block timestamp/difficulty randomness abuse with a single mint function called in a loop after setting a favorable fork timestamp. It requires minimal protocol understanding, no flash loans or complex multi-contract interactions, and the exploit logic is straightforward to reproduce in well under 30 minutes."
+}

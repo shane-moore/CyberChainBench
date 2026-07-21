@@ -1,0 +1,23 @@
+{
+  "id": "bench-458",
+  "name": "ResupplyFi",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250626-resupplyfi---share-price-manipulation",
+  "chain": "ethereum",
+  "block_number": 22785461,
+  "attack_txs": [
+    "0xffbbd492e0605a8bb6d490c3cd879e87ff60862b0684160d08fd5711e7a872d3"
+  ],
+  "vulnerable_address": "0x6e90c85a495d54c6d7E1f3400FEF1f6e59f86bd6",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "ResupplyPairCore.sol",
+  "function": "_updateExchangeRate",
+  "type": "price-manipulation",
+  "attacker_profit": 5495284.521797464,
+  "source_case_id": "dfhl-0618",
+  "fix_description": "The _updateExchangeRate function reads collateral price from an oracle (getPrices) that can be manipulated. Fix: use a TWAP oracle or add price deviation checks to reject sudden large changes in exchange rate. Alternatively add a timelock between exchange rate updates and borrowing actions to prevent atomic manipulation.",
+  "attack_date": "2025-06-26",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a multi-step flash-loan exploit involving repeated pair manipulations, understanding a protocol-specific token conversion function (`thisAToB`), and extracting value through two different liquidity pairs. While the code is not extremely long, reproducing it requires reading the token mechanics and AMM reserve math rather than spotting a simple generic bug."
+}

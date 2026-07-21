@@ -1,0 +1,22 @@
+{
+  "id": "bench-11",
+  "name": "MevBot private tx",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220913-mevbot-private-tx---incorrect-access-control",
+  "chain": "bsc",
+  "block_number": 21297410,
+  "attack_txs": [
+    "0xd48758ef48d113b78a09f7b8c7cd663ad79e9965852e872fdfc92234c3e598d2"
+  ],
+  "vulnerable_address": "0x64dD59D6C7f09dc05B472ce5CB961b6E10106E1d",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x84800812",
+  "type": "access-control",
+  "attacker_profit": 145827.61584365345,
+  "source_case_id": "dfhl-0113",
+  "fix_description": "In pancakeCall (0x84800812), add msg.sender validation to ensure the caller is a legitimate PancakeSwap pair. Currently any address can call this callback and trigger the bot to execute arbitrary swaps, draining its funds.",
+  "attack_date": "2022-09-13",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The PoC is not deeply complex, but it is a multi-step drain involving an Aave flash loan, several crafted low-level calls into a router using a hidden function selector, and Curve pool swaps to convert extracted assets. An auditor would need to understand the router\u2019s protocol-specific token handling and why arbitrary calls can pull the router\u2019s balances, which is more involved than a trivial access control bug but still far from a highly intricate cross-protocol exploit."
+}

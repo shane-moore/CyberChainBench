@@ -1,0 +1,23 @@
+{
+  "id": "bench-185",
+  "name": "MyAi",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230630-myai---business-logic",
+  "chain": "bsc",
+  "block_number": 29554344,
+  "attack_txs": [
+    "0x346f65ac333eb6d69886f5614aaf569a561a53a8d93db4384bd7c0bec15ae9f6"
+  ],
+  "vulnerable_address": "0xDb103fd28Ca4B18115F5Ce908baaeed7E0f1f101",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "MultiSender.sol",
+  "function": "tokenTransfer",
+  "type": "input-validation",
+  "attacker_profit": 2585.716416010373,
+  "source_case_id": "dfhl-0303",
+  "fix_description": "In batchTokenTransfer, require that _from == msg.sender. Currently any caller can specify an arbitrary _from address and drain tokens from anyone who approved the MultiSender contract.",
+  "attack_date": "2023-06-30",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very straightforward abuse of a vulnerable batchTokenTransfer function, likely missing proper authorization on the _from parameter, allowing the attacker to transfer tokens from a victim and then dump them. The PoC is short, uses a simple two-step flow (steal tokens, swap on PancakeSwap), and requires little protocol-specific reasoning beyond basic ERC20 approvals and router interaction."
+}

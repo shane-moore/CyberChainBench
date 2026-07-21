@@ -1,0 +1,23 @@
+{
+  "id": "bench-286",
+  "name": "Vista",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20241022-vista---flashmint-receive-error",
+  "chain": "bsc",
+  "block_number": 43305238,
+  "attack_txs": [
+    "0x84c385aab658d86b64e132e8db0c092756d5a9331a1131bf05f8214d08efba56"
+  ],
+  "vulnerable_address": "0x493361D6164093936c86Dcb35Ad03b4C0D032076",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "VistaFinance.sol",
+  "function": "flashLoan",
+  "type": "accounting-error",
+  "attacker_profit": 29249.393346587112,
+  "source_case_id": "dfhl-0420",
+  "fix_description": "In flashLoan, returned tokens are burned directly at the end without checking if they include staked tokens. This bypasses the stake constraint that should prevent selling staked tokens. Attacker flash-loans tokens, buys cheap from stake contract, sells at higher price elsewhere, returns flash loan (tokens get burned bypassing lock). Fix: check stake status before burning returned tokens, or add flash-loan guard on the stake contract.",
+  "attack_date": "2024-10-22",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is a multi-step, protocol-specific attack: take a flash loan, swap assets, stake into a presale to obtain VISTA, abuse VISTA's flashLoan/free-balance accounting, then sell and repay. While the PoC is short, understanding why the token burn/freeze check omission is exploitable requires reading custom token/presale/sale logic rather than spotting a generic single-call bug."
+}

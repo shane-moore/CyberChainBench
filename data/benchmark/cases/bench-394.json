@@ -1,0 +1,23 @@
+{
+  "id": "bench-394",
+  "name": "GHT",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240307-ght---business-logic-flaw",
+  "chain": "ethereum",
+  "block_number": 19380955,
+  "attack_txs": [
+    "0xd17266bcdf30cbcbd7d0b5a006f43141981aeee2e1f860f68c9a1805ecacbc68"
+  ],
+  "vulnerable_address": "0x17dfb09194ab77dcf318839cfdd01f587a73a77e",
+  "has_public_source": false,
+  "fixable": true,
+  "proxy_address": "0x528e046acfb52bd3f9c400e7a5c79a8a2c2863d0",
+  "function": "0x23b872dd",
+  "type": "access-control",
+  "attacker_profit": 55577.93058899259,
+  "source_case_id": "dfhl-0541",
+  "fix_description": "In transferFrom (0x23b872dd), for tokenIds <= storage[0x0131], the function skips the allowance check and directly transfers if the from address matches the token owner. This allows anyone to transfer tokens without approval. Add proper allowance verification for all transfer paths.",
+  "attack_date": "2024-03-07",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This PoC uses a long multi-stage attack chain with nested Aave V2/V3 flash loans, Benqi collateral/borrow mechanics, repeated stable-swap liquidity imbalance manipulation, USD+ mint/redeem timing across blocks, and final cross-protocol settlement. Writing it requires deep protocol-specific understanding of several Avalanche DeFi systems and stateful sequencing well beyond a straightforward exploit."
+}

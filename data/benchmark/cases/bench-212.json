@@ -1,0 +1,23 @@
+{
+  "id": "bench-212",
+  "name": "CS Token",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230524-cs-token---outdated-global-variable",
+  "chain": "bsc",
+  "block_number": 28466977,
+  "attack_txs": [
+    "0x906394b2ee093720955a7d55bff1666f6cf6239e46bea8af99d6352b9687baa4"
+  ],
+  "vulnerable_address": "0x8BC6Ce23E5e2c4f0A96429E3C9d482d74171215e",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "CS.sol",
+  "function": "sync",
+  "type": "accounting-error",
+  "attacker_profit": 700618.3463901514,
+  "source_case_id": "dfhl-0332",
+  "fix_description": "The private sync() function directly reduces _tOwned[uniswapV2Pair] based on accumulated sellAmount and calls pair.sync(). The sellAmount global variable can be inflated by repeated sells before sync is triggered. Fix: add per-block rate limit on the burn amount, or cap the burnAmount per sync call to a small percentage of pair balance to prevent large single-tx drainage.",
+  "attack_date": "2023-05-24",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is more than a trivial bug because it uses a flash swap, repeated router interactions to manipulate protocol-specific token accounting, and a crafted sell loop exploiting the stale global `sellAmount` state. Although the PoC is short, an auditor would need to understand the token\u2019s custom burn logic and why repeated buys/sells trigger the miscalculation, so it is not a simple one-call pattern."
+}

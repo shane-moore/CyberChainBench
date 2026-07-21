@@ -1,0 +1,23 @@
+{
+  "id": "bench-270",
+  "name": "CloberDEX",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20241210-cloberdex---reentrancy",
+  "chain": "base",
+  "block_number": 23514451,
+  "attack_txs": [
+    "0x8fcdfcded45100437ff94801090355f2f689941dca75de9a702e01670f361c04"
+  ],
+  "vulnerable_address": "0x6A0b87D6b74F7D5C92722F6a11714DBeDa9F3895",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Rebalancer.sol",
+  "function": "_burn",
+  "type": "reentrancy",
+  "attacker_profit": 496522.056338,
+  "source_case_id": "dfhl-0401",
+  "fix_description": "Add reentrancy guard (nonReentrant modifier) to _burn, or follow checks-effects-interactions pattern to update state before making external calls.",
+  "attack_date": "2024-12-10",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is a multi-step DeFi interaction involving a flash loan, creation of a malicious WETH/fake-token pool, minting LP against a fake asset, and a reentrant burn via hook logic to drain WETH. While the bug class is understandable once identified, writing the PoC requires protocol-specific understanding of the rebalancer/book manager and hook-based reentrancy flow, putting it beyond a simple one-step exploit."
+}

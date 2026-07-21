@@ -1,0 +1,25 @@
+{
+  "id": "bench-561",
+  "name": "RPP",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20241105-rpp---logic-flaw",
+  "chain": "bsc",
+  "block_number": 43752882,
+  "attack_txs": [
+    "0x76c39537374e7fa7f206ed3c99aa6b14ccf1d2dadaabe6139164cc37966e40bd"
+  ],
+  "vulnerable_address": "0x7d1a69302d2a94620d5185f2d80e065454a35751",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": null,
+  "file": "contracts/RichPipToken.sol",
+  "function": "autoLiquidityPairTokens(uint256)",
+  "type": "accounting-error",
+  "attacker_profit": 13996.46,
+  "source_case_id": "draft-282",
+  "fix_description": "The _lpBurnRate is set to 206 (206% of sell amount), causing each sell to burn more tokens from the LP than the sell amount itself. Reduce _lpBurnRate to a reasonable value (e.g., 5-10) and cap the burn to prevent removing more tokens from the pair than what was actually sold.",
+  "normal_txs": [],
+  "attack_date": "2024-11-05",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This PoC is a very short single-transaction flash-loan exploit with straightforward swap loops and no deep protocol internals, governance, or cross-contract accounting complexity. An experienced auditor could reproduce it quickly once noticing the token\u2019s broken transfer/swap behavior, since the attack logic is mostly repeated router calls and repayment."
+}

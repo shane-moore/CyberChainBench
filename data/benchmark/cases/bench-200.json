@@ -1,0 +1,23 @@
+{
+  "id": "bench-200",
+  "name": "CompounderFinance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230607-compounderfinance---manipulation-of-funds-through-fluctuations-in-the-amount-of-exchangeable-assets",
+  "chain": "ethereum",
+  "block_number": 17426065,
+  "attack_txs": [
+    "0xcff84cc137c92e427f720ca1f2b36fbad793f34ec5117eed127060686e6797b1"
+  ],
+  "vulnerable_address": "0xaf274e912243b19b882f02d731dacd7cd13072d0",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "StrategyDAICurve.sol",
+  "function": "deposit",
+  "type": "access-control",
+  "attacker_profit": 27010.185194619393,
+  "source_case_id": "dfhl-0319",
+  "fix_description": "Add access control to deposit() \u2014 only the vault or controller should be able to call it. Also add slippage protection (non-zero min_mint_amount) in the add_liquidity call to prevent sandwich attacks.",
+  "attack_date": "2023-06-07",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a multi-step DeFi attack involving a flash loan, interactions across several yield tokens and a Curve pool, plus protocol-specific understanding of how StrategyDAICurve.deposit can be abused after manipulating pool balances. While the PoC is not extremely long, it requires understanding nontrivial cross-contract state changes and sequencing beyond a simple bug pattern."
+}

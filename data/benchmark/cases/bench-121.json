@@ -1,0 +1,31 @@
+{
+  "id": "bench-121",
+  "name": "Hopelend",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231018-hopelend---div-precision-loss",
+  "chain": "ethereum",
+  "block_number": 18377042,
+  "attack_txs": [
+    "0x1a7ee0a7efc70ed7429edef069a1dd001fbff378748d91f17ab1876dc6d10392"
+  ],
+  "vulnerable_address": "0x1c2220437b068a8c124ac1d158f7f786fbea701e",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x25126f207db7dc427415ea640ce0187767403907",
+  "file": "ScaledBalanceTokenBase.sol",
+  "function": "cumulateToLiquidityIndex",
+  "type": "accounting-error",
+  "attacker_profit": 416147.9387216378,
+  "source_case_id": "dfhl-0239",
+  "fix_description": "In cumulateToLiquidityIndex (called during flashloan repayment), the liquidityIndex update formula divides premium by totalSupply of hToken. When totalSupply is near zero (1 wei), a small flashloan fee causes the index to inflate by millions. Fix: enforce minimum totalSupply threshold before allowing flashloans, or mint dead shares on pool initialization so totalSupply never approaches zero.",
+  "normal_txs": [
+    "0x0770c83f937fa676867e27c8558f4b85eb20b2e77c251376169a6c9dd9457bfd",
+    "0xb6228be09bad1f4e633c310bdc5cee3469e060b3d1178441f892ec8874732194",
+    "0x84d3023c156309a9d71f5198df221693c288500997b94db4381d2b623a6eedda",
+    "0x90b0df8a2193a48f09c00ad19fe5c8945dd8a84238034e8f148ef0c18aeefe25",
+    "0x19b23be8cfdf998ee38379654a9627215f14d613a90994d159529c32768c0dd8"
+  ],
+  "attack_date": "2023-10-18",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This exploit requires a fairly deep understanding of HopeLend\u2019s liquidity index/accounting and a non-obvious rounding flaw, combined with a staged flash-loan-based setup, reserve manipulation, repeated internal flashloans, draining multiple assets, and then a custom deposit/withdraw loop to extract WBTC. The PoC is long and protocol-specific, with several moving parts and calculations that go well beyond a straightforward auditor write-up."
+}

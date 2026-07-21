@@ -1,0 +1,23 @@
+{
+  "id": "bench-523",
+  "name": "- NUM",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221123---num---protocol-token-incompatible",
+  "chain": "ethereum",
+  "block_number": 16029970,
+  "attack_txs": [
+    "0x8a8145ab28b5d2a2e61d74c02c12350731f479b3175893de2014124f998bff32"
+  ],
+  "vulnerable_address": "0x765277EebeCA2e31912C9946eAe1021199B39C61",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "AnyswapV4Router.sol",
+  "function": "anySwapOutUnderlyingWithPermit",
+  "type": "input-validation",
+  "attacker_profit": 11700.688789632484,
+  "source_case_id": "dfhl-0072",
+  "fix_description": "In anySwapOutUnderlyingWithPermit, validate that the token parameter is a legitimate registered AnyswapV1ERC20 token (whitelist check). Currently any address can be passed as token, allowing attackers to use a fake token contract whose underlying() returns a target token, then steal funds from users who have permit signatures or existing approvals.",
+  "attack_date": "2022-11-23",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very simple two-step exploit: set an arbitrary marketing wallet and then call rescueEth to drain funds. It matches an obvious access control flaw, requires no DeFi-specific knowledge, and the PoC is short with only a couple of external calls."
+}

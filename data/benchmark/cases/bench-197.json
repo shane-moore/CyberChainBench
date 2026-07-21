@@ -1,0 +1,24 @@
+{
+  "id": "bench-197",
+  "name": "DEPUSDT_LEVUSDC",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230615-depusdt_levusdc---incorrect-access-control",
+  "chain": "ethereum",
+  "block_number": 17484162,
+  "attack_txs": [
+    "0xf0a13b445674094c455de9e947a25bade75cac9f5176695fca418898ea25742f"
+  ],
+  "vulnerable_address": "0x94290106d2a32bc89be9f1c3a3f3394f64578aa6",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x7b190a928aa76eece5cb3e0f6b3bdb24fcdd9b4f",
+  "file": "CurveSwap.sol",
+  "function": "approveToken",
+  "type": "access-control",
+  "attacker_profit": 69540.40291482865,
+  "source_case_id": "dfhl-0316",
+  "fix_description": "Add access control (onlyOwner or onlyAuthorized) to approveToken. Currently it is public with no restriction, allowing anyone to call it and approve the contract tokens to an arbitrary spender address, then drain via transferFrom.",
+  "attack_date": "2023-06-15",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a straightforward missing access control issue: the attacker directly calls an unprotected approveToken function, then uses transferFrom to drain balances. The PoC is very short, requires no complex DeFi knowledge, and consists of essentially the same simple two-step pattern repeated for two proxy contracts."
+}

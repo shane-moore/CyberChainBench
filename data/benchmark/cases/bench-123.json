@@ -1,0 +1,31 @@
+{
+  "id": "bench-123",
+  "name": "BelugaDex",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231013-belugadex---price-manipulation",
+  "chain": "arbitrum",
+  "block_number": 140129167,
+  "attack_txs": [
+    "0x57c96e320a3b885fabd95dd476d43c0d0fb10500d940d9594d4a458471a87abe"
+  ],
+  "vulnerable_address": "0x22d909abe10cc2f9fffa4770d8adca0a89493eb0",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x15a024061c151045ba483e9243291dee6ee5fd8a",
+  "file": "Pool.sol",
+  "function": "getEquilibriumCoverageRatio",
+  "type": "price-manipulation",
+  "attacker_profit": 90571.04120666027,
+  "source_case_id": "dfhl-0241",
+  "fix_description": "In getEquilibriumCoverageRatio, cash() returns the current pool balance which can be manipulated via flash loans (large deposit inflates cash temporarily). The coverage ratio affects swap pricing. Fix: use a time-weighted or snapshotted cash value, or add flash loan guards that prevent ratio manipulation within a single transaction.",
+  "normal_txs": [
+    "0xf94fe275484f76501d56e4bb245026bc25978c41d2f946436f7671fe23965e11",
+    "0x3ecd6a259de9e45177d42c591491a5c8eee540ad18ae7afa061eadd135e2c4df",
+    "0x969281247ee5dcd7a3c3e30bf83d2f6d89191b77a96e1d734b3dc17b5e0e1755",
+    "0x1803c47c416cd48376e977d99d1bb95cc706507855b99f474d2d6880dd8c45a4",
+    "0x0da51b8eed237be7ae005d3bb20d90a70e55b50030597f66d784eef42f955f0d"
+  ],
+  "attack_date": "2023-10-13",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a multi-step DeFi exploit using a Balancer flash loan, repeated pool deposits/swaps/withdrawals across LP tokens, and protocol-specific amount tuning via hardcoded withdraw values. It requires understanding the pool\u2019s internal accounting and crafting a nontrivial interaction sequence, but the exploit path is still contained in a single transaction and not deeply cross-protocol or mathematically intricate enough to be hard."
+}

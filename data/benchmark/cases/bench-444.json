@@ -1,0 +1,23 @@
+{
+  "id": "bench-444",
+  "name": "PDZ",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250815-pdz---price-manipulation",
+  "chain": "bsc",
+  "block_number": 57744491,
+  "attack_txs": [
+    "0x81fd00eab3434eac93bfdf919400ae5ca280acd891f95f47691bbe3cbf6f05a5"
+  ],
+  "vulnerable_address": "0x664201579057f50D23820d20558f4b61bd80BDda",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "TOKENbnb.sol",
+  "function": "burnToHolder",
+  "type": "price-manipulation",
+  "attacker_profit": 2788.0579648973635,
+  "source_case_id": "dfhl-0600",
+  "fix_description": "In burnToHolder, replace uniswapRouter.getAmountsOut() (spot price) with a TWAP oracle for calculating deserved rewards. The current implementation uses manipulable AMM spot price, allowing attackers to inflate rewards via flash loan price manipulation.",
+  "attack_date": "2025-08-15",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a short, straightforward flash-loan price manipulation exploit against a reward calculation that trusts router spot pricing. The attack is only a few steps with minimal protocol-specific complexity and the PoC is compact, so an experienced auditor could likely reproduce it quickly."
+}

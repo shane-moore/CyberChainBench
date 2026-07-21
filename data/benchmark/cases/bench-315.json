@@ -1,0 +1,23 @@
+{
+  "id": "bench-315",
+  "name": "Zenterest",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240816-zenterest---price-out-of-date",
+  "chain": "ethereum",
+  "block_number": 20541640,
+  "attack_txs": [
+    "0xfe8bc757d87e97a5471378c90d390df47e1b29bb9fca918b94acd8ecfaadc598"
+  ],
+  "vulnerable_address": "0x47D748C9baBd5CcA642f9f98E07442c0b5b04D2F",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "ZenterestPriceFeed.sol",
+  "function": "getUnderlyingPrice",
+  "type": "price-manipulation",
+  "attacker_profit": 5653.804304008894,
+  "source_case_id": "dfhl-0452",
+  "fix_description": "In getUnderlyingPrice/assetPrices, the stored price is returned without checking if it is stale (no updatedAt validation). If the reporter stops updating, the contract uses outdated prices that diverge from market. Attacker exploits the stale price to borrow/liquidate at incorrect valuations. Fix: add require(block.timestamp - _prices[token].updatedAt < MAX_STALENESS) before returning the price.",
+  "attack_date": "2024-08-16",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a multi-step flash-loan exploit involving repeated pair manipulations, a protocol-specific token conversion function, use of a victim/user address due to transfer restrictions, and liquidation through another pool. While the vulnerability class is not deeply arcane, reproducing the attack requires understanding the custom RES/ALL token mechanics and coordinating several contract interactions beyond a simple one- or two-call exploit."
+}

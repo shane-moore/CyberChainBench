@@ -1,0 +1,23 @@
+{
+  "id": "bench-33",
+  "name": "XSURGE",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2021/README.md#20210817-xsurge---flashloan-attack--reentrancy",
+  "chain": "bsc",
+  "block_number": 10090725,
+  "attack_txs": [
+    "0x8c93d6e5d6b3ec7478b4195123a696dbc82a3441be090e048fe4b33a242ef09d"
+  ],
+  "vulnerable_address": "0xE1E1Aa58983F6b8eE8E4eCD206ceA6578F036c21",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "SurgeToken.sol",
+  "function": "calculatePrice",
+  "type": "price-manipulation",
+  "attacker_profit": 125235.70187740622,
+  "source_case_id": "dfhl-0014",
+  "fix_description": "calculatePrice uses address(this).balance / _totalSupply which can be manipulated within a single transaction. Attacker repeatedly purchases (inflating balance and price) then sells at inflated price. Fix: track internal balance separately from address(this).balance, or use time-weighted pricing that cannot be manipulated in one tx.",
+  "attack_date": "2021-08-17",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a multi-step flash-loan exploit involving PancakePair callback flow, repeated buy/reentry via the receive function, and multiple sell operations against protocol-specific token logic. It is not deeply complex, but it does require understanding the Surge token\u2019s unusual transfer/receive behavior and the flash-swap repayment sequence, so it is beyond a trivial pattern."
+}

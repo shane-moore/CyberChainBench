@@ -1,0 +1,22 @@
+{
+  "id": "bench-496",
+  "name": "StepHeroNFTs",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250221-stepheronfts---reentrancy-on-sell-nft",
+  "chain": "bsc",
+  "block_number": 46843424,
+  "attack_txs": [
+    "0xef386a69ca6a147c374258a1bf40221b0b6bd9bc449a7016dbe5240644581877"
+  ],
+  "vulnerable_address": "0x9823E10A0bF6F64F59964bE1A7f83090bf5728aB",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0xe61aee51",
+  "type": "reentrancy",
+  "attacker_profit": 89581.23973805418,
+  "source_case_id": "dfhl-0659",
+  "fix_description": "In claimReferral (0xe61aee51), the function calls func_2D1E to transfer funds BEFORE clearing storage[0x05][sender][token] = 0. This violates checks-effects-interactions pattern. If the transfer triggers a callback (e.g. ETH transfer or NFT onReceived), attacker can re-enter claimReferral while balance is still set. Fix by setting storage to 0 BEFORE the external call.",
+  "attack_date": "2025-02-21",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is a multi-step chain involving a PancakeV3 flash loan, interaction with undocumented/protocol-specific StepHeroNFTs functions, deploying helper contracts, and abusing referral/ETH callback behavior to extract value. While the PoC is short, understanding why the low-level call plus nested claimReferral and buyAsset interactions work requires protocol-specific reasoning beyond a trivial bug pattern."
+}

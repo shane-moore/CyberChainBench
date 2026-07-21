@@ -1,0 +1,23 @@
+{
+  "id": "bench-30",
+  "name": "SpaceGodzilla",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220713-spacegodzilla---flashloans--price-manipulation",
+  "chain": "bsc",
+  "block_number": 19523981,
+  "attack_txs": [
+    "0x7f183df11f1a0225b5eb5bb2296b5dc51c0f3570e8cc15f0754de8e6f8b4cca4"
+  ],
+  "vulnerable_address": "0x2287c04a15bb11ad1358ba5702c1c95e2d13a5e0",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "SpaceGodzilla.sol",
+  "function": "swapAndLiquifyStepv1",
+  "type": "access-control",
+  "attacker_profit": 25244.145078890506,
+  "source_case_id": "dfhl-0135",
+  "fix_description": "Add onlyOwner modifier to swapAndLiquifyStepv1 to prevent external callers from triggering liquidity addition at manipulated prices. Additionally, set non-zero minimum amounts in addLiquidity to enforce slippage protection.",
+  "attack_date": "2022-07-13",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is a multi-step price/liquidity manipulation requiring understanding of the token\u2019s custom swap/liquify logic plus LP reserve interactions, not just a trivial access-control bug. Although the flashloan setup is skipped in the PoC, the attack still involves several coordinated contract calls and protocol-specific reasoning, putting it above easy but below truly hard cases."
+}

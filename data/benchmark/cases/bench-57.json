@@ -1,0 +1,31 @@
+{
+  "id": "bench-57",
+  "name": "Li.Fi",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220320-lifi---bridges",
+  "chain": "ethereum",
+  "block_number": 14420687,
+  "attack_txs": [
+    "0x4b4143cbe7f5475029cf23d6dcbb56856366d91794426f2e33819b9b1aac4e96"
+  ],
+  "vulnerable_address": "0x73a499e043b03fc047189ab1ba72eb595ff1fc8e",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x5a9fd7c39a6c488e715437d7b1f3c823d5596ed1",
+  "file": "LibSwap.sol",
+  "function": "swapAndStartBridgeTokensViaAnyswap",
+  "type": "input-validation",
+  "attacker_profit": 594528.5447427394,
+  "source_case_id": "dfhl-0167",
+  "fix_description": "Add nonReentrant guard to swapAndStartBridgeTokensViaAnyswap. The function calls LibSwap.swap in a loop with user-supplied _swapData, which performs external calls to arbitrary DEXs. An attacker can re-enter during the swap callback before the bridge transfer is executed.",
+  "normal_txs": [
+    "0xc9ab03e607e0e1f31f8d5c40f7029f28ad76db511877775941d4262e8800e3d7",
+    "0x0c7689a9a9e264373b9e58dc48b994e83402d626adf36501ff2b6a41eefbafc1",
+    "0x7f597b7e8f2a66acfd46282351583bd1c207ab51ef3cf4a4544801f17c5a89fa",
+    "0xe6985651d462b4543e9fe1b1538c97910dd2b0fa48bfd4da406db49e08156ad7",
+    "0xa5d13d16fac004e597ceac33d5234f583c2067ccd947c716b8593fb25ecb534c"
+  ],
+  "attack_date": "2022-03-20",
+  "difficulty": "unknown",
+  "difficulty_reasoning": "No matching PoC file found for automated labeling."
+}

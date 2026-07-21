@@ -1,0 +1,23 @@
+{
+  "id": "bench-330",
+  "name": "APEMAGA",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240627-apemaga---business-logic-flaw",
+  "chain": "ethereum",
+  "block_number": 20175377,
+  "attack_txs": [
+    "0x6beb21b53f5b205c088570333ec875b720e333b49657f7026b01ed72b026851e"
+  ],
+  "vulnerable_address": "0x56FF4AfD909AA66a1530fe69BF94c74e6D44500C",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Tonken.sol",
+  "function": "family",
+  "type": "access-control",
+  "attacker_profit": 31519.83507412134,
+  "source_case_id": "dfhl-0471",
+  "fix_description": "Remove the family function entirely. It allows anyone to burn 99.9% of any address token balance via the misleadingly named _approve_ internal function. No legitimate use case exists for burning other users tokens. If a burn mechanism is needed, restrict to msg.sender burning their own tokens only.",
+  "attack_date": "2024-06-27",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This PoC is a very short, single-pool manipulation with only a few obvious steps: buy the token, call the vulnerable function repeatedly on the pair, sync reserves, and dump back to WETH. It does not require flash loans, complex routing, or deep protocol-specific reasoning beyond noticing the token contract can improperly alter the LP pair balance/state."
+}

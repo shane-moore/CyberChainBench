@@ -1,0 +1,22 @@
+{
+  "id": "bench-272",
+  "name": "NFTG",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20241126-nftg---access-control",
+  "chain": "bsc",
+  "block_number": 44348367,
+  "attack_txs": [
+    "0xbd330fd17d0f825042474843a223547132a49abb0746a7e762a0b15cf4bd28f6"
+  ],
+  "vulnerable_address": "0x5fbbb391d54f4fb1d1cf18310c93d400bc80042e",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x85d07203",
+  "type": "access-control",
+  "attacker_profit": 9983.449327476199,
+  "source_case_id": "dfhl-0403",
+  "fix_description": "setMainContract (0x3ded33bc / func_0260) has NO access control. It directly sets storage[0x05] and storage[0x06] (token contract addresses) without any owner check. Attacker calls it to set a malicious contract address, then uses swap to drain real tokens. Fix by adding onlyOwner modifier like setSalePrice has (func_13C2 check).",
+  "attack_date": "2024-11-26",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This PoC is a very short flash-loan wrapper around a simple repeated-call abuse: borrow USDT, loop transfers plus a direct low-level call to the vulnerable contract, repay, and keep profit. It requires little protocol-specific reasoning, uses only a couple of contracts, and an experienced auditor could reproduce it quickly once the vulnerable function is identified."
+}

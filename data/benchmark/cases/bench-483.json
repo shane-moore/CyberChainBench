@@ -1,0 +1,31 @@
+{
+  "id": "bench-483",
+  "name": "LeverageSIR",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250330-leveragesir---storage-slot1-collision",
+  "chain": "ethereum",
+  "block_number": 22157900,
+  "attack_txs": [
+    "0xa05f047ddfdad9126624c4496b5d4a59f961ee7c091e7b4e38cee86f1335736f"
+  ],
+  "vulnerable_address": "0x80f18b12a6dbd515c5ad01a2006abf30c5972158",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0xb91ae2c8365fd45030aba84a4666c4db074e53e7",
+  "file": "Vault.sol",
+  "function": "uniswapV3SwapCallback",
+  "type": "accounting-error",
+  "attacker_profit": 353620.5462824145,
+  "source_case_id": "dfhl-0644",
+  "fix_description": "Storage slot collision: two variables in the proxy/implementation layout map to the same storage slot, causing data to be overwritten unexpectedly. This corrupts critical state used in uniswapV3SwapCallback. Fix: reorganize storage layout to eliminate slot collisions, using explicit slot assignments or OpenZeppelin storage gap patterns.",
+  "normal_txs": [
+    "0xd4cd993cfbb3ac42a6db557cc5ac92092888c0dbc764109f2fcfb82418c4d234",
+    "0x03cddbeec3a8a78ee28e06f9df32fa524e5993a23f9f3c96bfb21a67cf9ad990",
+    "0xda7e93ecf4d596c82d42976aed3cf1ce3859e2e898baf9e175421439948c5f1b",
+    "0xcfc31c785862e2b3f7bade5074615f17cbff8120679cfed4fdb065fecc4ed4ba",
+    "0xfdcb0658e6f5f31c5ffb203870d95e3cbad4251bf0f3a4b9f9b3ffbb27682e68"
+  ],
+  "attack_date": "2025-03-30",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This PoC requires a non-obvious multi-step exploit chain: crafting fake ERC20-like tokens, initializing a Uniswap V3 pool/position, manipulating transient storage/state via a specific mint path, deploying a contract at a computed CREATE2 address to satisfy callback assumptions, and then draining multiple assets through direct callback abuse. Exploiting it demands deep understanding of protocol-specific vault logic, Uniswap V3 callback mechanics, address/salt engineering, and custom calldata construction, which is well beyond a straightforward auditor write-up."
+}

@@ -1,0 +1,24 @@
+{
+  "id": "bench-366",
+  "name": "Rico",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240420-rico---arbitrary-call",
+  "chain": "arbitrum",
+  "block_number": 202973713,
+  "attack_txs": [
+    "0x5d2a94785d95a740ec5f778e79ff014c880bcefec70d1a7c2440e611f84713d6"
+  ],
+  "vulnerable_address": "0xc6d7b37fe18a3dd007f9b1c3b339b8c6043b3ccf",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x598c6c1cd9459f882530fc9d7da438cb74c6cb3b",
+  "file": "vat.sol",
+  "function": "flash",
+  "type": "reentrancy",
+  "attacker_profit": 22026.749744029275,
+  "source_case_id": "dfhl-0509",
+  "fix_description": "Add reentrancy guard (nonReentrant modifier) to flash, or follow checks-effects-interactions pattern to update state before making external calls.",
+  "attack_date": "2024-04-20",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is essentially an arbitrary external call via the vulnerable flash function, letting the attacker directly invoke ERC20 transfer and transferFrom with almost no protocol-specific complexity. The exploit is straightforward, uses simple helper functions and routine swaps, and a competent auditor could reproduce it quickly once the missing validation/access control is noticed."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-137",
+  "name": "BFCToken",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230909-bfctoken---business-logic-flaw",
+  "chain": "bsc",
+  "block_number": 31599444,
+  "attack_txs": [
+    "0x8ee76291c1b46d267431d2a528fa7f3ea7035629500bba4f87a69b88fcaf6e23"
+  ],
+  "vulnerable_address": "0x595eac4A0CE9b7175a99094680fbe55A774B5464",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "BFCToken.sol",
+  "function": "_transfer",
+  "type": "accounting-error",
+  "attacker_profit": 38545.30105322511,
+  "source_case_id": "dfhl-0256",
+  "fix_description": "Business logic flaw in _transfer: the complex fee/reward distribution logic (involving _distributeRewards, updateUserAmountMint, updateUserAmountBurn) has an accounting inconsistency that allows attackers to extract more value than intended through specific transaction patterns.",
+  "attack_date": "2023-09-09",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a multi-step DeFi exploit involving a flash swap, fee-on-transfer token behavior, repeated pair balance manipulation via transfer/skim, and final unwind through router swaps. It requires understanding PancakeSwap pair mechanics and protocol-specific token logic, but the attack path is still fairly self-contained and not deeply cross-protocol or mathematically complex."
+}

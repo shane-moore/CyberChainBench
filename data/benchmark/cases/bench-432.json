@@ -1,0 +1,31 @@
+{
+  "id": "bench-432",
+  "name": "TokenHolder",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20251007-tokenholder---access-control",
+  "chain": "bsc",
+  "block_number": 63856735,
+  "attack_txs": [
+    "0xc291d70f281dbb6976820fbc4dbb3cfcf56be7bf360f2e823f339af4161f64c6"
+  ],
+  "vulnerable_address": "0x8c7f34436C0037742AeCf047e06fD4B27Ad01117",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x616b36265759517af14300ba1dd20762241a3828",
+  "file": "BorrowerOperationsV6.sol",
+  "function": "sell",
+  "type": "input-validation",
+  "attacker_profit": 24681.208575170458,
+  "source_case_id": "dfhl-0588",
+  "fix_description": "In sell, all security checks are commented out: whitelist validation for DEX, router, collateral token, and approval amount. Uncomment and enforce these require statements to prevent arbitrary token extraction via unvalidated parameters.",
+  "normal_txs": [
+    "0xab16559a2a58883df9dd9829b7dcfa1f10dee8040be3e57de4808440839d8ff4",
+    "0x75af6f05abaa36b89357b1e4eb4d761add8cd89438af9cdac345bee4253c078a",
+    "0xf4c4c4ac31cbe0479cb706cee8b1329a5817f43d13c1e3bca55190e0ab6645cf",
+    "0x9b1d98b34ad01335bc87962e69b61ad6fb452a7e26e892be914cc157b9bec02e",
+    "0xf49f0c99da0c2d9d05d75b0546f4c552ddd60238f25a5c4b4135433d9e12d0cd"
+  ],
+  "attack_date": "2025-10-07",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very short, single-call exploit that abuses protocol logic by passing attacker-controlled addresses and calldata into sell(), with mocked callbacks/functions on the attacker contract. It does not require flash loans, price manipulation, or deep DeFi knowledge beyond spotting missing validation/trust assumptions in external call flow."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-296",
+  "name": "Bankroll_Network",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240923-bankroll_network---incorrect-input-validation",
+  "chain": "bsc",
+  "block_number": 42481611,
+  "attack_txs": [
+    "0xd4c7c11c46f81b6bf98284e4921a5b9f0ff97b4c71ebade206cb10507e4503b0"
+  ],
+  "vulnerable_address": "0x564D4126AF2B195fFAa7fB470ED658b1D9D07A54",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "BankrollNetworkStack.sol",
+  "function": "buyFor",
+  "type": "input-validation",
+  "attacker_profit": 234041.19409777425,
+  "source_case_id": "dfhl-0430",
+  "fix_description": "In buyFor(), change transferFrom(_customerAddress, ...) to transferFrom(msg.sender, ...), or add require(_customerAddress == msg.sender). Currently anyone can call buyFor with an arbitrary _customerAddress and spend tokens from addresses that have approved the contract.",
+  "attack_date": "2024-09-23",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The exploit is very short and mechanically simple: take a flash loan, buy into the vulnerable contract, repeatedly call the same function in a loop to inflate/divert value, then sell and withdraw. Although it uses a flash loan and a protocol-specific buyFor misuse, the attack path is straightforward and a competent auditor could likely reproduce it quickly once the faulty accounting is identified."
+}

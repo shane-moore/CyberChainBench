@@ -1,0 +1,23 @@
+{
+  "id": "bench-329",
+  "name": "MRP",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240702-mrp---reentrancy",
+  "chain": "bsc",
+  "block_number": 40122170,
+  "attack_txs": [
+    "0x4353a6d37e95a0844f511f0ea9300ef3081130b24f0cf7a4bd1cae26ec393101"
+  ],
+  "vulnerable_address": "0x35F5cEf517317694DF8c50C894080caA8c92AF7D",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "WMRP.sol",
+  "function": "_sell",
+  "type": "reentrancy",
+  "attacker_profit": 10352.1800123014,
+  "source_case_id": "dfhl-0469",
+  "fix_description": "Add reentrancy guard (nonReentrant modifier) to _sell, or follow checks-effects-interactions pattern to update state before making external calls.",
+  "attack_date": "2024-07-02",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is short, but it relies on understanding highly protocol-specific token/WMRP behavior, unusual payable callbacks/fallback flow, and a crafted sequence of token transfers to the token contract itself rather than a standard bug pattern. An experienced auditor could likely reproduce it within 30 minutes to 2 hours after reading the custom logic, but it is not an obvious one-step exploit."
+}

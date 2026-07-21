@@ -1,0 +1,22 @@
+{
+  "id": "bench-115",
+  "name": "UniBotRouter",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231031-unibotrouter---arbitrary-external-call",
+  "chain": "ethereum",
+  "block_number": 18467806,
+  "attack_txs": [
+    "0xcbe521aea28911fe9983030748028e12541e347b8b6b974d026fa5065c22f0cf"
+  ],
+  "vulnerable_address": "0x126c9FbaB3A2FCA24eDfd17322E71a5e36E91865",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0xb2bd16ab",
+  "type": "input-validation",
+  "attacker_profit": 81653.54010420405,
+  "source_case_id": "dfhl-0233",
+  "fix_description": "Function 0xb2bd16ab performs an external call to a user-supplied target address without validating it against a whitelist. Attacker passes a token contract address with transferFrom calldata to steal tokens approved to this router. Fix: validate that the call target is a whitelisted swap router/protocol.",
+  "attack_date": "2023-10-31",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is more than a trivial single-call bug: it uses a flash loan, interacts with a specific AMM pair, and relies on understanding how repeated token transfers plus skim() can manipulate pool balances before swapping back. While the PoC is short, the vulnerability is protocol-specific and requires DeFi/Uniswap reserve-accounting knowledge, placing it above easy but below a deeply complex multi-contract attack."
+}

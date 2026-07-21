@@ -1,0 +1,22 @@
+{
+  "id": "bench-110",
+  "name": "BRAND",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231102-brand---lack-of-access-control",
+  "chain": "bsc",
+  "block_number": 33139125,
+  "attack_txs": [
+    "0x19ef4febcd272643642925d5d7e9ab8fd3ed8785c5e3268f5b6fee44ae6b4a34"
+  ],
+  "vulnerable_address": "0x831d6F9AA6AF85CeAD4ccEc9B859c64421EEeFD4",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0xa4821719",
+  "type": "access-control",
+  "attacker_profit": 5344.202766789143,
+  "source_case_id": "dfhl-0229",
+  "fix_description": "buyToken() (0xa4821719) has no access control. It uses the contract balance to swap WBNB for tokens via router. Anyone can call it to force the contract to buy tokens at any price. Fix: add onlyOwner or admin check.",
+  "attack_date": "2023-11-02",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very short, straightforward exploit: take a flash loan, swap into the target token, repeatedly call an unprotected or flawed buy function in a loop, then swap back and repay. It involves only a few external interactions and no deep protocol-specific reasoning, fitting an exploit a competent auditor could reproduce quickly."
+}

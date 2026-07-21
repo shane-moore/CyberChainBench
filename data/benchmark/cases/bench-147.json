@@ -1,0 +1,23 @@
+{
+  "id": "bench-147",
+  "name": "EHIVE",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230821-ehive---business-logic-flaw",
+  "chain": "ethereum",
+  "block_number": 17961696,
+  "attack_txs": [
+    "0xad818ec910def08c70ac519ab0fffa084b4178014a91cd8aa2f882d972a511c1"
+  ],
+  "vulnerable_address": "0x4Ae2Cd1F5B8806a973953B76f9Ce6d5FAB9cdcfd",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "EHIVE.sol",
+  "function": "stake",
+  "type": "accounting-error",
+  "attacker_profit": 15569.361926475307,
+  "source_case_id": "dfhl-0268",
+  "fix_description": "In stake, the reward accumulation logic allows manipulation. When re-staking, earned rewards are accumulated and start is reset, but the reward calculation based on staked * time can be gamed by flash-loaning large amounts to stake momentarily. Fix: use a snapshot-based reward system, or add minimum staking duration before rewards accrue.",
+  "attack_date": "2023-08-21",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The root bug is conceptually simple, but the PoC requires a multi-step protocol-specific setup: creating many helper contracts, pre-staking zero, warping time, using a flash loan to buy EHIVE, chaining stake/unstake across contracts, and unwinding through the LP. An experienced auditor would need to understand the staking accounting flaw and the exploit amplification pattern, making it more than a trivial single-step exploit."
+}

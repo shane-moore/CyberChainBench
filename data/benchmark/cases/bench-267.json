@@ -1,0 +1,23 @@
+{
+  "id": "bench-267",
+  "name": "BTC24H",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20241216-btc24h---logic-flaw",
+  "chain": "polygon",
+  "block_number": 65560669,
+  "attack_txs": [
+    "0x554c9e4067e3bc0201ba06fc2cfeeacd178d7dd9c69f9b211bc661bb11296fde"
+  ],
+  "vulnerable_address": "0x968e1c984A431F3D0299563F15d48C395f70F719",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Lock.sol",
+  "function": "claim",
+  "type": "access-control",
+  "attacker_profit": 70985.13716761311,
+  "source_case_id": "dfhl-0398",
+  "fix_description": "In claim, the function transfers tokens to msg.sender without verifying the caller is the intended beneficiary. Only checks time (onlyOnOrAfter) and not-yet-claimed, but anyone can call it and receive the locked tokens. Fix: add require(msg.sender == beneficiary) to restrict who can claim.",
+  "attack_date": "2024-12-16",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is a very short, direct exploit: call the vulnerable contract's claim() once, then swap the improperly obtained tokens twice through a router. It involves minimal protocol-specific reasoning, no flash loans or complex state manipulation, and fits a straightforward missing-validation/access-control style bug."
+}

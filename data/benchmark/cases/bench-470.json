@@ -1,0 +1,22 @@
+{
+  "id": "bench-470",
+  "name": "RICE",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250524-rice---lack-of-access-control",
+  "chain": "base",
+  "block_number": 30655996,
+  "attack_txs": [
+    "0x8421c96c1cafa451e025c00706599ef82780bdc0db7d17b6263511a420e0cf20"
+  ],
+  "vulnerable_address": "0xcfe0de4a50c80b434092f87e106dfa40b71a5563",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0xc0a47c93",
+  "type": "access-control",
+  "attacker_profit": 88032.42895520083,
+  "source_case_id": "dfhl-0630",
+  "fix_description": "The setMasterContractApproval (0xc0a47c93) function lacks proper access control, allowing attackers to register as a protocol via registerProtocol() and then approve themselves as master contract to withdraw funds. Add whitelist validation for master contracts or restrict registerProtocol to owner-only.",
+  "attack_date": "2025-05-24",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The exploit is a very short, direct abuse of missing/broken authorization: the attacker self-registers, grants approval on behalf of a victim without a valid signature, then withdraws the victim's RICE and swaps it out. It is a simple 2-3 step flow with obvious access-control failure and minimal protocol-specific complexity."
+}

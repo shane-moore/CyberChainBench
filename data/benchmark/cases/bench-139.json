@@ -1,0 +1,23 @@
+{
+  "id": "bench-139",
+  "name": "HCT",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230907-hct---price-manipulation",
+  "chain": "bsc",
+  "block_number": 31528198,
+  "attack_txs": [
+    "0x84bd77f25cc0db493c339a187c920f104a69f89053ab2deabb93c35220e6dfc0"
+  ],
+  "vulnerable_address": "0x0FDfcfc398Ccc90124a0a41d920d6e2d0bD8CcF5",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "CoinToken.sol",
+  "function": "_burn",
+  "type": "accounting-error",
+  "attacker_profit": 6565.880401121012,
+  "source_case_id": "dfhl-0258",
+  "fix_description": "The public burn function combined with the reflect/rebase token mechanism allows manipulation: burning tokens changes the global rate, affecting all holders balances including the LP pair. Attacker buys tokens, burns them to deflate pair balance via rate change, then sells at inflated price. Fix: exclude the LP pair from reflect mechanism, or restrict burn to not affect pair reserves within the same transaction.",
+  "attack_date": "2023-09-07",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This is a short but protocol-specific multi-step exploit: flash loan WBNB, buy the vulnerable token, repeatedly burn held tokens to distort pool accounting, sync the pair, then sell back for profit. Writing the PoC requires understanding fee-on-transfer/token-burn behavior and AMM reserve syncing rather than just spotting a trivial access control bug."
+}

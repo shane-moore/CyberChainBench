@@ -1,0 +1,22 @@
+{
+  "id": "bench-467",
+  "name": "Unverified_8490",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250610-unverified_8490---access-control",
+  "chain": "bsc",
+  "block_number": 51190822,
+  "attack_txs": [
+    "0x9191153c8523d97f3441a08fef1da5e4169d9c2983db9398364071daa33f59d1"
+  ],
+  "vulnerable_address": "0x8490AA884Adb08a485BC8793C17296c9E2c91294",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x5ff02eae",
+  "type": "price-manipulation",
+  "attacker_profit": 44850.02771731488,
+  "source_case_id": "dfhl-0626",
+  "fix_description": "The 0x5ff02eae() function swaps USD1\u2192MOMO with amountOutMinimum=0 (no slippage protection), making it vulnerable to sandwich attacks. Set a reasonable minimum output amount based on oracle price or TWAP, and add access control to restrict who can trigger the swap.",
+  "attack_date": "2025-06-10",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a multi-step AMM reserve manipulation using a flash loan, requiring understanding of UniswapV2 pair accounting, reserve vs. balance discrepancies, and how repeated skim calls can extract value. The PoC is still fairly short and self-contained, but it is more involved than a simple access-control bug and needs protocol-specific reasoning."
+}

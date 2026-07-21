@@ -1,0 +1,23 @@
+{
+  "id": "bench-377",
+  "name": "SQUID",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240408-squid---sandwich-attack",
+  "chain": "bsc",
+  "block_number": 37672970,
+  "attack_txs": [
+    "0x9fcf38d0af4dd08f4d60f7658b623e35664e74bca0eaebdb0c3b9a6965d6257b"
+  ],
+  "vulnerable_address": "0xd309f0Fd5C3b90ecFb7024eDe7D329d9582492c5",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "SquidV1toSquidV2TokenSwap.sol",
+  "function": "getMinOut",
+  "type": "price-manipulation",
+  "attacker_profit": 84779.41595526203,
+  "source_case_id": "dfhl-0522",
+  "fix_description": "In getMinOut, uses manipulable on-chain price/balance values. Fix: use TWAP oracle or add flash-loan protection.",
+  "attack_date": "2024-04-08",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a multi-step DeFi exploit using a flash loan, repeated swap cycles, and interaction with a protocol-specific SquidSwap contract plus PancakeSwap routing. While the mechanics are not deeply complex, understanding why the sandwich/manipulation works requires reading protocol-specific token flow and pricing behavior beyond a simple one-call bug."
+}

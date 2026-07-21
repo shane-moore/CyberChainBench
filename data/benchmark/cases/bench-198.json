@@ -1,0 +1,31 @@
+{
+  "id": "bench-198",
+  "name": "Sturdy Finance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230612-sturdy-finance---read-only-reentrancy",
+  "chain": "ethereum",
+  "block_number": 17460610,
+  "attack_txs": [
+    "0xeb87ebc0a18aca7d2a9ffcabf61aa69c9e8d3c6efade9e2303f8857717fb9eb7"
+  ],
+  "vulnerable_address": "0x46bea99d977f269399fb3a4637077bb35f075516",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x9f72dc67cec672bb99e3d02cbea0a21536a2b657",
+  "file": "GenericLogic.sol",
+  "function": "calculateUserAccountData",
+  "type": "reentrancy",
+  "attacker_profit": 771899.5579596467,
+  "source_case_id": "dfhl-0317",
+  "fix_description": "Before calling IPriceOracleGetter(oracle).getAssetPrice() for Balancer/Curve LP tokens in calculateUserAccountData, verify the external pool is not mid-transaction by calling its reentrancy guard check (e.g., Balancer VaultReentrancyLib.ensureNotInVaultContext()). Without this check, an attacker can trigger a read-only reentrancy from a pool callback where getRate() returns an inflated value due to intermediate pool state.",
+  "normal_txs": [
+    "0xf64fea6c3fc82d937b08114a114183c505e09af093a9ff01cd9e78a5aabb71d1",
+    "0x92e3d2d40a0ac88863f00ac9b7c29eeb016b1a8cc2182b2281c4736a425413aa",
+    "0xde37abec4fe61f2d005e28f242eea80b3c8b05b0d6c4ecb009f9b1df5b145e0d",
+    "0xe520c7e723555c8d12d0c7675d5758794441122eb8172abfa8b83c2bfd49e897",
+    "0xbdf5b522ce1d425e97fe952d79d4f23070272c71c73dd6ff0fad5a6688d9672c"
+  ],
+  "attack_date": "2023-06-12",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This PoC uses a non-obvious read-only reentrancy against Balancer exit flow to manipulate oracle-dependent collateral valuation inside Sturdy, then chains collateral toggling, withdrawal, self-liquidation, and liquidity unwinding across Aave, Balancer, Curve, and Sturdy. It requires deep understanding of protocol internals, LP pricing/oracle interactions, and multi-contract state timing, which would likely take an experienced auditor well over 2 hours to reproduce from scratch."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-414",
+  "name": "AffineDeFi",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240201-affinedefi---lack-of-validation-userdata",
+  "chain": "ethereum",
+  "block_number": 19132935,
+  "attack_txs": [
+    "0x03543ef96c26d6c79ff6c24219c686ae6d0eb5453b322e54d3b6a5ce456385e5"
+  ],
+  "vulnerable_address": "0xcd6ca2f0d0c182c5049d9a1f65cde51a706ae142",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "LidoLevV3.sol",
+  "function": "receiveFlashLoan",
+  "type": "input-validation",
+  "attacker_profit": 801978.6797254048,
+  "source_case_id": "dfhl-0565",
+  "fix_description": "In receiveFlashLoan, validate that userData cannot specify LoanType.upgrade with an arbitrary newStrategy address. The upgrade path should only be callable by an authorized admin, not triggered via flash loan callback. Fix: add require(loan != LoanType.upgrade) in the flash loan callback, or verify newStrategy against a whitelist/governance-approved address.",
+  "attack_date": "2024-02-01",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is extremely short and consists of just two Balancer flashLoan calls with crafted calldata to the vulnerable contract, plus a stub callback. It does not require complex multi-protocol routing, deep accounting analysis, or a long exploit chain, so a competent auditor could reproduce it quickly once the missing validation/trust issue is identified."
+}

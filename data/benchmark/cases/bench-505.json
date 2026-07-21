@@ -1,0 +1,24 @@
+{
+  "id": "bench-505",
+  "name": "Unilend",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250112-unilend---logic-flaw",
+  "chain": "ethereum",
+  "block_number": 21608070,
+  "attack_txs": [
+    "0x44037ffc0993327176975e08789b71c1058318f48ddeff25890a577d6555b6ba"
+  ],
+  "vulnerable_address": "0xc86d2555f8c360d3c5e8e4364f42c1f2d169330e",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x4e34dd25dbd367b1bf82e1b5527dbbe799fad0d0",
+  "file": "pool.sol",
+  "function": "userHealthFactorLtv",
+  "type": "accounting-error",
+  "attacker_profit": 191213.00758880726,
+  "source_case_id": "dfhl-0669",
+  "fix_description": "Fix the health factor calculation in userHealthFactorLtv: the formula uses ltv (loan-to-value) ratio incorrectly, allowing positions to appear healthy when they should be undercollateralized. Ensure the collateral valuation properly accounts for the LTV discount and that oracle prices cannot be manipulated within the same transaction.",
+  "attack_date": "2025-01-12",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit needs understanding of UniswapV2 pair mechanics, especially abusing repeated skim calls after manipulating token balances, plus integrating a flash loan and reserve-based swap calculations. The attack is only a few calls long, but it is not a trivial bug pattern and requires protocol-specific reasoning about pair accounting and token transfers."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-357",
+  "name": "GPU",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240508-gpu---self-transfer",
+  "chain": "bsc",
+  "block_number": 38539573,
+  "attack_txs": [
+    "0x2c0ada695a507d7a03f4f308f545c7db4847b2b2c82de79e702d655d8c95dadb"
+  ],
+  "vulnerable_address": "0xf51cbf9f8e089ca48e454eb79731037a405972ce",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "GPU.sol",
+  "function": "_transfer",
+  "type": "accounting-error",
+  "attacker_profit": 32068.326147779444,
+  "source_case_id": "dfhl-0499",
+  "fix_description": "In _transfer, add require(from != to) to prevent self-transfers. The self-transfer exploit allows manipulation of the fee/burn mechanism - when from==to the balance is unchanged but fees are still deducted to _destroyAddress and address(this), creating accounting discrepancy that can be exploited via swapAndLiquify.",
+  "attack_date": "2024-05-08",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very straightforward flash-loan-funded tokenomics exploit: borrow BUSD, buy the vulnerable token, abuse a self-transfer balance-doubling bug in a simple loop, then sell and repay. It involves only a few steps, minimal protocol-specific reasoning, and the PoC is short and obvious once the faulty transfer logic is identified."
+}

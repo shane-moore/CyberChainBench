@@ -1,0 +1,22 @@
+{
+  "id": "bench-445",
+  "name": "YuliAI",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250813-yuliai---price-manipulation",
+  "chain": "bsc",
+  "block_number": 57432056,
+  "attack_txs": [
+    "0xeab946cfea49b240284d3baef24a4071313d76c39de2ee9ab00d957896a6c1c4"
+  ],
+  "vulnerable_address": "0x8262325Bf1d8c3bE83EB99f5a74b8458Ebb96282",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x2397e4d7",
+  "type": "price-manipulation",
+  "attacker_profit": 77815.30532623456,
+  "source_case_id": "dfhl-0602",
+  "fix_description": "In sellToken (0x2397e4d7), the internal price calculation (func_0EA9/getPrice) reads the V3 pool slot0.sqrtPriceX96 (spot price) directly. Replace with pool.observe() to use TWAP (e.g., 30-minute time-weighted average price), which cannot be manipulated within a single transaction by flash loans.",
+  "attack_date": "2025-08-13",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a flash-loan-driven spot-price manipulation against a victim contract that trusts a Uniswap V3 pool price, combined with repeated calls to the victim\u2019s sell function to drain value. While the PoC is not very long, it requires understanding flash loans, V3 swap mechanics, oracle/spot-price misuse, and protocol-specific behavior of the victim contract, putting it above a simple one-step exploit."
+}

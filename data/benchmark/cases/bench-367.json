@@ -1,0 +1,23 @@
+{
+  "id": "bench-367",
+  "name": "HedgeyFinance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240419-hedgeyfinance---logic-flaw",
+  "chain": "ethereum",
+  "block_number": 19687890,
+  "attack_txs": [
+    "0x2606d459a50ca4920722a111745c2eeced1d8a01ff25ee762e22d5d4b1595739"
+  ],
+  "vulnerable_address": "0xBc452fdC8F851d7c5B72e1Fe74DFB63bb793D511",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "ClaimCampaigns.sol",
+  "function": "createLockedCampaign",
+  "type": "input-validation",
+  "attacker_profit": 1299669.217466705,
+  "source_case_id": "dfhl-0510",
+  "fix_description": "In createLockedCampaign, validate that claimLockup.tokenLocker and donation.tokenLocker are whitelisted/authorized locker contracts. The function approves campaign tokens (via safeIncreaseAllowance) to user-supplied tokenLocker addresses without validation, allowing attackers to specify a malicious locker that steals the approved tokens.",
+  "attack_date": "2024-04-19",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very short, straightforward exploit: take a flash loan, create a malicious campaign to obtain approval/state corruption, cancel it, then drain funds with transferFrom. It involves only a couple of protocol interactions and no complex math, routing, or deep protocol internals, so an experienced auditor could likely reproduce it quickly."
+}

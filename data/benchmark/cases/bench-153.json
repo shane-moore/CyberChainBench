@@ -1,0 +1,23 @@
+{
+  "id": "bench-153",
+  "name": "CurveBurner",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230802-curveburner---lack-slippage-protection",
+  "chain": "ethereum",
+  "block_number": 17823543,
+  "attack_txs": [
+    "0xd493c73397952049644c531309df3dd4134bf3db1e64eb6f0b68b016ee0bffde"
+  ],
+  "vulnerable_address": "0x786b374b5eef874279f4b7b4de16940e57301a58",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Vyper_contract.sol",
+  "function": "execute",
+  "type": "accounting-error",
+  "attacker_profit": 189831.65126623554,
+  "source_case_id": "dfhl-0273",
+  "fix_description": "In execute(), set a proper min_amount_out when performing swaps instead of hardcoding 0. Calculate the minimum acceptable output based on oracle price or a reasonable slippage tolerance to prevent sandwich attacks from extracting value.",
+  "attack_date": "2023-08-02",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is a very short, direct attack: buy a token, call a vulnerable convertAndBurn function once with a crafted token array including address(0), then swap back for profit. It uses only simple Uniswap swaps and one protocol-specific call, with no complex flash-loan logic, accounting manipulation, or multi-contract state reasoning."
+}

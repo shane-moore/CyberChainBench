@@ -1,0 +1,23 @@
+{
+  "id": "bench-397",
+  "name": "Woofi",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240305-woofi---price-manipulation",
+  "chain": "arbitrum",
+  "block_number": 187381785,
+  "attack_txs": [
+    "0x57e555328b7def90e1fc2a0f7aa6df8d601a8f15803800a5aaf0a20382f21fbd"
+  ],
+  "vulnerable_address": "0xeFF23B4bE1091b53205E35f3AfCD9C7182bf3062",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "WooPPV2.sol",
+  "function": "_sellBase",
+  "type": "price-manipulation",
+  "attacker_profit": 2084225.030989348,
+  "source_case_id": "dfhl-0544",
+  "fix_description": "In _sellBase, the function posts the new price back to the oracle via postPrice() after each swap. Large swaps can move the oracle price significantly in one direction, allowing attackers to profit by swapping back at the manipulated price. Fix: add price movement limits per swap (max price impact), or use a TWAP-based pricing that cannot be moved significantly in a single transaction.",
+  "attack_date": "2024-03-05",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This exploit chains two flash loans, Silo collateral/borrow mechanics, and multiple WooPPV2 swaps that manipulate protocol-specific oracle/pool accounting before draining value and unwinding. Writing it requires understanding several interacting contracts and precise token amounts/state transitions, which is beyond a straightforward pattern and likely takes an experienced auditor over 2 hours."
+}

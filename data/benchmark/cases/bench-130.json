@@ -1,0 +1,23 @@
+{
+  "id": "bench-130",
+  "name": "DePayRouter",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231005-depayrouter---business-logic-flaw",
+  "chain": "ethereum",
+  "block_number": 18281130,
+  "attack_txs": [
+    "0x9a036058afb58169bfa91a826f5fcf4c0a376e650960669361d61bef99205f35"
+  ],
+  "vulnerable_address": "0xae60ac8e69414c2dc362d0e6a03af643d1d85b92",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "DePayRouterV1.sol",
+  "function": "_ensureBalance",
+  "type": "accounting-error",
+  "attacker_profit": 871.493479948775,
+  "source_case_id": "dfhl-0248",
+  "fix_description": "The _ensureBalance check only verifies that the contract token balance has not decreased after payment execution. This can be bypassed through manipulated swap paths or plugins. Fix by tracking exact expected amounts in/out rather than relying on before/after balance comparison.",
+  "attack_date": "2023-10-05",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a multi-step flash-swap attack involving Uniswap liquidity creation/removal, a crafted fake ERC20 token, and protocol-specific misuse of DePayRouter/plugin routing logic. It is not just a trivial access-control bug, but it also is not deeply stateful or cross-transactional, so an experienced auditor could likely build the PoC within 30 minutes to 2 hours."
+}

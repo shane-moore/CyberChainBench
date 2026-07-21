@@ -1,0 +1,23 @@
+{
+  "id": "bench-177",
+  "name": "CIVNFT",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230708-civnft---lack-of-access-control",
+  "chain": "ethereum",
+  "block_number": 17649876,
+  "attack_txs": [
+    "0x93a033917fcdbd5fe8ae24e9fe22f002949cba2f621a1c43a54f6519479caceb"
+  ],
+  "vulnerable_address": "0x78bd317a87d2eab65b666e9402182a949ab4eeb9",
+  "has_public_source": false,
+  "fixable": true,
+  "proxy_address": "0xf169bd68ed72b2fdc3c9234833197171aa000580",
+  "function": "0x7ca06d68",
+  "type": "input-validation",
+  "attacker_profit": 1626.0333775310364,
+  "source_case_id": "dfhl-0296",
+  "fix_description": "Function 0x7ca06d68 accepts a user-supplied contract address (arg0) and calls its functions (0xd0c93a7c, 0x3850c7bd) trusting the return values. Attacker deploys a fake contract that returns manipulated values to bypass validation logic. Fix: whitelist allowed contract addresses or validate the address against a registry.",
+  "attack_date": "2023-07-08",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is essentially a missing access control / trust-of-callback exploit: the attacker passes a fake Uniswap V3 pool and triggers the vulnerable contract to pull tokens from the victim via a forged mint callback. The PoC is short, has only a couple of key calls, and requires minimal protocol-specific reasoning beyond basic callback spoofing."
+}

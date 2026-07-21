@@ -1,0 +1,23 @@
+{
+  "id": "bench-172",
+  "name": "WGPT",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230712-wgpt---business-logic-flaw",
+  "chain": "bsc",
+  "block_number": 29891710,
+  "attack_txs": [
+    "0x258e53526e5a48feb1e4beadbf7ee53e07e816681ea297332533371032446bfd"
+  ],
+  "vulnerable_address": "0x1f415255f7e2a8546559a553e962de7bc60d7942",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "AiWGPTToken.sol",
+  "function": "callPrice",
+  "type": "price-manipulation",
+  "attacker_profit": 184.8441724005106,
+  "source_case_id": "dfhl-0292",
+  "fix_description": "In callPrice(), do not use instantaneous balanceOf(swapLPAddr) to calculate LP price. Use TWAP or internal accounting to prevent flash-loan manipulation of the pair token balance.",
+  "attack_date": "2023-07-12",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This is a multi-step exploit involving five nested flash loans, interaction with a Pancake pair/router, and understanding a broken token fee mechanism via repeated skim abuse. While the core bug is not deeply complex, writing the PoC requires protocol-specific reasoning about AMM reserve syncing/skimming and coordinated liquidity usage, putting it above a simple one-step exploit."
+}

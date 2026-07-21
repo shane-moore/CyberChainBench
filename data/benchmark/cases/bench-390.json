@@ -1,0 +1,23 @@
+{
+  "id": "bench-390",
+  "name": "IT",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240313-it---business-logic-flaw",
+  "chain": "bsc",
+  "block_number": 36934259,
+  "attack_txs": [
+    "0xb33057f57ce451aa8cbb65508d298fe3c627509cc64a394736dace2671b6dcfa"
+  ],
+  "vulnerable_address": "0x1AC5Fac863c0a026e029B173f2AE4D33938AB473",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "_contracts_bsc_BEP20.sol",
+  "function": "mintToPoolIfNeeded",
+  "type": "accounting-error",
+  "attacker_profit": 12324.35560336648,
+  "source_case_id": "dfhl-0536",
+  "fix_description": "mintToPoolIfNeeded mints tokens directly to the pair on each buy to limit price increase to 1%. However, repeated small buys each trigger minting, causing excessive token inflation in the pair. Fix by adding a cumulative mint cap per time period, or removing the auto-mint mechanism entirely.",
+  "attack_date": "2024-03-13",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This PoC involves a long multi-contract attack chain with nested V2/V3 flash liquidity, LP mint/redeem flows, vault deposits, lending market enter/exit logic, and collateral/borrow manipulation across several fTokens. Reproducing it requires deep protocol-specific understanding of Midas accounting and market interactions rather than spotting a simple bug pattern."
+}

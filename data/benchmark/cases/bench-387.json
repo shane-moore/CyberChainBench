@@ -1,0 +1,23 @@
+{
+  "id": "bench-387",
+  "name": "ARK",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240324-ark---business-logic-flaw",
+  "chain": "bsc",
+  "block_number": 37221236,
+  "attack_txs": [
+    "0xe8b0131fa14d0a96327f6b5690159ffa7650d66376db87366ba78d91f17cd677"
+  ],
+  "vulnerable_address": "0xde698B5BBb4A12DDf2261BbdF8e034af34399999",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "AbsToken.sol",
+  "function": "autoBurnLiquidityPairTokens",
+  "type": "input-validation",
+  "attacker_profit": 194866.33928707454,
+  "source_case_id": "dfhl-0533",
+  "fix_description": "In autoBurnLiquidityPairTokens, add require(block.timestamp >= lastLpBurnTime + lpBurnFrequency) to enforce cooldown between burns. Without this check, anyone can call it repeatedly to drain the LP pair.",
+  "attack_date": "2024-03-24",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This exploit is a complex multi-contract chain involving nested Aave and Balancer flash loans, Curve liquidity manipulation, Beefy vault shares as collateral, a lending market borrow/liquidation flow, and a read-only reentrancy trigger via receive(). Reproducing it requires deep protocol-specific understanding of pricing/accounting interactions across Curve, Beefy, and the lending market, well beyond a straightforward single-bug PoC."
+}

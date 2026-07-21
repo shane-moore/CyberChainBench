@@ -1,0 +1,23 @@
+{
+  "id": "bench-506",
+  "name": "RoulettePotV2",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250111-roulettepotv2---price-manipulation",
+  "chain": "bsc",
+  "block_number": 45668286,
+  "attack_txs": [
+    "0xd9e0014a32d96cfc8b72864988a6e1664a9b6a2e90aeaa895fcd42da11cc3490"
+  ],
+  "vulnerable_address": "0xf573748637e0576387289f1914627d716927f90f",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "RouletteV2.sol",
+  "function": "getTokenAmountForLink",
+  "type": "price-manipulation",
+  "attacker_profit": 13839.76266547712,
+  "source_case_id": "dfhl-0670",
+  "fix_description": "In getTokenAmountForLink, replace router.getAmountsOut (spot AMM price) with a TWAP oracle or Chainlink price feed. The current implementation reads instantaneous pool reserves which can be manipulated via flash loan.",
+  "attack_date": "2025-01-11",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The PoC is short, but the exploit is a multi-step DeFi flow combining a PancakeV3 flash loan, PancakeSwap pair manipulation, and two protocol-specific calls to the vulnerable contract. An auditor would need to understand how temporary reserve/balance distortion affects RoulettePotV2\u2019s accounting, so it is more than a trivial pattern but not a deeply complex attack chain."
+}

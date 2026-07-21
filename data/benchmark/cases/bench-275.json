@@ -1,0 +1,23 @@
+{
+  "id": "bench-275",
+  "name": "MainnetSettler",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20241120-mainnetsettler---access-control",
+  "chain": "ethereum",
+  "block_number": 21230768,
+  "attack_txs": [
+    "0xfab5912f858b3768b7b7d312abcc02b64af7b1e1b62c4f29a2c1a2d1568e9fa2"
+  ],
+  "vulnerable_address": "0x70bf6634eE8Cb27D04478f184b9b8BB13E5f4710",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Basic.sol",
+  "function": "basicSellToPool",
+  "type": "input-validation",
+  "attacker_profit": 53996.74648309764,
+  "source_case_id": "dfhl-0407",
+  "fix_description": "In basicSellToPool, arbitrary calls are made to user-specified pool with user-specified data. The _isRestrictedTarget check is insufficient - it does not cover token contracts. Attacker sets pool=token and data=transferFrom(victim,attacker,amount). Fix: validate data selector is not transferFrom/transfer/approve, or whitelist allowed pool addresses.",
+  "attack_date": "2024-11-20",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is a very short, essentially single-transaction exploit that directly abuses crafted calldata against the target contract without flash loans, routing complexity, or deep protocol-state reasoning. An experienced auditor could reproduce this quickly once they spot the arbitrary call/validation issue, so it fits the easy bucket."
+}

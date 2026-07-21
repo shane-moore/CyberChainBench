@@ -1,0 +1,24 @@
+{
+  "id": "bench-541",
+  "name": "Team Finance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221027-team-finance---liquidity-migration-exploit",
+  "chain": "ethereum",
+  "block_number": 15838225,
+  "attack_txs": [
+    "0xb2e3ea72d353da43a2ac9a8f1670fd16463ab370e563b9b5b26119b2601277ce"
+  ],
+  "vulnerable_address": "0x48d118c9185e4dbafe7f3813f8f29ec8a6248359",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0xe2fe530c047f2d85298b07d9333c05737f1435fb",
+  "file": "LockToken.sol",
+  "function": "migrate",
+  "type": "input-validation",
+  "attacker_profit": 5670212.961209494,
+  "source_case_id": "dfhl-0086",
+  "fix_description": "In migrate, two input validation flaws: (1) params.pair is not validated against lockedToken[_id].tokenAddress \u2014 attacker can migrate OTHER users locked LP tokens. (2) sqrtPriceX96 is not validated against actual V2 price ratio \u2014 attacker initializes V3 pool at extreme price so most tokens become refund sent to msg.sender. Fix: require(params.pair == lockedToken[_id].tokenAddress) and validate sqrtPriceX96 is within reasonable range of V2 spot price.",
+  "attack_date": "2022-10-27",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The root cause is conceptually simple\u2014insufficient validation of migrate parameters\u2014but turning it into a working exploit requires understanding the protocol\u2019s lock/migration flow, preparing prerequisite lock NFTs, and abusing Uniswap V2->V3 migration across multiple victim LP positions. The PoC is multi-step and protocol-specific, though it avoids harder elements like flash loans, reentrancy, or deep cross-protocol state reasoning."
+}

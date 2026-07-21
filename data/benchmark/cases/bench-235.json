@@ -1,0 +1,23 @@
+{
+  "id": "bench-235",
+  "name": "- Thena",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230328---thena---yield-protocol-flaw",
+  "chain": "bsc",
+  "block_number": 26834150,
+  "attack_txs": [
+    "0xdf6252854362c3e96fd086d9c3a5397c303d265649aee0b023176bb49cf00d4b"
+  ],
+  "vulnerable_address": "0xaedb00947b0bfd2723898f78018b4bb7b2398cdc",
+  "has_public_source": false,
+  "fixable": true,
+  "proxy_address": "0x39e29f4fb13aec505ef32ee6ff7cc16e2225b11f",
+  "function": "0xf6f6b881",
+  "type": "access-control",
+  "attacker_profit": 10145.657672113428,
+  "source_case_id": "dfhl-0360",
+  "fix_description": "Function 0xf6f6b881 is a harvest/compound function on a Thena yield vault with no access control. It claims rewards from gauge, swaps them via router, withdraws LP, and transfers all resulting USDT to msg.sender. Anyone can call it to steal vault funds. Fix: restrict to authorized keeper/manager with onlyRole modifier.",
+  "attack_date": "2023-03-28",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very short, single-step exploit that directly abuses an obvious flaw in the reward pool's unstake flow, with no flash loans, routing, or protocol-specific state manipulation. A competent auditor could identify and reproduce this quickly since the PoC is minimal and only requires one meaningful external call."
+}

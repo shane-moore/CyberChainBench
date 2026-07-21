@@ -1,0 +1,23 @@
+{
+  "id": "bench-331",
+  "name": "INcufi",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240618-incufi---business-logic-flaw",
+  "chain": "bsc",
+  "block_number": 39730109,
+  "attack_txs": [
+    "0x556419e0a6ee8e6de6b3679605f9f62ad013007419a1b55c9f56590a824bfb52"
+  ],
+  "vulnerable_address": "0x80df77b2Ae5828FF499A735ee823D6CD7Cf95f5a",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "INcufi.sol",
+  "function": "swapCommision",
+  "type": "accounting-error",
+  "attacker_profit": 11423.352373013518,
+  "source_case_id": "dfhl-0472",
+  "fix_description": "In swapCommision, add proper price conversion between CommissionContractToken and contractToken instead of 1:1 exchange. The swap rate should reflect the actual market value of both tokens.",
+  "attack_date": "2024-06-18",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is multi-step and protocol-specific: it abuses the referral/registration and staking-withdraw flow using CREATE2-predicted helper contracts, repeated stake/withdraw cycles, and commission token collection before swapping out value. While there is no flash loan or deep cross-protocol interaction, understanding why the referral chain and repeated withdrawals mint extractable rewards requires more than spotting a simple bug."
+}

@@ -1,0 +1,24 @@
+{
+  "id": "bench-92",
+  "name": "KyberSwap",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231122-kyberswap---precision-loss",
+  "chain": "ethereum",
+  "block_number": 18630392,
+  "attack_txs": [
+    "0x485e08dc2b6a4b3aeadcb89c3d18a37666dc7d9424961a2091d6b3696792f0f3"
+  ],
+  "vulnerable_address": "0xFd7B111AA83b9b6F547E617C7601EfD997F64703",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "SwapMath.sol",
+  "function": "estimateIncrementalLiquidity",
+  "type": "accounting-error",
+  "attacker_profit": 57981.087545747716,
+  "source_case_id": "dfhl-0211",
+  "normal_txs": [],
+  "fix_description": "In computeSwapStep, after computing nextSqrtP via calcFinalPrice (the branch where nextSqrtP==0, meaning the swap does not fully reach the target tick), add a boundary check: if the resulting nextSqrtP reaches or crosses targetSqrtP, clamp it to targetSqrtP and recompute deltaL using the exact calcIncrementalLiquidity path. The estimateIncrementalLiquidity function is an approximation that can produce a deltaL with precision loss, causing calcFinalPrice to yield a nextSqrtP that inadvertently crosses a tick boundary. This triggers incorrect tick-crossing logic (liquidity add/remove) for a tick that was not truly crossed, allowing an attacker to manipulate liquidity accounting and extract funds.",
+  "attack_date": "2023-11-22",
+  "difficulty": "unknown",
+  "difficulty_reasoning": "No matching PoC file found for automated labeling."
+}

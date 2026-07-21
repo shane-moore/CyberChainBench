@@ -1,0 +1,31 @@
+{
+  "id": "bench-39",
+  "name": "NOVO Protocol",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220529-novo-protocol---flashloan--price-oracle-manipulation",
+  "chain": "bsc",
+  "block_number": 18225003,
+  "attack_txs": [
+    "0xc346adf14e5082e6df5aeae650f3d7f606d7e08247c2b856510766b4dfcdc57f"
+  ],
+  "vulnerable_address": "0xa0787daad6062349f63b7c228cbfd5d8a3db08f1",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x6fb2020c236bbd5a7ddeb07e14c9298642253333",
+  "file": "NOVO.sol",
+  "function": "transferFrom",
+  "type": "access-control",
+  "attacker_profit": 75908.34786577587,
+  "source_case_id": "dfhl-0146",
+  "fix_description": "Uncomment the _approve check in transferFrom that verifies msg.sender has sufficient allowance from the sender. The allowance deduction was commented out, allowing anyone to transfer tokens from any address without approval.",
+  "normal_txs": [
+    "0xfae363b06bf8f217372edc7273e52741ce59eadb60ee9ad138f6ac416f8f0918",
+    "0x067ccf1264a3cf56aabd71616def9a643949cfc00739e7b9623acbfa8d618b98",
+    "0x95566c262f347f6e9d3b4fef8d70ad256f4b1a6d8e3cb5d8960a93acd4521f5f",
+    "0x8f5f110e1136dedbc06a4ac3e23064af67f9212544f377655cfcfe3963a23c2c",
+    "0x25398c76472c786a2cd346273dc19486000a761962e1ea0b305f95689e8aed2f"
+  ],
+  "attack_date": "2022-05-29",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a short, direct exploit built around an obvious token bug: transferFrom allows arbitrary from addresses, letting the attacker drain tokens from the LP, call sync, and dump at a manipulated price. Although it uses a flashswap and AMM price manipulation, the attack flow is only a few straightforward steps and the PoC is compact with minimal protocol-specific complexity."
+}

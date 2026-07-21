@@ -1,0 +1,120 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Web3Bug Benchmark Case",
+    "description": "Canonical flat benchmark case containing incident link, attack context, vulnerable target, fixability, and localization.",
+    "type": "object",
+    "additionalProperties": false,
+    "definitions": {
+        "annotation_hint": {
+            "type": "object",
+            "required": [
+                "label",
+                "status",
+                "expected_schema",
+                "hint"
+            ],
+            "properties": {
+                "label": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "missing",
+                        "inferred_default"
+                    ]
+                },
+                "expected_schema": {
+                    "type": "object"
+                },
+                "hint": {
+                    "type": "string"
+                },
+                "current_value": {}
+            }
+        },
+        "annotation_hints": {
+            "type": "object",
+            "additionalProperties": {
+                "$ref": "#/definitions/annotation_hint"
+            }
+        }
+    },
+    "required": [
+        "id",
+        "name",
+        "source",
+        "case_link"
+    ],
+    "properties": {
+        "id": {
+            "type": "string"
+        },
+        "name": {
+            "type": "string"
+        },
+        "source": {
+            "type": "string",
+            "enum": [
+                "DeFiHackLabs",
+                "Clara"
+            ]
+        },
+        "case_link": {
+            "type": "string"
+        },
+        "attack_txs": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "chain": {
+            "type": "string"
+        },
+        "block_number": {
+            "type": "integer"
+        },
+        "vulnerable_address": {
+            "type": "string"
+        },
+        "fixable": {
+            "type": "boolean"
+        },
+        "proxy_address": {
+            "type": "string"
+        },
+        "file": {
+            "type": "string"
+        },
+        "function": {
+            "type": "string"
+        },
+        "type": {
+            "type": "string"
+        },
+        "attacker_profit": {
+            "type": [
+                "number",
+                "null"
+            ]
+        },
+        "annotation_hints": {
+            "$ref": "#/definitions/annotation_hints"
+        },
+        "has_public_source": {
+            "type": "boolean"
+        },
+        "acceptable_alternatives": {
+            "type": "object",
+            "description": "Alternative acceptable function names when multiple functions contribute to a vulnerability.",
+            "properties": {
+                "function": {
+                    "type": "array",
+                    "items": {"type": "string"}
+                }
+            },
+            "additionalProperties": false
+        }
+    }
+}

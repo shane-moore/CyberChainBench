@@ -1,0 +1,23 @@
+{
+  "id": "bench-96",
+  "name": "WECO",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231116-weco---business-logic-flaw",
+  "chain": "bsc",
+  "block_number": 33549938,
+  "attack_txs": [
+    "0x2040a481c933b50ee31aba257c2041c48bb7a0b4bf4b4fad1ac165f19c4269e8"
+  ],
+  "vulnerable_address": "0xd672b766d66662f5c6fd798a999e1193a7945451",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "WECOStaking.sol",
+  "function": "deposit",
+  "type": "accounting-error",
+  "attacker_profit": 18167.566862300788,
+  "source_case_id": "dfhl-0214",
+  "fix_description": "In deposit(), when _weeksLocked == 0, set user.endLockEpoch to currentEpoch (or a minimal value != 0) so that _claimAndLock correctly identifies the lock state. Currently endLockEpoch remains 0, causing hasLocked=false and falling into a flawed reward calculation branch that overpays.",
+  "attack_date": "2023-11-16",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is a very short, direct exploit against a single staking contract using repeated deposit calls, with no flash loans, price manipulation, or complex multi-protocol interactions. An auditor would mainly need to spot broken deposit/accounting logic and reproduce it in a simple loop, which is well within a sub-30-minute exploit-writing task."
+}

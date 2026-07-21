@@ -1,0 +1,22 @@
+{
+  "id": "bench-194",
+  "name": "ARA",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230618-ara---incorrect-handling-of-permissions",
+  "chain": "bsc",
+  "block_number": 29214011,
+  "attack_txs": [
+    "0xd87cdecd5320301bf9a985cc17f6944e7e7c1fbb471c80076ef2d031cc3023b2"
+  ],
+  "vulnerable_address": "0x7BA5dd9Bb357aFa2231446198c75baC17CEfCda9",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x135b43e9",
+  "type": "access-control",
+  "attacker_profit": 123526.86337843486,
+  "source_case_id": "dfhl-0312",
+  "fix_description": "Function 0x135b43e9 checks allowance of arg3 (a user address) to the contract, then performs operations on their behalf without verifying msg.sender == arg3 or any admin role. Anyone can call this function to operate on other users funds who have approved the contract. Fix: add require(msg.sender == arg3) or admin check.",
+  "attack_date": "2023-06-18",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is a multi-step price-manipulation attack using a flash loan, two interactions with a protocol-specific vulnerable swap contract, and PancakeSwap V3 routing to distort and realize value. It is not deeply intricate, but it requires understanding the target contract\u2019s special approved-address logic and the effect of temporary ARA price inflation, putting it beyond a simple obvious bug."
+}

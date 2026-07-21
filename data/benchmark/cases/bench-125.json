@@ -1,0 +1,23 @@
+{
+  "id": "bench-125",
+  "name": "Platypus",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231012-platypus---business-logic-flaw",
+  "chain": "avalanche",
+  "attack_txs": [
+    "0x4425f757715e23d392cda666bc0492d9e5d5848ff89851a1821eab5ed12bb867"
+  ],
+  "vulnerable_address": "0xe5c84c7630a505b6adf69b5594d0ff7fedd5f447",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Core.sol",
+  "function": "_slippage",
+  "type": "price-manipulation",
+  "attacker_profit": 325126.87317859055,
+  "block_number": 36346397,
+  "source_case_id": "dfhl-0243",
+  "fix_description": "In _slippage, the coverage ratio (cash/liability) uses the current pool cash balance which can be manipulated via flash loans. A large deposit temporarily inflates cash, altering the slippage curve in favor of the attacker. Fix: use time-weighted cash values, or implement flash loan guards that snapshot cash before operations.",
+  "attack_date": "2023-10-12",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This is a multi-step DeFi exploit using a dual-asset flash loan and several protocol-specific pool actions (deposit, swap, partial withdraw, final unwind) to manipulate Platypus pool cash/liability accounting. It is not a trivial bug pattern and requires understanding the pool\u2019s pricing mechanics, but the PoC itself is still fairly direct and compact once the accounting flaw is known."
+}

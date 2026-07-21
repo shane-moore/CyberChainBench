@@ -1,0 +1,23 @@
+{
+  "id": "bench-544",
+  "name": "OlympusDAO",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221021-olympusdao---no-input-validation",
+  "chain": "ethereum",
+  "block_number": 15794364,
+  "attack_txs": [
+    "0x3ed75df83d907412af874b7998d911fdf990704da87c2b1a8cf95ca5d21504cf"
+  ],
+  "vulnerable_address": "0x007FE7c498A2Cf30971ad8f2cbC36bd14Ac51156",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "BondFixedExpiryTeller.sol",
+  "function": "redeem",
+  "type": "input-validation",
+  "attacker_profit": 1453.3943672159503,
+  "source_case_id": "dfhl-0091",
+  "fix_description": "In redeem, validate that the input token address is a legitimate bond token created by the protocol. Without this check, an attacker can pass an arbitrary token address to redeem and extract funds from the contract.",
+  "attack_date": "2022-10-21",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a single-call exploit caused by an obvious missing validation/access-control issue in redeem(), where the contract trusts an arbitrary token address implementing expected methods. The PoC is very short, requires no flash loans or complex protocol knowledge, and an experienced auditor could reproduce it quickly."
+}

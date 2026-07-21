@@ -1,0 +1,22 @@
+{
+  "id": "bench-50",
+  "name": "ElephantMoney",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220412-elephantmoney---flashloan--price-oracle-manipulation",
+  "chain": "bsc",
+  "block_number": 16886439,
+  "attack_txs": [
+    "0xec317deb2f3efdc1dbf7ed5d3902cdf2c33ae512151646383a8cf8cbcd3d4577"
+  ],
+  "vulnerable_address": "0xD520a3B47E42a1063617A9b6273B206a07bDf834",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0xa0712d68",
+  "type": "price-manipulation",
+  "attacker_profit": 11271555.597754652,
+  "source_case_id": "dfhl-0158",
+  "fix_description": "The mint function (0xa0712d68) uses PancakeSwap AMM spot price to buy ELEPHANT for the Treasury. Attacker manipulates the pool price via flash loan before calling mint, causing the contract to buy ELEPHANT at inflated prices. Fix: use TWAP or Chainlink oracle for price, add block-delayed claim mechanism to break flash loan loops, and add slippage checks on internal swaps.",
+  "attack_date": "2022-04-12",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC uses a two-layer flash swap and a multi-step attack flow involving token price manipulation, mint/redeem abuse in a protocol-specific contract, and repayment across two pools. While the code is not extremely long, understanding why the Elephant/Trunk mint-redeem sequence is profitable requires reading protocol-specific logic and DeFi interactions beyond a simple obvious bug."
+}

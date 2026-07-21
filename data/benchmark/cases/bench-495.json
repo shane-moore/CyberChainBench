@@ -1,0 +1,22 @@
+{
+  "id": "bench-495",
+  "name": "Unverified_35bc",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250222-unverified_35bc---reentrancy",
+  "chain": "bsc",
+  "block_number": 46886078,
+  "attack_txs": [
+    "0xd7a61b07ca4dc5966d00b3cc99b03c6ab2cee688fa13b30bea08f5142023777d"
+  ],
+  "vulnerable_address": "0xde91e6e937ec344e5a3c800539c41979c2d85278",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x2dad6442",
+  "type": "reentrancy",
+  "attacker_profit": 6691.5882829548145,
+  "source_case_id": "dfhl-0658",
+  "fix_description": "The function 0x2dad6442 (stake withdrawal) calls func_2D5C to transfer NFT via safeTransferFrom before updating the stake state (storage[var0+0x06], etc). The ERC721 onERC721Received callback allows reentrancy. Fix by updating state (mark slot as claimed) before making the external transfer call, or add a nonReentrant modifier.",
+  "attack_date": "2025-02-22",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a short multi-step AMM reserve-manipulation attack using a flash loan, swap, repeated skim abuse, and swap-back repayment. It requires understanding UniswapV2 pair accounting and how skim can be abused with a deflationary/fee-on-transfer style token, so it is not trivial, but the PoC itself is still fairly compact and straightforward for an experienced DeFi auditor."
+}

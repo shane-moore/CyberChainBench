@@ -1,0 +1,22 @@
+{
+  "id": "bench-421",
+  "name": "DAO_SoulMate",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240122-dao_soulmate---incorrect-access-control",
+  "chain": "ethereum",
+  "block_number": 19063677,
+  "attack_txs": [
+    "0x1ea0a2e88efceccb2dd93e6e5cb89e5421666caeefb1e6fc41b68168373da342"
+  ],
+  "vulnerable_address": "0x82c063afefb226859abd427ae40167cb77174b68",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x7bde82f2",
+  "type": "access-control",
+  "attacker_profit": 317582.3466494997,
+  "source_case_id": "dfhl-0572",
+  "fix_description": "Add access control check (e.g., require isOwner(msg.sender)) at the beginning of func_0323 (redeem). Currently anyone can call it to redeem assets from the contract without authorization.",
+  "attack_date": "2024-01-22",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a textbook missing access control issue: the PoC is a single external call to redeem the victim contract\u2019s entire BUI balance to the attacker. It requires minimal protocol understanding, no flash loans or routing, and the exploit logic is far under the easy threshold."
+}

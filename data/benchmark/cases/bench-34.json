@@ -1,0 +1,31 @@
+{
+  "id": "bench-34",
+  "name": "XCarnival",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220626-xcarnival---infinite-number-of-loans",
+  "chain": "ethereum",
+  "block_number": 15028888,
+  "attack_txs": [
+    "0xabfcfaf3620bbb2d41a3ffea6e31e93b9b5f61c061b9cfc5a53c74ebe890294d"
+  ],
+  "vulnerable_address": "0x34ca24ddcdaf00105a3bf10ba5aae67953178b85",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0xb7e2300e77d81336307e36ce68d6909e43f4d38a",
+  "file": "P2Controller.sol",
+  "function": "orderAllowed",
+  "type": "input-validation",
+  "attacker_profit": 1505174.686092,
+  "source_case_id": "dfhl-0139",
+  "normal_txs": [
+    "0x45d0d81bae51bb376efd758f9e8c5641387c6d40f7ac163a0f250ad15dbe4285",
+    "0x8e8a70f2f4371ff8c91d2966141f7a8469ddd9b2106ab9b41b29c11d135f34b5",
+    "0x65c6e73fd8be1b113b67f2426f8bda226116cfa7c41112bb959dfe86164b30a9",
+    "0x974157afacfb697832f1724ed9ba6c05f44896190a44ebc1d92f68bffe819334",
+    "0xc81bb0a29875bcf4c36027e9cb57fe749bb01ed7cf106a812bd7de8698a32480"
+  ],
+  "fix_description": "In P2Controller.orderAllowed, add a check that the order NFT has not been withdrawn. Currently the function only verifies pledger ownership and non-liquidation status via xNFT.getOrderDetail and xNFT.isOrderLiquidated, but does not check the isWithdraw flag. Add require(!xNFT.isOrderWithdrawn(orderId)) (exposing a new view on XNFT that returns allOrders[orderId].isWithdraw), or equivalently call xNFT.getOrderState(orderId) and require it equals PLEDGEING. Without this check, an attacker can pledgeAndBorrow with 0 amount, withdrawNFT to reclaim the NFT, then repeatedly call borrow on the same orderId since orderAllowed still passes.",
+  "attack_date": "2022-06-26",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is not a single-call bug: it requires understanding a protocol-specific NFT collateral/order accounting flaw, creating many pledge records via multiple helper contracts, withdrawing the same BAYC back out, then later borrowing against each stale order. While the PoC is straightforward once understood, the repeated multi-contract setup and need to grasp the broken lending state transitions make it more than an easy case."
+}

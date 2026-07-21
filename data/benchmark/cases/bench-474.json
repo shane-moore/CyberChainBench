@@ -1,0 +1,23 @@
+{
+  "id": "bench-474",
+  "name": "MBUToken",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250511-mbutoken---price-manipulation-not-confirmed",
+  "chain": "bsc",
+  "block_number": 49470430,
+  "attack_txs": [
+    "0x2a65254b41b42f39331a0bcc9f893518d6b106e80d9a476b8ca3816325f4a150"
+  ],
+  "vulnerable_address": "0x637d8ce897bb653cb83ba436cdf76bbe158f05b1",
+  "has_public_source": false,
+  "fixable": true,
+  "proxy_address": "0x95e92b09b89cf31fa9f1eca4109a85f88eb08531",
+  "function": "0x47e7ef24",
+  "type": "accounting-error",
+  "attacker_profit": 1952839.617621084,
+  "source_case_id": "dfhl-0634",
+  "fix_description": "In the deposit function (0x47e7ef24), the internal price calculation (0x371b) for converting WBNB to USDT value does not divide by the token decimals, resulting in a massively inflated USDT amount. This causes excessive MBU minting. Fix by normalizing decimals consistently across all price calculations in the deposit path.",
+  "attack_date": "2025-05-11",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is a very short, direct exploit: wrap BNB, call a single vulnerable deposit function, then dump the incorrectly received tokens via PancakeSwap. It involves only a couple of external interactions and no complex flash loans, stateful multi-transaction reasoning, or deep protocol-specific mechanics."
+}

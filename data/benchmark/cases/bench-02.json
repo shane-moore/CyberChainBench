@@ -1,0 +1,31 @@
+{
+  "id": "bench-02",
+  "name": "MonoX Finance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2021/README.md#20211130-monox-finance---price-manipulation",
+  "chain": "ethereum",
+  "block_number": 13715026,
+  "attack_txs": [
+    "0x9f14d093a2349de08f02fc0fb018dadb449351d0cdb7d0738ff69cc6fef5f299"
+  ],
+  "vulnerable_address": "0x66e7d7839333f502df355f5bd87aea24bac2ee63",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0xc36a7887786389405ea8da0b87602ae3902b88a1",
+  "file": "Monoswap.sol",
+  "function": "swapIn",
+  "type": "input-validation",
+  "attacker_profit": 11599571.449665776,
+  "source_case_id": "dfhl-0004",
+  "normal_txs": [
+    "0x83425a2c989e72e9807114450d7d3ed36eaa2147383c72394398e5dea301488f",
+    "0xd8c80edf65757a3b9cd1246d38d4dbd9b65b2287118e25bc80e87a328ae8ffe7",
+    "0xcc9622da61c2f54f7e4e454041da6d9dfe8eef169b5453330402b16e03a61140",
+    "0xaf8ff64a9d3044b73ed0e1191e4d9fddbb78693a89303ebe4a7cb363a414a4a7",
+    "0x1f515265ff31dbbfad695c0cfe8c83786b6d1738dbd092613328b44145cfc0a9"
+  ],
+  "fix_description": "In swapIn, add a check that tokenIn != tokenOut before executing the swap. When tokenIn == tokenOut, the second _updateTokenInfo call overwrites the first, causing a net price increase that can be exploited repeatedly.",
+  "attack_date": "2021-11-30",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The PoC is a multi-step protocol-specific exploit: it abuses unauthorized liquidity removal from other users, then performs self-swaps on the same token repeatedly to distort pool accounting before draining USDC. While the code is not very long, understanding why removeLiquidity can target arbitrary users and why repeated MONO->MONO swaps work requires reading Monoswap/MonoXPool internals rather than spotting a single obvious bug."
+}

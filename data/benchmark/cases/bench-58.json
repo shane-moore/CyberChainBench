@@ -1,0 +1,23 @@
+{
+  "id": "bench-58",
+  "name": "Umbrella Network",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220320-umbrella-network---underflow",
+  "chain": "ethereum",
+  "block_number": 14421984,
+  "attack_txs": [
+    "0x33479bcfbc792aa0f8103ab0d7a3784788b5b0e1467c81ffbed1b7682660b4fa"
+  ],
+  "vulnerable_address": "0xB3FB1D01B07A706736Ca175f827e4F56021b85dE",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "StakingRewards.sol",
+  "function": "_withdraw",
+  "type": "accounting-error",
+  "attacker_profit": 537747.7553560804,
+  "source_case_id": "dfhl-0168",
+  "fix_description": "In _withdraw, add require(_balances[user] >= amount) before subtracting. Contract uses Solidity 0.7.5 without SafeMath for these operations, allowing integer underflow when withdrawing more than staked balance.",
+  "attack_date": "2022-03-20",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a single-step exploit against an obvious arithmetic underflow in withdraw, requiring only one external call and no meaningful protocol-specific DeFi knowledge. A competent auditor could identify and reproduce this quickly from the vulnerable balance accounting logic."
+}

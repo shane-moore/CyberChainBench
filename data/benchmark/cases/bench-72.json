@@ -1,0 +1,31 @@
+{
+  "id": "bench-72",
+  "name": "GoodDollar",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231216-gooddollar---lack-of-input-validation--reentrancy",
+  "chain": "ethereum",
+  "block_number": 18802015,
+  "attack_txs": [
+    "0x726459a46839c915ee2fb3d8de7f986e3c7391c605b7a622112161a84c7384d0"
+  ],
+  "vulnerable_address": "0x4a37a8d7cdb43d89b4dbd7ecfaeaf9bd39e24929",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x0c6c80d2061afa35e160f3799411d83bdeea0a5a",
+  "file": "GoodFundManager.sol",
+  "function": "collectInterest",
+  "type": "input-validation",
+  "attacker_profit": 617381.5199850978,
+  "source_case_id": "dfhl-0190",
+  "fix_description": "In collectInterest, validate that each address in _stakingContracts is a registered/active staking contract before calling collectUBIInterest on it. Without this check, an attacker can pass a malicious contract that re-enters or manipulates state during the callback. Add: require(isRegisteredStaking(_stakingContracts[i-1])) inside the loop.",
+  "normal_txs": [
+    "0x1106418384414ed56cd7cbb9fedc66a02d39b663d580abc618f2d387348354ab",
+    "0x46cdf03000ab6d1ee5566a4f171c9679c7be78e60b9974ab9acbf41c86d839af",
+    "0x6ae43c229c31e7d7c0dcd577886cbfc62c1579e707325c2780b0e3effad8e759",
+    "0x1525b71f997b35e9951c1b90785e311c1d6798d6b1c4026ad3ccee1ce6cace3e",
+    "0xbe2d73077ed62ae15bf409d62934d3926478e8a7c25b240ef30dca5cfdb2f299"
+  ],
+  "attack_date": "2023-12-16",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is multi-step and requires understanding interactions across Balancer flash loans, Compound collateral/borrowing, the protocol\u2019s GDX buy/sell flow, and a malicious staking contract exploiting collectInterest via callback/reentrancy. While the root issue is a fairly recognizable lack of input validation plus reentrant callback pattern, reproducing the full profit path is protocol-specific and involves several coordinated external calls."
+}

@@ -1,0 +1,22 @@
+{
+  "id": "bench-398",
+  "name": "Zoomer",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240223-zoomer---business-logic-flaw",
+  "chain": "ethereum",
+  "block_number": 19291250,
+  "attack_txs": [
+    "0x06d7e7436414c658a33452d28400799f3637e83930dcec39b3bd065dabc6ef04"
+  ],
+  "vulnerable_address": "0x9700204D77A67A18eA8F1B47275897b21e5eFA97",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x72c4cff6",
+  "type": "price-manipulation",
+  "attacker_profit": 41065.29225797025,
+  "source_case_id": "dfhl-0547",
+  "fix_description": "In the loan function (0x72c4cff6), collateral value is calculated using instantaneous Uniswap pair reserves (getReserves). An attacker can flash-loan manipulate the pair reserves to inflate collateral value and borrow excess funds. Fix: use a time-weighted average price (TWAP) oracle or Chainlink price feed instead of spot reserves for collateral valuation.",
+  "attack_date": "2024-02-23",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a multi-step DeFi attack involving a Balancer flash loan, repeated deployment of helper contracts, token swaps on Uniswap, and interaction with a protocol-specific vulnerable function to extract value. While the PoC is not very long, understanding why the repeated loop and contract recreation work requires reading protocol-specific logic and DeFi flow beyond a simple access control or single-call bug."
+}

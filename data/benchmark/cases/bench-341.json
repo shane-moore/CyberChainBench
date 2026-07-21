@@ -1,0 +1,23 @@
+{
+  "id": "bench-341",
+  "name": "MineSTM",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240606-minestm---business-logic-flaw",
+  "chain": "bsc",
+  "block_number": 39383150,
+  "attack_txs": [
+    "0x849ed7f687cc2ebd1f7c4bed0849893e829a74f512b7f4a18aea39a3ef4d83b1"
+  ],
+  "vulnerable_address": "0xb7D0A1aDaFA3e9e8D8e244C20B6277Bee17a09b6",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "MineSTM.sol",
+  "function": "updateAllowance",
+  "type": "access-control",
+  "attacker_profit": 13730.332135425959,
+  "source_case_id": "dfhl-0481",
+  "fix_description": "Add onlyOwner modifier to updateAllowance. Without access control, anyone can call it to approve max allowance to the router, enabling subsequent exploitation of the sell function to drain contract LP.",
+  "attack_date": "2024-06-06",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This exploit requires a nontrivial multi-step chain: flash loan setup, repeated deposits, fee-on-transfer token swaps, deliberate state desynchronization of the deposit contract, and a 100-iteration skim-based balance manipulation against the AMM pair. It also depends on protocol-specific EOA-only claim bypass via EIP-7702 delegation and understanding how BNBDeposit, EST token mechanics, and Pancake pair accounting interact, which would take an experienced auditor well over 2 hours to fully derive."
+}

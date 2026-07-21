@@ -1,0 +1,23 @@
+{
+  "id": "bench-204",
+  "name": "DDCoin",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230601-ddcoin---flashloan-attack-and-smart-contract-vulnerability",
+  "chain": "bsc",
+  "block_number": 28714108,
+  "attack_txs": [
+    "0xd92bf51b9bf464420e1261cfcd8b291ee05d5fbffbfbb316ec95131779f80809"
+  ],
+  "vulnerable_address": "0xb3a636ac4c271e6cd962cad98eae9cf71f5a49c8",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Marketplace.sol",
+  "function": "sellItem",
+  "type": "reentrancy",
+  "attacker_profit": 125403.17272117162,
+  "source_case_id": "dfhl-0323",
+  "fix_description": "In sellItem, follow checks-effects-interactions: update sellAmount and order state before calling usdt.transfer and coin.transferFrom. Alternatively add a nonReentrant modifier. The current order (transfer USDT first, then transferFrom coin) allows reentrancy if the coin token has callbacks.",
+  "attack_date": "2023-06-01",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The PoC is a multi-step exploit involving chained flash loans, interacting with a marketplace plus a helper contract to bypass an order limit, and then repeatedly abusing protocol-specific accounting in a loop. While not deeply technical like cross-protocol state desync or complex math, it still requires understanding the marketplace\u2019s business logic and orchestrating several contract interactions beyond a simple one-call bug."
+}

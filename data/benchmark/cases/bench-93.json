@@ -1,0 +1,23 @@
+{
+  "id": "bench-93",
+  "name": "xWin Finance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2021/README.md#20210625-xwin-finance---subscription-incentive-mechanism",
+  "chain": "bsc",
+  "block_number": 8589726,
+  "attack_txs": [
+    "0xba0fa8c150b2408eec9bbbbfe63f9ca63e99f3ff53ac46ee08d691883ac05c1d"
+  ],
+  "vulnerable_address": "0x8f52e0C41164169818C1FB04B263FDC7c1e56088",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "xWinFarmVaultSingleFile.sol",
+  "function": "_swapBNBToTokens",
+  "type": "price-manipulation",
+  "attacker_profit": 260587.3900252527,
+  "source_case_id": "dfhl-0022",
+  "fix_description": "In _swapBNBToTokens, the slippage control uses PancakeLibrary.getReserves to calculate the minimum output (quote), but this value is based on current (manipulable) reserves. Use a TWAP-based price or external oracle for the slippage baseline, not the spot reserves that can be manipulated in the same transaction via flash loan.",
+  "attack_date": "2021-06-25",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is a multi-step flashloan attack that requires understanding protocol-specific reward/referral logic plus token swaps and repeated subscribe/redeem cycling to amplify rewards. While the bug class itself is not deeply obscure, reproducing the full attack needs several contract interactions, looped state manipulation, and AMM reserve-based swap handling."
+}

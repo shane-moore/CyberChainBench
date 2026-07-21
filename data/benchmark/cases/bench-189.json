@@ -1,0 +1,23 @@
+{
+  "id": "bench-189",
+  "name": "SHIDO",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230623-shido---business-logic",
+  "chain": "bsc",
+  "block_number": 29365172,
+  "attack_txs": [
+    "0x72f8dd2bcfe2c9fbf0d933678170417802ac8a0d8995ff9a56bfbabe3aa712d6"
+  ],
+  "vulnerable_address": "0xaf0ca21363219c8f3d8050e7b61bb5f04e02f8d4",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "ShidoLock.sol",
+  "function": "lockTokens",
+  "type": "accounting-error",
+  "attacker_profit": 238005.52695545662,
+  "source_case_id": "dfhl-0307",
+  "fix_description": "In lockTokens, prevent repeated locking by either using assignment instead of += (userShidoV1[msg.sender] = amount), or adding a check that the user has not already locked. The current += allows attackers to inflate their recorded balance by calling lockTokens multiple times if they can get tokens back (e.g., via fee-on-transfer mechanics or token recycling).",
+  "attack_date": "2023-06-23",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is a 3-step chain using a flash loan, token swaps/liquidity manipulation through a fee-free router, then abusing protocol-specific lock/claim logic before swapping out for profit. It is not deeply complex, but it requires understanding multiple contracts and the specific SHIDO/SHIDOINU lock mechanics rather than a trivial single-pattern bug."
+}

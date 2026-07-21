@@ -1,0 +1,23 @@
+{
+  "id": "bench-171",
+  "name": "Platypus",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230712-platypus---bussiness-logic-flaw",
+  "chain": "avalanche",
+  "block_number": 32470737,
+  "attack_txs": [
+    "0x4b544e5ffb0420977dacb589a6fb83e25347e0685275a3327ee202449b3bfac6"
+  ],
+  "vulnerable_address": "0x7e1333a39abed9a5664661957b80ba01d2702b1e",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Pool.sol",
+  "function": "withdrawFromOtherAsset",
+  "type": "accounting-error",
+  "attacker_profit": 5729.117747996372,
+  "source_case_id": "dfhl-0291",
+  "fix_description": "In withdrawFromOtherAsset(), the decimal conversion between initialAsset and wantedAsset is incorrect. The user burns liquidityInInitialAssetDP (scaled to initialAsset decimals) but _withdrawFrom uses the original liquidity value (in wantedAsset decimals). Ensure the burn amount and withdrawal amount are calculated consistently in the same decimal precision.",
+  "attack_date": "2023-07-12",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This is a multi-step DeFi exploit using a dual-asset flash loan, coordinated deposits/withdrawals, and swaps to manipulate Platypus pool cash/liability accounting before extracting profit. It requires understanding protocol-specific LP pricing mechanics rather than a generic bug pattern, but the PoC itself is still fairly compact and linear."
+}

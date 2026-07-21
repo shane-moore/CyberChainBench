@@ -1,0 +1,23 @@
+{
+  "id": "bench-345",
+  "name": "MetaDragon",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240529-metadragon---lack-of-access-control",
+  "chain": "bsc",
+  "block_number": 39141427,
+  "attack_txs": [
+    "0x3ad998a01ad1f1bbe6dba6a08e658c1749dabfa4a07da20ded3c73bcd6970d20"
+  ],
+  "vulnerable_address": "0xEF1f39d8391cdDcaee62b8b383cB992F46a6ce4f",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "token.sol",
+  "function": "_update",
+  "type": "accounting-error",
+  "attacker_profit": 38741.806656449204,
+  "source_case_id": "dfhl-0487",
+  "fix_description": "In _update, add return after super._update(from, to, value) when !isValidTokenId(value). Without it, ERC20 transfers to address(this) or erc721 will execute both the normal transfer AND the transform logic, causing double state modification.",
+  "attack_date": "2024-05-29",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very straightforward unrestricted minting case caused by a bad transfer condition, and the PoC is essentially just repeated token transfers to self-trigger minting followed by a swap to WBNB. It requires minimal protocol knowledge, no flash loans or complex cross-contract reasoning, and only a couple of external interactions."
+}

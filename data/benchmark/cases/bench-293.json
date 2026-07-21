@@ -1,0 +1,23 @@
+{
+  "id": "bench-293",
+  "name": "LavaLending",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20241002-lavalending---price-manipulation",
+  "chain": "arbitrum",
+  "block_number": 259645908,
+  "attack_txs": [
+    "0xb5cfa4ae4d6e459ba285fec7f31caf8885e2285a0b4ff62f66b43e280c947216"
+  ],
+  "vulnerable_address": "0x1e515301f24abbf92dfb3d071e062739a8827b4d",
+  "has_public_source": false,
+  "fixable": true,
+  "proxy_address": "0x6700b021a8bcfae25a2493d16d7078c928c13151",
+  "function": "0x2505c3d9",
+  "type": "price-manipulation",
+  "attacker_profit": 129329.65791530993,
+  "source_case_id": "dfhl-0427",
+  "fix_description": "In deposit (0x2505c3d9), share calculation relies on instantaneous Uniswap V3 pool state (calls burn to get current liquidity amounts). An attacker can flash-loan manipulate the pool price before depositing, obtaining inflated shares. Fix: use a TWAP oracle or require that the current tick is within an acceptable range of recent observations before allowing deposit. Alternatively, add a maxSlippage check on the ratio of deposited assets vs expected ratio at fair price.",
+  "attack_date": "2024-10-02",
+  "difficulty": "hard",
+  "difficulty_reasoning": "This PoC is a long, highly protocol-specific multi-contract exploit chain involving four nested flash loans, LP deposit/withdraw/compound flows, collateral manipulation across a lending market, and multiple swaps/flash callbacks. Writing it requires deep understanding of the vulnerable protocol\u2019s accounting and how to sequence many dependent actions across Aave, Balancer, Algebra, Uniswap V3, and custom contracts, which is well beyond a quick standard-pattern exploit."
+}

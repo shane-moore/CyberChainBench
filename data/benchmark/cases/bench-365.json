@@ -1,0 +1,23 @@
+{
+  "id": "bench-365",
+  "name": "- Defrost",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221223---defrost---reentrancy",
+  "chain": "avalanche",
+  "block_number": 24003940,
+  "attack_txs": [
+    "0xc6fb8217e45870a93c25e2098f54f6e3b24674a3083c30664867de474bf0212d"
+  ],
+  "vulnerable_address": "0xfF152e21C5A511c478ED23D1b89Bb9391bE6de96",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "baseSuperToken.sol",
+  "function": "flashLoan",
+  "type": "reentrancy",
+  "attacker_profit": 163108.09668559214,
+  "source_case_id": "dfhl-0055",
+  "fix_description": "Add reentrancy guard (nonReentrant modifier) to flashLoan, or follow checks-effects-interactions pattern to update state before making external calls.",
+  "attack_date": "2022-12-23",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a short multi-step attack that chains a DEX flash swap with an ERC3156 flash loan and abuses protocol-specific deposit/redeem accounting in the same transaction. It is not deeply complex, but it does require understanding the victim vault logic and coordinating callbacks across multiple contracts, which is more than a trivial single-pattern bug."
+}

@@ -1,0 +1,24 @@
+{
+  "id": "bench-295",
+  "name": "Bedrock_DeFi",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240926-bedrock_defi---swap-ethbtc-11-in-mint-function",
+  "chain": "ethereum",
+  "block_number": 20836584,
+  "attack_txs": [
+    "0x725f0d65340c859e0f64e72ca8260220c526c3e0ccde530004160809f6177940"
+  ],
+  "vulnerable_address": "0x702696b2aa47fd1d4feaaf03ce273009dc47d901",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x047d41f2544b7f63a8e991af2068a363d210d6da",
+  "file": "Vault.sol",
+  "function": "_amounts",
+  "type": "accounting-error",
+  "attacker_profit": 80980.1170332,
+  "source_case_id": "dfhl-0429",
+  "fix_description": "In _amounts(), the function treats ETH and BTC tokens as equivalent in value (only adjusting for decimals, not price). When a user deposits WETH (18 decimals), it mints uniBTC as if 1 ETH = 1 BTC. Add an oracle price check to convert ETH value to BTC value before calculating the uniBTC mint amount.",
+  "attack_date": "2024-09-26",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The core bug is a very straightforward mint pricing/validation failure: the vault lets an attacker mint 200 uniBTC for 200 ETH with essentially a single call. The full replication adds a flash loan and two swaps, but these are standard monetization steps rather than protocol-complex exploit logic, so a competent auditor could reproduce it quickly."
+}

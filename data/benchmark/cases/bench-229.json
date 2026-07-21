@@ -1,0 +1,31 @@
+{
+  "id": "bench-229",
+  "name": "Paribus",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230411-paribus---reentrancy",
+  "chain": "arbitrum",
+  "block_number": 79308098,
+  "attack_txs": [
+    "0x0e29dcf4e9b211a811caf00fc8294024867bffe4ab2819cc1625d2e9d62390af"
+  ],
+  "vulnerable_address": "0x5b0ec471565e36e5a33c35b861dd752e16f3a8e7",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0x375ae76f0450293e50876d0e5bdc3022cab23198",
+  "file": "PToken.sol",
+  "function": "redeemFresh",
+  "type": "reentrancy",
+  "attacker_profit": 67284.38950303379,
+  "source_case_id": "dfhl-0355",
+  "fix_description": "Add reentrancy guard (nonReentrant modifier) to redeemFresh, or follow checks-effects-interactions pattern to update state before making external calls.",
+  "normal_txs": [
+    "0x8ec301a20306262dee8bacc5bec7b460769c14e624c3823c6a6e4ddaaccc79d6",
+    "0xfb7a8cf2910e9f9eb97f74df91d0852185497920fa8e3d06720cee6b872c0574",
+    "0xdcb4e8a1d3fe1eceb716f09c1940312b8fc46f4ea2091fe6db5f179ec0333eaf",
+    "0xb6292e2229f965f65bc2367eff355bbe8a8e72b9183f9de4a100f7da36ce429b",
+    "0x295f5fb66fdc0dc0f94b8be94567f64bf0cd59874c480e464a673fd22999b623"
+  ],
+  "attack_date": "2023-04-11",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a multi-step DeFi exploit involving an Aave flash loan, token swap into PBX, minting a Camelot LP NFT, entering an NFT collateral market, and then borrowing across several Paribus markets before unwinding. It requires understanding protocol-specific NFT-collateral/accounting logic and coordination across multiple contracts, but the execution path is still fairly direct once the core bug is identified."
+}

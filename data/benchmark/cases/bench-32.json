@@ -1,0 +1,23 @@
+{
+  "id": "bench-32",
+  "name": "Quixotic",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220701-quixotic---optimism-nft-marketplace",
+  "chain": "optimism",
+  "block_number": 13591384,
+  "attack_txs": [
+    "0x5dc519726e1236eb846271f6699e03cdd1a8fd593a2900c71cd2aabbdb7c92e6"
+  ],
+  "vulnerable_address": "0x065e8A87b8F11aED6fAcf9447aBe5E8C5D7502b6",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "ExchangeV4.sol",
+  "function": "fillSellOrder",
+  "type": "input-validation",
+  "attacker_profit": 1405.2198678217774,
+  "source_case_id": "dfhl-0138",
+  "fix_description": "In fillSellOrder, require that msg.sender == buyer or verify a signature from the buyer authorizing the purchase. Currently only the sell order signature is validated, allowing anyone to force arbitrary addresses to buy worthless NFTs using their approved tokens.",
+  "attack_date": "2022-07-01",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a single-call exploit of an obvious signature/access-control flaw: the marketplace only validates the seller signature and allows an arbitrary buyer parameter. The PoC is very short, requires no flash loans or complex protocol interactions, and a competent auditor could reproduce it quickly once reading the fillSellOrder logic."
+}

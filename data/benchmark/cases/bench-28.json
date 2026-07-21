@@ -1,0 +1,31 @@
+{
+  "id": "bench-28",
+  "name": "Reaper Farm",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220801-reaper-farm---business-logic-flaw--lack-of-access-control-mechanism",
+  "chain": "fantom",
+  "block_number": 44045900,
+  "attack_txs": [
+    "0xc929f3b9312ff26be0adb1c3ff832dbdafdcbcaad33d002744effd515e53c9d5"
+  ],
+  "vulnerable_address": "0xcdA5deA176F2dF95082f4daDb96255Bdb2bc7C7D",
+  "has_public_source": false,
+  "fixable": false,
+  "file": "ReaperVaultV2.sol",
+  "function": "0xba087652",
+  "type": "access-control",
+  "attacker_profit": 36949.04763494997,
+  "annotation_hints": {
+    "function": {
+      "label": "NEEDS_SELECTOR",
+      "status": "invalid",
+      "original_value": "_withdraw",
+      "hint": "has_public_source is false \u2014 the eval agent only sees bytecode. Use get_decompiled_contract or get_tx_trace to find the 4-byte selector and replace this human-readable name."
+    }
+  },
+  "source_case_id": "dfhl-0132",
+  "fix_description": "In withdraw(uint256,address,address), before calling _burn (func_34FC) on the owner shares, add allowance check: if msg.sender != owner, require that allowance[owner][msg.sender] >= shares and deduct from allowance. Currently any caller can burn any owner shares and withdraw their assets.",
+  "attack_date": "2022-08-01",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is a single-step exploit: it directly calls redeem() using a victim as the owner and sends funds to the attacker, indicating an obvious missing authorization/access-control check. It requires minimal protocol understanding, no flash loans or complex multi-contract interactions, and the exploit code is very short."
+}

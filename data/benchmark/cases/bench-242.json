@@ -1,0 +1,23 @@
+{
+  "id": "bench-242",
+  "name": "- swapX",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230227---swapx---access-control",
+  "chain": "bsc",
+  "block_number": 26023089,
+  "attack_txs": [
+    "0x3ee23c1585474eaa4f976313cafbc09461abb781d263547c8397788c68a00160"
+  ],
+  "vulnerable_address": "0x6d1879f4151b7f3958b8f5a9cc5e2cc93b95e50d",
+  "has_public_source": false,
+  "fixable": true,
+  "proxy_address": "0x6d8981847eb3cc2234179d0f0e72f6b6b2421a01",
+  "function": "0x7855da66",
+  "type": "input-validation",
+  "attacker_profit": 225677.42239285482,
+  "source_case_id": "dfhl-0369",
+  "fix_description": "Function 0x4f1f05bc accepts a user-supplied from address parameter and calls transferFrom without validating that msg.sender == from. Attacker passes victim addresses as the from parameter to drain their approved tokens. Fix: validate that from == msg.sender, or remove the from parameter and always use msg.sender.",
+  "attack_date": "2023-02-27",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is a straightforward allowance-abuse drain: it iterates over victims, uses an existing approval to pull BUSD via a vulnerable swap function, then dumps the received token. It requires little protocol-specific DeFi reasoning, no flash loans or complex state manipulation, and the exploit flow is only a couple of external interactions."
+}

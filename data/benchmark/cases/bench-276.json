@@ -1,0 +1,22 @@
+{
+  "id": "bench-276",
+  "name": "vETH",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20241114-veth---vulnerable-price-dependency",
+  "chain": "ethereum",
+  "block_number": 21184778,
+  "attack_txs": [
+    "0x900891b4540cac8443d6802a08a7a0562b5320444aa6d8eed19705ea6fb9710b"
+  ],
+  "vulnerable_address": "0x62f250cf7021e1cf76c765dec8ec623fe173a1b5",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x6c0472da",
+  "type": "price-manipulation",
+  "attacker_profit": 425488.0652750439,
+  "source_case_id": "dfhl-0410",
+  "fix_description": "Function 0x6c0472da uses pair.getReserves() to calculate swap output amount at spot price. Attacker flash-loans to manipulate pair reserves, then calls this function to receive disproportionate output at the manipulated price. Fix by using TWAP oracle instead of instant reserves, or add a price deviation check against a reference oracle.",
+  "attack_date": "2024-11-14",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The PoC itself is short, but the exploit requires understanding a protocol-specific factory flaw plus a flash-loan-funded buy/exploit/sell sequence across Balancer, a custom DEX interface, and the vulnerable contract. It is not just an obvious access-control bug, but also not a deeply complex multi-transaction or cross-protocol accounting attack."
+}

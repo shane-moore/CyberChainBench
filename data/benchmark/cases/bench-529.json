@@ -1,0 +1,23 @@
+{
+  "id": "bench-529",
+  "name": "- sDAO",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221121---sdao---business-logic-flaw",
+  "chain": "bsc",
+  "block_number": 23241441,
+  "attack_txs": [
+    "0xb3ac111d294ea9dedfd99349304a9606df0b572d05da8cedf47ba169d10791ed"
+  ],
+  "vulnerable_address": "0x6666625Ab26131B490E7015333F97306F05Bf816",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "sDAO.sol",
+  "function": "withdrawTeam",
+  "type": "access-control",
+  "attacker_profit": 13679.807707631231,
+  "source_case_id": "dfhl-0074",
+  "fix_description": "Add OnlyOperator or onlyOwner modifier to withdrawTeam(). Currently any external caller can trigger withdrawal of all contract funds to the TEAM address.",
+  "attack_date": "2022-11-21",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a single-call exploit caused by an obvious missing validation/access-control issue in redeem(), where a fake token contract can spoof underlying() and expiry() and bypass burn semantics. The PoC is very short, requires no flash loans or protocol-specific multi-step setup, and a competent auditor could reproduce it quickly."
+}

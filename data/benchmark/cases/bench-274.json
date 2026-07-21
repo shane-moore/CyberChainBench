@@ -1,0 +1,23 @@
+{
+  "id": "bench-274",
+  "name": "Ak1111",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20241123-ak1111---access-control",
+  "chain": "bsc",
+  "block_number": 44280829,
+  "attack_txs": [
+    "0xc29c98da0c14f4ca436d38f8238f8da1c84c4b1ee6480c4b4facc4b81a013438"
+  ],
+  "vulnerable_address": "0xc3B1b45e5784A8efececfC0BE2E28247d3f49963",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "OFT.sol",
+  "function": "nonblockingLzReceive1",
+  "type": "access-control",
+  "attacker_profit": 31288.598992235533,
+  "source_case_id": "dfhl-0405",
+  "fix_description": "In nonblockingLzReceive1, the function is public without verifying msg.sender is the LayerZero endpoint. It calls _creditTo which mints tokens to an arbitrary address. Anyone can call this to mint unlimited tokens. Fix: add require(msg.sender == address(lzEndpoint)) or use the standard LayerZero NonblockingLzApp pattern which restricts the caller.",
+  "attack_date": "2024-11-23",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a straightforward missing access control issue: the attacker directly calls an unrestricted mint-like function to create tokens, then swaps them for USDT in a single follow-up step. The PoC is very short, involves only one vulnerable contract plus a router swap, and requires minimal protocol-specific reasoning."
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "name": "aave-v3-core",
+    "repo": "aave/aave-v3-core",
+    "path": "audits"
+  },
+  {
+    "name": "morpho-blue",
+    "repo": "morpho-org/morpho-blue",
+    "path": "audits"
+  },
+  {
+    "name": "renzo-contracts-public",
+    "repo": "Renzo-Protocol/contracts-public",
+    "path": "Audit"
+  },
+  {
+    "name": "gamma-hypervisor",
+    "repo": "GammaStrategies/hypervisor",
+    "path": "audits"
+  }
+]

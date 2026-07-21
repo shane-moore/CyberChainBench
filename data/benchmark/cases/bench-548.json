@@ -1,0 +1,23 @@
+{
+  "id": "bench-548",
+  "name": "PLTD",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221018-pltd---transfer-logic-flaw",
+  "chain": "bsc",
+  "block_number": 22252046,
+  "attack_txs": [
+    "0x8385625e9d8011f4ad5d023d64dc7985f0315b6a4be37424c7212fe4c10dafe0"
+  ],
+  "vulnerable_address": "0x29b2525e11BC0B0E9E59f705F318601eA6756645",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "PLTD.sol",
+  "function": "_tokenTransferSell",
+  "type": "price-manipulation",
+  "attacker_profit": 24367.795299449794,
+  "source_case_id": "dfhl-0095",
+  "fix_description": "In _tokenTransferSell, _bron is set to tAmount/2 without any cap, allowing attackers to set an arbitrary burn amount for the next transfer. Remove _bron mechanism entirely, or cap it to a small percentage of pair balance (e.g., 1%) to prevent draining the pair to near-zero.",
+  "attack_date": "2022-10-18",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC is a multi-step DeFi exploit involving nested flash loans, token swaps through a router, and abusing pair accounting via direct token transfer plus skim, which requires understanding AMM mechanics and fee-on-transfer token behavior. The code is still fairly short and not deeply protocol-internal, so it is more complex than a trivial bug but not hard-tier."
+}

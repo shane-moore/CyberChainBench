@@ -1,0 +1,22 @@
+{
+  "id": "bench-108",
+  "name": "MEVbot",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231107-mevbot---lack-of-access-control",
+  "chain": "ethereum",
+  "block_number": 18523344,
+  "attack_txs": [
+    "0xbc08860cd0a08289c41033bdc84b2bb2b0c54a51ceae59620ed9904384287a38"
+  ],
+  "vulnerable_address": "0x05f016765c6c601fd05a10dba1abe21a04f924a5",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0xf6ebebbb",
+  "type": "access-control",
+  "attacker_profit": 1965661.1260771651,
+  "source_case_id": "dfhl-0225",
+  "fix_description": "Function 0xf6ebebbb has no access control check. The contract has owner/trader/operator role system (setOwner, addTrader, addOperators) but this critical function does not verify msg.sender against any role. Fix: add require(traders[msg.sender] || msg.sender == owner) check.",
+  "attack_date": "2023-11-07",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The PoC is extremely short and the exploit path is basically repeated flash loans against a vulnerable contract with no complex callback logic, routing, or multi-protocol interaction implemented in the test. An auditor would mainly need to identify that the target can be drained via borrowed USDT sent directly to it, which fits a straightforward single-pattern exploit rather than deep protocol reasoning."
+}

@@ -1,0 +1,31 @@
+{
+  "id": "bench-221",
+  "name": "DEI",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230505-dei---wrong-implemention",
+  "chain": "arbitrum",
+  "block_number": 87626026,
+  "attack_txs": [
+    "0xb1141785b7b94eb37c39c37f0272744c6e79ca1517529fec3f4af59d4c3c37ef"
+  ],
+  "vulnerable_address": "0xbc1b62db243b51dabcd9540473324f36e094ec55",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0xde1e704dae0b4051e80dabb26ab6ad6c12262da0",
+  "file": "LERC20Upgradable.sol",
+  "function": "burnFrom",
+  "type": "accounting-error",
+  "attacker_profit": 4951420.903867473,
+  "source_case_id": "dfhl-0344",
+  "fix_description": "In burnFrom, the allowance check reads _allowances[_msgSender()][account] (msg.sender allowance TO account) instead of _allowances[account][_msgSender()] (account allowance TO msg.sender). The direction is reversed. This allows anyone to burn tokens from any account by simply approving that account first. Fix: change to _allowances[account][_msgSender()].",
+  "normal_txs": [
+    "0x7ebb7be243b46e5acfd9c7c226d8efd87a4d6246f17d4cde705e15e6a65f4bb9",
+    "0x2f835338b80a17289c1e386a72ca1db21a7b1c335b0faabb6397b2e7d026014a",
+    "0xdf7ccd5700be5df7bc47350e5f90a01b891336a32bb45efd7de50e3151151239",
+    "0x60584d807a103393695eefa78c68756b9be2463a69d89669f8cb770ee141aecd",
+    "0xb206e24ef180eb2ef5077d151ef147c4b23e392646ffe25e1fcf15a5b2b1d51a"
+  ],
+  "attack_date": "2023-05-05",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very short, direct exploit with only a few steps: abuse DEI's broken burnFrom/transferFrom behavior on the pair, call sync to update reserves, then swap out USDC. It requires minimal protocol-specific reasoning and no flash loans, routing, or complex state interactions."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-26",
+  "name": "Qixi",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20220803-qixi---underflow",
+  "chain": "bsc",
+  "block_number": 20120885,
+  "attack_txs": [
+    "0x16be4fe1c8fcab578fcb999cbc40885ba0d4ba9f3782a67bd215fb56dc579062"
+  ],
+  "vulnerable_address": "0x65F11B2de17c4af7A8f70858D6CcB63AAC215697",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Token.sol",
+  "function": "_basicTransfer",
+  "type": "accounting-error",
+  "attacker_profit": 2031.597898472493,
+  "source_case_id": "dfhl-0130",
+  "fix_description": "Add balance check in _basicTransfer: require(balanceOf[sender] >= value) before subtracting. The contract uses Solidity 0.4.25 without SafeMath, allowing integer underflow when transferring more than the sender balance.",
+  "attack_date": "2022-08-03",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very short, single-pair flash-swap style PoC with essentially one meaningful exploit action in the callback: transferring a huge amount of the vulnerable token to the pair to abuse broken token/pair logic. It requires minimal protocol understanding, no complex routing or multi-contract state reasoning, and an experienced auditor could reproduce it quickly."
+}

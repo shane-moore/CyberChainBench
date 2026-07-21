@@ -1,0 +1,31 @@
+{
+  "id": "bench-117",
+  "name": "AstridProtocol",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231028-astridprotocol---business-logic-flaw",
+  "chain": "ethereum",
+  "block_number": 18448168,
+  "attack_txs": [
+    "0x8af9b5fb3e2e3df8659ffb2e0f0c1f4c90d5a80f4f6fccef143b823ce673fb60"
+  ],
+  "vulnerable_address": "0x4d5b4b9ccf52bbcfe7b71b3038d8577293779e0c",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0xbaa87546cf87b5de1b0b52353a86792d40b8ba70",
+  "file": "AstridProtocol.sol",
+  "function": "withdraw",
+  "type": "input-validation",
+  "attacker_profit": 228427.12605057386,
+  "source_case_id": "dfhl-0235",
+  "fix_description": "In withdraw, the _restakedTokenAddress parameter is not validated against the whitelist (unlike deposit which checks stakedTokenMapping.whitelisted). Attacker passes a malicious token contract that manipulates scaledBalanceOf to inflate shares. Fix: add whitelist validation for _restakedTokenAddress in withdraw, same as deposit.",
+  "normal_txs": [
+    "0xdd9b1dfd48ea900907ae2ac7c0497b6b968a2343d48573e2c076b46889ec80fa",
+    "0x9cd1f60b016967812ae142f668c6e252d1c797cb93d5d73a397d1c681bf4789f",
+    "0x0fd17348f758118d6815d7474a537b8e0d3f473a1fa71d6e4cdc0700022e7e28",
+    "0x94dc11656b9f37582c4b5a62f97e26aa3fc76fb73f07c2f75b3240144579b45c",
+    "0xa2458a6f31bb7e3c5d1966c5ac31e47db7907167a8e05e60aff400133bbefdf6"
+  ],
+  "attack_date": "2023-10-28",
+  "difficulty": "easy",
+  "difficulty_reasoning": "The exploit is a very straightforward fake-token/input-validation flaw: deploy malicious ERC20s that spoof the expected restaked token interface, call withdraw and claim for each supported asset, then swap proceeds to ETH. It is only a few simple steps with obvious malicious contract setup and minimal protocol-specific reasoning beyond understanding the vulnerable contract trusts attacker-controlled token metadata."
+}

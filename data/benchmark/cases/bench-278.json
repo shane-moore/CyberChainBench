@@ -1,0 +1,22 @@
+{
+  "id": "bench-278",
+  "name": "X319",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20241109-x319---access-control",
+  "chain": "bsc",
+  "block_number": 43860720,
+  "attack_txs": [
+    "0x679028cb0a5af35f57cbea120ec668a5caf72d74fcc6972adc7c75ef6c9a9092"
+  ],
+  "vulnerable_address": "0xedd632eaf3b57e100ae9142e8ed1641e5fd6b2c0",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0xbfcf63b0",
+  "type": "access-control",
+  "attacker_profit": 12905.54262476413,
+  "source_case_id": "dfhl-0412",
+  "fix_description": "claimEther (0xbfcf63b0) directly sends ETH/BNB to any address with any amount specified by the caller, with NO access control. Anyone can drain the contract entire balance. Fix by adding onlyOwner modifier.",
+  "attack_date": "2024-11-09",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a single-step exploit: deploying a contract whose constructor calls claimEther with tx.origin as receiver. The vulnerability appears to be a straightforward misuse of tx.origin or missing access control, requiring minimal protocol context and very little PoC logic."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-269",
+  "name": "LABUBU Token",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20241210-labubu-token---logic-flaw",
+  "chain": "bsc",
+  "block_number": 44751945,
+  "attack_txs": [
+    "0xb06df371029456f2bf2d2edb732d1f3c8292d4271d362390961fdcc63a2382de"
+  ],
+  "vulnerable_address": "0x2fF960F1D9AF1A6368c2866f79080C1E0B253997",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "LABUBU.sol",
+  "function": "_transfer",
+  "type": "accounting-error",
+  "attacker_profit": 11909.74988502678,
+  "source_case_id": "dfhl-0400",
+  "fix_description": "In _transfer, when sender balance reaches 0, it is forcibly set to 16 (creating tokens from nothing). Attacker repeatedly transfers full balance, getting 16 free tokens each time. Fix: remove the if(_balances[sender] == 0) { _balances[sender] = 16; } logic entirely.",
+  "attack_date": "2024-12-10",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very short, single-core-idea exploit: abuse a token\u2019s flawed transfer logic during a PancakeV3 flash callback to multiply LABUBU balance, then dump it through standard routers. It requires minimal protocol-specific reasoning beyond understanding a flash loan callback and simple token swapping, and the PoC is well under 100 lines of real exploit logic."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-73",
+  "name": "KEST",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231216-kest---business-logic-flaw",
+  "chain": "bsc",
+  "block_number": 34402344,
+  "attack_txs": [
+    "0x2fcee04e64e54f3dd9c15db9ae44e4cbdd57ab4c6f01941a3acf470dc60bfc16"
+  ],
+  "vulnerable_address": "0x7dda132dd57b773a94e27c5caa97834a73510429",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "KEKESANTA.sol",
+  "function": "_transfer",
+  "type": "accounting-error",
+  "attacker_profit": 2226.9995108616454,
+  "source_case_id": "dfhl-0191",
+  "fix_description": "In _transfer, when neither from nor to is a market address (non-market transfer), the balances are never updated despite emitting a Transfer event. Add an else branch to handle regular transfers: _balances[from] = fromBalance - amount; _balances[to] += amount. Also change the second if(isMarket(to)) to else if to prevent double execution when both from and to are market addresses.",
+  "attack_date": "2023-12-16",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This PoC requires understanding Uniswap V2 pair mechanics, fee-on-transfer token behavior, mint/skim/swap interactions, and a repeated liquidity-manipulation loop rather than a simple one-call bug. While it is contained to a single protocol pair and one flash loan, the exploit path is multi-step and protocol-specific enough that an experienced auditor would likely need 30 minutes to 2 hours to reconstruct confidently."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bench-312",
+  "name": "Pythia",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240902-pythia---logic-flaw",
+  "chain": "ethereum",
+  "block_number": 20667434,
+  "attack_txs": [
+    "0x7e19f8edb1f1666322113f15d7674593950ac94bbc25d2aff96adabdcae0a6c3"
+  ],
+  "vulnerable_address": "0xe2910b29252F97bb6F3Cc5E66BfA0551821C7461",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "PythiaTokenStaking.sol",
+  "function": "distributeRewards",
+  "type": "input-validation",
+  "attacker_profit": 1837.2950974345956,
+  "source_case_id": "dfhl-0448",
+  "fix_description": "In distributeRewards, cap timePassed to at most one epoch.length instead of accumulating unbounded time since epoch.end. Currently if epoch.end expired long ago, all accumulated rewards are distributed to current stakers regardless of when they staked. An attacker can stake right before calling distributeRewards and claim all accumulated rewards. Fix: timePassed = min(block.timestamp - epoch.end, epoch.length).",
+  "attack_date": "2024-09-02",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a short, direct exploit against protocol-specific reward accounting: stake once, repeatedly transfer staked position to fresh helper contracts, and call claimRewards to farm rewards multiple times. The PoC is small, uses only simple swaps/staking/transfers, and does not require flash loans, complex routing, or deep multi-protocol reasoning."
+}

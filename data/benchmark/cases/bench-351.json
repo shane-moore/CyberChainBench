@@ -1,0 +1,23 @@
+{
+  "id": "bench-351",
+  "name": "TCH",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240516-tch---signature-malleability-vulnerability",
+  "chain": "bsc",
+  "block_number": 38776240,
+  "attack_txs": [
+    "0xa94338d8aa312ed4b97b2a4dcb27f632b1ade6f3abec667e3bf9f002a75dabe0"
+  ],
+  "vulnerable_address": "0x5d78cfc8732fd328015c9b73699de9556ef06e8e",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "tch.sol",
+  "function": "burnToken",
+  "type": "input-validation",
+  "attacker_profit": 18444.40106593795,
+  "source_case_id": "dfhl-0493",
+  "fix_description": "In burnToken, the replay protection uses keccak256(signature) which is vulnerable to ECDSA signature malleability (attacker can derive alternative valid signatures with different bytes). Fix by using the nonce for replay protection instead, or normalize the signature (enforce low-s) before hashing.",
+  "attack_date": "2024-05-16",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The core bug is conceptually simple\u2014a flawed signature verification allowing tampered signatures in burnToken\u2014but turning it into profit requires a multi-step DeFi exploit with a flash loan, swaps, LP price manipulation via repeated burns, and unwind. Although the PoC is mechanically straightforward once known, it depends on protocol-specific tokenomics/pair behavior and harvested signature data, so it is more than a quick obvious exploit."
+}

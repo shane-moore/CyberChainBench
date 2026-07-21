@@ -1,0 +1,23 @@
+{
+  "id": "bench-472",
+  "name": "Unwarp",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2025/README.md#20250514-unwarp---lack-of-access-control",
+  "chain": "base",
+  "block_number": 30210274,
+  "attack_txs": [
+    "0xac6f716c57bbb1a4c1e92f0a9531019ea2ecfcaea67794bbd27115d400ae9b41"
+  ],
+  "vulnerable_address": "0x8127d4532d0da08c2db6c36e18160d8343265b93",
+  "has_public_source": false,
+  "fixable": true,
+  "proxy_address": "0x8bEfC1d90d03011a7d0b35B3a00eC50f8E014802",
+  "function": "0xe16d9ce5",
+  "type": "access-control",
+  "attacker_profit": 10451.02478138203,
+  "source_case_id": "dfhl-0633",
+  "fix_description": "Add onlyOwner or role-based access control to unwrapWETH (0xe16d9ce5). Currently anyone can call it to unwrap WETH from the contract and send ETH to an arbitrary address.",
+  "attack_date": "2025-05-14",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a short but protocol-specific multi-step attack: flash-loan BUSD, swap into the vulnerable token, abuse repeated pair.skim calls via token/pair accounting behavior, then swap back and repay. It is not a trivial access-control bug, but it also does not require deep cross-protocol or highly complex state reasoning, so an experienced auditor could likely reproduce it within 30 minutes to 2 hours."
+}

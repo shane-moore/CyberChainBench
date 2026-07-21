@@ -1,0 +1,23 @@
+{
+  "id": "bench-525",
+  "name": "MTToken",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/README.md#20260112-mttoken---incorrect-fee-logic",
+  "chain": "bsc",
+  "block_number": 74937080,
+  "attack_txs": [
+    "0xc758ab15fd51e713ff8b4184620610a1ac809be06ec374305c32d3b244256a64"
+  ],
+  "vulnerable_address": "0x2f3f25046Ea518d1E524B8fB6147c656D6722CeD",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "MetaverseToken.sol",
+  "function": "transactionFee",
+  "type": "accounting-error",
+  "attacker_profit": 36732.33295196038,
+  "source_case_id": "dfhl-0687",
+  "fix_description": "In transactionFee, ensure the fee distribution logic is consistent with the amount deducted from realAmount. The ContractorsFee percentages and actual transfers must sum correctly. The current implementation has a mismatch between fees charged and fees distributed, allowing exploitation of the accounting discrepancy.",
+  "attack_date": "2026-01-12",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is a 5-step DeFi attack involving a flash loan, direct pair swap, pair skim/sync reserve manipulation, and a fee-on-transfer token edge case, so it requires understanding PancakeV2 pair mechanics and protocol-specific token logic. While the root cause is conceptually simple once identified, producing the full PoC and correct sequencing would likely take an experienced auditor more than 30 minutes."
+}

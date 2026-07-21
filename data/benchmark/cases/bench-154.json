@@ -1,0 +1,23 @@
+{
+  "id": "bench-154",
+  "name": "Uwerx",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230802-uwerx---fault-logic",
+  "chain": "ethereum",
+  "block_number": 17826203,
+  "attack_txs": [
+    "0x3b19e152943f31fe0830b67315ddc89be9a066dc89174256e17bc8c2d35b5af8"
+  ],
+  "vulnerable_address": "0x4306B12F8e824cE1fa9604BbD88f2AD4f0FE3c54",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "Uwerx.sol",
+  "function": "_transfer",
+  "type": "accounting-error",
+  "attacker_profit": 323838.5917966193,
+  "source_case_id": "dfhl-0274",
+  "fix_description": "In _transfer, when to == uniswapPoolAddress, only add userTransferAmount (97%) to _balances[to] instead of the full amount. The current code adds the full amount to the pool balance but then emits events and burns as if only partial was transferred, creating a mismatch between actual balances and intended transfer amounts.",
+  "attack_date": "2023-08-02",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This PoC is a very short, direct reserve-manipulation/tokenomics exploit with only a few steps: buy the token, transfer a large amount to the pair, call skim/sync, then swap back for profit. It requires limited protocol-specific reasoning, no real flash-loan mechanics in the PoC, and the exploit path is obvious from the pair interaction and fee-on-transfer token behavior."
+}

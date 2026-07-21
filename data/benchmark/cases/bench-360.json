@@ -1,0 +1,23 @@
+{
+  "id": "bench-360",
+  "name": "PikeFinance",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2024/README.md#20240430-pikefinance---uninitialized-proxy",
+  "chain": "ethereum",
+  "block_number": 19771059,
+  "attack_txs": [
+    "0xe2912b8bf34d561983f2ae95f34e33ecc7792a2905a3e317fcc98052bce66431"
+  ],
+  "vulnerable_address": "0xb30c120eb92c120bf11b358b4b9961e6679b6ae7",
+  "has_public_source": false,
+  "fixable": true,
+  "proxy_address": "0xfc7599cffea9de127a9f9c748ccb451a34d2f063",
+  "function": "0xfb5e556c",
+  "type": "access-control",
+  "attacker_profit": 1434393.4196911387,
+  "source_case_id": "dfhl-0503",
+  "fix_description": "The proxy was deployed without calling initialize (0xfb5e556c) on the implementation. Anyone can call it to set themselves as owner (storage[0x00] = msg.sender) and take over the contract. Fix by calling initialize in the same transaction as proxy deployment, or add a constructor that disables initialization on the implementation contract.",
+  "attack_date": "2024-04-30",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very straightforward uninitialized/upgradable proxy takeover: call initialize to become owner, then upgradeToAndCall to malicious logic and drain funds. The PoC is short, uses only two key external calls, and requires no complex DeFi, pricing, or multi-contract reasoning."
+}

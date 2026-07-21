@@ -1,0 +1,23 @@
+{
+  "id": "bench-191",
+  "name": "BUNN",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20230621-bunn---reflection-tokens",
+  "chain": "bsc",
+  "block_number": 29304628,
+  "attack_txs": [
+    "0x24a68d2a4bbb02f398d3601acfd87b09f543d935fc24862c314aaf64c295acdb"
+  ],
+  "vulnerable_address": "0xc54AAecF5fA1b6c007d019a9d14dFb4a77CC3039",
+  "has_public_source": true,
+  "fixable": false,
+  "file": "BunnyProtocol.sol",
+  "function": "deliver",
+  "type": "accounting-error",
+  "attacker_profit": 12905.491470821818,
+  "source_case_id": "dfhl-0309",
+  "fix_description": "Exclude the LP pair address from reflection rewards (add pair to _isExcluded), or remove the deliver function. When deliver reduces _rTotal, it inflates the token balance of all holders including the LP pair, but the pair reserves are not synced, creating an arbitrage opportunity.",
+  "attack_date": "2023-06-21",
+  "difficulty": "easy",
+  "difficulty_reasoning": "This is a very short, single-pattern exploit against a reflection token mechanic: invoke the pair swap callback and call deliver() to reduce the pair\u2019s token balance, then profit from the broken reserve accounting. It requires minimal protocol-specific reasoning, no flash loan orchestration, and the PoC is far under 100 lines with essentially one key external action."
+}

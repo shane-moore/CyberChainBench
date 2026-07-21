@@ -1,0 +1,22 @@
+{
+  "id": "bench-90",
+  "name": "MetaLend",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2023/README.md#20231125-metalend---compoundv2-inflation-attack",
+  "chain": "ethereum",
+  "block_number": 18648754,
+  "attack_txs": [
+    "0x4c684fb2618c29743531dec9253ede1b757bda0b323dc2f305e3b50ab1773da7"
+  ],
+  "vulnerable_address": "0x5578f2e245e932a599c46215a0ca88707230f17b",
+  "has_public_source": false,
+  "fixable": false,
+  "function": "0x1249c58b",
+  "type": "accounting-error",
+  "attacker_profit": 4104.977889056771,
+  "source_case_id": "dfhl-0209",
+  "fix_description": "Classic Compound V2 share inflation attack. exchangeRateStored() (0x182df0f5) calculates rate as (cash + totalBorrows - totalReserves) / totalSupply. When totalSupply is 1 wei, attacker donates ETH directly to inflate cash, making exchangeRate extremely large. Subsequent depositors get 0 shares due to integer division. Fix: require minimum initial deposit that mints dead shares, or add virtual offset to totalSupply and totalAssets.",
+  "attack_date": "2023-11-25",
+  "difficulty": "medium",
+  "difficulty_reasoning": "The exploit is a multi-step protocol-specific attack: flash-loan WETH, manipulate the vulnerable mETH market state via mint/redeem plus forced ETH donation, enter the market, drain WBTC collateral capacity, then unwind and repay. It is not a simple bug pattern and requires understanding Compound-style cToken accounting and how unsolicited ETH affects collateral/borrow logic, but the PoC itself is still fairly compact and only involves a few contracts."
+}

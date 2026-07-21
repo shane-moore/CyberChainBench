@@ -1,0 +1,31 @@
+{
+  "id": "bench-401",
+  "name": "- BGLD (Deflationary token)",
+  "source": "DeFiHackLabs",
+  "case_link": "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/past/2022/README.md#20221212---bgld-deflationary-token---flashloan-price-manipulation",
+  "chain": "bsc",
+  "block_number": 23844530,
+  "attack_txs": [
+    "0xea108fe94bfc9a71bb3e4dee4a1b0fd47572e6ad6aba8b2155ac44861be628ae"
+  ],
+  "vulnerable_address": "0x67d7249d581169516e49a88eec11370234100fb7",
+  "has_public_source": true,
+  "fixable": true,
+  "proxy_address": "0xe445654f3797c5ee36406dbe88fbaa0dfbddb2bb",
+  "file": "BlackGoldMigration.sol",
+  "function": "migrate",
+  "type": "accounting-error",
+  "attacker_profit": 20807.767655919863,
+  "source_case_id": "dfhl-0059",
+  "fix_description": "In migrate, use the actual amount received by the contract (check balance before and after transferFrom) instead of the original balance when calculating v2 token distribution. Deflationary tokens have transfer fees, so the received amount is less than the sent amount.",
+  "normal_txs": [
+    "0xd8c45a046289e50ef154960212322d8148e993f0b58ed690521c223eff9e59cc",
+    "0x8880f2eec3866317aeae81ebc2f98b40bfad06f20b45831f22ec40bc8cf1338e",
+    "0xca1c19f2953a0fa7e9503f49ca2c5e1c964470abb689afa9a497175eac7a3ed1",
+    "0x5980cf5d27edf1b2a2fd1b2da11cd5bae2bf235a4bae3aab136b7f1e1219f042",
+    "0xfdc4be9e545abf717e38a7d1fb85369db8cab702825ad6e59d5b0e42684b68ab"
+  ],
+  "attack_date": "2022-12-12",
+  "difficulty": "medium",
+  "difficulty_reasoning": "This exploit is a multi-step DeFi attack involving a flash loan, manipulation of two liquidity pairs via skim/sync mechanics, repeated token migration abuse, and final profit extraction through swaps. It requires understanding protocol-specific token migration behavior and AMM reserve/accounting interactions, but the PoC is still relatively compact and not deeply dependent on highly obscure internals."
+}
