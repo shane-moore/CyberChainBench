@@ -12,6 +12,7 @@ from agents.task_agent.base import AgentResponse, TaskType
 from benchmark.loader import BenchmarkLoader
 from eval.tasks.patch.attack_replay import validate_patch_attack_transactions
 from eval.tasks.patch import evaluate_patch, write_patch_score_artifact
+from eval.tasks.patch.log_hash import SOLIDITY_LOG_HASH_FUNCTION
 from eval.tasks.patch.replay_accounting import summarize_normal_replay_results
 
 # Backwards-compatible aliases
@@ -1322,16 +1323,7 @@ contract {test_name} is Test {{
         }}
     }}
 
-    function _hashLogs(Vm.Log[] memory entries) internal pure returns (bytes32) {{
-        bytes memory encoded;
-        for (uint256 i = 0; i < entries.length; i++) {{
-            encoded = abi.encodePacked(encoded, entries[i].emitter, entries[i].data);
-            for (uint256 j = 0; j < entries[i].topics.length; j++) {{
-                encoded = abi.encodePacked(encoded, entries[i].topics[j]);
-            }}
-        }}
-        return keccak256(encoded);
-    }}
+{SOLIDITY_LOG_HASH_FUNCTION}
 
     function _runHistoricalCall() internal returns (bool, bytes32, bytes32) {{
         vm.createSelectFork("{fork_chain}", {replay_block});
