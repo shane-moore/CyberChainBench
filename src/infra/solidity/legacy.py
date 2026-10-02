@@ -101,10 +101,12 @@ def compile_fixed_bytecode_from_source(
             name: {"content": fixed_code if name == target_unit else content}
             for name, content in reference_sources.items()
         }
+        allow_unique_source_unit_fallback = target_unit == artifact_unit
     else:
         target_unit = "fix.sol"
         artifact_unit = target_unit
         compiler_sources = {target_unit: {"content": fixed_code}}
+        allow_unique_source_unit_fallback = False
 
     solcx_error: RuntimeError | None = None
     try:
@@ -127,12 +129,13 @@ def compile_fixed_bytecode_from_source(
             solcx_error = RuntimeError("\n".join(fatal_errors))
         else:
             try:
-                bytecode = _extract_exact_solc_bytecode(
+                bytecode, contract_name = _extract_solc_runtime_artifact(
                     compiled,
                     target_source_unit=artifact_unit,
                     contract_name=contract_name_hint,
+                    allow_unique_source_unit_fallback=allow_unique_source_unit_fallback,
                 )
-                return bytecode, contract_name_hint
+                return bytecode, contract_name
             except RuntimeError as exc:
                 solcx_error = exc
     except solcx.exceptions.SolcError as exc:
@@ -150,6 +153,7 @@ def compile_fixed_bytecode_from_source(
             contract_name_hint=contract_name_hint,
             target_file=artifact_unit,
             source_remappings=source_remappings,
+            allow_unique_source_unit_fallback=allow_unique_source_unit_fallback,
         )
         return bc, cn
     except RuntimeError:
@@ -158,27 +162,46 @@ def compile_fixed_bytecode_from_source(
     raise solcx_error
 
 
-def _extract_exact_solc_bytecode(
+def _runtime_bytecode_from_solc_artifact(artifact: object) -> str:
+    if not isinstance(artifact, dict):
+        return ""
+    bytecode = artifact.get("evm", {}).get("deployedBytecode", {}).get("object", "")
+    return str(bytecode) if bytecode else ""
+
+
+def _extract_solc_runtime_artifact(
     compiled: dict,
     *,
     target_source_unit: str,
     contract_name: str,
-) -> str:
+    allow_unique_source_unit_fallback: bool = False,
+) -> tuple[str, str]:
     if not contract_name:
         raise RuntimeError("missing target contract name")
     contracts = compiled.get("contracts", {}) if isinstance(compiled, dict) else {}
     file_contracts = contracts.get(target_source_unit, {}) if isinstance(contracts, dict) else {}
     artifact = file_contracts.get(contract_name, {}) if isinstance(file_contracts, dict) else {}
-    bytecode = (
-        artifact.get("evm", {}).get("deployedBytecode", {}).get("object", "")
-        if isinstance(artifact, dict)
-        else ""
-    )
-    if not bytecode:
+    bytecode = _runtime_bytecode_from_solc_artifact(artifact)
+    if bytecode:
+        return bytecode, contract_name
+
+    if not allow_unique_source_unit_fallback:
         raise RuntimeError(
             f"no deployed bytecode produced for {target_source_unit}:{contract_name}"
         )
-    return str(bytecode)
+
+    fallback_artifacts = [
+        (name, candidate_bytecode)
+        for name, candidate_artifact in sorted(file_contracts.items())
+        if (candidate_bytecode := _runtime_bytecode_from_solc_artifact(candidate_artifact))
+    ] if isinstance(file_contracts, dict) else []
+    if len(fallback_artifacts) != 1:
+        raise RuntimeError(
+            f"expected one deployed runtime artifact from {target_source_unit} "
+            f"after {contract_name} was absent, found {len(fallback_artifacts)}"
+        )
+    fallback_name, fallback_bytecode = fallback_artifacts[0]
+    return fallback_bytecode, fallback_name
 
 
 def _pick_target_file(
@@ -273,6 +296,14 @@ def compile_dfhl_fixed_bytecode(
     )
     if not artifact_file:
         raise RuntimeError(f"could not infer artifact source unit for {case_id}")
+    same_logical_source_unit = target_source_unit == artifact_source_unit
+    if not same_logical_source_unit and target_file == artifact_file:
+        raise RuntimeError(
+            "distinct trusted source units collapse to one cached Solidity source file"
+        )
+    allow_unique_source_unit_fallback = (
+        same_logical_source_unit and target_file == artifact_file
+    )
 
     available_files = [
         str(item).strip()
@@ -325,12 +356,13 @@ def compile_dfhl_fixed_bytecode(
         else:
             contract_name = contract_name_hint or str(metadata.get("contract_name", "")).strip()
             try:
-                bytecode = _extract_exact_solc_bytecode(
+                bytecode, compiled_contract_name = _extract_solc_runtime_artifact(
                     compiled,
                     target_source_unit=artifact_file,
                     contract_name=contract_name,
+                    allow_unique_source_unit_fallback=allow_unique_source_unit_fallback,
                 )
-                return bytecode, compiler_version, contract_name
+                return bytecode, compiler_version, compiled_contract_name
             except RuntimeError as exc:
                 solcx_error = exc
     except solcx.exceptions.SolcError as exc:
@@ -346,6 +378,7 @@ def compile_dfhl_fixed_bytecode(
             contract_name_hint=contract_name_hint or str(metadata.get("contract_name", "")).strip(),
             target_file=artifact_file,
             source_dir=source_dir,
+            allow_unique_source_unit_fallback=allow_unique_source_unit_fallback,
         )
         return bc, compiler_version, cn
     except RuntimeError:
@@ -456,12 +489,15 @@ def _extract_bytecode_from_forge_out(
     out_dir: Path,
     contract_name_hint: str,
     target_file: str,
+    *,
+    allow_unique_source_unit_fallback: bool = False,
 ) -> tuple[str, str]:
     """Return the exact source-unit and contract artifact from Forge output."""
     if not target_file or not contract_name_hint:
         raise RuntimeError("missing exact Forge artifact identity")
     expected_source = f"src/{normalize_staged_source_path(target_file).as_posix()}"
-    matches: list[str] = []
+    exact_matches: list[tuple[str, str]] = []
+    source_unit_matches: list[tuple[str, str]] = []
 
     for artifact_file in sorted(out_dir.glob("*/*.json")):
         try:
@@ -480,21 +516,37 @@ def _extract_bytecode_from_forge_out(
         compilation_target = (
             settings.get("compilationTarget", {}) if isinstance(settings, dict) else {}
         )
-        if compilation_target != {expected_source: contract_name_hint}:
+        if not isinstance(compilation_target, dict) or len(compilation_target) != 1:
+            continue
+        artifact_source, artifact_contract = next(iter(compilation_target.items()))
+        if artifact_source != expected_source or not isinstance(artifact_contract, str):
             continue
         bytecode = artifact.get("deployedBytecode", {}).get("object", "")
         if not isinstance(bytecode, str) or not bytecode or bytecode == "0x":
-            raise RuntimeError(
-                f"no deployed bytecode produced for {target_file}:{contract_name_hint}"
-            )
-        matches.append(bytecode[2:] if bytecode.startswith("0x") else bytecode)
+            continue
+        normalized_bytecode = bytecode[2:] if bytecode.startswith("0x") else bytecode
+        match = (normalized_bytecode, artifact_contract)
+        source_unit_matches.append(match)
+        if artifact_contract == contract_name_hint:
+            exact_matches.append(match)
 
-    if len(matches) != 1:
+    if len(exact_matches) == 1:
+        return exact_matches[0]
+    if len(exact_matches) > 1:
         raise RuntimeError(
             f"expected one Forge artifact for {target_file}:{contract_name_hint}, "
-            f"found {len(matches)}"
+            f"found {len(exact_matches)}"
         )
-    return matches[0], contract_name_hint
+    if not allow_unique_source_unit_fallback:
+        raise RuntimeError(
+            f"no deployed bytecode produced for {target_file}:{contract_name_hint}"
+        )
+    if len(source_unit_matches) != 1:
+        raise RuntimeError(
+            f"expected one deployed Forge runtime artifact from {target_file} "
+            f"after {contract_name_hint} was absent, found {len(source_unit_matches)}"
+        )
+    return source_unit_matches[0]
 
 
 def _forge_compile_fallback(
@@ -505,6 +557,7 @@ def _forge_compile_fallback(
     target_file: str = "",
     source_dir: Path | None = None,
     source_remappings: list[str] | None = None,
+    allow_unique_source_unit_fallback: bool = False,
 ) -> tuple[str, str]:
     """Forge-based compilation fallback when solcx fails.
 
@@ -622,6 +675,11 @@ def _forge_compile_fallback(
         if not out_dir.exists():
             raise RuntimeError("forge build produced no output directory")
 
-        return _extract_bytecode_from_forge_out(out_dir, contract_name_hint, target_file)
+        return _extract_bytecode_from_forge_out(
+            out_dir,
+            contract_name_hint,
+            target_file,
+            allow_unique_source_unit_fallback=allow_unique_source_unit_fallback,
+        )
     finally:
         shutil.rmtree(tmp_dir, ignore_errors=True)

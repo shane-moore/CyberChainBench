@@ -226,7 +226,79 @@ class SoliditySourcePathTests(unittest.TestCase):
             sources["vendor/Target.sol"],
         )
 
-    def test_compile_does_not_accept_target_contract_from_wrong_source_unit(self) -> None:
+    def test_compile_accepts_one_renamed_runtime_from_exact_patched_unit(self) -> None:
+        fake_solcx = types.SimpleNamespace(
+            compile_standard=lambda *_args, **_kwargs: {
+                "contracts": {
+                    "contracts/Target.sol": {
+                        "PoC_CCBPATCH": {
+                            "evm": {"deployedBytecode": {"object": "6001"}}
+                        },
+                        "IHelper": {"evm": {"deployedBytecode": {"object": ""}}},
+                    },
+                    "vendor/Other.sol": {
+                        "Unrelated": {
+                            "evm": {"deployedBytecode": {"object": "6002"}}
+                        }
+                    },
+                }
+            },
+            exceptions=types.SimpleNamespace(SolcError=RuntimeError),
+        )
+
+        with (
+            mock.patch.dict(sys.modules, {"solcx": fake_solcx}),
+            mock.patch("infra.solidity.legacy.get_or_install_solc", return_value="/solc"),
+        ):
+            result = compile_fixed_bytecode_from_source(
+                fixed_code="contract PoC_CCBPATCH {}",
+                contract_name_hint="Target",
+                compiler_version="0.8.20",
+                reference_sources={
+                    "contracts/Target.sol": "contract Target {}",
+                    "vendor/Other.sol": "contract Unrelated {}",
+                },
+                target_source_unit="contracts/Target.sol",
+                artifact_source_unit="contracts/Target.sol",
+            )
+
+        self.assertEqual(result, ("6001", "PoC_CCBPATCH"))
+
+    def test_compile_rejects_multiple_renamed_runtimes_from_patched_unit(self) -> None:
+        fake_solcx = types.SimpleNamespace(
+            compile_standard=lambda *_args, **_kwargs: {
+                "contracts": {
+                    "contracts/Target.sol": {
+                        "First": {"evm": {"deployedBytecode": {"object": "6001"}}},
+                        "Second": {"evm": {"deployedBytecode": {"object": "6002"}}},
+                    }
+                }
+            },
+            exceptions=types.SimpleNamespace(SolcError=RuntimeError),
+        )
+
+        with (
+            mock.patch.dict(sys.modules, {"solcx": fake_solcx}),
+            mock.patch("infra.solidity.legacy.get_or_install_solc", return_value="/solc"),
+            mock.patch(
+                "infra.solidity.legacy._forge_compile_fallback",
+                side_effect=RuntimeError("forge rejected ambiguous artifacts"),
+            ),
+            self.assertRaisesRegex(
+                RuntimeError,
+                "expected one deployed runtime artifact.*found 2",
+            ),
+        ):
+            compile_fixed_bytecode_from_source(
+                fixed_code="contract First {} contract Second {}",
+                contract_name_hint="Target",
+                compiler_version="0.8.20",
+                reference_sources={"contracts/Target.sol": "contract Target {}"},
+                target_source_unit="contracts/Target.sol",
+                artifact_source_unit="contracts/Target.sol",
+            )
+
+    def test_compile_does_not_select_trusted_name_from_wrong_source_unit(self) -> None:
         fake_solcx = types.SimpleNamespace(
             compile_standard=lambda *_args, **_kwargs: {
                 "contracts": {
@@ -244,16 +316,8 @@ class SoliditySourcePathTests(unittest.TestCase):
         with (
             mock.patch.dict(sys.modules, {"solcx": fake_solcx}),
             mock.patch("infra.solidity.legacy.get_or_install_solc", return_value="/solc"),
-            mock.patch(
-                "infra.solidity.legacy._forge_compile_fallback",
-                side_effect=RuntimeError("forge rejected exact target"),
-            ),
-            self.assertRaisesRegex(
-                RuntimeError,
-                "no deployed bytecode produced for contracts/Target.sol:Target",
-            ),
         ):
-            compile_fixed_bytecode_from_source(
+            result = compile_fixed_bytecode_from_source(
                 fixed_code="contract Target {}",
                 contract_name_hint="Target",
                 compiler_version="0.8.20",
@@ -264,6 +328,8 @@ class SoliditySourcePathTests(unittest.TestCase):
                 target_source_unit="contracts/Target.sol",
                 artifact_source_unit="contracts/Target.sol",
             )
+
+        self.assertEqual(result, ("6001", "Other"))
 
     def test_compile_separates_patched_base_unit_from_runtime_artifact_unit(self) -> None:
         captured: dict = {}
@@ -394,6 +460,51 @@ class SoliditySourcePathTests(unittest.TestCase):
             "contract CErc20Delegate {}",
         )
 
+    def test_renamed_runtime_fallback_is_disabled_for_dependency_patch(self) -> None:
+        fake_solcx = types.SimpleNamespace(
+            compile_standard=lambda *_args, **_kwargs: {
+                "contracts": {
+                    "contracts/CToken.sol": {
+                        "PoC_CCBPATCH": {
+                            "evm": {"deployedBytecode": {"object": "6004"}}
+                        }
+                    },
+                    "contracts/CErc20Delegate.sol": {
+                        "CErc20Delegate": {
+                            "evm": {"deployedBytecode": {"object": ""}}
+                        }
+                    },
+                }
+            },
+            exceptions=types.SimpleNamespace(SolcError=RuntimeError),
+        )
+
+        with (
+            mock.patch.dict(sys.modules, {"solcx": fake_solcx}),
+            mock.patch("infra.solidity.legacy.get_or_install_solc", return_value="/solc"),
+            mock.patch(
+                "infra.solidity.legacy._forge_compile_fallback",
+                side_effect=RuntimeError("forge rejected missing trusted runtime"),
+            ),
+            self.assertRaisesRegex(
+                RuntimeError,
+                "no deployed bytecode produced.*CErc20Delegate",
+            ),
+        ):
+            compile_fixed_bytecode_from_source(
+                fixed_code="contract PoC_CCBPATCH {}",
+                contract_name_hint="CErc20Delegate",
+                compiler_version="0.8.20",
+                reference_sources={
+                    "contracts/CToken.sol": "abstract contract CToken {}",
+                    "contracts/CErc20Delegate.sol": (
+                        'import "./CToken.sol"; contract CErc20Delegate is CToken {}'
+                    ),
+                },
+                target_source_unit="contracts/CToken.sol",
+                artifact_source_unit="contracts/CErc20Delegate.sol",
+            )
+
     def test_forge_artifact_selection_rejects_same_contract_from_wrong_unit(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             out_dir = Path(temp_dir)
@@ -408,7 +519,7 @@ class SoliditySourcePathTests(unittest.TestCase):
                 }"""
             )
 
-            with self.assertRaisesRegex(RuntimeError, "found 0"):
+            with self.assertRaisesRegex(RuntimeError, "no deployed bytecode"):
                 _extract_bytecode_from_forge_out(
                     out_dir,
                     "Target",
@@ -441,6 +552,67 @@ class SoliditySourcePathTests(unittest.TestCase):
                 ),
                 ("6001", "Target"),
             )
+
+    def test_forge_artifact_selection_accepts_one_renamed_runtime(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            out_dir = Path(temp_dir)
+            for directory, source, contract_name, bytecode in (
+                ("Patch.sol", "src/contracts/Target.sol", "PoC_CCBPATCH", "0x6001"),
+                ("Other.sol", "src/vendor/Other.sol", "Unrelated", "0x6002"),
+            ):
+                artifact_dir = out_dir / directory
+                artifact_dir.mkdir()
+                (artifact_dir / f"{contract_name}.json").write_text(
+                    """{{
+                        "deployedBytecode": {{"object": "{bytecode}"}},
+                        "metadata": {{"settings": {{"compilationTarget": {{
+                            "{source}": "{contract_name}"
+                        }}}}}}
+                    }}""".format(
+                        bytecode=bytecode,
+                        source=source,
+                        contract_name=contract_name,
+                    )
+                )
+
+            self.assertEqual(
+                _extract_bytecode_from_forge_out(
+                    out_dir,
+                    "Target",
+                    "contracts/Target.sol",
+                    allow_unique_source_unit_fallback=True,
+                ),
+                ("6001", "PoC_CCBPATCH"),
+            )
+
+    def test_forge_artifact_selection_rejects_multiple_renamed_runtimes(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            out_dir = Path(temp_dir)
+            for contract_name, bytecode in (("First", "0x6001"), ("Second", "0x6002")):
+                artifact_dir = out_dir / f"{contract_name}.sol"
+                artifact_dir.mkdir()
+                (artifact_dir / f"{contract_name}.json").write_text(
+                    """{{
+                        "deployedBytecode": {{"object": "{bytecode}"}},
+                        "metadata": {{"settings": {{"compilationTarget": {{
+                            "src/contracts/Target.sol": "{contract_name}"
+                        }}}}}}
+                    }}""".format(
+                        bytecode=bytecode,
+                        contract_name=contract_name,
+                    )
+                )
+
+            with self.assertRaisesRegex(
+                RuntimeError,
+                "expected one deployed Forge runtime artifact.*found 2",
+            ):
+                _extract_bytecode_from_forge_out(
+                    out_dir,
+                    "Target",
+                    "contracts/Target.sol",
+                    allow_unique_source_unit_fallback=True,
+                )
 
     def test_forge_artifact_selection_rejects_creation_bytecode_only(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -571,6 +743,48 @@ class SoliditySourcePathTests(unittest.TestCase):
                             base_dir=base_dir,
                             case_id="bench-test",
                             fixed_code="contract Target {}",
+                            contract_name_hint="Target",
+                            target_source_unit=target_source_unit,
+                            artifact_source_unit=artifact_source_unit,
+                        )
+
+    def test_dfhl_rejects_distinct_logical_units_collapsed_by_flat_cache(self) -> None:
+        fake_solcx = types.SimpleNamespace(
+            exceptions=types.SimpleNamespace(SolcError=RuntimeError),
+        )
+        with tempfile.TemporaryDirectory() as temp_dir:
+            base_dir = Path(temp_dir)
+            source_dir = base_dir / "sources"
+            source_dir.mkdir()
+            (source_dir / "Target.sol").write_text("contract Target {}")
+            metadata = {
+                "source_dir": "sources",
+                "compiler_version": "0.8.20",
+                "files": ["Target.sol"],
+            }
+            for target_source_unit, artifact_source_unit in (
+                ("base/Target.sol", "runtime/Target.sol"),
+                ("/contracts/Target.sol", "contracts/Target.sol"),
+            ):
+                with self.subTest(
+                    target_source_unit=target_source_unit,
+                    artifact_source_unit=artifact_source_unit,
+                ):
+                    with (
+                        mock.patch.dict(sys.modules, {"solcx": fake_solcx}),
+                        mock.patch(
+                            "infra.solidity.legacy.resolve_case_source_metadata",
+                            return_value=metadata,
+                        ),
+                        self.assertRaisesRegex(
+                            RuntimeError,
+                            "distinct trusted source units collapse",
+                        ),
+                    ):
+                        compile_dfhl_fixed_bytecode(
+                            base_dir=base_dir,
+                            case_id="bench-test",
+                            fixed_code="contract Renamed {}",
                             contract_name_hint="Target",
                             target_source_unit=target_source_unit,
                             artifact_source_unit=artifact_source_unit,
